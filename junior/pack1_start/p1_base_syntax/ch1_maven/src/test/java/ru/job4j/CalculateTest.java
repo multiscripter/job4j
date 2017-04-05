@@ -23,7 +23,7 @@ public class CalculateTest {
         Calculate.main(null);
         assertThat(
             out.toString(),
-            is (
+            is(
                 String.format(
                     "Hello, World!%s",
                     System.getProperty("line.separator")
