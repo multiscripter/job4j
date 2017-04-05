@@ -1,5 +1,5 @@
 /**
-* Package for calculate task.
+* Package for task: 1.4. JUnit.
 *
 * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
 * @version 1

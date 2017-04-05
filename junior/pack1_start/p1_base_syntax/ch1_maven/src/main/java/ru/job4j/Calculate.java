@@ -2,9 +2,10 @@ package ru.job4j;
 
 /**
  * Class Calculate для вывода на консоль фразы "Hello, World!".
- * @author Goureev Ilya
- * @since 2017.04.04
+ *
+ * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
  * @version 1
+ * @since 0.1
  */
 public class Calculate {
     /**
