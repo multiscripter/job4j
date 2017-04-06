@@ -17,6 +17,7 @@
     
     <modules>
         <module>ch1_maven</module>
+        <module>ch2_datatypes</module>
     </modules>
 
     <dependencies>
