@@ -7,7 +7,6 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Class CalculatorTest тестирует методы класса Calculator.
- *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
  * @version 1
  * @since 0.1
