@@ -16,4 +16,14 @@ public class Max {
     public int max(int first, int second) {
         return first > second ? first : second;
     }
+    /**
+     * Сравнивает три значения и возвращает большее из них.
+     * @param first первое значение.
+     * @param second второе значение.
+     * @param third третье значение.
+     * @return большее из зничений.
+     */
+    public int max(int first, int second, int third) {
+        return this.max(this.max(first, second), third);
+    }
 }

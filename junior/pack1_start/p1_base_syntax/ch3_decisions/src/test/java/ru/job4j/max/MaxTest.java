@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
  */
 public class MaxTest {
     /**
-     * Тестирует метод max(). Значение из первого параметра больше, чем значение из второго.
+     * Тестирует метод max(int, int). Значение из первого параметра больше, чем значение из второго.
      */
     @Test
     public void whenFirstGreaterThanSecond() {
@@ -22,13 +22,23 @@ public class MaxTest {
         assertThat(result, is(expected));
     }
     /**
-     * Тестирует метод max(). Значение из первого параметра меньше, чем значение из второго.
+     * Тестирует метод max(int, int). Значение из первого параметра меньше, чем значение из второго.
      */
     @Test
     public void whenFirstLessThanSecond() {
         Max max = new Max();
         int result = max.max(1, 2);
         int expected = 2;
+        assertThat(result, is(expected));
+    }
+    /**
+     * Тестирует метод max(int, int, int). Значение из первого параметра меньше, чем значение из второго.
+     */
+    @Test
+    public void testMaxWithThreeParams() {
+        Max max = new Max();
+        int result = max.max(1, 3, 2);
+        int expected = 3;
         assertThat(result, is(expected));
     }
 }
