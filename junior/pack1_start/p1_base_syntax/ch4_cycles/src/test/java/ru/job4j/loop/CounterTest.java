@@ -5,10 +5,10 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Class MaxTest тестирует метод класса Max.
+ * Class MaxTest тестирует метод класса Counter.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version %G%
- * @since 1
+ * @version 1
+ * @since 2017-04-08
  */
 public class CounterTest {
     /**
