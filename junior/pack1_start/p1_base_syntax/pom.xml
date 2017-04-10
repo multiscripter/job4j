@@ -19,6 +19,7 @@
         <module>ch1_maven</module>
         <module>ch2_datatypes</module>
         <module>ch3_decisions</module>
+        <module>ch5_arrays</module>
     </modules>
 
     <dependencies>
