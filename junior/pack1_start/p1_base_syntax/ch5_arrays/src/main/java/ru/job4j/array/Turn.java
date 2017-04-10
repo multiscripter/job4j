@@ -3,7 +3,7 @@ package ru.job4j.array;
 /**
  * Class Turn для переворота массива.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-10
  * @see https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html
  */
