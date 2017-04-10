@@ -19,11 +19,8 @@
         <module>ch1_maven</module>
         <module>ch2_datatypes</module>
         <module>ch3_decisions</module>
-<<<<<<< HEAD
-        <module>ch5_arrays</module>
-=======
         <module>ch4_cycles</module>
->>>>>>> 99d40e1
+        <module>ch5_arrays</module>
     </modules>
 
     <dependencies>
