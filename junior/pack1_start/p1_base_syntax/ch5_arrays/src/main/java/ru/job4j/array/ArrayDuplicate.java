@@ -22,11 +22,11 @@ public class ArrayDuplicate {
                     for (int c = b; c < size - 1; c++) {
                         array[c] = array[c + 1];
                     }
-                    array = Arrays.copyOf(array, --size);
                     b--;
+                  size--;
                 }
             }
         }
-        return array;
+        return Arrays.copyOf(array, size);
     }
 }
