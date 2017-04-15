@@ -8,6 +8,6 @@
     <parent>
         <groupId>ru.job4j</groupId>
         <artifactId>p1_base_syntax</artifactId>
-        <version>2.0</version>
+        <version>1.0</version>
     </parent>
 </project>

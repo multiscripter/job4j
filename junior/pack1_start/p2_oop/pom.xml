@@ -6,7 +6,7 @@
     <artifactId>p2_oop</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
-    <name>p1_base_syntax</name>
+    <name>p2_oop</name>
     <url>http://job4j.ru</url>
     
     <parent>
