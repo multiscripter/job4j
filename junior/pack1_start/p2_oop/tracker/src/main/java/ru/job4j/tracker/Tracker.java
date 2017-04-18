@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Class Tracker реализует сущность Трэкер заявок.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-18
  */
 public class Tracker {
@@ -15,10 +15,20 @@ public class Tracker {
      */
     private Item[] items;
     /**
+     * Ёмкость массив заявок.
+     */
+    private int capacity;
+    /**
+     * Указатель на первый пустой элемент массива.
+     */
+    private int pointer;
+    /**
      * Конструктор без параметров.
      */
     public Tracker() {
-        this.items = new Item[0];
+        this.capacity = 10;
+        this.pointer = 0;
+        this.items = new Item[this.capacity];
     }
     /**
      * Добавляет заявку.
@@ -26,8 +36,10 @@ public class Tracker {
      * @return добавленная заявка.
      */
     public Item add(Item item) {
-        this.items = Arrays.copyOf(this.items, this.items.length + 1);
-        this.items[this.items.length - 1] = item;
+        if (this.pointer == this.items.length) {
+            this.items = this.increaseCapacity(this.items);
+        }
+        this.items[this.pointer++] = item;
         return item;
     }
     /**
@@ -35,9 +47,9 @@ public class Tracker {
      * @param uItem заявка.
      */
     public void update(Item uItem) {
-        for (Item item : this.items) {
-            if (item.getId() == uItem.getId()) {
-                item = uItem;
+        for (int a = 0; a < this.pointer; a++) {
+            if (this.items[a].getId().equals(uItem.getId())) {
+                items[a] = uItem;
                 break;
             }
         }
@@ -49,33 +61,51 @@ public class Tracker {
      */
     public Item findById(String id) {
         Item uItem = new Item();
-        for (Item item : this.items) {
-            if (item.getId() == id) {
-                uItem = item;
+        for (int a = 0; a < this.pointer; a++) {
+            if (id.equals(items[a].getId())) {
+                uItem = items[a];
                 break;
             }
         }
         return uItem;
     }
     /**
+     * Ищет заявку по имени.
+     * @param name имя заявки.
+     * @return массив найденных заявок или пустой массив.
+     */
+    public Item[] findByName(String name) {
+        Item[] found = new Item[this.capacity];
+        int index = 0;
+        for (int a = 0; a < this.pointer; a++) {
+            if (name.equals(items[a].getName())) {
+                if (index == found.length) {
+                    found = this.increaseCapacity(found);
+                }
+                found[index++] = this.items[a];
+            }
+        }
+        return Arrays.copyOf(found, index);
+    }
+    /**
      * Удаляет заявку по идентификатору.
      * @param id идентификатор заявки.
      */
     public void delete(String id) {
-        Item[] items = new Item[this.items.length - 1];
-        for (int a = 0; a < items.length; a++) {
-            if (this.items[a].getId() != id) {
-                items[a] = this.items[a];
+        for (int a = 0; a < this.pointer; a++) {
+            if (id.equals(this.items[a].getId())) {
+                System.arraycopy((Object) this.items, a + 1, (Object) this.items, a, items.length - a - 1);
+                break;
             }
         }
-        this.items = items;
+        this.pointer--;
     }
     /**
      * Получает все заявки.
      * @return массив заявок.
      */
     public Item[] getAll() {
-        return this.items;
+        return Arrays.copyOf(this.items, this.pointer);
     }
     /**
      * Получает количество заявок.
@@ -83,5 +113,13 @@ public class Tracker {
      */
     public int getLength() {
         return this.items.length;
+    }
+    /**
+     * Увеличивает ёмкость массива.
+     * @param items массив, ёмкость которого нужно увеличить.
+     * @return увеличеснный массив.
+     */
+    private Item[] increaseCapacity(Item[] items) {
+        return Arrays.copyOf(items, items.length + this.capacity);
     }
 }

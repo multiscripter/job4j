@@ -2,11 +2,12 @@ package ru.job4j.tracker;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Class ItemTest тестирует методы класса Item.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-18
  */
 public class ItemTest {
@@ -16,9 +17,8 @@ public class ItemTest {
     @Test
     public void testEmpty() {
         Item item = new Item();
-        boolean expected = true;
         boolean result = item.isEmpty();
-        assertEquals(expected, result);
+        assertTrue(result);
     }
     /**
      * Тестирует String getId().

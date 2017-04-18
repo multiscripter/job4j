@@ -4,7 +4,7 @@ package ru.job4j.tracker;
  * Class Item реализует сущность Заявка.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-18
  */
 public class Item {
@@ -67,6 +67,13 @@ public class Item {
      */
     public String getDesc() {
         return this.desc;
+    }
+    /**
+     * Устанавливает описание заявки.
+     * @param desc описание заявки.
+     */
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
     /**
      * Получет время заявки.
