@@ -6,12 +6,12 @@ import java.util.Date;
  * Class Doctor реализует профессию врача.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-17
  */
 public class Doctor extends Profession {
     /**
-     * Количество пациентов врача.
+     * Количество пациентов.
      */
     private int patients;
     /**
@@ -29,16 +29,15 @@ public class Doctor extends Profession {
     }
     /**
      * Возвращает проделанную работу.
-     * @param nameLast фамилия пациента.
+     * @param patient объект пациента.
      * @return проделанная работа.
      */
-    @Override
-    public String makeJob(String patientNameLast) {
+    public String makeJob(Patient patient) {
         StringBuilder str = new StringBuilder();
         str.append("Врач ");
         str.append(this.getNameLast());
         str.append(" лечит пациента по фамилии ");
-        str.append(patientNameLast);
+        str.append(patient.getNameLast());
         this.patients++;
         return str.toString();
     }

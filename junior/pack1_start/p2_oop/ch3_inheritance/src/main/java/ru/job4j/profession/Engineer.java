@@ -6,12 +6,12 @@ import java.util.Date;
  * Class Engineer реализует профессию инженера.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-17
  */
 public class Engineer extends Profession {
     /**
-     * Количество количество проектов инженера.
+     * Количество проектов.
      */
     private int projects;
     /**
@@ -32,7 +32,6 @@ public class Engineer extends Profession {
      * @param projectName название проекта.
      * @return проделанная работа.
      */
-    @Override
     public String makeJob(String projectName) {
         StringBuilder str = new StringBuilder();
         str.append("Инженер ");

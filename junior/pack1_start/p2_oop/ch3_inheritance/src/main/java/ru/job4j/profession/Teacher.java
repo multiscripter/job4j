@@ -6,12 +6,12 @@ import java.util.Date;
  * Class Teacher реализует профессию преподавателя.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-17
  */
 public class Teacher extends Profession {
     /**
-     * Количество учеников преподавателя.
+     * Количество учеников.
      */
     private int learners;
     /**
@@ -29,16 +29,15 @@ public class Teacher extends Profession {
     }
     /**
      * Возвращает проделанную работу.
-     * @param nameLast фамилия ученика.
+     * @param learner объект учащегося.
      * @return проделанная работа.
      */
-    @Override
-    public String makeJob(String learnerNameLast) {
+    public String makeJob(Learner learner) {
         StringBuilder str = new StringBuilder();
         str.append("Преподаватель ");
         str.append(this.getNameLast());
-        str.append(" учит ученика по фамилии ");
-        str.append(learnerNameLast);
+        str.append(" учит учащегося по фамилии ");
+        str.append(learner.getNameLast());
         this.learners++;
         return str.toString();
     }

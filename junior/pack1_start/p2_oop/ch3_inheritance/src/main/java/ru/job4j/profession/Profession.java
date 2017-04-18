@@ -6,40 +6,24 @@ import java.util.Date;
  * Class Profession базовый для всех профессий.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-17
  */
-abstract class Profession {
+abstract class Profession extends Person {
     /**
-     * Фамилия профессионала.
-     */
-    private String nameLast;
-    /**
-     * Имя профессионала.
-     */
-    private final String nameFirst;
-    /**
-     * пол профессионала.
-     */
-    private Gender gender;
-    /**
-     * День рождения профессионала.
-     */
-    private final Date birthDay;
-    /**
-     * Образование профессионала.
+     * Образование.
      */
     private String[] education;
     /**
-     * Специальность профессионала.
+     * Специальность.
      */
     private String[] speciality;
     /**
-     * Опыт профессионала.
+     * Опыт.
      */
     private int experience;
     /**
-     * Учёная степень профессионала.
+     * Учёная степень.
      */
     private String degree;
     /**
@@ -52,57 +36,19 @@ abstract class Profession {
      * @param degree учёная степень.
      */
     Profession(String nameLast, String nameFirst, Gender gender, Date birthDay, int experience, String degree) {
-        this.nameLast = nameLast;
-        this.nameFirst = nameFirst;
-        this.gender = gender;
-        this.birthDay = birthDay;
+        super(nameLast, nameFirst, gender, birthDay);
         this.experience = experience;
         this.degree = degree;
     }
     /**
-     * Возвращает фамилию профессионала.
-     * @return фамилия.
-     */
-    public String getNameLast() {
-        return this.nameLast;
-    }
-    /**
-     * Устанавливает фамилию профессионала.
-     * @param nameLast новая фамилия.
-     */
-    public void setNameLast(String nameLast) {
-        this.nameLast = nameLast;
-    }
-    /**
-     * Возвращает имя профессионала.
-     * @return имя.
-     */
-    public String getNameFirst() {
-        return this.nameFirst;
-    }
-    /**
-     * Возвращает пол профессионала.
-     * @return пол.
-     */
-    public Gender getGender() {
-        return this.gender;
-    }
-    /**
-     * Возвращает дату рождения профессионала.
-     * @return дата рождения.
-     */
-    public Date getBirthDay() {
-        return this.birthDay;
-    }
-    /**
-     * Возвращает образования профессионала.
+     * Возвращает образования.
      * @return образования.
      */
     public String[] getEducation() {
         return this.education;
     }
     /**
-     * Устанавливает образование профессионала.
+     * Устанавливает образование.
      * @param education образование.
      */
     public void setEducation(String education) {
@@ -112,14 +58,14 @@ abstract class Profession {
         this.education = edu;
     }
     /**
-     * Возвращает специальности профессионала.
+     * Возвращает специальности.
      * @return специальности.
      */
     public String[] getSpeciality() {
         return this.speciality;
     }
     /**
-     * Устанавливает специальность профессионала.
+     * Устанавливает специальность.
      * @param speciality специальность.
      */
     public void setSpeciality(String speciality) {
@@ -129,37 +75,31 @@ abstract class Profession {
         this.speciality = spec;
     }
     /**
-     * Возвращает опыт профессионала.
+     * Возвращает опыт.
      * @return опыт.
      */
     public int getExperience() {
         return this.experience;
     }
     /**
-     * Устанавливает опыт профессионала.
+     * Устанавливает опыт.
      * @param days опыт.
      */
     public void setExperience(int days) {
         this.experience = this.experience + days;
     }
     /**
-     * Возвращает учёную степень профессионала.
+     * Возвращает учёную степень.
      * @return учёная степень.
      */
     public String getDegree() {
         return this.degree;
     }
     /**
-     * Устанавливает учёную степень профессионала.
+     * Устанавливает учёную степень.
      * @param degree учёная степень.
      */
     public void setDegree(String degree) {
         this.degree = degree;
     }
-    /**
-     * Возвращает проделанную работу профессионала.
-     * @param arg аргумент.
-     * @return проделанная работа.
-     */
-    abstract String makeJob(String arg);
 }
