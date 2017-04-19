@@ -8,7 +8,7 @@ import static org.junit.Assert.assertArrayEquals;
 /**
  * Class TrackerTest тестирует методы класса Tracker.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 3
  * @since 2017-04-18
  */
 public class TrackerTest {
@@ -102,6 +102,17 @@ public class TrackerTest {
         tracker.add(new Item("Заявка1", "Имя1", "Описание1"));
         tracker.add(new Item("Заявка2", "Имя2", "Описание2"));
         assertEquals(expected, tracker.getLength());
+    }
+    /**
+     * Тестирует int getQuantity().
+     */
+    @Test
+    public void testGetQuantity() {
+        Tracker tracker = new Tracker();
+        int expected = 2;
+        tracker.add(new Item("Заявка1", "Имя1", "Описание1"));
+        tracker.add(new Item("Заявка2", "Имя2", "Описание2"));
+        assertEquals(expected, tracker.getQuantity());
     }
     /**
      * Тестирует Item[] increaseCapacity(Item[] items).

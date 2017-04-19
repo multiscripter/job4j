@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Class Tracker реализует сущность Трэкер заявок.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 3
  * @since 2017-04-18
  */
 public class Tracker {
@@ -113,11 +113,18 @@ public class Tracker {
         return Arrays.copyOf(this.items, this.pointer);
     }
     /**
-     * Получает количество заявок.
-     * @return количество заявок.
+     * Получает длину массива заявок.
+     * @return длина массива заявок.
      */
     public int getLength() {
         return this.items.length;
+    }
+    /**
+     * Получает количество заявок.
+     * @return количество заявок.
+     */
+    public int getQuantity() {
+        return this.pointer;
     }
     /**
      * Увеличивает ёмкость массива.
