@@ -15,6 +15,10 @@ public class Tracker {
      */
     private Item[] items;
     /**
+     * Идентификатор заявки.
+     */
+    private int id;
+    /**
      * Ёмкость массив заявок.
      */
     private int capacity;
@@ -26,6 +30,7 @@ public class Tracker {
      * Конструктор без параметров.
      */
     public Tracker() {
+        this.id = 1;
         this.capacity = 10;
         this.pointer = 0;
         this.items = new Item[this.capacity];
@@ -121,5 +126,12 @@ public class Tracker {
      */
     private Item[] increaseCapacity(Item[] items) {
         return Arrays.copyOf(items, items.length + this.capacity);
+    }
+    /**
+     * Генерирует идентификатор заявки.
+     * @return идентификатор.
+     */
+    public String generateId() {
+        return String.valueOf(this.id++);
     }
 }

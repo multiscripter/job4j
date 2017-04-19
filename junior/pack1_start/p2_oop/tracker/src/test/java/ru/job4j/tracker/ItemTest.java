@@ -26,7 +26,7 @@ public class ItemTest {
     @Test
     public void testGetId() {
         String id = "Идентификатор";
-        Item item = new Item(id, "Имя", "Описание", new String[0]);
+        Item item = new Item(id, "Имя", "Описание");
         String result = item.getId();
         assertEquals(id, result);
     }

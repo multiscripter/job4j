@@ -38,14 +38,13 @@ public class Item {
      * @param id идентификатор заявки.
      * @param name имя заявки.
      * @param desc описание заявки.
-     * @param comments комментарии заявки.
      */
-    public Item(String id, String name, String desc, String[] comments) {
+    public Item(String id, String name, String desc) {
         this.id = id;
         this.name = name;
         this.desc = desc;
         this.created = System.currentTimeMillis();
-        this.comments = comments;
+        this.comments = new String[10];
     }
     /**
      * Получет идентификатор заявки.
@@ -60,6 +59,13 @@ public class Item {
      */
     public String getName() {
         return this.name;
+    }
+    /**
+     * Устанавливает имя заявки.
+     * @param name имя.
+     */
+    public void setName(String name) {
+        this.name = name;
     }
     /**
      * Получет описание заявки.
@@ -127,5 +133,20 @@ public class Item {
             return false;
         }
         return true;
+    }
+    /**
+     * Переопределяет метод toString().
+     * @return строковое представление объекта.
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("id: ");
+        sb.append(this.getId());
+        sb.append(", user name: ");
+        sb.append(this.getName());
+        sb.append(", description: ");
+        sb.append(this.getDesc());
+        return sb.toString();
     }
 }

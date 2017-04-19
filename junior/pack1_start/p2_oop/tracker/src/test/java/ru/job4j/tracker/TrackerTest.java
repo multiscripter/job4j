@@ -18,7 +18,7 @@ public class TrackerTest {
     @Test
     public void testAdd() {
         Tracker tracker = new Tracker();
-        Item expected = new Item("Заявка1", "Имя1", "Описание1", new String[0]);
+        Item expected = new Item("Заявка1", "Имя1", "Описание1");
         Item result = tracker.add(expected);
         assertEquals(expected, result);
     }
@@ -29,7 +29,7 @@ public class TrackerTest {
     public void testUpdate() {
         Tracker tracker = new Tracker();
         String id = "Заявка2";
-        Item item = new Item(id, "Имя2", "Описание2", new String[0]);
+        Item item = new Item(id, "Имя2", "Описание2");
         tracker.add(item);
         item.setDesc("Новое описание Заявки2");
         tracker.update(item);
@@ -44,7 +44,7 @@ public class TrackerTest {
     public void testFindById() {
         Tracker tracker = new Tracker();
         String id = "Заявка3";
-        Item expected = new Item(id, "Имя3", "Описание3", new String[0]);
+        Item expected = new Item(id, "Имя3", "Описание3");
         tracker.add(expected);
         Item result = tracker.findById(id);
         assertEquals(expected, result);
@@ -57,9 +57,9 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         String name = "Имя3";
         for (int a = 1; a < 6; a++) {
-            tracker.add(new Item("Заявка" + a, "Имя" + a, "Описание" + a, new String[0]));
+            tracker.add(new Item("Заявка" + a, "Имя" + a, "Описание" + a));
         }
-        tracker.add(new Item("Заявка10", name, "Описание10", new String[0]));
+        tracker.add(new Item("Заявка10", name, "Описание10"));
         Item[] found = tracker.findByName(name);
         assertEquals(2, found.length);
     }
@@ -71,7 +71,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         String id = "Заявка3";
         for (int a = 1; a < 6; a++) {
-            tracker.add(new Item("Заявка" + a, "Имя" + a, "Описание" + a, new String[0]));
+            tracker.add(new Item("Заявка" + a, "Имя" + a, "Описание" + a));
         }
         tracker.delete(id);
         Item result = tracker.findById(id);
@@ -85,7 +85,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item[] items = new Item[15];
         for (int a = 0; a < 15; a++) {
-            Item item = new Item("Заявка" + a, "Имя" + a, "Описание" + a, new String[0]);
+            Item item = new Item("Заявка" + a, "Имя" + a, "Описание" + a);
             tracker.add(item);
             items[a] = item;
         }
@@ -99,8 +99,8 @@ public class TrackerTest {
     public void testGetLength() {
         Tracker tracker = new Tracker();
         int expected = 10;
-        tracker.add(new Item("Заявка1", "Имя1", "Описание1", new String[0]));
-        tracker.add(new Item("Заявка2", "Имя2", "Описание2", new String[0]));
+        tracker.add(new Item("Заявка1", "Имя1", "Описание1"));
+        tracker.add(new Item("Заявка2", "Имя2", "Описание2"));
         assertEquals(expected, tracker.getLength());
     }
     /**
@@ -112,7 +112,7 @@ public class TrackerTest {
         int expected = 20;
         Item[] items = new Item[expected];
         for (int a = 0; a < 15; a++) {
-            Item item = new Item("Заявка" + a, "Имя" + a, "Описание" + a, new String[0]);
+            Item item = new Item("Заявка" + a, "Имя" + a, "Описание" + a);
             tracker.add(item);
         }
         assertEquals(expected, tracker.getLength());
