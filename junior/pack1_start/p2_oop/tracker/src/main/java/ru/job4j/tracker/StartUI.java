@@ -4,7 +4,7 @@ package ru.job4j.tracker;
  * Class StartUI реализует сущность пользовательского интрефэйса трэкера.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-19
  */
 public class StartUI {
@@ -15,7 +15,7 @@ public class StartUI {
     /**
      * Массив действий.
      */
-    private String[] actions = {"Add new Item", "Show all items", "Edit item", "Delete item", "Find item by Id", "Find items by name", "Exit Program"};
+    private String[] actions;
     /**
      * Объект трэкера заявок.
      */
@@ -26,6 +26,14 @@ public class StartUI {
      */
     public StartUI(Input input) {
         this.input = input;
+        this.actions = new String[7];
+        this.actions[MenuActions.ADD] = "Add new Item";
+        this.actions[MenuActions.SHOW] = "Show all items";
+        this.actions[MenuActions.EDIT] = "Edit item";
+        this.actions[MenuActions.DELETE] = "Delete item";
+        this.actions[MenuActions.FINDBYID] = "Find item by Id";
+        this.actions[MenuActions.FINDBYNAME] = "Find items by name";
+        this.actions[MenuActions.EXIT] = "Exit program";
     }
     /**
      * Реализует действия по добавлению новой заявки в трэкер.
@@ -37,9 +45,9 @@ public class StartUI {
         String id = this.tracker.generateId();
         tracker.add(new Item(id, name, desc));
         StringBuilder sb = new StringBuilder();
-        sb.append("Task added. Id: ");
+        sb.append("\nTask added. Id: ");
         sb.append(id);
-        sb.append("\n\n");
+        sb.append("\n");
         System.out.println(sb.toString());
     }
     /**
@@ -47,7 +55,7 @@ public class StartUI {
      */
     public void showAllTasks() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\nTasks in tracker:");
+        sb.append("\nTasks in tracker:\n");
         for (Item item : this.tracker.getAll()) {
             sb.append(item.toString());
             sb.append("\n");
@@ -59,7 +67,7 @@ public class StartUI {
      * Показывает сообщение при выходе из программы.
      */
     public void showExitMsg() {
-        System.out.print("Buy our program for 10$.");
+        System.out.println("Buy our program for 10$.");
     }
     /**
      * Реализует действия по изменению заявки в трэкере.
@@ -138,25 +146,25 @@ public class StartUI {
             }
             int entered = Integer.valueOf(this.input.ask("Select: "));
             switch (entered) {
-                case 0:
+                case MenuActions.ADD:
                     this.addNewItem();
                     break;
-                case 1:
+                case MenuActions.SHOW:
                     this.showAllTasks();
                     break;
-                case 2:
+                case MenuActions.EDIT:
                     this.editItem();
                     break;
-                case 3:
+                case MenuActions.DELETE:
                     this.deleteItem();
                     break;
-                case 4:
+                case MenuActions.FINDBYID:
                     this.findById();
                     break;
-                case 5:
+                case MenuActions.FINDBYNAME:
                     this.findByName();
                     break;
-                case 6:
+                case MenuActions.EXIT:
                     this.showExitMsg();
                     break exit;
                 default:
