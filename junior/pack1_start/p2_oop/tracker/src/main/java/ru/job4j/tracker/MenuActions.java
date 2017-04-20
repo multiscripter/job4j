@@ -4,10 +4,10 @@ package ru.job4j.tracker;
  * Class MenuActions реализует константы действий пользовательского интрефэйса трэкера.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-19
  */
-public class MenuActions {
+public final class MenuActions {
     /**
      * Добавить заявку.
      */
