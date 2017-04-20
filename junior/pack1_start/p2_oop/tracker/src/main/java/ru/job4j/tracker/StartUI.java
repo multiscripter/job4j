@@ -4,7 +4,7 @@ package ru.job4j.tracker;
  * Class StartUI реализует сущность пользовательского интрефэйса трэкера.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 3
+ * @version 4
  * @since 2017-04-19
  */
 public class StartUI {
@@ -22,6 +22,16 @@ public class StartUI {
      */
     public StartUI(Input input) {
         this.input = input;
+        this.tracker = new Tracker();
+    }
+    /**
+     * Конструктор.
+     * @param input объект класса, реализующего интерфэйс Input.
+     * @param tracker объект трэкера.
+     */
+    public StartUI(Input input, Tracker tracker) {
+        this.input = input;
+        this.tracker = tracker;
     }
     /**
      * Реализует действия по добавлению новой заявки в трэкер.
@@ -125,7 +135,6 @@ public class StartUI {
      * Инициализирует трэкер и интерфэйс пользователя.
      */
     public void init() {
-        this.tracker = new Tracker();
         MenuActions[] actions = MenuActions.values();
         exit:
         while (true) {
