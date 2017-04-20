@@ -1,44 +1,57 @@
 package ru.job4j.tracker;
 
 /**
- * Class MenuActions реализует константы действий пользовательского интрефэйса трэкера.
+ * Enum MenuActions реализует константы действий пользовательского интрефэйса трэкера.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 3
  * @since 2017-04-19
  */
-public final class MenuActions {
+enum MenuActions {
     /**
      * Добавить заявку.
      */
-    static final int ADD = 0;
+    ADD("Add new Item"),
     /**
-     * Показать заявки.
-     */
-    static final int SHOW = 1;
+    * Показать заявки.
+    */
+    SHOW("Show all items"),
     /**
      * Редактировать заявку.
      */
-    static final int EDIT = 2;
+    EDIT("Edit item"),
     /**
-     * Удалить заявок.
+     * Удалить заявку.
      */
-    static final int DELETE = 3;
+    DELETE("Delete item"),
     /**
      * Найти заявку по идентификатору.
      */
-    static final int FINDBYID = 4;
+    FINDBYID("Find item by Id"),
     /**
      * Найти заявку по имени.
      */
-    static final int FINDBYNAME = 5;
+    FINDBYNAME("Find items by name"),
     /**
      * Выход из программы.
      */
-    static final int EXIT = 6;
+    EXIT("Exit program");
+    /**
+     * Значение перечисления.
+     */
+    private String value;
     /**
      * Конструктор.
+     * @param value значение перечисления.
      */
-    private MenuActions() {
+    MenuActions(String value) {
+        this.value = value;
+    }
+    /**
+     * Конструктор.
+     * @return значение перечисления.
+     */
+    public String getValue() {
+        return this.value;
     }
 }

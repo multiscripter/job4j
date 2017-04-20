@@ -4,7 +4,7 @@ package ru.job4j.tracker;
  * Class StartUI реализует сущность пользовательского интрефэйса трэкера.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 3
  * @since 2017-04-19
  */
 public class StartUI {
@@ -12,10 +12,6 @@ public class StartUI {
      * Объект ввода.
      */
     private Input input;
-    /**
-     * Массив действий.
-     */
-    private String[] actions;
     /**
      * Объект трэкера заявок.
      */
@@ -26,14 +22,6 @@ public class StartUI {
      */
     public StartUI(Input input) {
         this.input = input;
-        this.actions = new String[7];
-        this.actions[MenuActions.ADD] = "Add new Item";
-        this.actions[MenuActions.SHOW] = "Show all items";
-        this.actions[MenuActions.EDIT] = "Edit item";
-        this.actions[MenuActions.DELETE] = "Delete item";
-        this.actions[MenuActions.FINDBYID] = "Find item by Id";
-        this.actions[MenuActions.FINDBYNAME] = "Find items by name";
-        this.actions[MenuActions.EXIT] = "Exit program";
     }
     /**
      * Реализует действия по добавлению новой заявки в трэкер.
@@ -138,33 +126,34 @@ public class StartUI {
      */
     public void init() {
         this.tracker = new Tracker();
+        MenuActions[] actions = MenuActions.values();
         exit:
         while (true) {
             System.out.println("Please, enter the action number:");
-            for (int a = 0; a < this.actions.length; a++) {
-                System.out.println(a + ". " + this.actions[a]);
+            for (MenuActions action : actions) {
+                System.out.println(action.ordinal() + ". " + action.getValue());
             }
             int entered = Integer.valueOf(this.input.ask("Select: "));
-            switch (entered) {
-                case MenuActions.ADD:
+            switch (actions[entered]) {
+                case ADD:
                     this.addNewItem();
                     break;
-                case MenuActions.SHOW:
+                case SHOW:
                     this.showAllTasks();
                     break;
-                case MenuActions.EDIT:
+                case EDIT:
                     this.editItem();
                     break;
-                case MenuActions.DELETE:
+                case DELETE:
                     this.deleteItem();
                     break;
-                case MenuActions.FINDBYID:
+                case FINDBYID:
                     this.findById();
                     break;
-                case MenuActions.FINDBYNAME:
+                case FINDBYNAME:
                     this.findByName();
                     break;
-                case MenuActions.EXIT:
+                case EXIT:
                     this.showExitMsg();
                     break exit;
                 default:
