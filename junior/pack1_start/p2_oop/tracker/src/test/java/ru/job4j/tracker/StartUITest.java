@@ -1,5 +1,9 @@
 package ru.job4j.tracker;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
@@ -9,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Класс StartUITest тестирует работу приложения Tracker.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-20
  */
 public class StartUITest {
@@ -88,6 +92,24 @@ public class StartUITest {
         new StartUI(input, tracker).init();
         String result = this.tracker.findById(id).getId();
         assertEquals(id, result);
+    }
+    /**
+     * Тестирует функционал поиска заявки по идентификатору с проверкой вывода в консоль.
+     */
+    @Test
+    public void checkFindByIdOut() {
+        PrintStream original = System.out;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+        String id = "8";
+        Input input = new StubInput(new String[]{"4", id, "6"});
+        new StartUI(input, tracker).init();
+        String result = out.toString();
+        System.setOut(original);
+        String expected = this.tracker.findById(id).toString();
+        Pattern pattern = Pattern.compile(expected);
+        Matcher matcher = pattern.matcher(result);
+        assertTrue(matcher.find());
     }
     /**
      * Тестирует функционал поиска заявки по имени.
