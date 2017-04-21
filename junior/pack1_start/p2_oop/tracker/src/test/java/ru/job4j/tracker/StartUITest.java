@@ -6,14 +6,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
  * Класс StartUITest тестирует работу приложения Tracker.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 3
  * @since 2017-04-20
  */
 public class StartUITest {
@@ -53,11 +52,17 @@ public class StartUITest {
      */
     @Test
     public void checkShowAllItems() {
-        int expected = this.taskQuantity;
+        Item[] items = this.tracker.getAll();
+        PrintStream original = System.out;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
         Input input = new StubInput(new String[]{"1", "6"});
         new StartUI(input, tracker).init();
-        int result = this.tracker.getQuantity();
-        assertEquals(expected, result);
+        String result = out.toString();
+        System.setOut(original);
+        for (Item expected : items) {
+            assertTrue(result.contains(expected.toString()));
+        }
     }
     /**
      * Тестирует функционал редактирования заявки.
@@ -94,10 +99,10 @@ public class StartUITest {
         assertEquals(id, result);
     }
     /**
-     * Тестирует функционал поиска заявки по идентификатору с проверкой вывода в консоль.
+     * Тестирует функционал поиска заявки по идентификатору с помощью RegExp.
      */
     @Test
-    public void checkFindByIdOut() {
+    public void checkFindByIdUsingRegExp() {
         PrintStream original = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
@@ -112,16 +117,37 @@ public class StartUITest {
         assertTrue(matcher.find());
     }
     /**
+     * Тестирует функционал поиска заявки по идентификатору с помощью String.contains().
+     */
+    @Test
+    public void checkFindByIdUsingContsains() {
+        String id = "8";
+        String expected = this.tracker.findById(id).toString();
+        PrintStream original = System.out;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+        Input input = new StubInput(new String[]{"4", id, "6"});
+        new StartUI(input, tracker).init();
+        String result = out.toString();
+        System.setOut(original);
+        assertTrue(result.contains(expected));
+    }
+    /**
      * Тестирует функционал поиска заявки по имени.
      */
     @Test
     public void checkFindByName() {
         String name = "task8";
-        String[] expected = {name, name};
+        Item[] items = this.tracker.findByName(name);
+        PrintStream original = System.out;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
         Input input = new StubInput(new String[]{"5", name, "6"});
         new StartUI(input, tracker).init();
-        Item[] items = this.tracker.findByName(name);
-        String[] result = {items[0].getName(), items[1].getName()};
-        assertArrayEquals(expected, result);
+        String result = out.toString();
+        System.setOut(original);
+        for (Item expected : items) {
+            assertTrue(result.contains(expected.toString()));
+        }
     }
 }
