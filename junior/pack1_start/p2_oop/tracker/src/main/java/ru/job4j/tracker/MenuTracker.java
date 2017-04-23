@@ -4,7 +4,7 @@ package ru.job4j.tracker;
  * Класс MenuTracker реализует сущность меню трэкера.
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 3
  * @since 2017-04-23
  */
 class MenuTracker {
@@ -23,7 +23,7 @@ class MenuTracker {
     /**
      * Массив действий пользователя.
      */
-    private UserAction[] actions = new UserAction[6];
+    private IUserAction[] actions = new UserAction[6];
     /**
      * Конструктор.
      * @param input объект класса, реализующего интерфэйс Input.
@@ -37,13 +37,13 @@ class MenuTracker {
      * Инициализирует меню трэкера.
      */
     public void fillActions() {
-        this.actions[0] = new AddItem();
-        //this.actions[0] = this.new AddItem();
-        this.actions[1] = new MenuTracker.ShowItems();
-        this.actions[2] = new EditItem();
-        this.actions[3] = new DeleteItem();
-        this.actions[4] = new FindItemById();
-        this.actions[5] = new FindItemsByName();
+        this.actions[MenuActions.ADD.ordinal()] = new AddItem(MenuActions.ADD);
+        //this.actions[MenuActions.ADD.ordinal()] = this.new AddItem(MenuActions.ADD);
+        this.actions[MenuActions.SHOW.ordinal()] = new MenuTracker.ShowItems(MenuActions.SHOW);
+        this.actions[MenuActions.EDIT.ordinal()] = new EditItem(MenuActions.EDIT);
+        this.actions[MenuActions.DELETE.ordinal()] = new DeleteItem(MenuActions.DELETE);
+        this.actions[MenuActions.FINDBYID.ordinal()] = new FindItemById(MenuActions.FINDBYID);
+        this.actions[MenuActions.FINDBYNAME.ordinal()] = new FindItemsByName(MenuActions.FINDBYNAME);
     }
     /**
      * Выполняет действие, выбранное пользователем.
@@ -57,7 +57,7 @@ class MenuTracker {
      */
     public void show() {
         System.out.println("Please, enter the action number:");
-        for (UserAction action : this.actions) {
+        for (IUserAction action : this.actions) {
             if (action != null) {
                 System.out.println(action.info());
             }
@@ -70,13 +70,13 @@ class MenuTracker {
      * @version 1
      * @since 2017-04-23
      */
-    private class AddItem implements UserAction {
+    private class AddItem extends UserAction {
         /**
-         * Возвращает идентификатор действия пользователя.
-         * @return идентификатор действия.
+         * Конструктор.
+         * @param action константа действия.
          */
-        public int key() {
-            return 0;
+        AddItem(MenuActions action) {
+            super(action);
         }
         /**
          * Выполняет действие, выбранное пользователем.
@@ -97,13 +97,6 @@ class MenuTracker {
             sb.append(LS);
             System.out.println(sb.toString());
         }
-        /**
-         * Возвращает строку с выполняемым действием.
-         * @return идентификатор действия.
-         */
-        public String info() {
-            return String.format("%s. %s", this.key(), "Add new item");
-        }
     }
     /**
      * Класс ShowItems реализует сущность печати заявок трэкера.
@@ -112,13 +105,13 @@ class MenuTracker {
      * @version 1
      * @since 2017-04-23
      */
-    private static class ShowItems implements UserAction {
+    private static class ShowItems extends UserAction {
         /**
-         * Возвращает идентификатор действия пользователя.
-         * @return идентификатор действия.
+         * Конструктор.
+         * @param action константа действия.
          */
-        public int key() {
-            return 1;
+        ShowItems(MenuActions action) {
+            super(action);
         }
         /**
          * Выполняет действие, выбранное пользователем.
@@ -136,13 +129,6 @@ class MenuTracker {
             }
             System.out.println(sb.toString());
         }
-        /**
-         * Возвращает строку с выполняемым действием.
-         * @return идентификатор действия.
-         */
-        public String info() {
-            return String.format("%s. %s", this.key(), "Show all items");
-        }
     }
     /**
      * Класс DeleteItem реализует сущность удаления заявки из трэкера.
@@ -151,13 +137,13 @@ class MenuTracker {
      * @version 1
      * @since 2017-04-23
      */
-    private class DeleteItem implements UserAction {
+    private class DeleteItem extends UserAction {
         /**
-         * Возвращает идентификатор действия пользователя.
-         * @return идентификатор действия.
+         * Конструктор.
+         * @param action константа действия.
          */
-        public int key() {
-            return 3;
+        DeleteItem(MenuActions action) {
+            super(action);
         }
         /**
          * Выполняет действие, выбранное пользователем.
@@ -168,16 +154,12 @@ class MenuTracker {
             System.out.println("");
             System.out.println("Delete task.");
             String id = input.ask("Enter task id: ");
-            tracker.delete(id);
-            System.out.println("Task deleted.");
+            if (tracker.delete(id)) {
+                System.out.println("Task deleted.");
+            } else {
+                System.out.println("Nothing deleted.");
+            }
             System.out.println("");
-        }
-        /**
-         * Возвращает строку с выполняемым действием.
-         * @return идентификатор действия.
-         */
-        public String info() {
-            return String.format("%s. %s", this.key(), "Delete item");
         }
     }
     /**
@@ -187,13 +169,13 @@ class MenuTracker {
      * @version 1
      * @since 2017-04-23
      */
-    private class FindItemById implements UserAction {
+    private class FindItemById extends UserAction {
         /**
-         * Возвращает идентификатор действия пользователя.
-         * @return идентификатор действия.
+         * Конструктор.
+         * @param action константа действия.
          */
-        public int key() {
-            return 4;
+        FindItemById(MenuActions action) {
+            super(action);
         }
         /**
          * Выполняет действие, выбранное пользователем.
@@ -215,13 +197,6 @@ class MenuTracker {
                 System.out.println("");
             }
         }
-        /**
-         * Возвращает строку с выполняемым действием.
-         * @return идентификатор действия.
-         */
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find item by Id");
-        }
     }
     /**
      * Класс FindItemsByName реализует сущность поиска заявок по имени.
@@ -230,13 +205,13 @@ class MenuTracker {
      * @version 1
      * @since 2017-04-23
      */
-    private class FindItemsByName implements UserAction {
+    private class FindItemsByName extends UserAction {
         /**
-         * Возвращает идентификатор действия пользователя.
-         * @return идентификатор действия.
+         * Конструктор.
+         * @param action константа действия.
          */
-        public int key() {
-            return 5;
+        FindItemsByName(MenuActions action) {
+            super(action);
         }
         /**
          * Выполняет действие, выбранное пользователем.
@@ -260,16 +235,8 @@ class MenuTracker {
                     sb.append(item.toString());
                     sb.append(LS);
                 }
-                sb.append(LS);
                 System.out.println(sb.toString());
             }
-        }
-        /**
-         * Возвращает строку с выполняемым действием.
-         * @return идентификатор действия.
-         */
-        public String info() {
-            return String.format("%s. %s", this.key(), "Find items by name");
         }
     }
 }
@@ -280,13 +247,13 @@ class MenuTracker {
  * @version 1
  * @since 2017-04-23
  */
-class EditItem implements UserAction {
+class EditItem extends UserAction {
     /**
-     * Возвращает идентификатор действия пользователя.
-     * @return идентификатор действия.
+     * Конструктор.
+     * @param action константа действия.
      */
-    public int key() {
-        return 2;
+    EditItem(MenuActions action) {
+        super(action);
     }
     /**
      * Выполняет действие, выбранное пользователем.
@@ -299,6 +266,8 @@ class EditItem implements UserAction {
         String id = input.ask("Enter task id: ");
         Item item = tracker.findById(id);
         if (item.isEmpty()) {
+            System.out.println("There is no task with this id.");
+            System.out.println("");
             return;
         }
         String name = input.ask("Enter new user name or just press Enter to go on: ");
@@ -312,12 +281,5 @@ class EditItem implements UserAction {
         tracker.update(item);
         System.out.println("Task updated.");
         System.out.println("");
-    }
-    /**
-     * Возвращает строку с выполняемым действием.
-     * @return идентификатор действия.
-     */
-    public String info() {
-        return String.format("%s. %s", this.key(), "Edit item");
     }
 }

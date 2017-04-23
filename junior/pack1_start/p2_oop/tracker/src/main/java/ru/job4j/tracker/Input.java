@@ -14,4 +14,11 @@ public interface Input {
      * @return ответ пользователя.
      */
     String ask(String question);
+    /**
+     * Опрашивает пользователя.
+     * @param question вопрос пользователю.
+     * @param range диапазон допустимых значений.
+     * @return ответ пользователя.
+     */
+    int ask(String question, int[] range);
 }

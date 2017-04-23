@@ -1,13 +1,17 @@
 package ru.job4j.tracker;
 
 /**
- * Class StartUI реализует сущность пользовательского интрефэйса трэкера.
+ * Класс StartUI реализует сущность пользовательского интрефэйса трэкера.
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 4
+ * @version 5
  * @since 2017-04-19
  */
 public class StartUI {
+    /**
+     * Массив допустимых значений.
+     */
+    private int[] range = new int[] {0, 1, 2, 3, 4, 5};
     /**
      * Объект ввода.
      */
@@ -42,11 +46,11 @@ public class StartUI {
         menu.fillActions();
         do {
             menu.show();
-            String entered = this.input.ask("Select: ");
-            if (!entered.equals("y") && !entered.equals("n")) {
-                int key = Integer.valueOf(entered);
-                menu.select(key);
-            }
+            //String entered = this.input.ask("Select: ");
+            //if (!entered.equals("y") && !entered.equals("n")) {
+            //    int key = Integer.valueOf(entered);
+                menu.select(input.ask("Select: ", this.range));
+            //}
         } while (!"y".equals(this.input.ask("Exit? y|n: ")));
         System.out.println("Buy our program for 10$.");
         System.out.println("");
@@ -56,7 +60,7 @@ public class StartUI {
      * @param args массив аргументов командной строки.
      */
     public static void main(String[] args) {
-        Input input = new ConsoleInput();
+        Input input = new ValidateInput();
         new StartUI(input).init();
     }
 }

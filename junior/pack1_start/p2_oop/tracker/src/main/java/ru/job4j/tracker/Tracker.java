@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Class Tracker реализует сущность Трэкер заявок.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 3
+ * @version 4
  * @since 2017-04-18
  */
 public class Tracker {
@@ -19,7 +19,7 @@ public class Tracker {
      */
     private int id;
     /**
-     * Ёмкость массив заявок.
+     * Ёмкость массива заявок.
      */
     private int capacity;
     /**
@@ -95,15 +95,19 @@ public class Tracker {
     /**
      * Удаляет заявку по идентификатору.
      * @param id идентификатор заявки.
+     * @return true если заявка удалена, иначе false.
      */
-    public void delete(String id) {
+    public boolean delete(String id) {
+        boolean deleted = false;
         for (int a = 0; a < this.pointer; a++) {
             if (id.equals(this.items[a].getId())) {
                 System.arraycopy((Object) this.items, a + 1, (Object) this.items, a, items.length - a - 1);
+                this.pointer--;
+                deleted = true;
                 break;
             }
         }
-        this.pointer--;
+        return deleted;
     }
     /**
      * Получает все заявки.
