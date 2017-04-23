@@ -147,6 +147,8 @@ public class Item {
         sb.append(this.getName());
         sb.append(", description: ");
         sb.append(this.getDesc());
+        sb.append(", created: ");
+        sb.append(this.getCreated());
         return sb.toString();
     }
 }

@@ -3,7 +3,7 @@ package ru.job4j.tracker;
 /**
  * Enum MenuActions реализует константы действий пользовательского интрефэйса трэкера.
  *
- * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
+ * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 3
  * @since 2017-04-19
  */
@@ -11,7 +11,7 @@ enum MenuActions {
     /**
      * Добавить заявку.
      */
-    ADD("Add new Item"),
+    ADD("Add new item"),
     /**
     * Показать заявки.
     */
@@ -48,7 +48,7 @@ enum MenuActions {
         this.value = value;
     }
     /**
-     * Конструктор.
+     * Возвращает значение перечисления.
      * @return значение перечисления.
      */
     public String getValue() {

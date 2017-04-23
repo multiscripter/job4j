@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Класс StartUITest тестирует работу приложения Tracker.
- * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
+ * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 3
  * @since 2017-04-20
  */
@@ -42,7 +42,7 @@ public class StartUITest {
     @Test
     public void checkAddNewTask() {
         String expected = "Test1";
-        Input input = new StubInput(new String[]{"0", expected, "Testing adding new task", "6"});
+        Input input = new StubInput(new String[]{"0", expected, "Testing adding new task", "y"});
         new StartUI(input, tracker).init();
         String result = tracker.findByName(expected)[0].getName();
         assertEquals(expected, result);
@@ -56,7 +56,7 @@ public class StartUITest {
         PrintStream original = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
-        Input input = new StubInput(new String[]{"1", "6"});
+        Input input = new StubInput(new String[]{"1", "y"});
         new StartUI(input, tracker).init();
         String result = out.toString();
         System.setOut(original);
@@ -70,7 +70,7 @@ public class StartUITest {
     @Test
     public void checkEditItem() {
         String[] expected = {"3", "task2", "Edited description"};
-        Input input = new StubInput(new String[]{"2", expected[0], expected[1], expected[2], "1", "6"});
+        Input input = new StubInput(new String[]{"2", expected[0], expected[1], expected[2], "y"});
         new StartUI(input, tracker).init();
         Item item = this.tracker.findById(expected[0]);
         String[] result = {item.getId(), item.getName(), item.getDesc()};
@@ -82,7 +82,7 @@ public class StartUITest {
     @Test
     public void checkDeleteItem() {
         String id = "7";
-        Input input = new StubInput(new String[]{"3", id, "6"});
+        Input input = new StubInput(new String[]{"3", id, "y"});
         new StartUI(input, tracker).init();
         Item result = this.tracker.findById(id);
         assertTrue(result.isEmpty());
@@ -93,7 +93,7 @@ public class StartUITest {
     @Test
     public void checkFindById() {
         String id = "8";
-        Input input = new StubInput(new String[]{"4", id, "6"});
+        Input input = new StubInput(new String[]{"4", id, "y"});
         new StartUI(input, tracker).init();
         String result = this.tracker.findById(id).getId();
         assertEquals(id, result);
@@ -107,7 +107,7 @@ public class StartUITest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         String id = "8";
-        Input input = new StubInput(new String[]{"4", id, "6"});
+        Input input = new StubInput(new String[]{"4", id, "y"});
         new StartUI(input, tracker).init();
         String result = out.toString();
         System.setOut(original);
@@ -120,13 +120,13 @@ public class StartUITest {
      * Тестирует функционал поиска заявки по идентификатору с помощью String.contains().
      */
     @Test
-    public void checkFindByIdUsingContsains() {
+    public void checkFindByIdUsingContains() {
         String id = "8";
         String expected = this.tracker.findById(id).toString();
         PrintStream original = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
-        Input input = new StubInput(new String[]{"4", id, "6"});
+        Input input = new StubInput(new String[]{"4", id, "y"});
         new StartUI(input, tracker).init();
         String result = out.toString();
         System.setOut(original);
@@ -142,7 +142,7 @@ public class StartUITest {
         PrintStream original = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
-        Input input = new StubInput(new String[]{"5", name, "6"});
+        Input input = new StubInput(new String[]{"5", name, "y"});
         new StartUI(input, tracker).init();
         String result = out.toString();
         System.setOut(original);
