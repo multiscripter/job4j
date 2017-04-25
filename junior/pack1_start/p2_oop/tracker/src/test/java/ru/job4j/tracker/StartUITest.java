@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Класс StartUITest тестирует работу приложения Tracker.
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 3
+ * @version 4
  * @since 2017-04-20
  */
 public class StartUITest {
@@ -43,7 +43,7 @@ public class StartUITest {
     public void checkAddNewTask() {
         String expected = "Test1";
         Input input = new StubInput(new String[]{"0", expected, "Testing adding new task", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, this.tracker).init();
         String result = tracker.findByName(expected)[0].getName();
         assertEquals(expected, result);
     }
@@ -57,7 +57,7 @@ public class StartUITest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         Input input = new StubInput(new String[]{"1", "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, this.tracker).init();
         String result = out.toString();
         System.setOut(original);
         for (Item expected : items) {
@@ -71,7 +71,7 @@ public class StartUITest {
     public void checkEditItem() {
         String[] expected = {"3", "task2", "Edited description"};
         Input input = new StubInput(new String[]{"2", expected[0], expected[1], expected[2], "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, this.tracker).init();
         Item item = this.tracker.findById(expected[0]);
         String[] result = {item.getId(), item.getName(), item.getDesc()};
         assertEquals(expected, result);
@@ -83,7 +83,7 @@ public class StartUITest {
     public void checkDeleteItem() {
         String id = "7";
         Input input = new StubInput(new String[]{"3", id, "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, this.tracker).init();
         Item result = this.tracker.findById(id);
         assertTrue(result.isEmpty());
     }
@@ -94,7 +94,7 @@ public class StartUITest {
     public void checkFindById() {
         String id = "8";
         Input input = new StubInput(new String[]{"4", id, "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, this.tracker).init();
         String result = this.tracker.findById(id).getId();
         assertEquals(id, result);
     }
@@ -108,7 +108,7 @@ public class StartUITest {
         System.setOut(new PrintStream(out));
         String id = "8";
         Input input = new StubInput(new String[]{"4", id, "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, this.tracker).init();
         String result = out.toString();
         System.setOut(original);
         String expected = this.tracker.findById(id).toString();
@@ -127,7 +127,7 @@ public class StartUITest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         Input input = new StubInput(new String[]{"4", id, "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, this.tracker).init();
         String result = out.toString();
         System.setOut(original);
         assertTrue(result.contains(expected));
@@ -143,11 +143,19 @@ public class StartUITest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         Input input = new StubInput(new String[]{"5", name, "y"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, this.tracker).init();
         String result = out.toString();
         System.setOut(original);
         for (Item expected : items) {
             assertTrue(result.contains(expected.toString()));
         }
+    }
+    /**
+     * Тестирует пользовательское исключение MenuOutException.
+     */
+    @Test(expected = MenuOutException.class)
+    public void checkMenuOutException() {
+        Input input = new StubInput(new String[]{"9"});
+        new StartUI(input, this.tracker).init();
     }
 }
