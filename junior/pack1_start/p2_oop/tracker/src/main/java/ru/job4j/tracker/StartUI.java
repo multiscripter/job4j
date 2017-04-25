@@ -11,7 +11,7 @@ public class StartUI {
     /**
      * Массив допустимых значений.
      */
-    private int[] range = new int[] {0, 1, 2, 3, 4, 5};
+    private int[] range;
     /**
      * Объект ввода.
      */
@@ -27,6 +27,10 @@ public class StartUI {
     public StartUI(Input input) {
         this.input = input;
         this.tracker = new Tracker();
+        this.range = new int[MenuActions.values().length];
+        for (int a = 0; a < MenuActions.values().length; a++) {
+            this.range[a] = a;
+        }
     }
     /**
      * Конструктор.
@@ -36,21 +40,34 @@ public class StartUI {
     public StartUI(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
+        this.range = new int[MenuActions.values().length];
+        for (int a = 0; a < MenuActions.values().length; a++) {
+            this.range[a] = a;
+        }
     }
     /**
      * Инициализирует трэкер и интерфэйс пользователя.
      */
     public void init() {
+        System.out.println(MenuActions.values().length);
         MenuActions[] actions = MenuActions.values();
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         menu.fillActions();
+        UserAction exitAction = new UserAction(MenuActions.EXIT) {
+            /**
+             * Выполняет действие, выбранное пользователем.
+             * @param input объект ввода.
+             * @param tracker объект трэкера.
+             */
+            public void execute(Input input, Tracker tracker) {
+                System.out.println("Buy our program for 10$.");
+                System.exit(0);
+            }
+        };
+        menu.addAction(exitAction);
         do {
             menu.show();
-            //String entered = this.input.ask("Select: ");
-            //if (!entered.equals("y") && !entered.equals("n")) {
-            //    int key = Integer.valueOf(entered);
-                menu.select(input.ask("Select: ", this.range));
-            //}
+            menu.select(input.ask("Select: ", this.range));
         } while (!"y".equals(this.input.ask("Exit? y|n: ")));
         System.out.println("Buy our program for 10$.");
         System.out.println("");

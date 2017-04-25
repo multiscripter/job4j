@@ -23,7 +23,11 @@ class MenuTracker {
     /**
      * Массив действий пользователя.
      */
-    private IUserAction[] actions = new UserAction[6];
+    private IUserAction[] actions = new UserAction[MenuActions.values().length];
+    /**
+     * Позиция в массиве действий пользователя.
+     */
+    private int position = 0;
     /**
      * Конструктор.
      * @param input объект класса, реализующего интерфэйс Input.
@@ -37,13 +41,20 @@ class MenuTracker {
      * Инициализирует меню трэкера.
      */
     public void fillActions() {
-        this.actions[MenuActions.ADD.ordinal()] = new AddItem(MenuActions.ADD);
-        //this.actions[MenuActions.ADD.ordinal()] = this.new AddItem(MenuActions.ADD);
-        this.actions[MenuActions.SHOW.ordinal()] = new MenuTracker.ShowItems(MenuActions.SHOW);
-        this.actions[MenuActions.EDIT.ordinal()] = new EditItem(MenuActions.EDIT);
-        this.actions[MenuActions.DELETE.ordinal()] = new DeleteItem(MenuActions.DELETE);
-        this.actions[MenuActions.FINDBYID.ordinal()] = new FindItemById(MenuActions.FINDBYID);
-        this.actions[MenuActions.FINDBYNAME.ordinal()] = new FindItemsByName(MenuActions.FINDBYNAME);
+        this.actions[this.position++] = new AddItem(MenuActions.ADD);
+        //this.actions[this.position++] = this.new AddItem(MenuActions.ADD);
+        this.actions[this.position++] = new MenuTracker.ShowItems(MenuActions.SHOW);
+        this.actions[this.position++] = new EditItem(MenuActions.EDIT);
+        this.actions[this.position++] = new DeleteItem(MenuActions.DELETE);
+        this.actions[this.position++] = new FindItemById(MenuActions.FINDBYID);
+        this.actions[this.position++] = new FindItemsByName(MenuActions.FINDBYNAME);
+    }
+    /**
+     * Добавляет в массив пользовательских действие нвое действие.
+     * @param action добавляемое действие.
+     */
+    public void addAction(UserAction action) {
+        this.actions[this.position++] = action;
     }
     /**
      * Выполняет действие, выбранное пользователем.
