@@ -19,6 +19,7 @@
         <!--<module>ch1_classesAndObjects</module>-->
         <module>ch3_inheritance</module>
         <module>ch5_polymorphism</module>
+        <module>ch6_control</module>
         <module>tracker</module>
     </modules>
 </project>
