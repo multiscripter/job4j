@@ -9,14 +9,10 @@ import java.util.TimerTask;
  * Класс DailyPeak вычисляет период дневного пика посещений банка.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-30
  */
 class DailyPeak {
-    /**
-     * Экземпляр класса.
-     */
-    private static DailyPeak instance;
     /**
      * Начало рабочего дня.
      */
@@ -46,25 +42,13 @@ class DailyPeak {
      * @param dayStart начало рабочего дня.
      * @param dayEnd конец рабочего дня.
      */
-    private DailyPeak(int dayStart, int dayEnd) {
+    DailyPeak(int dayStart, int dayEnd) {
         this.peakStart = dayStart;
         this.peakEnd = dayStart;
         this.peakVisitors = 0;
         this.curVisitors = 0;
         this.dayStart = dayStart;
         this.dayEnd = dayEnd;
-    }
-    /**
-     * Возвращает экземпляр класса.
-     * @param dayStart начало рабочего дня.
-     * @param dayEnd конец рабочего дня.
-     * @return экземпляр класса.
-     */
-    public static DailyPeak getInstance(int dayStart, int dayEnd) {
-        if (instance == null) {
-            instance = new DailyPeak(dayStart, dayEnd);
-        }
-        return instance;
     }
     /**
      * Прибавляет час.
@@ -127,11 +111,11 @@ class DailyPeak {
      */
     public String getInfo() {
         StringBuilder str = new StringBuilder();
-        str.append("Начало пика: ");
+        str.append("Peak start: ");
         str.append(this.peakStart);
-        str.append(". Конец пика: ");
+        str.append(". Peak end: ");
         str.append(this.peakEnd);
-        str.append(". Количество: ");
+        str.append(". Quantity: ");
         str.append(this.peakVisitors);
         return str.toString();
     }
@@ -140,7 +124,7 @@ class DailyPeak {
      * @param args массив аргументов запуска.
      */
     public static void main(String[] args) {
-        DailyPeak dp = DailyPeak.getInstance(8, 20);
+        DailyPeak dp = new DailyPeak(8, 20);
         Timer timer = new Timer();
         VisGenTask vgt = new VisGenTask();
         vgt.setDailyPeak(dp);
@@ -152,25 +136,14 @@ class DailyPeak {
  * Класс VisGenTask реализует "Генератор поситителей".
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-04-30
  */
 class VisGenTask extends TimerTask {
     /**
-     * Экземпляр класса Timer.
-     */
-    private Timer timer;
-    /**
      * Экземпляр класса DailyPeak.
      */
     private DailyPeak dp;
-    /**
-     * Устанавливет экземпляр класса Timer.
-     * @param timer экземпляр класса Timer.
-     */
-    public void setTimer(Timer timer) {
-        this.timer = timer;
-    }
     /**
      * Устанавливет экземпляр класса DailyPeak.
      * @param dp экземпляр класса DailyPeak.
