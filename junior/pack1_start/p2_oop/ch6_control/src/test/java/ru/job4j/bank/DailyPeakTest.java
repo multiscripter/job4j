@@ -1,7 +1,7 @@
 package ru.job4j.bank;
 
-import java.util.Date;
-import java.util.Random;
+//import java.util.Date;
+//import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  * Класс DailyPeakTest тестирует класс DailyPeak.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-02
  */
 public class DailyPeakTest {
@@ -19,41 +19,26 @@ public class DailyPeakTest {
      */
     private static DailyPeak dp;
     /**
-     * Начало рабочего дня.
-     */
-    private int dayStart;
-    /**
-     * Конец рабочего дня.
-     */
-    private int dayEnd;
-    /**
      * Массив почасовых пиков.
      */
     private int[] visPerHour;
-    /**
-     * Рандомизатор.
-     */
-    private Random rnd;
     /**
      * Действия перед тестом.
      */
     @Before
     public void beforeTest() {
-        this.dayStart = 8;
-        this.dayEnd = 20;
-        this.visPerHour = new int[this.dayEnd - this.dayStart];
-        this.dp = new DailyPeak(this.dayStart, this.dayEnd);
-        this.rnd = new Random(new Date().getTime());
+        this.visPerHour = new int[] {21, 96, 94, 115, 50, 71, 159, 232, 135, 123, 46, 67};
+        this.dp = new DailyPeak(8, 20);
         for (int a = 0; a < this.visPerHour.length; a++) {
             if (this.dp.getCurVisitors() != 0) {
-                this.visPerHour[a] = this.dp.getCurVisitors();
-                int remove = this.rnd.nextInt(this.visPerHour[a]);
-                this.visPerHour[a] -= remove;
-                this.dp.decrease(remove);
+            //    this.visPerHour[a] = this.dp.getCurVisitors();
+            //    int remove = this.rnd.nextInt(this.visPerHour[a]);
+            //    this.visPerHour[a] -= remove;
+                this.dp.decrease(this.visPerHour[a - 1]);
             }
-            int add = this.rnd.nextInt(100);
-            this.visPerHour[a] += add;
-            this.dp.increase(add);
+            //int add = this.rnd.nextInt(100);
+            //this.visPerHour[a] += add;
+            this.dp.increase(this.visPerHour[a]);
             this.dp.addHour();
         }
         this.dp.decrease(this.dp.getCurVisitors());
@@ -69,7 +54,7 @@ public class DailyPeakTest {
         for (int a = 0; a < this.visPerHour.length; a++) {
             if (this.visPerHour[a] > peak) {
                 peak = this.visPerHour[a];
-                peakStart = a + this.dayStart;
+                peakStart = a + 8;
             }
         }
         int peakEnd = peakStart + 1;
@@ -82,21 +67,21 @@ public class DailyPeakTest {
     @Test
     public void testAddHour() {
         this.dp.addHour();
-        assertEquals(this.dayEnd + 1, this.dp.getHour());
+        assertEquals(21, this.dp.getHour());
     }
     /**
      * Тестирует getHour().
      */
     @Test
     public void testGetHour() {
-        assertEquals(this.dayEnd, this.dp.getHour());
+        assertEquals(20, this.dp.getHour());
     }
     /**
      * Тестирует getDayEnd().
      */
     @Test
     public void testGetDayEnd() {
-        assertEquals(this.dayEnd, this.dp.getDayEnd());
+        assertEquals(20, this.dp.getDayEnd());
     }
     /**
      * Тестирует getPeakVisitors().
@@ -116,14 +101,16 @@ public class DailyPeakTest {
      */
     @Test
     public void testGetCurVisitors() {
-        assertEquals(0, this.dp.getCurVisitors());
+        int expected = 97;
+        this.dp.increase(expected);
+        assertEquals(expected, this.dp.getCurVisitors());
     }
     /**
      * Тестирует increase().
      */
     @Test
     public void testIncrease() {
-        int expected = this.rnd.nextInt(100);
+        int expected = 112;
         this.dp.increase(expected);
         assertEquals(expected, this.dp.getCurVisitors());
     }
@@ -132,9 +119,9 @@ public class DailyPeakTest {
      */
     @Test
     public void testDecrease() {
-        int expected = this.rnd.nextInt(100);
-        this.dp.increase(expected);
-        this.dp.decrease(expected);
-        assertEquals(0, this.dp.getCurVisitors());
+        int expected = 0;
+        this.dp.increase(109);
+        this.dp.decrease(109);
+        assertEquals(expected, this.dp.getCurVisitors());
     }
 }
