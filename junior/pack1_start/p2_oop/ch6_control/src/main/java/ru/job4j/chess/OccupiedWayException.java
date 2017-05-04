@@ -1,9 +1,9 @@
 package ru.job4j.chess;
 
 /**
- * Класс OccupiedWayException реализует исключение "Клетка занята".
+ * Класс OccupiedWayException реализует исключение "Поле занято".
  *
- * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
+ * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 1
  * @since 2017-05-03
  */
@@ -11,7 +11,7 @@ class OccupiedWayException extends Exception {
     /**
      * Конструктор.
      */
-    public OccupiedWayException() {
+    OccupiedWayException() {
         super("Way occupied by another figure.");
     }
 }
