@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Класс Board реализует сущность "Шахматная доска". Поле A1 - чёрное слева внизу.
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-03
  */
 class Board {
@@ -49,7 +49,7 @@ class Board {
      */
     private void checkCoords(int col, int row) {
         if (col < 0 || col > 7 || row < 0 || row > 7) {
-            throw new IllegalPositionException(String.format("%c%d", this.cols[col], row));
+            throw new IllegalPositionException(String.format("col: %d, row: %d", col, row));
         }
     }
     /**

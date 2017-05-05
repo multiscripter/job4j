@@ -4,7 +4,7 @@ package ru.job4j.chess;
  * Класс Bishop реализует сущность "Шахматная фигура Слон".
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-04
  */
 class Bishop extends Figure {
@@ -23,33 +23,9 @@ class Bishop extends Figure {
      * @throws ImposibleMoveException исключение "Движение невозможно".
      */
     public Cell[] way(Cell dest) throws ImposibleMoveException {
-        Cell cell = this.getCell();
-        int curCol = cell.getCol();
-        int destCol = dest.getCol();
-        boolean colRise = destCol > curCol;
-        int colDist = colRise ? destCol - curCol : curCol - destCol;
-        int curRow = cell.getRow();
-        int destRow = dest.getRow();
-        boolean rowRise = destRow > curRow;
-        int rowDist = rowRise ? destRow - curRow : curRow - destRow;
-        if (colDist != rowDist) {
+        Cell[] way = super.way(dest);
+        if (Math.abs(this.getCell().getCol() - dest.getCol()) != Math.abs(this.getCell().getRow() - dest.getRow())) {
             throw new ImposibleMoveException();
-        }
-        Cell[] way = new Cell[colDist];
-        int tmpCol;
-        int tmpRow;
-        for (int a = 0; a < colDist; a++) {
-            if (colRise) {
-                tmpCol = curCol + a + 1;
-            } else {
-                tmpCol = curCol - a - 1;
-            }
-            if (rowRise) {
-                tmpRow = curRow + a + 1;
-            } else {
-                tmpRow = curRow - a - 1;
-            }
-            way[a] = cell.getBoard().getCell(tmpCol, tmpRow);
         }
         return way;
     }

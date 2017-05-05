@@ -4,7 +4,7 @@ package ru.job4j.chess;
  * Класс Figure реализует сущность "Шахматная фигура".
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-03
  */
 abstract class Figure {
@@ -85,10 +85,27 @@ abstract class Figure {
         return this.cell.getPosition();
     }
     /**
-     * Проводит фигуру по пути от текущей позиции до поля dest.
+     * Возвращает путь из полей в виде массива от текущего поля (исключительно) до поля dest (включительно).
      * @param dest поле назначения.
      * @return массив полей, пройденных фигурой.
      * @throws ImposibleMoveException исключение "Движение невозможно".
      */
-    abstract Cell[] way(Cell dest) throws ImposibleMoveException;
+    public Cell[] way(Cell dest) throws ImposibleMoveException {
+        int tmpCol = this.cell.getCol();
+        int tmpRow = this.cell.getRow();
+        int colShift = tmpCol - dest.getCol();
+        int rowShift = tmpRow - dest.getRow();
+        if (colShift == 0 && rowShift == 0) {
+            throw new ImposibleMoveException();
+        }
+        Cell[] way = new Cell[Math.abs(colShift != 0 ? colShift : rowShift)];
+        colShift = colShift == 0 ? 0 : colShift < 0 ? 1 : -1;
+        rowShift = rowShift == 0 ? 0 : rowShift < 0 ? 1 : -1;
+        for (int a = 0, cycles = way.length; a < cycles; a++) {
+            tmpCol += colShift;
+            tmpRow += rowShift;
+            way[a] = this.cell.getBoard().getCell(tmpCol, tmpRow);
+        }
+        return way;
+    }
 }
