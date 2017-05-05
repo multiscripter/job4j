@@ -1,7 +1,5 @@
 package ru.job4j.bank;
 
-//import java.util.Date;
-//import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -31,13 +29,8 @@ public class DailyPeakTest {
         this.dp = new DailyPeak(8, 20);
         for (int a = 0; a < this.visPerHour.length; a++) {
             if (this.dp.getCurVisitors() != 0) {
-            //    this.visPerHour[a] = this.dp.getCurVisitors();
-            //    int remove = this.rnd.nextInt(this.visPerHour[a]);
-            //    this.visPerHour[a] -= remove;
                 this.dp.decrease(this.visPerHour[a - 1]);
             }
-            //int add = this.rnd.nextInt(100);
-            //this.visPerHour[a] += add;
             this.dp.increase(this.visPerHour[a]);
             this.dp.addHour();
         }

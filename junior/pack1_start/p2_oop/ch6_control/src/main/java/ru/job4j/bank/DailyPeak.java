@@ -9,7 +9,7 @@ import java.util.TimerTask;
  * Класс DailyPeak вычисляет период дневного пика посещений банка.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 3
  * @since 2017-04-30
  */
 class DailyPeak {
@@ -128,6 +128,7 @@ class DailyPeak {
         Timer timer = new Timer();
         VisGenTask vgt = new VisGenTask();
         vgt.setDailyPeak(dp);
+        vgt.setTimer(timer);
         timer.schedule(vgt, 0, 1000);
     }
 }
@@ -136,14 +137,25 @@ class DailyPeak {
  * Класс VisGenTask реализует "Генератор поситителей".
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 3
  * @since 2017-04-30
  */
 class VisGenTask extends TimerTask {
     /**
+     * Экземпляр класса Timer.
+     */
+    private Timer timer;
+    /**
      * Экземпляр класса DailyPeak.
      */
     private DailyPeak dp;
+    /**
+     * Устанавливет экземпляр класса Timer.
+     * @param timer экземпляр класса Timer.
+     */
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
     /**
      * Устанавливет экземпляр класса DailyPeak.
      * @param dp экземпляр класса DailyPeak.
@@ -160,7 +172,7 @@ class VisGenTask extends TimerTask {
             this.dp.decrease(this.dp.getCurVisitors());
             this.cancel();
             System.out.println(this.dp.getInfo());
-            System.exit(0);
+            this.timer.cancel();
         }
         Random rnd = new Random(new Date().getTime());
         if (this.dp.getCurVisitors() != 0) {
