@@ -111,12 +111,16 @@ class Cell {
             throw new OccupiedPositionException(this.getPosition());
         }
         this.figure = figure;
+        this.figure.setCell(this);
     }
     /**
      * Получает фигуру в поле.
      * @return фигура в поле.
      */
     public Figure getFigure() {
+        if (this.figure == null) {
+            throw new FigureNotFoundException();
+        }
         return this.figure;
     }
 }

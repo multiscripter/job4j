@@ -59,20 +59,18 @@ class Board {
      */
     private int[] getPosition(String position) {
         int col = Arrays.binarySearch(this.cols, position.charAt(0));
+        if (col == -1) {
+            throw new IllegalPositionException(position);
+        }
         int row = Integer.valueOf(String.valueOf(position.charAt(1))) - 1;
         this.checkCoords(col, row);
         return new int[]{col, row};
     }
     /**
-     * Добавляет фигуру на доску.
+     * Добавляет фигуру в массив фигур и сдвигает указатель массива.
      * @param figure добавляемая фигура.
      */
     public void addFigure(Figure figure) {
-        Cell cell = this.cells[figure.getCell().getCol()][figure.getCell().getRow()];
-        if (cell.isOccupied()) {
-            throw new OccupiedPositionException(cell.getPosition());
-        }
-        cell.setFigure(figure);
         this.figures[this.figuresPointer++] = figure;
     }
     /**
@@ -112,10 +110,14 @@ class Board {
      * @throws FigureNotFoundException исключение "Фигура не найдена".
      */
     public boolean move(Cell source, Cell dest) throws ImposibleMoveException, OccupiedWayException, FigureNotFoundException {
-        Cell[] way = source.getFigure().way(dest);
+        Figure figure = source.getFigure();
+        Cell[] way = figure.way(dest);
         for (Cell cell : way) {
-            System.out.println(cell.getPosition());
+            if (cell.isOccupied()) {
+                throw new OccupiedWayException();
+            }
         }
+        dest.setFigure(figure);
         return true;
     }
 }

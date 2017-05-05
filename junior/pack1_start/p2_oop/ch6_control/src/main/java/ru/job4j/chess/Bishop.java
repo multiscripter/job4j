@@ -42,12 +42,12 @@ class Bishop extends Figure {
             if (colRise) {
                 tmpCol = curCol + a + 1;
             } else {
-                tmpCol = curCol - a + 1;
+                tmpCol = curCol - a - 1;
             }
             if (rowRise) {
                 tmpRow = curRow + a + 1;
             } else {
-                tmpRow = curRow - a + 1;
+                tmpRow = curRow - a - 1;
             }
             way[a] = cell.getBoard().getCell(tmpCol, tmpRow);
         }

@@ -9,9 +9,9 @@ package ru.job4j.chess;
  */
 abstract class Figure {
     /**
-     * Объект поля, в которой находится фигура.
+     * Объект поля, в котором находится фигура.
      */
-    private final Cell cell;
+    private Cell cell;
     /**
      * Цвет фигуры: Color.BLACK или Color.WHITE.
      */
@@ -39,6 +39,8 @@ abstract class Figure {
         this.color = color;
         this.name = name;
         this.unicode = unicode;
+        this.cell.setFigure(this);
+        this.cell.getBoard().addFigure(this);
     }
     /**
      * Возвращает текущее поле фигуры.
@@ -46,6 +48,13 @@ abstract class Figure {
      */
     public Cell getCell() {
         return this.cell;
+    }
+    /**
+     * Устанавливает поле фигуры.
+     * @param cell поле фигуры.
+     */
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
     /**
      * Возвращает цвет фигуры.
