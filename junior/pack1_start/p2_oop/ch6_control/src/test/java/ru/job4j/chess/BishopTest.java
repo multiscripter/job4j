@@ -21,7 +21,7 @@ public class BishopTest {
         Bishop bishop2 = new Bishop(cell, Color.WHITE);
     }
     /**
-     * Тестирует move(). Слон c1 -> h6.
+     * Тестирует move(). c1 -> h6.
      */
     @Test
     public void checkMoveColPlusRowPlus() {
@@ -37,7 +37,7 @@ public class BishopTest {
         assertEquals(expected, bishop.getCell());
     }
     /**
-     * Тестирует move(). Слон c1 -> a3.
+     * Тестирует move(). c1 -> a3.
      */
     @Test
     public void checkMoveColMinusRowPlus() {
@@ -53,7 +53,7 @@ public class BishopTest {
         assertEquals(expected, bishop.getCell());
     }
     /**
-     * Тестирует move(). Слон h8 -> a1.
+     * Тестирует move(). h8 -> a1.
      */
     @Test
     public void checkMoveColMinusRowMinus() {
@@ -69,7 +69,7 @@ public class BishopTest {
         assertEquals(expected, bishop.getCell());
     }
     /**
-     * Тестирует move(). Слон a4 -> d1.
+     * Тестирует move(). a4 -> d1.
      */
     @Test
     public void checkMoveColPlusRowMinus() {

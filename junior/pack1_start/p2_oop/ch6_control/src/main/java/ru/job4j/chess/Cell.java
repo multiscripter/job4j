@@ -107,11 +107,13 @@ class Cell {
      * @param figure фигура.
      */
     public void setFigure(Figure figure) {
-        if (this.figure != null) {
+        if (figure != null && this.figure != null) {
             throw new OccupiedPositionException(this.getPosition());
         }
         this.figure = figure;
-        this.figure.setCell(this);
+        if (figure != null) {
+            this.figure.setCell(this);
+        }
     }
     /**
      * Получает фигуру в поле.

@@ -96,7 +96,7 @@ abstract class Figure {
         int colShift = tmpCol - dest.getCol();
         int rowShift = tmpRow - dest.getRow();
         if (colShift == 0 && rowShift == 0) {
-            throw new ImposibleMoveException();
+            throw new ImposibleMoveException(this.getCell().getPosition(), dest.getPosition());
         }
         Cell[] way = new Cell[Math.abs(colShift != 0 ? colShift : rowShift)];
         colShift = colShift == 0 ? 0 : colShift < 0 ? 1 : -1;

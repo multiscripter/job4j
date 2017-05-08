@@ -3,7 +3,7 @@ package ru.job4j.chess;
 import java.util.Arrays;
 
 /**
- * Класс Board реализует сущность "Шахматная доска". Поле A1 - чёрное слева внизу.
+ * Класс Board реализует сущность "Шахматная доска". Поле A1 - чёрное слева внизу. Белые фигуры начинают внизу.
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 2
@@ -118,6 +118,7 @@ class Board {
             }
         }
         dest.setFigure(figure);
+        source.setFigure(null);
         return true;
     }
 }

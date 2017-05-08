@@ -23,10 +23,10 @@ class Bishop extends Figure {
      * @throws ImposibleMoveException исключение "Движение невозможно".
      */
     public Cell[] way(Cell dest) throws ImposibleMoveException {
-        Cell[] way = super.way(dest);
         if (Math.abs(this.getCell().getCol() - dest.getCol()) != Math.abs(this.getCell().getRow() - dest.getRow())) {
-            throw new ImposibleMoveException();
+            throw new ImposibleMoveException(this.getCell().getPosition(), dest.getPosition());
         }
+        Cell[] way = super.way(dest);
         return way;
     }
 }
