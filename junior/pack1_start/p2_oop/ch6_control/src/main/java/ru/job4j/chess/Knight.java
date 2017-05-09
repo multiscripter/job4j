@@ -4,7 +4,7 @@ package ru.job4j.chess;
  * Класс Knight реализует сущность "Шахматная фигура Конь".
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-08
  */
 class Knight extends Figure {
@@ -25,10 +25,9 @@ class Knight extends Figure {
     public Cell[] way(Cell dest) throws ImposibleMoveException {
         int[] src = new int[] {this.getCell().getCol(), this.getCell().getRow()};
         int[] dst = new int[] {dest.getCol(), dest.getRow()};
-        if (Math.abs(src[0] - dst[0]) > 2 || Math.abs(src[0] - dst[0]) < 1 || Math.abs(src[1] - dst[1]) > 2 || Math.abs(src[1] - dst[1]) < 1 || (Math.abs(src[0] - dst[0]) == 2 && Math.abs(src[1] - dst[1]) != 1) || (Math.abs(src[0] - dst[0]) == 1 && Math.abs(src[1] - dst[1]) != 2)) {
+        if (Math.abs(dst[0] - src[0]) + Math.abs(dst[1] - src[1]) != 3 || Math.abs(dst[0] - src[0]) == 0 || Math.abs(dst[1] - src[1]) == 0) {
             throw new ImposibleMoveException(this.getCell().getPosition(), dest.getPosition());
         }
-        Cell[] way = super.way(dest);
-        return way;
+        return new Cell[] {dest};
     }
 }
