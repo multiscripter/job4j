@@ -16,6 +16,6 @@
     </parent>
 
     <modules>
-        <module>ch2_testing</module>
+        <module>ch1_collections</module>
     </modules>
 </project>
