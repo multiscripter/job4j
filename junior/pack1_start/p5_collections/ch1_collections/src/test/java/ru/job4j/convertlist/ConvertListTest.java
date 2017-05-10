@@ -31,11 +31,7 @@ public class ConvertListTest {
     @Test
     public void testToArray() {
         int[][] expected = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 0, 0}};
-        int[] vals = new int[]{1, 2, 3, 4, 5, 6, 7};
-        List<Integer> list = new ArrayList<>();
-        for (int a = 0; a < vals.length; a++) {
-            list.add(vals[a]);
-        }
+        List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
         ConvertList cl = new ConvertList();
         int[][] result = cl.toArray(list, 3);
         assertEquals(expected, result);
