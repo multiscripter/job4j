@@ -17,5 +17,6 @@
 
     <modules>
         <module>ch1_collections</module>
+        <module>ch2_generics</module>
     </modules>
 </project>
