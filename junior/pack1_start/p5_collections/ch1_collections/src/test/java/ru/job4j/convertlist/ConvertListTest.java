@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
  * Класс ConvertListTest тестирует класс ConvertList.
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-10
  */
 public class ConvertListTest {
@@ -34,6 +34,19 @@ public class ConvertListTest {
         List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
         ConvertList cl = new ConvertList();
         int[][] result = cl.toArray(list, 3);
+        assertEquals(expected, result);
+    }
+    /**
+     * Тестирует convert().
+     */
+    @Test
+    public void testConvert() {
+        List<Integer> expected = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
+        List<int[]> list = new ArrayList<>();
+        list.add(new int[]{1, 2});
+        list.add(new int[]{3, 4, 5, 6});
+        ConvertList cl = new ConvertList();
+        List<Integer> result = cl.convert(list);
         assertEquals(expected, result);
     }
 }

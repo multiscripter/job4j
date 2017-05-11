@@ -2,12 +2,14 @@ package ru.job4j.convertlist;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 /**
  * Класс ConvertList реализует функционал конвертации двумерного массива в ArrayList и наоборот.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 3
  * @since 2017-05-10
  */
 class ConvertList {
@@ -43,5 +45,17 @@ class ConvertList {
             }
         }
         return array;
+    }
+    /**
+     * Конвертирует список массивов в один список.
+     * @param list конвертируемый список массивов.
+     * @return список.
+     */
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> result = new ArrayList<>();
+        for (int[] items : list) {
+            result.addAll(IntStream.of(items).boxed().collect(Collectors.toList()));
+        }
+        return result;
     }
 }
