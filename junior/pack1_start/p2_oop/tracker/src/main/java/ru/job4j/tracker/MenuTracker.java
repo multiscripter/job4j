@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
 /**
  * Класс MenuTracker реализует сущность меню трэкера.
  *
@@ -23,11 +24,7 @@ class MenuTracker {
     /**
      * Массив действий пользователя.
      */
-    private IUserAction[] actions = new UserAction[MenuActions.values().length];
-    /**
-     * Позиция в массиве действий пользователя.
-     */
-    private int position = 0;
+    private ArrayList<IUserAction> actions = new ArrayList<>();
     /**
      * Конструктор.
      * @param input объект класса, реализующего интерфэйс Input.
@@ -41,27 +38,27 @@ class MenuTracker {
      * Инициализирует меню трэкера.
      */
     public void fillActions() {
-        this.actions[this.position++] = new AddItem(MenuActions.ADD);
-        //this.actions[this.position++] = this.new AddItem(MenuActions.ADD);
-        this.actions[this.position++] = new MenuTracker.ShowItems(MenuActions.SHOW);
-        this.actions[this.position++] = new EditItem(MenuActions.EDIT);
-        this.actions[this.position++] = new DeleteItem(MenuActions.DELETE);
-        this.actions[this.position++] = new FindItemById(MenuActions.FINDBYID);
-        this.actions[this.position++] = new FindItemsByName(MenuActions.FINDBYNAME);
+        this.actions.add(new AddItem(MenuActions.ADD));
+        //this.actions.add(this.new AddItem(MenuActions.ADD));
+        this.actions.add(new MenuTracker.ShowItems(MenuActions.SHOW));
+        this.actions.add(new EditItem(MenuActions.EDIT));
+        this.actions.add(new DeleteItem(MenuActions.DELETE));
+        this.actions.add(new FindItemById(MenuActions.FINDBYID));
+        this.actions.add(new FindItemsByName(MenuActions.FINDBYNAME));
     }
     /**
      * Добавляет в массив пользовательских действие нвое действие.
      * @param action добавляемое действие.
      */
     public void addAction(UserAction action) {
-        this.actions[this.position++] = action;
+        this.actions.add(action);
     }
     /**
      * Выполняет действие, выбранное пользователем.
      * @param key идентификатор действия.
      */
     public void select(int key) {
-        this.actions[key].execute(this.input, this.tracker);
+        this.actions.get(key).execute(this.input, this.tracker);
     }
     /**
      * Выводит меню трэкера.

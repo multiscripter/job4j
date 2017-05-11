@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
 /**
  * Класс StartUI реализует сущность пользовательского интрефэйса трэкера.
  *
@@ -11,7 +12,7 @@ public class StartUI {
     /**
      * Массив допустимых значений.
      */
-    private int[] range;
+    private ArrayList<Integer> range;
     /**
      * Объект ввода.
      */
@@ -27,9 +28,9 @@ public class StartUI {
     public StartUI(Input input) {
         this.input = input;
         this.tracker = new Tracker();
-        this.range = new int[MenuActions.values().length];
+        this.range = new ArrayList<>(MenuActions.values().length);
         for (int a = 0; a < MenuActions.values().length; a++) {
-            this.range[a] = a;
+            this.range.add(a);
         }
     }
     /**
@@ -40,9 +41,9 @@ public class StartUI {
     public StartUI(Input input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
-        this.range = new int[MenuActions.values().length];
+        this.range = new ArrayList<>(MenuActions.values().length);
         for (int a = 0; a < MenuActions.values().length; a++) {
-            this.range[a] = a;
+            this.range.add(a);
         }
     }
     /**
@@ -67,7 +68,7 @@ public class StartUI {
         menu.addAction(exitAction);
         do {
             menu.show();
-            menu.select(input.ask("Select: ", this.range));
+            menu.select(input.ask("Select: ", this.range.stream().mapToInt(i -> i).toArray()));
         } while (!"y".equals(this.input.ask("Exit? y|n: ")));
         System.out.println("Buy our program for 10$.");
         System.out.println("");
