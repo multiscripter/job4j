@@ -1,5 +1,6 @@
 package ru.job4j.sorting;
 
+import java.util.Objects;
 /**
  * Class User реализует сущность Пользователь.
  *
@@ -55,10 +56,51 @@ class User implements Comparable<User> {
     }
     /**
      * Сравнивает два объекта пользователя.
-     * @param age возраст пользователя.
+     * @param obj объект пользователя.
+     * @return результат сравнения.
      */
     @Override
-    public int compareTo(User o) {
-        return this.getAge() - o.getAge();
+    public int compareTo(User obj) {
+        return this.getAge() - obj.getAge();
+    }
+    /**
+     * Возвращает хэш-код объекта пользователя.
+     * @return хэш-код объекта пользователя.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
+    /**
+     * Сравнивает объекты пользователя.
+     * @param obj целевой объект, с которым сравнивается текущий объект.
+     * @return true если объекты одинаковые, иначе false.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        if (this.name != user.name || this.age != user.age) {
+            return false;
+        }
+        return true;
+    }
+    /**
+     * Возвращает строковое представление объекта.
+     * @return строковое представление объекта.
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("user name: ");
+        sb.append(this.getName());
+        sb.append(", age: ");
+        sb.append(this.getAge());
+        return sb.toString();
     }
 }

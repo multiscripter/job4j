@@ -13,7 +13,7 @@ import java.util.Set;
  */
 class SortUser {
     /**
-     * Сортирует пользователей.
+     * Сортирует пользователей по возрасту.
      * @param list список пользователей.
      * @return TreeSet с отсортированными пользователями.
      */
@@ -26,5 +26,33 @@ class SortUser {
         });
         TreeSet<User> set = new TreeSet<>(list);
         return set;
+    }
+    /**
+     * Сортирует пользователей по хэш-коду объектов.
+     * @param list список пользователей.
+     * @return List с отсортированными пользователями.
+     */
+    public List<User> sortHash(List<User> list) {
+        list.sort(new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return Integer.compare(o1.hashCode(), o2.hashCode());
+            }
+        });
+        return list;
+    }
+    /**
+     * Сортирует пользователей по длине имени.
+     * @param list список пользователей.
+     * @return List с отсортированными пользователями.
+     */
+    public List<User> sortLength(List<User> list) {
+        list.sort(new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return Integer.compare(o1.getName().length(), o2.getName().length());
+            }
+        });
+        return list;
     }
 }
