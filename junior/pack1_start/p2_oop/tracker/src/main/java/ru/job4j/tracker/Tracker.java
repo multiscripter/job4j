@@ -6,8 +6,8 @@ import java.util.Iterator;
 /**
  * Class Tracker реализует сущность Трэкер заявок.
  *
- * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 4
+ * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
+ * @version 5
  * @since 2017-04-18
  */
 public class Tracker {
@@ -44,9 +44,7 @@ public class Tracker {
      * @param uItem заявка.
      */
     public void update(Item uItem) {
-        Iterator iter = this.items.iterator();
-        while (iter.hasNext()) {
-            Item item = (Item) iter.next();
+        for (Item item : this.items) {
             if (item.getId().equals(uItem.getId())) {
                 item = uItem;
                 break;
@@ -60,9 +58,9 @@ public class Tracker {
      */
     public Item findById(String id) {
         Item uItem = new Item();
-        Iterator iter = this.items.iterator();
+        Iterator<Item> iter = this.items.iterator();
         while (iter.hasNext()) {
-            Item item = (Item) iter.next();
+            Item item = iter.next();
             if (id.equals(item.getId())) {
                 uItem = item;
                 break;
@@ -77,9 +75,9 @@ public class Tracker {
      */
     public Item[] findByName(String name) {
         ArrayList<Item> found = new ArrayList<>();
-        Iterator iter = this.items.iterator();
+        Iterator<Item> iter = this.items.iterator();
         while (iter.hasNext()) {
-            Item item = (Item) iter.next();
+            Item item = iter.next();
             if (name.equals(item.getName())) {
                 found.add(item);
             }
@@ -93,9 +91,9 @@ public class Tracker {
      */
     public boolean delete(String id) {
         boolean deleted = false;
-        Iterator iter = this.items.iterator();
+        Iterator<Item> iter = this.items.iterator();
         while (iter.hasNext()) {
-            Item item = (Item) iter.next();
+            Item item = iter.next();
             if (id.equals(item.getId())) {
                 iter.remove();
                 deleted = true;
