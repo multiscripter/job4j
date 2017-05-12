@@ -93,17 +93,6 @@ public class TrackerTest {
         assertArrayEquals(items, all);
     }
     /**
-     * Тестирует int getLength().
-     */
-    @Test
-    public void testGetLength() {
-        Tracker tracker = new Tracker();
-        int expected = 10;
-        tracker.add(new Item("Заявка1", "Имя1", "Описание1"));
-        tracker.add(new Item("Заявка2", "Имя2", "Описание2"));
-        assertEquals(expected, tracker.getLength());
-    }
-    /**
      * Тестирует int getQuantity().
      */
     @Test
@@ -113,19 +102,5 @@ public class TrackerTest {
         tracker.add(new Item("Заявка1", "Имя1", "Описание1"));
         tracker.add(new Item("Заявка2", "Имя2", "Описание2"));
         assertEquals(expected, tracker.getQuantity());
-    }
-    /**
-     * Тестирует Item[] increaseCapacity(Item[] items).
-     */
-    @Test
-    public void testIncreaseCapacity() {
-        Tracker tracker = new Tracker();
-        int expected = 20;
-        Item[] items = new Item[expected];
-        for (int a = 0; a < 15; a++) {
-            Item item = new Item("Заявка" + a, "Имя" + a, "Описание" + a);
-            tracker.add(item);
-        }
-        assertEquals(expected, tracker.getLength());
     }
 }

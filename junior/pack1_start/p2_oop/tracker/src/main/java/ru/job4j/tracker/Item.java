@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
 /**
  * Class Item реализует сущность Заявка.
  *
@@ -27,7 +28,7 @@ public class Item {
     /**
      * Массив комментариев заявки.
      */
-    private String[] comments;
+    private ArrayList<String> comments;
     /**
      * Конструктор без параметров.
      */
@@ -44,7 +45,7 @@ public class Item {
         this.name = name;
         this.desc = desc;
         this.created = System.currentTimeMillis();
-        this.comments = new String[10];
+        this.comments = new ArrayList<>();
     }
     /**
      * Получет идентификатор заявки.
@@ -93,7 +94,7 @@ public class Item {
      * @return комментарии заявки.
      */
     public String[] getComments() {
-        return this.comments;
+        return this.comments.toArray(new String[this.comments.size()]);
     }
     /**
      * Проверяет объект на пустоту.

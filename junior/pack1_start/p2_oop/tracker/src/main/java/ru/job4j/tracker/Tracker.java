@@ -1,19 +1,20 @@
 package ru.job4j.tracker;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Class Tracker реализует сущность Трэкер заявок.
  *
- * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 4
+ * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
+ * @version 5
  * @since 2017-04-18
  */
 public class Tracker {
     /**
      * Массив заявок.
      */
-    private Item[] items;
+    private ArrayList<Item> items;
     /**
      * Идентификатор заявки.
      */
@@ -23,17 +24,11 @@ public class Tracker {
      */
     private int capacity;
     /**
-     * Указатель на первый пустой элемент массива.
-     */
-    private int pointer;
-    /**
      * Конструктор без параметров.
      */
     public Tracker() {
         this.id = 1;
-        this.capacity = 10;
-        this.pointer = 0;
-        this.items = new Item[this.capacity];
+        this.items = new ArrayList<>();
     }
     /**
      * Добавляет заявку.
@@ -41,10 +36,7 @@ public class Tracker {
      * @return добавленная заявка.
      */
     public Item add(Item item) {
-        if (this.pointer == this.items.length) {
-            this.items = this.increaseCapacity(this.items);
-        }
-        this.items[this.pointer++] = item;
+        this.items.add(item);
         return item;
     }
     /**
@@ -52,9 +44,9 @@ public class Tracker {
      * @param uItem заявка.
      */
     public void update(Item uItem) {
-        for (int a = 0; a < this.pointer; a++) {
-            if (this.items[a].getId().equals(uItem.getId())) {
-                items[a] = uItem;
+        for (Item item : this.items) {
+            if (item.getId().equals(uItem.getId())) {
+                item = uItem;
                 break;
             }
         }
@@ -66,9 +58,11 @@ public class Tracker {
      */
     public Item findById(String id) {
         Item uItem = new Item();
-        for (int a = 0; a < this.pointer; a++) {
-            if (id.equals(items[a].getId())) {
-                uItem = items[a];
+        Iterator<Item> iter = this.items.iterator();
+        while (iter.hasNext()) {
+            Item item = iter.next();
+            if (id.equals(item.getId())) {
+                uItem = item;
                 break;
             }
         }
@@ -80,17 +74,15 @@ public class Tracker {
      * @return массив найденных заявок или пустой массив.
      */
     public Item[] findByName(String name) {
-        Item[] found = new Item[this.capacity];
-        int index = 0;
-        for (int a = 0; a < this.pointer; a++) {
-            if (name.equals(items[a].getName())) {
-                if (index == found.length) {
-                    found = this.increaseCapacity(found);
-                }
-                found[index++] = this.items[a];
+        ArrayList<Item> found = new ArrayList<>();
+        Iterator<Item> iter = this.items.iterator();
+        while (iter.hasNext()) {
+            Item item = iter.next();
+            if (name.equals(item.getName())) {
+                found.add(item);
             }
         }
-        return Arrays.copyOf(found, index);
+        return found.toArray(new Item[found.size()]);
     }
     /**
      * Удаляет заявку по идентификатору.
@@ -99,10 +91,11 @@ public class Tracker {
      */
     public boolean delete(String id) {
         boolean deleted = false;
-        for (int a = 0; a < this.pointer; a++) {
-            if (id.equals(this.items[a].getId())) {
-                System.arraycopy((Object) this.items, a + 1, (Object) this.items, a, items.length - a - 1);
-                this.pointer--;
+        Iterator<Item> iter = this.items.iterator();
+        while (iter.hasNext()) {
+            Item item = iter.next();
+            if (id.equals(item.getId())) {
+                iter.remove();
                 deleted = true;
                 break;
             }
@@ -114,29 +107,14 @@ public class Tracker {
      * @return массив заявок.
      */
     public Item[] getAll() {
-        return Arrays.copyOf(this.items, this.pointer);
-    }
-    /**
-     * Получает длину массива заявок.
-     * @return длина массива заявок.
-     */
-    public int getLength() {
-        return this.items.length;
+        return this.items.toArray(new Item[this.items.size()]);
     }
     /**
      * Получает количество заявок.
      * @return количество заявок.
      */
     public int getQuantity() {
-        return this.pointer;
-    }
-    /**
-     * Увеличивает ёмкость массива.
-     * @param items массив, ёмкость которого нужно увеличить.
-     * @return увеличеснный массив.
-     */
-    private Item[] increaseCapacity(Item[] items) {
-        return Arrays.copyOf(items, items.length + this.capacity);
+        return this.items.size();
     }
     /**
      * Генерирует идентификатор заявки.
