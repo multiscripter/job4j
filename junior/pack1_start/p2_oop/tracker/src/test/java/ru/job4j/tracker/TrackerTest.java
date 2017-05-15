@@ -8,7 +8,7 @@ import static org.junit.Assert.assertArrayEquals;
 /**
  * Class TrackerTest тестирует методы класса Tracker.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 3
+ * @version 5
  * @since 2017-04-18
  */
 public class TrackerTest {
@@ -29,12 +29,14 @@ public class TrackerTest {
     public void testUpdate() {
         Tracker tracker = new Tracker();
         String id = "Заявка2";
-        Item item = new Item(id, "Имя2", "Описание2");
-        tracker.add(item);
-        item.setDesc("Новое описание Заявки2");
-        tracker.update(item);
-        Item expected = item;
-        Item result = tracker.findById(id);
+        Item expected = new Item(id, "Имя2", "Описание2");
+        tracker.add(expected);
+        Item found = new Item();
+        found = tracker.findById(id);
+        found.setDesc("Новое описание Заявки2");
+        tracker.update(found);
+        Item result = new Item();
+        result = tracker.findById(id);
         assertEquals(expected, result);
     }
     /**

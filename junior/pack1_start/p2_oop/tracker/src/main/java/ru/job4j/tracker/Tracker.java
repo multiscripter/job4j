@@ -7,7 +7,7 @@ import java.util.Iterator;
  * Class Tracker реализует сущность Трэкер заявок.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 5
+ * @version 7
  * @since 2017-04-18
  */
 public class Tracker {
@@ -44,9 +44,9 @@ public class Tracker {
      * @param uItem заявка.
      */
     public void update(Item uItem) {
-        for (Item item : this.items) {
-            if (item.getId().equals(uItem.getId())) {
-                item = uItem;
+        for (int a = 0, size = this.items.size(); a < size; a++) {
+            if (this.items.get(a).getId().equals(uItem.getId())) {
+                this.items.set(a, uItem);
                 break;
             }
         }
