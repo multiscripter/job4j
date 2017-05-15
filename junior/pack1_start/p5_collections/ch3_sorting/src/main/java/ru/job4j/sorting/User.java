@@ -5,7 +5,7 @@ import java.util.Objects;
  * Class User реализует сущность Пользователь.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-12
  */
 class User implements Comparable<User> {
@@ -102,5 +102,40 @@ class User implements Comparable<User> {
         sb.append(", age: ");
         sb.append(this.getAge());
         return sb.toString();
+    }
+    /**
+     * Генерирует строковое представление объект пользователя.
+     * @return строковое представление объект пользователя.
+     */
+    @Override
+    public String toString() {
+        return String.format("User{name: %s, age: %d}", this.getName(), this.getAge());
+    }
+    /**
+     * Сравнивает объекты пользователя.
+     * @param obj целевой объект, с которым сравнивается текущий объект.
+     * @return true если объекты одинаковые, иначе false.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        if (this.name != user.name || this.age != user.age) {
+            return false;
+        }
+        return true;
+    }
+    /**
+      * Возвращает хэш-код объекта пользователя.
+      * @return хэш-код объекта пользователя.
+      */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
     }
 }

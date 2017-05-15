@@ -1,7 +1,11 @@
 package ru.job4j.sorting;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.TreeMap;
+=======
+import java.util.Comparator;
+>>>>>>> origin/junior.pack1.p5.ch3.task3.1
 import java.util.TreeSet;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -9,7 +13,7 @@ import static org.junit.Assert.assertEquals;
  * Class SortUserTest тестирует класс SortUser.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-12
  */
 public class SortUserTest {
@@ -27,15 +31,23 @@ public class SortUserTest {
     @Test
     public void testSort() {
         ArrayList<User> usersList = new ArrayList<>();
-        TreeSet<User> expected = new TreeSet<>();
+        ArrayList<User> expected = new ArrayList<>();
         for (int a = 0; a < names.length; a++) {
             usersList.add(new User(names[a], ages[a]));
             expected.add(new User(names[a], ages[a]));
         }
+        expected.sort(new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                return Integer.compare(o1.getAge(), o2.getAge());
+            }
+        });
         SortUser su = new SortUser();
-        TreeSet<User> result = (TreeSet) su.sort(usersList);
+        TreeSet<User> sorted = (TreeSet) su.sort(usersList);
+        ArrayList<User> result = new ArrayList<>(sorted);
         assertEquals(expected, result);
     }
+<<<<<<< HEAD
     /**
      * Тестирует sortHash().
      */
@@ -71,3 +83,6 @@ public class SortUserTest {
         assertEquals(expected, result);
     }
 }
+=======
+}
+>>>>>>> origin/junior.pack1.p5.ch3.task3.1
