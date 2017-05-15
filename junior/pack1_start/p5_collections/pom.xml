@@ -19,5 +19,6 @@
         <module>ch1_collections</module>
         <module>ch2_generics</module>
         <module>ch3_sorting</module>
+        <module>ch4_control</module>
     </modules>
 </project>
