@@ -11,6 +11,7 @@
     
     <modules>
         <module>pack1_start</module>
+        <module>pack2_standard</module>
     </modules>
 
     <properties>
