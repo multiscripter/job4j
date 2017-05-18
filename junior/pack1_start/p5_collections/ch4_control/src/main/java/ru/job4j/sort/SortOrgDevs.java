@@ -13,10 +13,6 @@ import java.util.TreeSet;
  */
 class SortOrgDevs {
     /**
-     * Массив строк с названиями подразделений организации.
-     */
-    private String[] orgDevsNames;
-    /**
      * Деревянное множество с названиями подразделений, педставляющих иерархию организации.
      */
     private TreeSet<Departure> orgDevsHierarchy;
@@ -25,16 +21,8 @@ class SortOrgDevs {
      * @param orgDevsNames массив строк с названиями подразделений организации.
      */
     SortOrgDevs(String[] orgDevsNames) {
-        this.orgDevsNames = orgDevsNames;
         this.orgDevsHierarchy = new TreeSet<>();
-        this.fillTree(this.orgDevsNames);
-    }
-    /**
-     * Получает массив строк с названиями подразделений организации.
-     * @return массив строк с названиями подразделений организации.
-     */
-    String[] getOrgDevsNames() {
-        return this.orgDevsNames;
+        this.fillTree(orgDevsNames);
     }
     /**
      * Заполняет деревянное множество названиями подразделений организации.
@@ -43,19 +31,26 @@ class SortOrgDevs {
     private void fillTree(String[] strsNames) {
         for (String strNames : strsNames) {
             String[] names = strNames.split("\\\\");
-            StringBuilder fullName = new StringBuilder();
-            for (int a = 0; a < names.length; a++, fullName.append("\\")) {
-                fullName.append(names[a]);
-                this.orgDevsHierarchy.add(fullName.toString());
+            //StringBuilder fullName = new StringBuilder();
+            for (int a = 0; a < names.length; a++) {
+                //fullName.append(names[a]);
+                this.orgDevsHierarchy.add(new Departure(names[a]));
             }
         }
+        System.out.println("this.orgDevsHierarchy.size(): " + this.orgDevsHierarchy.size());
     }
     /**
      * Возвращает массив названий, отсортированных в порядке возрастания.
      * @return strsNames массив строк с названиями подразделений организации.
      */
     public String[] getNamesOrderAsc() {
-        return this.orgDevsHierarchy.toArray(new String[this.orgDevsHierarchy.size()]);
+        Departure[] deps = this.orgDevsHierarchy.toArray(new Departure[this.orgDevsHierarchy.size()]);
+        String[] depsNames = new String[deps.length];
+        for (int a = 0; a < deps.length; a++) {
+            depsNames[a] = deps[a].getName();
+        }
+        return depsNames;
+        //return this.orgDevsHierarchy.toArray(new String[this.orgDevsHierarchy.size()]);
     }
     /**
      * Возвращает массив названий, отсортированных в порядке убывания.
