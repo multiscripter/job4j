@@ -19,7 +19,7 @@ class SortOrgDevs {
     /**
      * Деревянное множество с названиями подразделений, педставляющих иерархию организации.
      */
-    private TreeSet<String> orgDevsHierarchy;
+    private TreeSet<Departure> orgDevsHierarchy;
     /**
      * Конструктор.
      * @param orgDevsNames массив строк с названиями подразделений организации.
