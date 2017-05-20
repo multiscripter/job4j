@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
  * Класс TwoDemArrIter реализует итератор для двухмерного массива int[][].
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-18
  */
 class TwoDemArrIter implements Iterator {
@@ -19,27 +19,41 @@ class TwoDemArrIter implements Iterator {
      */
     private int index;
     /**
+     * Длина двухмерного массива.
+     */
+    private int length = 0;
+    /**
      * Конструктор.
      * @param arr двухмерный массив.
      */
     TwoDemArrIter(int[][] arr) {
         this.arr = arr;
         this.index = 0;
+        for (int a = 0; a < this.arr.length; a++) {
+            this.length += this.arr[a].length;
+        }
     }
     /**
      * Проверяет существование следующего элемента.
      * @return true если следующий элемент существует, иначе false.
      */
     public boolean hasNext() {
-        return this.index < this.arr.length * this.arr[0].length ? true : false;
+        return this.index < this.length;
     }
     /**
      * Возвращает значение следующего элемента массива.
      * @return значение следующего элемента массива.
      */
     public Object next() {
-        int x = this.index / this.arr[0].length;
-        int y = this.index++ - x * this.arr[0].length;
+        int x = 0, y = 0, cur = 0;
+        for (int a = 0; a < this.arr.length; a++, x++) {
+            cur += this.arr[a].length;
+            if (cur > this.index) {
+                y = this.arr[a].length - (cur - this.index);
+                break;
+            }
+        }
+        this.index++;
         try {
             return new Integer(this.arr[x][y]);
         } catch (Exception ex) {

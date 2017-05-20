@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
  * Класс TwoDemArrIterTest тестирует класс TwoDemArrIter.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-18
  */
 public class TwoDemArrIterTest {
@@ -65,7 +65,7 @@ public class TwoDemArrIterTest {
         assertEquals(expected, result);
     }
     /**
-     * Тестирует next().
+     * Тестирует next(). Массив 2х2.
      */
     @Test
     public void testNext2x2() {
@@ -79,7 +79,7 @@ public class TwoDemArrIterTest {
         assertEquals(expected, result);
     }
     /**
-     * Тестирует next().
+     * Тестирует next(). Массив 3х3.
      */
     @Test
     public void testNext3x3() {
@@ -93,7 +93,7 @@ public class TwoDemArrIterTest {
         assertEquals(expected, result);
     }
     /**
-     * Тестирует next().
+     * Тестирует next(). Массив 4х3.
      */
     @Test
     public void testNext4x3() {
@@ -107,7 +107,7 @@ public class TwoDemArrIterTest {
         assertEquals(expected, result);
     }
     /**
-     * Тестирует next().
+     * Тестирует next(). Массив 3х4.
      */
     @Test
     public void testNext3x4() {
@@ -121,11 +121,25 @@ public class TwoDemArrIterTest {
         assertEquals(expected, result);
     }
     /**
-     * Тестирует next().
+     * Тестирует next(). Массив 4х4.
      */
     @Test
     public void testNext4x4() {
         int[][] arr = new int[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}};
+        TwoDemArrIter tdai = new TwoDemArrIter(arr);
+        int expected = 16;
+        int result = -1;
+        for (int a = 0; a < expected; a++) {
+            result = (Integer) tdai.next();
+        }
+        assertEquals(expected, result);
+    }
+    /**
+     * Тестирует next(). Вложенные массивы разной длины.
+     */
+    @Test
+    public void testNextArrayDifferentLength() {
+        int[][] arr = new int[][]{{1, 2, 3, 4}, {5, 6, 7}, {8, 9, 10, 11, 12}, {13}, {14, 15, 16}};
         TwoDemArrIter tdai = new TwoDemArrIter(arr);
         int expected = 16;
         int result = -1;
