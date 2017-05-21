@@ -1,5 +1,6 @@
 package ru.job4j.sort;
 
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -38,7 +39,17 @@ public class SortOrgDevsTest {
     @Test
     public void testGetNamesOrderDesc() {
         String[] expected = new String[]{"K2", "K2\\SK1", "K2\\SK1\\SSK2", "K2\\SK1\\SSK1", "K1", "K1\\SK2", "K1\\SK1", "K1\\SK1\\SSK2", "K1\\SK1\\SSK1"};
-        //String[] result = this.sod.getNamesOrderDesc();
-        //assertEquals(expected, result);
+        String[] result = this.sod.getNamesOrderDesc();
+        assertEquals(expected, result);
+    }
+    /**
+     * Тестирует getSubDepsNames().
+     */
+    @Test
+    public void testGetSubDepsNames() {
+        String[] expected = new String[]{"K1\\SK1\\SSK1", "K1\\SK1\\SSK2"};
+        List<String> subDepsNames = this.sod.getDepByFullName("K1\\SK1").getSubDepsNames();
+        String[] result = subDepsNames.toArray(new String[subDepsNames.size()]);
+        assertEquals(expected, result);
     }
 }

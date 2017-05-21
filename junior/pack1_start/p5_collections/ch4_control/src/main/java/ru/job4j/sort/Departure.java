@@ -1,11 +1,12 @@
 package ru.job4j.sort;
 
+import java.util.LinkedList;
 import java.util.List;
 /**
  * Class Departure реализует сущность Департамент организации.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-18
  */
 class Departure implements Comparable<Departure> {
@@ -14,15 +15,22 @@ class Departure implements Comparable<Departure> {
      */
     private String name;
     /**
+     * Название текущего департамента вместе с предками.
+     */
+    private String fullName;
+    /**
      * Названия департаментов, являющихся прямыми потомками текущего.
      */
-    private List<String> deps;
+    private List<String> subDeps;
     /**
      * Конструктор.
-     * @param name имя департамента.
+     * @param fullName название текущего департамента вместе с предками.
      */
-    Departure(String name) {
-        this.name = name;
+    Departure(String fullName) {
+        this.fullName = fullName;
+        String[] names = this.fullName.split("\\\\");
+        this.name = names[names.length - 1];
+        this.subDeps = new LinkedList();
     }
     /**
      * Получает строку с именем текущего департамента.
@@ -32,18 +40,27 @@ class Departure implements Comparable<Departure> {
         return this.name;
     }
     /**
+     * Получает строку с именем текущего департамента вместе с предками.
+     * @return строка с именем текущего департамента вместе с предками.
+     */
+    public String getFullName() {
+        return this.fullName;
+    }
+    /**
      * Добавляет название департамента, являющигося прямым потомком текущего.
      * @param name строка с именем субдепартамента.
      */
-    public void addDepsName(String name) {
-        this.deps.add(name);
+    public void addSubDepName(String name) {
+        if (!this.subDeps.contains(name)) {
+            this.subDeps.add(name);
+        }
     }
     /**
      * Получает список названий департаментов, являющихся прямыми потомками текущего.
      * @return список названий департаментов, являющихся прямыми потомками текущего.
      */
-    public List<String> getDepsNames() {
-        return this.deps;
+    public List<String> getSubDepsNames() {
+        return this.subDeps;
     }
     /**
      * Сравнивает два объекта департамента.
@@ -51,18 +68,7 @@ class Departure implements Comparable<Departure> {
      */
     @Override
     public int compareTo(Departure obj) {
-        String[] cName = this.getName().split("K");
-        cName[1] = this.getName().substring(this.getName().length() - 2);
-        String[] oName = obj.getName().split("K");
-        oName[1] = obj.getName().substring(obj.getName().length() - 2);
-        int result = cName[1].compareTo(oName[1]);
-        System.out.println(this.getName() + " compare " + obj.getName());
-        System.out.println("cName[1]: " + cName[1] + " compare oName[1]: " + oName[1] + " result: " + result);
-        if (result == 0 && cName[0].length() != oName[0].length()) {
-            System.out.println("cName[0].length " + cName[0].length() + " oName[0].length: " + oName[0].length());
-            result = cName[0].length() - oName[0].length();
-        }
-        System.out.println("result: " + result);
+        int result = this.getFullName().compareTo(obj.getFullName());
         return result;
     }
     /**
@@ -79,7 +85,7 @@ class Departure implements Comparable<Departure> {
             return false;
         }
         Departure dep = (Departure) obj;
-        return this.name.equals(dep.getName());
+        return this.fullName.equals(dep.getFullName());
     }
     /**
      * Возвращает хэш-код объекта департамента.
@@ -87,7 +93,7 @@ class Departure implements Comparable<Departure> {
      */
     @Override
     public int hashCode() {
-        return this.name.hashCode();
+        return this.fullName.hashCode();
     }
     /**
      * Возвращает строковое представление объект департамента.
@@ -95,6 +101,6 @@ class Departure implements Comparable<Departure> {
      */
     @Override
     public String toString() {
-        return String.format("Dep{name: %s}", this.getName());
+        return String.format("Dep{fullName: %s}", this.getFullName());
     }
 }
