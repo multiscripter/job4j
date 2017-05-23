@@ -12,7 +12,7 @@ class IterOfIterToIter implements Iterator {
     /**
      * Текущий итератор.
      */
-    private Iterator<Iterator> curIter;
+    private Iterator<Integer> curIter;
     /**
      * Указатель.
      */
@@ -26,8 +26,8 @@ class IterOfIterToIter implements Iterator {
      * Конструктор.
      * @param iterOfIters итератор итераторов.
      */
-    private IterOfIterToIter(Iterable<Iterator<Integer>> iterOfIters) {
-        this.pointer = iterOfIters.iterator();
+    private IterOfIterToIter(Iterator<Iterator<Integer>> iterOfIters) {
+        this.pointer = iterOfIters;
     }
     /**
      * Конвертирует итератор итераторов в итератор.
@@ -35,15 +35,15 @@ class IterOfIterToIter implements Iterator {
      * @return итератор.
      */
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> iterOfIters) {
-        return new IterOfIterToIter((Iterable) iterOfIters);
+        return new IterOfIterToIter(iterOfIters);
     }
     /**
      * Получает следующий элемент.
      * @return следующий элемент или null.
      */
-    private Integer getNext() {
-        Integer result = null;
-        while (this.pointer.hasNext()) {
+    private Iterator<Integer> getNext() {
+        Iterator<Integer> result = null;
+        if (this.pointer.hasNext()) {
             this.curIter = this.pointer.next();
             if (this.curIter.hasNext()) {
                 result = this.curIter;
@@ -59,7 +59,7 @@ class IterOfIterToIter implements Iterator {
         if (this.curIter == null || !this.curIter.hasNext()) {
             this.curIter = this.getNext();
         }
-        return (this.curIter != null && this.cutIter.hasNext());
+        return (this.curIter != null && this.curIter.hasNext());
     }
     /**
      * Возвращает значение следующего элемента.
