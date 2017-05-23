@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
  * Класс EvenNumArrIter реализует итератор чётных чисел.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-22
  */
 class EvenNumArrIter implements Iterator {
@@ -53,7 +53,7 @@ class EvenNumArrIter implements Iterator {
             while (this.arr[this.index] % 2 != 0) {
                 this.index++;
             }
-            return new Integer(this.arr[this.index++]);
+            return Integer.valueOf(this.arr[this.index++]);
         } catch (Exception ex) {
             throw new NoSuchElementException();
         }
