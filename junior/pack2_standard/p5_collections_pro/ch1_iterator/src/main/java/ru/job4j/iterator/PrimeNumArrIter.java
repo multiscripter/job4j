@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
  * Класс PrimeNumArrIter реализует итератор простых чисел.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-22
  */
 class PrimeNumArrIter implements Iterator {
@@ -77,7 +77,7 @@ class PrimeNumArrIter implements Iterator {
             while (!this.isPrime(this.arr[this.index])) {
                 this.index++;
             }
-            return new Integer(this.arr[this.index++]);
+            return Integer.valueOf(this.arr[this.index++]);
         } catch (Exception ex) {
             throw new NoSuchElementException();
         }
