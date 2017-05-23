@@ -1,11 +1,12 @@
 package ru.job4j.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 /**
  * Класс IterOfIterToIter реализует функционал конвертирования итератора итераторов в итератор.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-22
  */
 class IterOfIterToIter implements Iterator {
@@ -66,7 +67,14 @@ class IterOfIterToIter implements Iterator {
      * @return значение следующего элемента.
      */
     public Integer next() {
-        return this.curIter.next();
+        if (this.curIter == null || !this.curIter.hasNext()) {
+            this.curIter = this.getNext();
+        }
+        try {
+            return this.curIter.next();
+        } catch (Exception ex) {
+            throw new NoSuchElementException();
+        }
     }
     /**
      * Удаляет элемент массива.
