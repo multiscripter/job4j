@@ -22,11 +22,19 @@ public class SimpleList<T> {
      */
     private int size;
     /**
+     * Конструкор без параметров.
+     */
+    SimpleList() {
+        this.size = 10;
+        this.objects = new Object[this.size];
+        this.index = 0;
+    }
+    /**
      * Конструкор.
      * @param size размер контейнера.
      */
     SimpleList(int size) {
-        this.size = size > 0 ? size : 10;
+        this.size = size;
         this.objects = new Object[this.size];
         this.index = 0;
     }
