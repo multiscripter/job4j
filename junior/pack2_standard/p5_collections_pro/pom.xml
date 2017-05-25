@@ -17,5 +17,7 @@
 
     <modules>
         <module>ch1_iterator</module>
+        <module>ch2_generic</module>
+        <module>ch3_list</module>
     </modules>
 </project>
