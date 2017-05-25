@@ -12,27 +12,6 @@ import java.util.NoSuchElementException;
  */
 abstract class SimpleAdstractList<E> extends SimpleAdstractCollection<E> implements ISimpleList<E> {
     /**
-     * Индекс коллекции.
-     */
-    private int index = 0;
-    /**
-     * Массив объектов коллекции.
-     */
-    private Object[] objects;
-    /**
-     * Размер массива элементов.
-     */
-    private int size;
-    /**
-     * Добавляет элемент в конец списка.
-     * @param e добавляемый элемент.
-     * @return true если элемент добавлен в коллекцию.
-     */
-    public boolean add(E e) {
-        this.objects[this.index++] = e;
-        return true;
-    }
-    /**
      * Добавляет элемент в список по индексу.
      * @param index индекс в списке.
      * @param e добавляемый элемент.
@@ -88,7 +67,7 @@ abstract class SimpleAdstractList<E> extends SimpleAdstractCollection<E> impleme
          * @return true если следующий элемент существует, иначе false.
          */
         public boolean hasNext() {
-            return this.index < index;
+            return this.index < size();
         }
         /**
          * Возвращает значение следующего элемента списка.
