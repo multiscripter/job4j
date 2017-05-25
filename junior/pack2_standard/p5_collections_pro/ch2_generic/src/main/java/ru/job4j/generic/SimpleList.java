@@ -5,7 +5,7 @@ package ru.job4j.generic;
  *
  * @param <T> тип контейнера.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-24
  */
 public class SimpleList<T> {
@@ -87,9 +87,7 @@ public class SimpleList<T> {
      * @param index индекс элемента.
      */
     private void shift(int index) {
-        for (int size = this.index - 1; index < size;) {
-            this.objects[index] = this.objects[++index];
-        }
+        System.arraycopy(this.objects, index + 1, this.objects, index, this.index - index - 1);
         this.size--;
     }
     /**
