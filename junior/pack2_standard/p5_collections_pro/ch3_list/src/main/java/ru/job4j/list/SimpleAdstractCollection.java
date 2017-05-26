@@ -11,18 +11,6 @@ import java.util.Iterator;
  */
 abstract class SimpleAdstractCollection<E> extends Object implements ISimpleCollection<E> {
     /**
-     * Индекс коллекции.
-     */
-    private int index = 0;
-    /**
-     * Массив объектов коллекции.
-     */
-    private Object[] objects;
-    /**
-     * Размер массива элементов.
-     */
-    private int size;
-    /**
      * Добавляет элемент в коллекцию.
      * @param e добавляемый элемент.
      * @return true если элемент добавлен в коллекцию.
