@@ -91,51 +91,11 @@ class User implements Comparable<User> {
         return true;
     }
     /**
-     * Возвращает строковое представление объекта.
-     * @return строковое представление объекта.
-     */
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("user name: ");
-        sb.append(this.getName());
-        sb.append(", age: ");
-        sb.append(this.getAge());
-        return sb.toString();
-    }
-    /**
      * Генерирует строковое представление объект пользователя.
      * @return строковое представление объект пользователя.
      */
     @Override
     public String toString() {
         return String.format("User{name: %s, age: %d}", this.getName(), this.getAge());
-    }
-    /**
-     * Сравнивает объекты пользователя.
-     * @param obj целевой объект, с которым сравнивается текущий объект.
-     * @return true если объекты одинаковые, иначе false.
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || this.getClass() != obj.getClass()) {
-            return false;
-        }
-        User user = (User) obj;
-        if (this.name != user.name || this.age != user.age) {
-            return false;
-        }
-        return true;
-    }
-    /**
-      * Возвращает хэш-код объекта пользователя.
-      * @return хэш-код объекта пользователя.
-      */
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, age);
     }
 }
