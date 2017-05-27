@@ -57,14 +57,15 @@ public class UserStoreTest {
      */
     @Test
     public void testDelete() {
-        User[] expected = new User[5];
-        for (int a = 0; a < 5; a++) {
+        int num = 5;
+        User[] expected = new User[num];
+        for (int a = 0; a < num; a++) {
             User user = new User();
             user.setName("FakeUser" + a);
             expected[a] = user;
         }
-        for (int a = 5; a < 11; a++) {
-            this.storeU.delete(Integer.toString(a));
+        for (int a = num; a < 11; a++) {
+            this.storeU.delete(Integer.toString(num));
         }
         User[] result = Arrays.copyOfRange(this.storeU.toArray(), 0, this.storeU.count(), User[].class);
         assertArrayEquals(expected, result);

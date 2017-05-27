@@ -96,7 +96,6 @@ public class SimpleList<T> {
      */
     private void shift(int index) {
         System.arraycopy(this.objects, index + 1, this.objects, index, this.index - index - 1);
-        this.size--;
     }
     /**
      * Получает текущий размер контейнера.
