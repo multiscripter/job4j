@@ -12,33 +12,62 @@ import java.util.NoSuchElementException;
  */
 class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISimpleList<E>, ISimpleDeque<E> {
     /**
-     * Добавляет элемент в начало очереди.
+     * Первый элемент в списке.
+     */
+    private Node first;
+    /**
+     * Последний элемент в списке.
+     */
+    private Node last;
+    /**
+     * Размер списка.
+     */
+    private int size = 0;
+    /**
+     * Добавляет элемент в конец списка.
+     * @param e добавляемый элемент.
+     * @return true если элемент добавлен в список, иначе false.
+     */
+    public boolean add(E e) {
+        Node tmp = new Node(e);
+        if (this.size == 0) {
+            this.first = tmp;
+        } else {
+            tmp.setPrevious(this.last);
+            this.last.setNext(tmp);
+        }
+        this.last = tmp;
+        this.size++;
+        return true;
+    }
+    /**
+     * Добавляет элемент в начало списка.
      * @param e добавляемый элемент.
      */
     public void addFirst(E e) {
     }
     /**
-     * Добавляет элемент в конец очереди.
+     * Добавляет элемент в конец списка.
      * @param e добавляемый элемент.
      */
     public void addLast(E e) {
     }
     /**
-     * Получает головной элемент из очереди.
-     * @return элемент или бросает NoSuchElementException если очередь пуста.
+     * Получает головной элемент из списка.
+     * @return элемент или бросает NoSuchElementException если список пуста.
      */
     public E element() {
         return (E) new Object();
     }
     /**
-     * Получает первый элемент в очереди.
+     * Получает первый элемент в списке.
      * @return элемент.
      */
     public E getFirst() {
         return (E) new Object();
     }
     /**
-     * Получает последний элемент в очереди.
+     * Получает последний элемент в списке.
      * @return элемент.
      */
     public E getLast() {
@@ -56,101 +85,101 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
         return new SimpleListIterator(index);
     }
     /**
-     * Добавляет элемент в очередь если есть место.
+     * Добавляет элемент в список если есть место.
      * @param e добавляемый элемент.
-     * @return true если элемент добавлен в конец очереди, иначе false.
+     * @return true если элемент добавлен в конец списка, иначе false.
      */
     public boolean offer(E e) {
         return true;
     }
     /**
-     * Добавляет элемент в начало очереди.
+     * Добавляет элемент в начало списка.
      * @param e добавляемый элемент.
-     * @return true если элемент добавлен в начало очереди, иначе false.
+     * @return true если элемент добавлен в начало списка, иначе false.
      */
     public boolean offerFirst(E e) {
         return true;
     }
     /**
-     * Добавляет элемент в конец очереди.
+     * Добавляет элемент в конец списка.
      * @param e добавляемый элемент.
-     * @return true если элемент добавлен в конец очереди, иначе false.
+     * @return true если элемент добавлен в конец списка, иначе false.
      */
     public boolean offerLast(E e) {
         return true;
     }
     /**
-     * Получает головной элемент из очереди.
-     * @return элемент или null если очередь пуста.
+     * Получает головной элемент из списка.
+     * @return элемент или null если список пуст.
      */
     public E peek() {
         return (E) new Object();
     }
     /**
-     * Получает первый элемент из очереди.
-     * @return элемент или null если очередь пуста.
+     * Получает первый элемент из списка.
+     * @return элемент или null если список пуст.
      */
     public E peekFirst() {
         return (E) new Object();
     }
     /**
-     * Получает последний элемент из очереди.
-     * @return элемент или null если очередь пуста.
+     * Получает последний элемент из списка.
+     * @return элемент или null если список пуст.
      */
     public E peekLast() {
         return (E) new Object();
     }
     /**
-     * Получает и удаляет головной элемент из очереди.
-     * @return удалённый элемент или null если очередь пуста.
+     * Получает и удаляет головной элемент из списка.
+     * @return удалённый элемент или null если список пуст.
      */
     public E poll() {
         return (E) new Object();
     }
     /**
-     * Получает и удаляет первый элемент в очереди.
-     * @return удалённый элемент или null если очередь пуста.
+     * Получает и удаляет первый элемент в списке.
+     * @return удалённый элемент или null если список пуст.
      */
     public E pollFirst() {
         return (E) new Object();
     }
     /**
-     * Получает и удаляет последний элемент в очереди.
-     * @return удалённый элемент или null если очередь пуста.
+     * Получает и удаляет последний элемент в списке.
+     * @return удалённый элемент или null если список пуст.
      */
     public E pollLast() {
         return (E) new Object();
     }
     /**
-     * Добавляет элемент в начало очереди. Эквивалент addFirst(E e).
+     * Добавляет элемент в начало списка. Эквивалент addFirst(E e).
      * @param e добавляемый элемент.
      */
     public void push(E e) {
     }
     /**
-     * Получает и удаляет первый элемент в очереди. Эквивалент removeFirst().
-     * @return элемент или null если очередь пуста.
+     * Получает и удаляет первый элемент в списке. Эквивалент removeFirst().
+     * @return элемент или null если список пуст.
      */
     public E pop() {
         return (E) new Object();
     }
     /**
-     * Получает и удаляет первый элемент в очереди.
+     * Получает и удаляет первый элемент в списке.
      * @return элемент.
      */
     public E remove() {
         return (E) new Object();
     }
     /**
-     * Получает и удаляет первый элемент в очереди.
-     * @return элемент или null если очередь пуста.
+     * Получает и удаляет первый элемент в списке.
+     * @return элемент или null если список пуст.
      */
     public E removeFirst() {
         return (E) new Object();
     }
     /**
-     * Получает и удаляет последний элемент в очереди.
-     * @return элемент или null если очередь пуста.
+     * Получает и удаляет последний элемент в списке.
+     * @return элемент или null если список пуст.
      */
     public E removeLast() {
         return (E) new Object();
@@ -267,6 +296,76 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
          */
         public void remove() {
             SimpleLinkedList.this.remove();
+        }
+    }
+    /**
+     * Класс Node реализует сущность Элемент списка.
+     *
+     * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
+     * @version 1
+     * @since 2017-05-28
+     */
+    private class Node {
+        /**
+         * Объект, сохраняемый в элементе списка.
+         */
+        private E object;
+        /**
+         * Ссылка на предыдущий элемент списка.
+         */
+        private Node previous;
+        /**
+         * Ссылка на следующий элемент списка.
+         */
+        private Node next;
+        /**
+         * Конструктор.
+         * @param e Объект, сохраняемый в элементе списка.
+         */
+        Node(E e) {
+            this.object = e;
+        }
+        /**
+         * Получает объект, сохраняемый в элементе списка.
+         * @return объект, сохраняемый в элементе списка.
+         */
+        public E getObject() {
+            return this.object;
+        }
+        /**
+         * Получает предыдущий элемент списка.
+         * @return предыдущий элемент списка.
+         */
+        public Node getPrevious() {
+            return this.previous;
+        }
+        /**
+         * Получает следующий элемент списка.
+         * @return следующий элемент списка.
+         */
+        public Node getNext() {
+            return this.next;
+        }
+        /**
+         * Устанавливает объект, сохраняемый в элементе списка.
+         * @param object объект, сохраняемый в элементе списка.
+         */
+        public void setObject(E object) {
+            this.object = object;
+        }
+        /**
+         * Устанавливает предыдущий элемент списка.
+         * @param previous предыдущий элемент списка.
+         */
+        public void setPrevious(Node previous) {
+            this.previous = previous;
+        }
+        /**
+         * Устанавливает следующий элемент списка.
+         * @param next следующий элемент списка.
+         */
+        public void setNext(Node next) {
+            this.next = next;
         }
     }
 }
