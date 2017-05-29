@@ -73,35 +73,6 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
         return this.first.getObject();
     }
     /**
-     * Получает элемент из списке по индексу.
-     * @param index индекс элемента.
-     * @return элемент.
-     */
-    public E get(int index) {
-        if (index < 0 || index >= this.size()) {
-            throw new IndexOutOfBoundsException();
-        }
-        Node tmp;
-        if (index > this.size() / 2) {
-            tmp = this.last;
-            for (int a = this.size() - 1, end = index - 1; a > end; a--) {
-                if (a == index) {
-                    break;
-                }
-                tmp = tmp.getPrevious();
-            }
-        } else {
-            tmp = this.first;
-            for (int a = 0, end = index + 1; a < end; a++) {
-                if (a == index) {
-                    break;
-                }
-                tmp = tmp.getNext();
-            }
-        }
-        return tmp.getObject();
-    }
-    /**
      * Получает первый элемент в списке.
      * @return элемент.
      */
@@ -120,7 +91,7 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
      * @param index индекс начального элемента итератора.
      * @return объект списочного итератора.
      */
-    public SimpleListIterator listIterator(int index) {
+    public ListIterator listIterator(int index) {
         if (index < 0 || index >= size()) {
             throw new IndexOutOfBoundsException();
         }
@@ -180,6 +151,7 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
         Node tmp = this.first;
         this.first = tmp.getNext();
         this.first.setPrevious(null);
+        this.size--;
         return tmp.getObject();
     }
     /**
@@ -197,6 +169,7 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
         Node tmp = this.last;
         this.last = tmp.getPrevious();
         this.last.setNext(null);
+        this.size--;
         return tmp.getObject();
     }
     /**
@@ -219,7 +192,7 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
     }
     /**
      * Получает и удаляет первый элемент в списке.
-     * @return элемент.
+     * @return элемент или null если список пуст.
      */
     public E remove() {
         E tmp = this.poll();
@@ -251,43 +224,18 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
         return tmp;
     }
     /**
-     * Заменяет элемент в список по индексу.
-     * @param index индекс заменяемого элемента в списке.
-     * @param e заменающий элемент.
-     * @return удалённый элемент.
-     */
-    public E set(int index, E e) {
-        if (index < 0 || index > this.size()) {
-            throw new IndexOutOfBoundsException();
-        }
-        Node tmp;
-        if (index > this.size() / 2) {
-            tmp = this.last;
-            for (int a = this.size() - 1, end = index - 1; a > end; a--) {
-                if (a == index) {
-                    tmp.setObject(e);
-                    break;
-                }
-                tmp = tmp.getPrevious();
-            }
-        } else {
-            tmp = this.first;
-            for (int a = 0, end = index + 1; a < end; a++) {
-                if (a == index) {
-                    tmp.setObject(e);
-                    break;
-                }
-                tmp = tmp.getNext();
-            }
-        }
-        return tmp.getObject();
-    }
-    /**
      * Возвращает число элементов в коллекции.
      * @return число элементов в коллекции.
      */
     public int size() {
         return this.size > Integer.MAX_VALUE ? Integer.MAX_VALUE : this.size;
+    }
+    /**
+     * Устанавливает размер списка.
+     * @param size размер списка.
+     */
+    private void setSize(int size) {
+        this.size = size;
     }
     /**
      * Класс SimpleListIterator реализует сущность Списочный итератор.
@@ -302,10 +250,34 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
          */
         private int index = 0;
         /**
+         * Последний узел, полученный итератором.
+         */
+        private Node cur;
+        /**
          * Конструктор.
          * @param index начальный элемент итератора.
          */
         SimpleListIterator(int index) {
+            if (index < 0 || index > SimpleLinkedList.this.size()) {
+                throw new IndexOutOfBoundsException();
+            }
+            if (index > SimpleLinkedList.this.size() / 2) {
+                this.cur = SimpleLinkedList.this.last;
+                for (int a = SimpleLinkedList.this.size() - 1, end = index - 1; a > end; a--) {
+                    if (a == index) {
+                        break;
+                    }
+                    this.cur = this.cur.getPrevious();
+                }
+            } else {
+                this.cur = SimpleLinkedList.this.first;
+                for (int a = 0, end = index + 1; a < end; a++) {
+                    if (a == index) {
+                        break;
+                    }
+                    this.cur = this.cur.getNext();
+                }
+            }
             this.index = index;
         }
         /**
@@ -313,8 +285,13 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
          * @param e добавляемый элемент.
          */
         public void add(E e) {
-            add(e);
+            Node tmp = new Node(e);
+            tmp.setPrevious(this.cur.getPrevious());
+            this.cur.getPrevious().setNext(tmp);
+            tmp.setNext(this.cur);
+            this.cur.setPrevious(tmp);
             this.index++;
+            SimpleLinkedList.this.setSize(SimpleLinkedList.this.size() + 1);
         }
         /**
          * Проверяет существование следующего элемента.
@@ -336,7 +313,10 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
          */
         public E next() {
             try {
-                return (E) get(this.index++);
+                E tmp = this.cur.getObject();
+                this.cur = this.cur.getNext();
+                this.index++;
+                return tmp;
             } catch (NoSuchElementException e) {
                 throw new NoSuchElementException();
             }
@@ -354,7 +334,10 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
          */
         public E previous() {
             try {
-                return (E) get(this.index--);
+                E tmp = this.cur.getObject();
+                this.cur = this.cur.getPrevious();
+                this.index--;
+                return tmp;
             } catch (NoSuchElementException e) {
                 throw new NoSuchElementException();
             }
@@ -371,13 +354,15 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
          * @param e заменающий элемент.
          */
         public void set(E e) {
-            SimpleLinkedList.this.set(this.index, e);
+            this.cur.getPrevious().setObject(e);
         }
         /**
          * Удаляет текущий элемент из списка.
          */
         public void remove() {
-            SimpleLinkedList.this.remove();
+            this.cur.setPrevious(this.cur.getPrevious().getPrevious());
+            this.cur.getPrevious().setNext(this.cur);
+            SimpleLinkedList.this.setSize(SimpleLinkedList.this.size() - 1);
         }
     }
     /**

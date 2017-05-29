@@ -1,9 +1,10 @@
 package ru.job4j.list;
 
-//import java.util.Iterator;
+import java.util.Iterator;
+import java.util.ListIterator;
 import org.junit.Before;
 import org.junit.Test;
-//import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 /**
@@ -35,6 +36,21 @@ public class SimpleLinkedListTest {
     public void testAdd() {
         boolean result = this.sll.add("Baz");
         assertTrue(result);
+    }
+    /**
+     * Тестирует add(int index, E e).
+     */
+    @Test
+    public void testAddIndex() {
+        String[] expected = {"Foo0", "Foo1", "Baz", "Foo2"};
+        this.sll.add(2, "Baz");
+        String[] result = new String[4];
+        Iterator<String> iter = this.sll.iterator();
+        int a = 0;
+        while (a < 4) {
+            result[a++] = iter.next();
+        }
+        assertArrayEquals(expected, result);
     }
     /**
      * Тестирует addFirst(E e).
@@ -137,6 +153,32 @@ public class SimpleLinkedListTest {
         String expected = "Foo8";
         String result = this.sll.getLast();
         assertEquals(expected, result);
+    }
+    /**
+     * Тестирует iterator().
+     */
+    @Test
+    public void testIterator() {
+        Iterator<String> iter = this.sll.iterator();
+        String[] expected = {"Foo0", "Foo1", "Foo2", "Foo3", "Foo4", "Foo5", "Foo6", "Foo7", "Foo8"};
+        String[] result = new String[9];
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
+    }
+    /**
+     * Тестирует listIterator().
+     */
+    @Test
+    public void testListIterator() {
+        ListIterator<String> iter = this.sll.listIterator(4);
+        String[] expected = {"Foo4", "Foo5", "Foo6", "Foo7", "Foo8"};
+        String[] result = new String[5];
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
     }
     /**
      * Тестирует offer().
@@ -248,6 +290,20 @@ public class SimpleLinkedListTest {
         this.sll.remove();
         String result = this.sll.getFirst();
         assertEquals(expected, result);
+    }
+    /**
+     * Тестирует remove(int index).
+     */
+    @Test
+    public void testRemoveIndex() {
+        this.sll.remove(6);
+        ListIterator<String> iter = this.sll.listIterator(4);
+        String[] expected = {"Foo4", "Foo5", "Foo7", "Foo8"};
+        String[] result = new String[4];
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
     }
     /**
      * Тестирует removeFirst().

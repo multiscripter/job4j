@@ -28,7 +28,7 @@ abstract class SimpleAbstractSequentialList<E> extends SimpleAdstractList<E> {
      * @return объект итератора.
      */
     public Iterator<E> iterator() {
-        return iterator();
+        return listIterator(0);
     }
     /**
      * Получает элемент из списка по индексу.
@@ -58,7 +58,7 @@ abstract class SimpleAbstractSequentialList<E> extends SimpleAdstractList<E> {
             throw new IndexOutOfBoundsException();
         }
         ListIterator<E> iter = listIterator(index);
-        E deleted = (E) iter.next();
+        E deleted = iter.next();
         iter.remove();
         return deleted;
     }
@@ -73,7 +73,7 @@ abstract class SimpleAbstractSequentialList<E> extends SimpleAdstractList<E> {
             throw new IndexOutOfBoundsException();
         }
         ListIterator<E> iter = listIterator(index);
-        E replaced = (E) iter.next();
+        E replaced = iter.next();
         iter.set(e);
         return replaced;
     }
