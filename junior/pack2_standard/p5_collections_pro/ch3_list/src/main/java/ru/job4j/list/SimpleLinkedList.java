@@ -45,33 +45,75 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
      * @param e добавляемый элемент.
      */
     public void addFirst(E e) {
+        Node tmp = new Node(e);
+        if (this.size == 0) {
+            this.last = tmp;
+        } else {
+            tmp.setNext(this.first);
+            this.first.setPrevious(tmp);
+        }
+        this.first = tmp;
+        this.size++;
     }
     /**
      * Добавляет элемент в конец списка.
      * @param e добавляемый элемент.
      */
     public void addLast(E e) {
+        this.add(e);
     }
     /**
      * Получает головной элемент из списка.
      * @return элемент или бросает NoSuchElementException если список пуста.
      */
     public E element() {
-        return (E) new Object();
+        if (this.first == null) {
+            throw new NoSuchElementException();
+        }
+        return this.first.getObject();
+    }
+    /**
+     * Получает элемент из списке по индексу.
+     * @param index индекс элемента.
+     * @return элемент.
+     */
+    public E get(int index) {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node tmp;
+        if (index > this.size() / 2) {
+            tmp = this.last;
+            for (int a = this.size() - 1, end = index - 1; a > end; a--) {
+                if (a == index) {
+                    break;
+                }
+                tmp = tmp.getPrevious();
+            }
+        } else {
+            tmp = this.first;
+            for (int a = 0, end = index + 1; a < end; a++) {
+                if (a == index) {
+                    break;
+                }
+                tmp = tmp.getNext();
+            }
+        }
+        return tmp.getObject();
     }
     /**
      * Получает первый элемент в списке.
      * @return элемент.
      */
     public E getFirst() {
-        return (E) new Object();
+        return this.element();
     }
     /**
      * Получает последний элемент в списке.
      * @return элемент.
      */
     public E getLast() {
-        return (E) new Object();
+        return this.last.getObject();
     }
     /**
      * Возвращает объект списочного итератора.
@@ -87,102 +129,126 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
     /**
      * Добавляет элемент в список если есть место.
      * @param e добавляемый элемент.
-     * @return true если элемент добавлен в конец списка, иначе false.
+     * @return true если элемент добавлен в конец списка.
      */
     public boolean offer(E e) {
-        return true;
+        return this.add(e);
     }
     /**
      * Добавляет элемент в начало списка.
      * @param e добавляемый элемент.
-     * @return true если элемент добавлен в начало списка, иначе false.
+     * @return true если элемент добавлен в начало списка.
      */
     public boolean offerFirst(E e) {
+        this.addFirst(e);
         return true;
     }
     /**
      * Добавляет элемент в конец списка.
      * @param e добавляемый элемент.
-     * @return true если элемент добавлен в конец списка, иначе false.
+     * @return true если элемент добавлен в конец списка.
      */
     public boolean offerLast(E e) {
-        return true;
+        return this.add(e);
     }
     /**
      * Получает головной элемент из списка.
      * @return элемент или null если список пуст.
      */
     public E peek() {
-        return (E) new Object();
+        return this.first.getObject();
     }
     /**
      * Получает первый элемент из списка.
      * @return элемент или null если список пуст.
      */
     public E peekFirst() {
-        return (E) new Object();
+        return this.first.getObject();
     }
     /**
      * Получает последний элемент из списка.
      * @return элемент или null если список пуст.
      */
     public E peekLast() {
-        return (E) new Object();
+        return this.last.getObject();
     }
     /**
      * Получает и удаляет головной элемент из списка.
      * @return удалённый элемент или null если список пуст.
      */
     public E poll() {
-        return (E) new Object();
+        Node tmp = this.first;
+        this.first = tmp.getNext();
+        this.first.setPrevious(null);
+        return tmp.getObject();
     }
     /**
      * Получает и удаляет первый элемент в списке.
      * @return удалённый элемент или null если список пуст.
      */
     public E pollFirst() {
-        return (E) new Object();
+        return this.poll();
     }
     /**
      * Получает и удаляет последний элемент в списке.
      * @return удалённый элемент или null если список пуст.
      */
     public E pollLast() {
-        return (E) new Object();
+        Node tmp = this.last;
+        this.last = tmp.getPrevious();
+        this.last.setNext(null);
+        return tmp.getObject();
     }
     /**
      * Добавляет элемент в начало списка. Эквивалент addFirst(E e).
      * @param e добавляемый элемент.
      */
     public void push(E e) {
+        this.addFirst(e);
     }
     /**
      * Получает и удаляет первый элемент в списке. Эквивалент removeFirst().
      * @return элемент или null если список пуст.
      */
     public E pop() {
-        return (E) new Object();
+        E tmp = this.poll();
+        if (tmp == null) {
+            throw new NoSuchElementException();
+        }
+        return tmp;
     }
     /**
      * Получает и удаляет первый элемент в списке.
      * @return элемент.
      */
     public E remove() {
-        return (E) new Object();
+        E tmp = this.poll();
+        if (tmp == null) {
+            throw new NoSuchElementException();
+        }
+        return tmp;
     }
     /**
      * Получает и удаляет первый элемент в списке.
      * @return элемент или null если список пуст.
      */
     public E removeFirst() {
-        return (E) new Object();
+        E tmp = this.poll();
+        if (tmp == null) {
+            throw new NoSuchElementException();
+        }
+        return tmp;
     }
     /**
      * Получает и удаляет последний элемент в списке.
      * @return элемент или null если список пуст.
      */
     public E removeLast() {
-        return (E) new Object();
+        E tmp = this.pollLast();
+        if (tmp == null) {
+            throw new NoSuchElementException();
+        }
+        return tmp;
     }
     /**
      * Заменяет элемент в список по индексу.
@@ -194,18 +260,34 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
         if (index < 0 || index > this.size()) {
             throw new IndexOutOfBoundsException();
         }
-        //E previously = (E) this.objects[index];
-        //this.objects[index] = e;
-        //return previously;
-        return (E) new Object();
+        Node tmp;
+        if (index > this.size() / 2) {
+            tmp = this.last;
+            for (int a = this.size() - 1, end = index - 1; a > end; a--) {
+                if (a == index) {
+                    tmp.setObject(e);
+                    break;
+                }
+                tmp = tmp.getPrevious();
+            }
+        } else {
+            tmp = this.first;
+            for (int a = 0, end = index + 1; a < end; a++) {
+                if (a == index) {
+                    tmp.setObject(e);
+                    break;
+                }
+                tmp = tmp.getNext();
+            }
+        }
+        return tmp.getObject();
     }
     /**
      * Возвращает число элементов в коллекции.
      * @return число элементов в коллекции.
      */
     public int size() {
-        return -1;
-        //return this.cursor > Integer.MAX_VALUE ? Integer.MAX_VALUE : this.cursor;
+        return this.size > Integer.MAX_VALUE ? Integer.MAX_VALUE : this.size;
     }
     /**
      * Класс SimpleListIterator реализует сущность Списочный итератор.
