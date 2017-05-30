@@ -8,23 +8,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 /**
- * Класс SimpleLimkedPriorityQueueTest тестирует класс SimpleLimkedPriorityQueue<E>.
+ * Класс SimpleLinkedPriorityQueueTest тестирует класс SimpleLinkedPriorityQueue<E>.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 1
  * @since 2017-05-30
  */
-public class SimpleLimkedPriorityQueueTest {
+public class SimpleLinkedPriorityQueueTest {
     /**
      * Объект связного списка.
      */
-    private SimpleLimkedPriorityQueue<String> slpq;
+    private SimpleLinkedPriorityQueue<String> slpq;
     /**
      * Действия перед тестом.
      */
     @Before
     public void beforeTest() {
-        this.slpq = new SimpleLimkedPriorityQueue<>();
+        this.slpq = new SimpleLinkedPriorityQueue<>();
         for (int a = 0; a < 9; a++) {
             this.slpq.add("Foo" + a * 2);
         }

@@ -4,14 +4,14 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 /**
- * Класс SimpleLimkedPriorityQueue реализует сущность Очередь с приоритетом.
+ * Класс SimpleLinkedPriorityQueue реализует сущность Очередь с приоритетом.
  *
  * @param <E> параметризированный тип.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 1
  * @since 2017-05-30
  */
-public class SimpleLimkedPriorityQueue<E> extends SimpleAbstractQueue<E> {
+public class SimpleLinkedPriorityQueue<E> extends SimpleAbstractQueue<E> {
     /**
      * Первый элемент в списке.
      */
@@ -31,7 +31,7 @@ public class SimpleLimkedPriorityQueue<E> extends SimpleAbstractQueue<E> {
     /**
      * Конструктор без параметров.
      */
-    SimpleLimkedPriorityQueue() {
+    SimpleLinkedPriorityQueue() {
         this.comparator = new Comparator<E>() {
             @Override
             public int compare(E o1, E o2) {
@@ -43,7 +43,7 @@ public class SimpleLimkedPriorityQueue<E> extends SimpleAbstractQueue<E> {
      * Конструктор.
      * @param comparator объект компаратора.
      */
-    SimpleLimkedPriorityQueue(Comparator<? super E> comparator) {
+    SimpleLinkedPriorityQueue(Comparator<? super E> comparator) {
         this.comparator = comparator;
     }
     /**
@@ -201,7 +201,7 @@ public class SimpleLimkedPriorityQueue<E> extends SimpleAbstractQueue<E> {
          * Конструктор.
          */
         SimpleIterator() {
-            this.cur = SimpleLimkedPriorityQueue.this.first;
+            this.cur = SimpleLinkedPriorityQueue.this.first;
         }
         /**
          * Проверяет существование следующего элемента.
@@ -230,7 +230,7 @@ public class SimpleLimkedPriorityQueue<E> extends SimpleAbstractQueue<E> {
         public void remove() {
             this.cur.setPrevious(this.cur.getPrevious().getPrevious());
             this.cur.getPrevious().setNext(this.cur);
-            SimpleLimkedPriorityQueue.this.setSize(SimpleLimkedPriorityQueue.this.size() - 1);
+            SimpleLinkedPriorityQueue.this.setSize(SimpleLinkedPriorityQueue.this.size() - 1);
         }
     }
     /**
