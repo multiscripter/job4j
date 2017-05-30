@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 /**
- * Класс SimpleLinkedPriorityQueue реализует сущность Очередь с приоритетом.
+ * Класс SimpleLinkedPriorityQueue реализует сущность Списочная очередь с приоритетом.
  *
  * @param <E> параметризированный тип.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
@@ -25,11 +25,11 @@ public class SimpleLinkedPriorityQueue<E> extends SimpleAbstractQueue<E> {
      */
     private int size = 0;
     /**
-     * Компаратор по умолчанию.
+     * Компаратор.
      */
     private final Comparator<? super E> comparator;
     /**
-     * Конструктор без параметров.
+     * Конструктор без параметров с компаратором по умолчанию.
      */
     SimpleLinkedPriorityQueue() {
         this.comparator = new Comparator<E>() {

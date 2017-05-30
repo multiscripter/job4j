@@ -1,22 +1,24 @@
 package ru.job4j.list;
 
+//import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 /**
- * Класс SimpleLinkedList реализует сущность Связный список.
+ * Класс SimpleLinkedStack реализует сущность Списочный стэк.
  *
  * @param <E> параметризированный тип.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 1
- * @since 2017-05-26
+ * @since 2017-05-30
  */
-class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISimpleList<E>, ISimpleDeque<E> {
+public class SimpleLinkedStack<E> extends SimpleAbstractSequentialList<E> {
     /**
-     * Первый элемент в списке.
+     * Первый элемент в стэке.
      */
     private Node first;
     /**
-     * Последний элемент в списке.
+     * Последний элемент в стэке.
      */
     private Node last;
     /**
@@ -24,7 +26,7 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
      */
     private int size = 0;
     /**
-     * Добавляет элемент в конец списка.
+     * Добавляет элемент на вершину стэка.
      * @param e добавляемый элемент.
      * @return true если элемент добавлен в список, иначе false.
      */
@@ -41,50 +43,26 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
         return true;
     }
     /**
-     * Добавляет элемент в начало списка.
-     * @param e добавляемый элемент.
+     * Очищает стэк удалением всех элементов.
      */
-    public void addFirst(E e) {
-        Node tmp = new Node(e);
-        if (this.size == 0) {
-            this.last = tmp;
-        } else {
-            tmp.setNext(this.first);
-            this.first.setPrevious(tmp);
-        }
-        this.first = tmp;
-        this.size++;
+    public void clear() {
+        this.first = null;
+        this.last = null;
+        this.size = 0;
     }
     /**
-     * Добавляет элемент в конец списка.
-     * @param e добавляемый элемент.
+     * Проверяет коллекцию на пустоту.
+     * @return true если коллекция не содержит элементов, иначе false.
      */
-    public void addLast(E e) {
-        this.add(e);
+    public boolean empty() {
+        return this.first == null && this.last == null;
     }
     /**
-     * Получает головной элемент из списка.
-     * @return элемент или бросает NoSuchElementException если список пуста.
+     * Возвращает объект списочного итератора.
+     * @return объект списочного итератора.
      */
-    public E element() {
-        if (this.first == null) {
-            throw new NoSuchElementException();
-        }
-        return this.first.getObject();
-    }
-    /**
-     * Получает первый элемент в списке.
-     * @return элемент.
-     */
-    public E getFirst() {
-        return this.element();
-    }
-    /**
-     * Получает последний элемент в списке.
-     * @return элемент.
-     */
-    public E getLast() {
-        return this.last.getObject();
+    public ListIterator listIterator() {
+        return new SimpleListIterator();
     }
     /**
      * Возвращает объект списочного итератора.
@@ -98,130 +76,59 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
         return new SimpleListIterator(index);
     }
     /**
-     * Добавляет элемент в список если есть место.
-     * @param e добавляемый элемент.
-     * @return true если элемент добавлен в конец списка.
-     */
-    public boolean offer(E e) {
-        return this.add(e);
-    }
-    /**
-     * Добавляет элемент в начало списка.
-     * @param e добавляемый элемент.
-     * @return true если элемент добавлен в начало списка.
-     */
-    public boolean offerFirst(E e) {
-        this.addFirst(e);
-        return true;
-    }
-    /**
-     * Добавляет элемент в конец списка.
-     * @param e добавляемый элемент.
-     * @return true если элемент добавлен в конец списка.
-     */
-    public boolean offerLast(E e) {
-        return this.add(e);
-    }
-    /**
-     * Получает головной элемент из списка.
-     * @return элемент или null если список пуст.
+     * Получает элемент вершины стэка.
+     * @return элемент или бросает исключение "Пустой стэк".
      */
     public E peek() {
-        return this.first.getObject();
-    }
-    /**
-     * Получает первый элемент из списка.
-     * @return элемент или null если список пуст.
-     */
-    public E peekFirst() {
-        return this.first.getObject();
-    }
-    /**
-     * Получает последний элемент из списка.
-     * @return элемент или null если список пуст.
-     */
-    public E peekLast() {
+        if (this.size == 0) {
+            throw new EmptyStackException();
+        }
         return this.last.getObject();
     }
     /**
      * Получает и удаляет головной элемент из списка.
      * @return удалённый элемент или null если список пуст.
      */
-    public E poll() {
-        Node tmp = this.first;
-        this.first = tmp.getNext();
-        this.first.setPrevious(null);
-        this.size--;
-        return tmp.getObject();
-    }
-    /**
-     * Получает и удаляет первый элемент в списке.
-     * @return удалённый элемент или null если список пуст.
-     */
-    public E pollFirst() {
-        return this.poll();
-    }
-    /**
-     * Получает и удаляет последний элемент в списке.
-     * @return удалённый элемент или null если список пуст.
-     */
-    public E pollLast() {
-        Node tmp = this.last;
-        this.last = tmp.getPrevious();
-        this.last.setNext(null);
-        this.size--;
-        return tmp.getObject();
-    }
-    /**
-     * Добавляет элемент в начало списка. Эквивалент addFirst(E e).
-     * @param e добавляемый элемент.
-     */
-    public void push(E e) {
-        this.addFirst(e);
-    }
-    /**
-     * Получает и удаляет первый элемент в списке. Эквивалент removeFirst().
-     * @return элемент или null если список пуст.
-     */
     public E pop() {
-        E tmp = this.poll();
-        if (tmp == null) {
-            throw new NoSuchElementException();
+        if (this.size == 0) {
+            throw new EmptyStackException();
         }
-        return tmp;
+        Node tmp = this.last;
+        if (this.size == 1) {
+            this.first = null;
+            this.last = null;
+        } else {
+            this.last = tmp.getPrevious();
+            this.last.setNext(null);
+            tmp.setPrevious(null);
+        }
+        this.size--;
+        return tmp.getObject();
     }
     /**
-     * Получает и удаляет первый элемент в списке.
-     * @return элемент или null если список пуст.
+     * Добавляет элемент на вершину стэка.
+     * @param item добавляемый элемент.
+     * @return item добавленный элемент.
      */
-    public E remove() {
-        E tmp = this.poll();
-        if (tmp == null) {
-            throw new NoSuchElementException();
-        }
-        return tmp;
+    public E push(E item) {
+        this.add(item);
+        return item;
     }
     /**
-     * Получает и удаляет первый элемент в списке.
-     * @return элемент или null если список пуст.
+     * Производит поиск элемента в стэке и возвращает расстояние от вершины стэка до элемента.
+     * @param o искомый элемент.
+     * @return расстояние от вершины стэка до элемента.
      */
-    public E removeFirst() {
-        E tmp = this.poll();
-        if (tmp == null) {
-            throw new NoSuchElementException();
+    public int search(Object o) {
+        int shift = 0;
+        ListIterator iter = new SimpleListIterator();
+        while (iter.hasPrevious()) {
+            if (o.equals((Object) iter.previous())) {
+                break;
+            }
+            shift++;
         }
-        return tmp;
-    }
-    /**
-     * Получает и удаляет последний элемент в списке.
-     * @return элемент или null если список пуст.
-     */
-    public E removeLast() {
-        E tmp = this.pollLast();
-        if (tmp == null) {
-            throw new NoSuchElementException();
-        }
-        return tmp;
+        return shift == this.size ? -1 : shift;
     }
     /**
      * Возвращает число элементов в коллекции.
@@ -254,24 +161,30 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
          */
         private Node cur;
         /**
+         * Конструктор без араметров.
+         */
+        SimpleListIterator() {
+            this(0);
+        }
+        /**
          * Конструктор.
          * @param index начальный элемент итератора.
          */
         SimpleListIterator(int index) {
-            if (index < 0 || index >= SimpleLinkedList.this.size()) {
+            if (index < 0 || index >= SimpleLinkedStack.this.size()) {
                 throw new IndexOutOfBoundsException();
             }
-            if (index > SimpleLinkedList.this.size() / 2) {
-                this.cur = SimpleLinkedList.this.last;
-                for (int a = SimpleLinkedList.this.size() - 1, end = index - 1; a > end; a--) {
+            if (index < SimpleLinkedStack.this.size() / 2) {
+                this.cur = SimpleLinkedStack.this.last;
+                for (int a = 0, end = index + 1; a < end; a++) {
                     if (a == index) {
                         break;
                     }
                     this.cur = this.cur.getPrevious();
                 }
             } else {
-                this.cur = SimpleLinkedList.this.first;
-                for (int a = 0, end = index + 1; a < end; a++) {
+                this.cur = SimpleLinkedStack.this.first;
+                for (int a = SimpleLinkedStack.this.size() - 1, end = index - 1; a > end; a--) {
                     if (a == index) {
                         break;
                     }
@@ -291,21 +204,21 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
             tmp.setNext(this.cur);
             this.cur.setPrevious(tmp);
             this.index++;
-            SimpleLinkedList.this.setSize(SimpleLinkedList.this.size() + 1);
+            SimpleLinkedStack.this.setSize(SimpleLinkedStack.this.size() + 1);
         }
         /**
          * Проверяет существование следующего элемента.
          * @return true если следующий элемент существует, иначе false.
          */
         public boolean hasNext() {
-            return this.index < size();
+            return this.index > -1;
         }
         /**
          * Проверяет существование предыдущего элемента.
          * @return true если предыдущий элемент существует, иначе false.
          */
         public boolean hasPrevious() {
-            return this.index > -1;
+            return this.index < size();
         }
         /**
          * Возвращает значение следующего элемента списка.
@@ -315,7 +228,7 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
             try {
                 E tmp = this.cur.getObject();
                 this.cur = this.cur.getNext();
-                this.index++;
+                this.index--;
                 return tmp;
             } catch (NoSuchElementException e) {
                 throw new NoSuchElementException();
@@ -336,7 +249,7 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
             try {
                 E tmp = this.cur.getObject();
                 this.cur = this.cur.getPrevious();
-                this.index--;
+                this.index++;
                 return tmp;
             } catch (NoSuchElementException e) {
                 throw new NoSuchElementException();
@@ -362,7 +275,7 @@ class SimpleLinkedList<E> extends SimpleAbstractSequentialList<E> implements ISi
         public void remove() {
             this.cur.setPrevious(this.cur.getPrevious().getPrevious());
             this.cur.getPrevious().setNext(this.cur);
-            SimpleLinkedList.this.setSize(SimpleLinkedList.this.size() - 1);
+            SimpleLinkedStack.this.setSize(SimpleLinkedStack.this.size() - 1);
         }
     }
     /**
