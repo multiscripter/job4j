@@ -1,6 +1,7 @@
 package ru.job4j.list;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 /**
  * Класс SimpleAdstractList реализует сущность Абстрактный список.
@@ -41,7 +42,7 @@ abstract class SimpleAdstractList<E> extends SimpleAdstractCollection<E> impleme
         throw new UnsupportedOperationException();
     }
     /**
-     * Заменяет элемент в список по индексу.
+     * Заменяет элемент в списке по индексу.
      * @param index индекс заменяемого элемента в списке.
      * @param e заменающий элемент.
      * @return удалённый элемент.
@@ -81,10 +82,83 @@ abstract class SimpleAdstractList<E> extends SimpleAdstractCollection<E> impleme
             }
         }
         /**
-         * Удаляет элемента массива.
+         * Удаляет текущий элемент из списка.
          */
         public void remove() {
-            throw new UnsupportedOperationException();
+            SimpleAdstractList.this.remove(this.index--);
+        }
+    }
+    /**
+     * Класс SimpleListIterator реализует сущность Списочный итератор.
+     *
+     * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
+     * @version 1
+     * @since 2017-05-27
+     */
+    private class SimpleListIterator extends SimpleIterator<E> implements ListIterator<E> {
+        /**
+         * Текущий индекс итератора.
+         */
+        private int index = 0;
+        /**
+         * Конструктор.
+         * @param index начальный элемент итератора.
+         */
+        SimpleListIterator(int index) {
+            this.index = index;
+        }
+        /**
+         * Добавляет элемент в конец списка.
+         * @param e добавляемый элемент.
+         */
+        public void add(E e) {
+            add(e);
+            this.index++;
+        }
+        /**
+         * Проверяет существование предыдущего элемента.
+         * @return true если предыдущий элемент существует, иначе false.
+         */
+        public boolean hasPrevious() {
+            return this.index != 0;
+        }
+        /**
+         * Возвращает индекс значения следующего элемента списка.
+         * @return индекс значения следующего элемента списка.
+         */
+        public int nextIndex() {
+            return this.index;
+        }
+        /**
+         * Возвращает значение предыдущего элемента списка.
+         * @return значение предыдущего элемента списка.
+         */
+        public E previous() {
+            try {
+                return (E) get(this.index--);
+            } catch (NoSuchElementException e) {
+                throw new NoSuchElementException();
+            }
+        }
+        /**
+         * Возвращает индекс значения предыдущего элемента списка.
+         * @return индекс значения предыдущего элемента списка.
+         */
+        public int previousIndex() {
+            return this.index - 1;
+        }
+        /**
+         * Заменяет текущий элемент в списке.
+         * @param e заменающий элемент.
+         */
+        public void set(E e) {
+            SimpleAdstractList.this.set(this.index, (E) e);
+        }
+        /**
+         * Удаляет текущий элемент из списка.
+         */
+        public void remove() {
+            SimpleAdstractList.this.remove(this.index--);
         }
     }
 }

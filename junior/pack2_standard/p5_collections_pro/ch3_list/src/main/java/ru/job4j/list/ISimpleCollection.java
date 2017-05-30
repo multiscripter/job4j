@@ -1,4 +1,6 @@
 package ru.job4j.list;
+
+import java.util.Iterator;
 /**
  * ISimpleCollection объявляет интерфэйс Коллекция.
  *
@@ -14,4 +16,14 @@ public interface ISimpleCollection<E> extends Iterable<E> {
      * @return true если элемент добавлен в коллекцию.
      */
     boolean add(E e);
+    /**
+     * Возвращает итератор коллекции.
+     * @return итератор коллекции.
+     */
+    Iterator<E> iterator();
+    /**
+     * Возвращает число элементов в коллекции.
+     * @return число элементов в коллекции.
+     */
+    int size();
 }
