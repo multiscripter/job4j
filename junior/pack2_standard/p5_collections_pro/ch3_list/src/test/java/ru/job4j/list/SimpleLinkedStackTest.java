@@ -5,7 +5,7 @@ import java.util.ListIterator;
 import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 /**
  * Класс SimpleLinkedStackTest тестирует класс SimpleLinkedStack<E>.
@@ -44,12 +44,38 @@ public class SimpleLinkedStackTest {
         assertArrayEquals(expected, result);
     }
     /**
+     * Тестирует add(int index, E e).
+     */
+    @Test
+    public void testAddByIndex() {
+        String[] expected = {"Bar0", "Foo16", "Foo14", "Foo12", "Foo10", "Bar5", "Foo8", "Foo6", "Foo4", "Foo2", "Bar11", "Foo0"};
+        this.sls.add(0, "Bar0");
+        this.sls.add(5, "Bar5");
+        this.sls.add(10, "Bar11");
+        String[] result = this.sls.toArray(new String[12]);
+        assertArrayEquals(expected, result);
+    }
+    /**
      * Тестирует clear().
      */
     @Test
     public void testClear() {
         this.sls.clear();
         assertEquals(0, this.sls.size());
+    }
+    /**
+     * Тестирует contains(). Указанный в параметре объект есть в стэке.
+     */
+    @Test
+    public void testContainsTrue() {
+        assertTrue(this.sls.contains("Foo8"));
+    }
+    /**
+     * Тестирует contains(). Стэк не содержит указанный в параметре объект.
+     */
+    @Test
+    public void testContainsFalse() {
+        assertFalse(this.sls.contains("Labut"));
     }
     /**
      * Тестирует empty().
@@ -60,7 +86,14 @@ public class SimpleLinkedStackTest {
         assertTrue(this.sls.empty());
     }
     /**
-     * Тестирует listIterator() со дна стэка к вершине.
+     * Тестирует get().
+     */
+    @Test
+    public void testGet() {
+        assertEquals("Foo8", this.sls.get(4));
+    }
+    /**
+     * Тестирует listIterator() от основания стэка к вершине.
      */
     @Test
     public void testListIteratorFromBottomToTop() {
@@ -69,12 +102,11 @@ public class SimpleLinkedStackTest {
         ListIterator<String> iter = this.sls.listIterator(this.sls.size() - 1);
         for (int a = 0; iter.hasNext(); a++) {
             result[a] = iter.next();
-            //System.out.println(result[a]);
         }
         assertArrayEquals(expected, result);
     }
     /**
-     * Тестирует listIterator() с вершине к дну стэка.
+     * Тестирует listIterator() с вершины к основанию стэка.
      */
     @Test
     public void testListIteratorFromTopToBottom() {
@@ -114,6 +146,16 @@ public class SimpleLinkedStackTest {
         assertEquals(expected, result);
     }
     /**
+     * Тестирует remove().
+     */
+    @Test
+    public void testRemove() {
+        String[] expected = {"Foo16", "Foo14", "Foo12", "Foo10", "Foo8", "Foo4", "Foo2", "Foo0"};
+        this.sls.remove(5);
+        String[] result = this.sls.toArray(new String[8]);
+        assertArrayEquals(expected, result);
+    }
+    /**
      * Тестирует search(). Указанный объект есть в стэке.
      */
     @Test
@@ -132,10 +174,38 @@ public class SimpleLinkedStackTest {
         assertEquals(expected, result);
     }
     /**
+     * Тестирует set(int index, E e).
+     */
+    @Test
+    public void testSet() {
+        String[] expected = {"Foo16", "Foo14", "Foo12", "Foo10", "Foo8", "Azaza", "Foo4", "Foo2", "Foo0"};
+        this.sls.set(5, "Azaza");
+        String[] result = this.sls.toArray(new String[9]);
+        assertArrayEquals(expected, result);
+    }
+    /**
      * Тестирует size().
      */
     @Test
     public void testSize() {
         assertEquals(9, this.sls.size());
+    }
+    /**
+     * Тестирует toArray().
+     */
+    @Test
+    public void testToArray() {
+        Object[] expected = {"Foo16", "Foo14", "Foo12", "Foo10", "Foo8", "Foo6", "Foo4", "Foo2", "Foo0"};
+        Object[] result = this.sls.toArray();
+        assertArrayEquals(expected, result);
+    }
+    /**
+     * Тестирует toArray(E[] a).
+     */
+    @Test
+    public void testToEArray() {
+        String[] expected = {"Foo16", "Foo14", "Foo12", "Foo10", "Foo8", "Foo6", "Foo4", "Foo2", "Foo0"};
+        String[] result = this.sls.toArray(new String[9]);
+        assertArrayEquals(expected, result);
     }
 }

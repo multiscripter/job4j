@@ -1,6 +1,5 @@
 package ru.job4j.list;
 
-//import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
@@ -22,7 +21,7 @@ public class SimpleLinkedStack<E> extends SimpleAbstractSequentialList<E> {
      */
     private Node last;
     /**
-     * Размер списка.
+     * Размер стэка.
      */
     private int size = 0;
     /**
@@ -43,12 +42,44 @@ public class SimpleLinkedStack<E> extends SimpleAbstractSequentialList<E> {
         return true;
     }
     /**
+     * Добавляет элемент в стэк.
+     * @param index индекс элемента.
+     * @param e добавляемый элемент.
+     */
+    public void add(int index, E e) {
+        ListIterator<E> iter = new SimpleListIterator(index);
+        iter.add(e);
+    }
+    /**
+     * Добавляет элемент на вершину стэка.
+     * @param e добавляемый элемент.
+     */
+    public void addElement(E e) {
+        this.add(e);
+    }
+    /**
      * Очищает стэк удалением всех элементов.
      */
     public void clear() {
         this.first = null;
         this.last = null;
         this.size = 0;
+    }
+    /**
+     * Проверяет содержит ли стэк заданный элемент.
+     * @param object объект поиска.
+     * @return true если стэк содержит заданный элемент, иначе false;
+     */
+    public boolean contains(Object object) {
+        boolean result = false;
+        ListIterator<E> iter = this.listIterator();
+        while (iter.hasPrevious()) {
+            if (iter.previous().equals((E) object)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
     /**
      * Проверяет коллекцию на пустоту.
@@ -58,21 +89,27 @@ public class SimpleLinkedStack<E> extends SimpleAbstractSequentialList<E> {
         return this.first == null && this.last == null;
     }
     /**
-     * Возвращает объект списочного итератора.
+     * Получает элемент по индексу от вершины стэка.
+     * @param index индекс элемента.
+     * @return элемент.
+     */
+    public E get(int index) {
+        ListIterator<E> iter = new SimpleListIterator(index);
+        return iter.previous();
+    }
+    /**
+     * Возвращает объект списочного итератора с началом не вершине стэка.
      * @return объект списочного итератора.
      */
     public ListIterator listIterator() {
         return new SimpleListIterator();
     }
     /**
-     * Возвращает объект списочного итератора.
+     * Возвращает объект списочного итератора с началом на элементе с индексом index от вершины стэка.
      * @param index индекс начального элемента итератора.
      * @return объект списочного итератора.
      */
     public ListIterator listIterator(int index) {
-        if (index < 0 || index >= size()) {
-            throw new IndexOutOfBoundsException();
-        }
         return new SimpleListIterator(index);
     }
     /**
@@ -86,7 +123,7 @@ public class SimpleLinkedStack<E> extends SimpleAbstractSequentialList<E> {
         return this.last.getObject();
     }
     /**
-     * Получает и удаляет головной элемент из списка.
+     * Получает и удаляет головной элемент из стэка.
      * @return удалённый элемент или null если список пуст.
      */
     public E pop() {
@@ -115,13 +152,24 @@ public class SimpleLinkedStack<E> extends SimpleAbstractSequentialList<E> {
         return item;
     }
     /**
+     * Удаляет элемент в списке по индексу.
+     * @param index индекс элемента.
+     * @return удалённый элемент.
+     */
+    public E remove(int index) {
+        ListIterator<E> iter = new SimpleListIterator(index);
+        E removed = iter.previous();
+        iter.remove();
+        return removed;
+    }
+    /**
      * Производит поиск элемента в стэке и возвращает расстояние от вершины стэка до элемента.
      * @param o искомый элемент.
      * @return расстояние от вершины стэка до элемента.
      */
     public int search(Object o) {
         int shift = 0;
-        ListIterator iter = new SimpleListIterator();
+        ListIterator<E> iter = new SimpleListIterator();
         while (iter.hasPrevious()) {
             if (o.equals((Object) iter.previous())) {
                 break;
@@ -131,6 +179,18 @@ public class SimpleLinkedStack<E> extends SimpleAbstractSequentialList<E> {
         return shift == this.size ? -1 : shift;
     }
     /**
+     * Заменяет элемент в списке по индексу.
+     * @param index индекс элемента.
+     * @param e заменающий элемент.
+     * @return заменённый элемент.
+     */
+    public E set(int index, E e) {
+        ListIterator<E> iter = new SimpleListIterator(index);
+        E replaced = iter.previous();
+        iter.set(e);
+        return replaced;
+    }
+    /**
      * Возвращает число элементов в коллекции.
      * @return число элементов в коллекции.
      */
@@ -138,11 +198,36 @@ public class SimpleLinkedStack<E> extends SimpleAbstractSequentialList<E> {
         return this.size > Integer.MAX_VALUE ? Integer.MAX_VALUE : this.size;
     }
     /**
-     * Устанавливает размер списка.
-     * @param size размер списка.
+     * Устанавливает размер стэка.
+     * @param size размер стэка.
      */
     private void setSize(int size) {
         this.size = size;
+    }
+    /**
+     * Возвращает массив объектов стэка.
+     * @return массив объектов стэка.
+     */
+    public Object[] toArray() {
+        Object[] arr = new Object[this.size];
+        ListIterator iter = this.listIterator();
+        for (int a = 0; a < this.size; a++) {
+            arr[a] = iter.previous();
+        }
+        return arr;
+    }
+    /**
+     * Возвращает массив объектов стэка параметризированного типа.
+     * @param arr массив, в который будут помещены объекты стэка.
+     * @return массив объектов стэка параметризированного типа.
+     */
+    public E[] toArray(E[] arr) {
+        int length = this.size < arr.length ? this.size : arr.length;
+        ListIterator<E> iter = this.listIterator();
+        for (int a = 0; a < length; a++) {
+            arr[a] = iter.previous();
+        }
+        return arr;
     }
     /**
      * Класс SimpleListIterator реализует сущность Списочный итератор.
@@ -194,15 +279,22 @@ public class SimpleLinkedStack<E> extends SimpleAbstractSequentialList<E> {
             this.index = index;
         }
         /**
-         * Добавляет элемент в конец списка.
+         * Добавляет элемент в конец стэка.
          * @param e добавляемый элемент.
          */
         public void add(E e) {
             Node tmp = new Node(e);
-            tmp.setPrevious(this.cur.getPrevious());
-            this.cur.getPrevious().setNext(tmp);
-            tmp.setNext(this.cur);
-            this.cur.setPrevious(tmp);
+            if (this.index == 0) {
+                tmp.setNext(null);
+                tmp.setPrevious(this.cur);
+                this.cur.setNext(tmp);
+                SimpleLinkedStack.this.last = tmp;
+            } else {
+                tmp.setNext(this.cur.getNext());
+                this.cur.getNext().setPrevious(tmp);
+                tmp.setPrevious(this.cur);
+                this.cur.setNext(tmp);
+            }
             this.index++;
             SimpleLinkedStack.this.setSize(SimpleLinkedStack.this.size() + 1);
         }
@@ -267,14 +359,14 @@ public class SimpleLinkedStack<E> extends SimpleAbstractSequentialList<E> {
          * @param e заменающий элемент.
          */
         public void set(E e) {
-            this.cur.getPrevious().setObject(e);
+            this.cur.getNext().setObject(e);
         }
         /**
          * Удаляет текущий элемент из списка.
          */
         public void remove() {
-            this.cur.setPrevious(this.cur.getPrevious().getPrevious());
-            this.cur.getPrevious().setNext(this.cur);
+            this.cur.setNext(this.cur.getNext().getNext());
+            this.cur.getNext().setPrevious(this.cur);
             SimpleLinkedStack.this.setSize(SimpleLinkedStack.this.size() - 1);
         }
     }
