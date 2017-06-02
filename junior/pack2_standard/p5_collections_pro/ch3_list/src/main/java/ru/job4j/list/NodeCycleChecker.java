@@ -1,15 +1,18 @@
 package ru.job4j.list;
 
-import java.util.LinkedList;
 /**
  * Класс NodeCycleChecker реализует сущность Проверятель списка узлов на ссылочную замкнутость.
  *
  * @param <T> параметризированный тип.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-05-31
  */
 class NodeCycleChecker<T> {
+    /**
+     * Позиция.
+     */
+    private int pos = 0;
     /**
      * Проверяет список узлов на ссылочную замкнутость.
      * @param first первый элемент списка.
@@ -17,16 +20,19 @@ class NodeCycleChecker<T> {
      */
     public boolean hasCycle(Node<T> first) {
         boolean result = false;
-        if (first.getNext() != null) {
-            LinkedList<Node<T>> list = new LinkedList<>();
-            list.add(first);
-            do {
-                if (list.contains(list.getLast().getNext())) {
-                    result = true;
+        Node<T> x = first.getNext();
+        if (x != null) {
+            this.pos++;
+            Node<T> x2 = x;
+            for (int a = this.pos * 2; a > this.pos; a--) {
+                x2 = x2.getNext();
+                if (x2 == null) {
                     break;
                 }
-                list.add(list.getLast().getNext());
-            } while (list.getLast() != null);
+            }
+            if (x2 != null) {
+                result = x == x2 ? true : this.hasCycle(x);
+            }
         }
         return result;
     }
