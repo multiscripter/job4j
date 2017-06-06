@@ -38,7 +38,6 @@ public class SimpleLinkedSetTest {
         for (int a = 1; a < 20; a++) {
             sls2.add("Zaz" + a);
         }
-        System.out.println("testBinarySearch---------------------");
         assertTrue(sls2.contains("Zaz17"));
     }
     /**
@@ -47,10 +46,9 @@ public class SimpleLinkedSetTest {
     @Test
     public void testBinarySearch20odd() {
         SimpleLinkedSet<String> sls2 = new SimpleLinkedSet<>();
-        for (int a = 1; a < 21; a++) {
+        for (int a = 1; a < 31; a++) {
             sls2.add("Zaz" + a);
         }
-        System.out.println("testBinarySearch---------------------");
         assertTrue(sls2.contains("Zaz17"));
     }
     /**
@@ -62,7 +60,6 @@ public class SimpleLinkedSetTest {
         for (int a = 1; a < 20; a++) {
             sls2.add("Zaz" + a);
         }
-        System.out.println("testBinarySearch---------------------");
         assertTrue(sls2.contains("Zaz16"));
     }
     /**
@@ -74,7 +71,6 @@ public class SimpleLinkedSetTest {
         for (int a = 1; a < 21; a++) {
             sls2.add("Zaz" + a);
         }
-        System.out.println("testBinarySearch---------------------");
         assertTrue(sls2.contains("Zaz16"));
     }
     /**

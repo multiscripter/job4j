@@ -76,39 +76,30 @@ class SimpleLinkedSet<E> extends SimpleAbstractSet<E> implements ISimpleSet<E> {
         boolean result = false;
         int iters = 0;
         if (this.size() > 0) {
-            System.out.println("this.size(): " + this.size());
-            System.out.println("o: " + o);
             int lIndex = 0;
-            int uIndex = this.size;
+            int uIndex = this.size - 1;
             Node cur = this.middle;
-            System.out.println("this.middle: " + this.middle.getObject());
             int curIndex = this.midindex;
             while (true) {
+                int mIndex = (lIndex + uIndex) / 2;
+                while (curIndex != mIndex) {
+                    cur = curIndex < mIndex ? cur.getNext() : cur.getPrevious();
+                    curIndex = curIndex < mIndex ? curIndex + 1 : curIndex - 1;
+                }
                 if (cur.getObject().equals((E) o)) {
                     result = true;
                     break;
-                } else if (uIndex <= lIndex) {
+                } else if (lIndex > uIndex) {
                     break;
                 }
                 if (cur.compareTo((E) o) < 0) {
-                    lIndex = ++curIndex;
+                    lIndex = curIndex + 1;
                 } else {
-                    uIndex = --curIndex;
+                    uIndex = curIndex - 1;
                 }
-                int mIndex = (lIndex + uIndex) / 2;
-                System.out.println("curIndex: " + curIndex);
-                System.out.println("mIndex: " + mIndex);
-                while (curIndex < mIndex) {
-                    cur = curIndex < mIndex ? cur.getNext() : cur.getPrevious();
-                    System.out.println("cur.getObject(): " + cur.getObject());
-                    curIndex = curIndex < mIndex ? curIndex + 1 : curIndex - 1;
-                }
-                System.out.println("curIndex: " + curIndex);
                 iters++;
             }
         }
-        System.out.println("result: " + result);
-        System.out.println(iters);
         return result;
     }
     /**
