@@ -28,7 +28,54 @@ public class SimpleLinkedSetTest {
         for (int a = 0; a < 9; a++) {
             this.sls.add("Foo" + a * 2);
         }
-        Iterator iter = this.sls.iterator();
+    }
+    /**
+     * Тестирует бинарый поиск.
+     */
+    @Test
+    public void testBinarySearch19odd() {
+        SimpleLinkedSet<String> sls2 = new SimpleLinkedSet<>();
+        for (int a = 1; a < 20; a++) {
+            sls2.add("Zaz" + a);
+        }
+        System.out.println("testBinarySearch---------------------");
+        assertTrue(sls2.contains("Zaz17"));
+    }
+    /**
+     * Тестирует бинарый поиск.
+     */
+    @Test
+    public void testBinarySearch20odd() {
+        SimpleLinkedSet<String> sls2 = new SimpleLinkedSet<>();
+        for (int a = 1; a < 21; a++) {
+            sls2.add("Zaz" + a);
+        }
+        System.out.println("testBinarySearch---------------------");
+        assertTrue(sls2.contains("Zaz17"));
+    }
+    /**
+     * Тестирует бинарый поиск.
+     */
+    @Test
+    public void testBinarySearch19even() {
+        SimpleLinkedSet<String> sls2 = new SimpleLinkedSet<>();
+        for (int a = 1; a < 20; a++) {
+            sls2.add("Zaz" + a);
+        }
+        System.out.println("testBinarySearch---------------------");
+        assertTrue(sls2.contains("Zaz16"));
+    }
+    /**
+     * Тестирует бинарый поиск.
+     */
+    @Test
+    public void testBinarySearch20even() {
+        SimpleLinkedSet<String> sls2 = new SimpleLinkedSet<>();
+        for (int a = 1; a < 21; a++) {
+            sls2.add("Zaz" + a);
+        }
+        System.out.println("testBinarySearch---------------------");
+        assertTrue(sls2.contains("Zaz16"));
     }
     /**
      * Тестирует add(E e). Добавляемого объекта нет в множестве.
