@@ -20,5 +20,6 @@
         <module>ch2_generic</module>
         <module>ch3_list</module>
         <module>ch4_set</module>
+        <module>ch5_map</module>
     </modules>
 </project>
