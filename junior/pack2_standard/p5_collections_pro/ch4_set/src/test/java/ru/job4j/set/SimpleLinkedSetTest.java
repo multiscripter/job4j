@@ -30,6 +30,19 @@ public class SimpleLinkedSetTest {
         }
     }
     /**
+     * Тестирует бинарый поиск. 100000 записей.
+     */
+    @Test
+    public void testBinarySearch100K() {
+        SimpleLinkedSet<String> sls2 = new SimpleLinkedSet<>();
+        System.out.print("testBinarySearch100K: ");
+        long start = System.nanoTime();
+        for (int a = 0; a < 100000; a++) {
+            sls2.add("M" + a);
+        }
+        System.out.println(System.nanoTime() - start);
+    }
+    /**
      * Тестирует бинарый поиск.
      */
     @Test
