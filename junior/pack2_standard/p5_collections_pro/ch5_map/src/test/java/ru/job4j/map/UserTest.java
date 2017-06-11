@@ -142,6 +142,8 @@ public class UserTest {
     public void showMapKeyUserValueUser() {
         User user1 = new User("Vasisualiy", new GregorianCalendar(1965, 11, 20), 1);
         User user2 = new User("Vasisualiy", new GregorianCalendar(1965, 11, 20), 1);
+        System.out.println("user1: " + user1.hashCode());
+        System.out.println("user2: " + user2.hashCode());
         Map<User, Object> map = new HashMap<>();
         map.put(user1, user1);
         map.put(user2, user2);

@@ -2,7 +2,7 @@ package ru.job4j.map;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-//import java.util.Objects;
+import java.util.Objects;
 /**
  * Класс User реализует сущность Пользователь.
  *
@@ -109,11 +109,11 @@ class User implements Comparable<User> {
     /**
      * Возвращает хэш-код объекта пользователя.
      * @return хэш-код объекта пользователя.
-     *
+     */
     @Override
     public int hashCode() {
         return Objects.hash(this.name, this.children, this.birthday);
-    }*/
+    }
     /**
      * Устанавливает дату рождения.
      * @param birthday дата рождения.
