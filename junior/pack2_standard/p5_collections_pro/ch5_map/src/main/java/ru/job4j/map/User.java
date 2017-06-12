@@ -57,7 +57,7 @@ class User implements Comparable<User> {
      * Сравнивает объекты пользователя.
      * @param obj целевой объект, с которым сравнивается текущий объект.
      * @return true если объекты одинаковые. Иначе false.
-     *
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -71,7 +71,7 @@ class User implements Comparable<User> {
             return false;
         }
         return true;
-    }*/
+    }
     /**
      * Получает строку с датой рождения.
      * @return строка с датой рождения.
