@@ -6,8 +6,8 @@ import java.util.Map;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertFalse;
-//import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 /**
  * Класс UserTest тестирует класс User.
  *
@@ -29,44 +29,44 @@ public class UserTest {
     }
     /**
      * Тестирует compareTo(). Объекты равны.
-     *
+     */
     @Test
     public void testCompareTo() {
         User expected = new User("Vasisualiy", new GregorianCalendar(1965, 11, 20), 1);
         assertTrue(expected.compareTo(this.user) == 0);
-    }*/
+    }
     /**
      * Тестирует compareTo(). Левый меньше правого.
-     *
+     */
     @Test
     public void testCompareToLower() {
         User expected = new User("Vasisualiy", new GregorianCalendar(1965, 11, 20), 0);
         assertTrue(expected.compareTo(this.user) < 0);
-    }*/
+    }
     /**
      * Тестирует compareTo(). Левый больше правого.
-     *
+     */
     @Test
     public void testCompareToGreater() {
         User expected = new User("Vasisualiy", new GregorianCalendar(1965, 11, 20), 2);
         assertTrue(expected.compareTo(this.user) > 0);
-    }*/
+    }
     /**
      * Тестирует equals(). Объекты равны.
-     *
+     */
     @Test
     public void testEqualsTrue() {
         User expected = new User("Vasisualiy", new GregorianCalendar(1965, 11, 20), 1);
         assertTrue(expected.equals(this.user));
-    }*/
+    }
     /**
      * Тестирует equals(). Объекты не равны.
-     *
+     */
     @Test
     public void testEqualsFalse() {
         User expected = new User("Vasisualiy", new GregorianCalendar(1965, 11, 20), 2);
         assertFalse(expected.equals(this.user));
-    }*/
+    }
     /**
      * Тестирует getBirthday().
      */
@@ -142,11 +142,11 @@ public class UserTest {
     public void showMapKeyUserValueUser() {
         User user1 = new User("Vasisualiy", new GregorianCalendar(1965, 11, 20), 1);
         User user2 = new User("Vasisualiy", new GregorianCalendar(1965, 11, 20), 1);
-        System.out.println("user1: " + user1.hashCode());
-        System.out.println("user2: " + user2.hashCode());
+        //System.out.println("user1: " + user1.hashCode());
+        //System.out.println("user2: " + user2.hashCode());
         Map<User, Object> map = new HashMap<>();
         map.put(user1, user1);
         map.put(user2, user2);
-        System.out.println(map.toString());
+        //System.out.println(map.toString());
     }
 }

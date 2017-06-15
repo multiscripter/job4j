@@ -67,7 +67,7 @@ class User implements Comparable<User> {
             return false;
         }
         User user = (User) obj;
-        if (this.name != user.name || this.children != user.children || this.birthday.equals(user.getBirthday())) {
+        if (!this.name.equals(user.name) || this.children != user.children || this.birthday.equals(user.getBirthday())) {
             return false;
         }
         return true;
