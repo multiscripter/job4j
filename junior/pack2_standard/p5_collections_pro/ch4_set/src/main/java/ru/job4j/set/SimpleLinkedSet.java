@@ -2,6 +2,7 @@ package ru.job4j.set;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 /**
  * Класс SimpleLinkedSet реализует сущность Множество на связном множестве.
  *
@@ -15,6 +16,14 @@ class SimpleLinkedSet<E> extends SimpleAbstractSet<E> implements ISimpleSet<E> {
      * Первый элемент в множестве.
      */
     private Node first;
+    /**
+     * Средний элемент в множестве.
+     */
+    private Node middle;
+    /**
+     * Индекс среднего элемента в множестве.
+     */
+    private int midindex;
     /**
      * Последний элемент в множестве.
      */
@@ -34,12 +43,18 @@ class SimpleLinkedSet<E> extends SimpleAbstractSet<E> implements ISimpleSet<E> {
             Node tmp = new Node(e);
             if (this.size == 0) {
                 this.first = tmp;
+                this.middle = tmp;
+                this.midindex = 0;
             } else {
                 tmp.setPrevious(this.last);
                 this.last.setNext(tmp);
             }
             this.last = tmp;
             this.size++;
+            if (this.size > 2 && this.size % 2 != 0) {
+                this.middle = this.middle.getNext();
+                this.midindex++;
+            }
             result = true;
         }
         return result;
@@ -59,14 +74,30 @@ class SimpleLinkedSet<E> extends SimpleAbstractSet<E> implements ISimpleSet<E> {
      */
     public boolean contains(Object o) {
         boolean result = false;
+        int iters = 0;
         if (this.size() > 0) {
-            Iterator iter = this.iterator();
-            while (iter.hasNext()) {
-                E tmp = (E) iter.next();
-                if (tmp.equals(o)) {
+            int lIndex = 0;
+            int uIndex = this.size - 1;
+            Node cur = this.middle;
+            int curIndex = this.midindex;
+            while (true) {
+                int mIndex = (lIndex + uIndex) / 2;
+                while (curIndex != mIndex) {
+                    cur = curIndex < mIndex ? cur.getNext() : cur.getPrevious();
+                    curIndex = curIndex < mIndex ? curIndex + 1 : curIndex - 1;
+                }
+                if (cur.getObject().equals((E) o)) {
                     result = true;
                     break;
+                } else if (lIndex > uIndex) {
+                    break;
                 }
+                if (cur.compareTo((E) o) < 0) {
+                    lIndex = curIndex + 1;
+                } else {
+                    uIndex = curIndex - 1;
+                }
+                iters++;
             }
         }
         return result;
@@ -92,6 +123,10 @@ class SimpleLinkedSet<E> extends SimpleAbstractSet<E> implements ISimpleSet<E> {
             if (o.equals(tmp)) {
                 iter.remove();
                 result = true;
+                if (this.size % 2 != 0) {
+                    this.middle = this.middle.getPrevious();
+                    this.midindex--;
+                }
                 break;
             }
             index++;
@@ -194,7 +229,7 @@ class SimpleLinkedSet<E> extends SimpleAbstractSet<E> implements ISimpleSet<E> {
      * @version 1
      * @since 2017-05-28
      */
-    private class Node {
+    private class Node implements Comparable<E> {
         /**
          * Объект, сохраняемый в элементе множества.
          */
@@ -213,6 +248,15 @@ class SimpleLinkedSet<E> extends SimpleAbstractSet<E> implements ISimpleSet<E> {
          */
         Node(E e) {
             this.object = e;
+        }
+        /**
+         * Сравнивает два объекта пользователя.
+         * @param o объект сравнения.
+         * @return результат сравнения.
+         */
+        @Override
+        public int compareTo(E o) {
+            return this.object.hashCode() - o.hashCode();
         }
         /**
          * Получает объект, сохраняемый в элементе множества.
@@ -234,6 +278,14 @@ class SimpleLinkedSet<E> extends SimpleAbstractSet<E> implements ISimpleSet<E> {
          */
         public Node getNext() {
             return this.next;
+        }
+        /**
+         * Возвращает хэш-код объекта пользователя.
+         * @return хэш-код объекта пользователя.
+         */
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.object);
         }
         /**
          * Устанавливает объект, сохраняемый в элементе множества.

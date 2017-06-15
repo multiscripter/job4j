@@ -30,6 +30,19 @@ public class SimpleArraySetTest {
         }
     }
     /**
+     * Тестирует линейный поиск. 100000 записей.
+     */
+    @Test
+    public void testLinearSearch100K() {
+        SimpleArraySet<String> sas = new SimpleArraySet<>();
+        System.out.print("testLinearSearch100K: ");
+        long start = System.nanoTime();
+        for (int a = 0; a < 100000; a++) {
+            sas.add("M" + a);
+        }
+        System.out.println(System.nanoTime() - start);
+    }
+    /**
      * Тестирует add(E e).
      */
     @Test
