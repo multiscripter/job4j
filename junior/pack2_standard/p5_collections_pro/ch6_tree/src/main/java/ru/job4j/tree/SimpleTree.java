@@ -3,6 +3,7 @@ package ru.job4j.tree;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 /**
@@ -17,7 +18,7 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
     /**
      * Корневой элемент дерева.
      */
-    private List<Node<E>> root;
+    private List<Node<E>> root = new LinkedList<>();
     /**
      * Количество узлов дерева.
      */
@@ -26,7 +27,6 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
      * Конструктор без параметров.
      */
     SimpleTree() {
-        this.root = new LinkedList<>();
     }
     /**
      * Конструктор.
@@ -40,7 +40,7 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
      * @param e элемент, добавляемый в корень.
      */
     public void add(E e) {
-        this.root = new LinkedList<>();
+        this.root.clear();
         this.root.add(new Node(null, e));
         this.size = 1;
     }
@@ -53,11 +53,13 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
     @Override
     public boolean add(E parent, E child) {
         boolean result = false;
-        Node<E> node = this.find(this.root.get(0), parent);
-        if (node != null) {
-            result = node.add(child);
-            if (result) {
-                this.size++;
+        if (!this.root.isEmpty()) {
+            Node<E> node = this.find(this.root.get(0), parent);
+            if (node != null) {
+                result = node.add(child);
+                if (result) {
+                    this.size++;
+                }
             }
         }
         return result;
@@ -72,8 +74,7 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
         Node<E> result = null;
         if (node.compareTo(e) == 0) {
             result = node;
-        }
-        if (node.hasChildren()) {
+        } else if (node.hasChildren()) {
             Iterator<Node<E>> iter = node.iterator();
             while (iter.hasNext()) {
                 result = this.find(iter.next(), e);
@@ -231,7 +232,9 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
          * Конструктор.
          */
         SimpleIterator() {
-            this.cur = SimpleTree.this.root.get(0);
+            if (!SimpleTree.this.root.isEmpty()) {
+                this.cur = SimpleTree.this.root.get(0);
+            }
         }
         /**
          * Проверяет существование следующего элемента.
@@ -248,18 +251,22 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
         private Node<E> getNext(Node<E> node) {
             Node<E> next = null;
             if (node.hasChildren()) {
-                next = this.getNext(node.iterator().next());
-            }
-            try {
+                next = this.getNext(node.getChildren().get(0));
+            } else {
                 int index = node.getParent().getChildren().indexOf(node);
-                next = node.getParent().getChildren().listIterator(index).next();
-            } catch (NoSuchElementException nsee) {
                 try {
-                    next = node.getParent();
-                } catch (NullPointerException npe) {
-                    throw new NoSuchElementException();
+                    ListIterator<Node<E>> iter = node.getParent().getChildren().listIterator(index);
+                    next = iter.next();
+                    //next = iter.next();
+                } catch (NoSuchElementException nsee) {
+                    try {
+                        next = node.getParent();
+                    } catch (NullPointerException npe) {
+                        throw new NoSuchElementException();
+                    }
                 }
             }
+            //System.out.println("next: " + next.getValue());
             return next;
         }
         /**
@@ -268,9 +275,13 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
          */
         public E next() {
             try {
+                if (this.cur == null) {
+                    throw new NoSuchElementException();
+                }
                 E tmp = this.cur.getValue();
                 this.cur = this.getNext(this.cur);
                 this.index++;
+                //System.out.println("tmp: " + tmp);
                 return tmp;
             } catch (NoSuchElementException e) {
                 throw new NoSuchElementException();
