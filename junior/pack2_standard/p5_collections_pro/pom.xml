@@ -21,5 +21,6 @@
         <module>ch3_list</module>
         <module>ch4_set</module>
         <module>ch5_map</module>
+        <module>ch6_tree</module>
     </modules>
 </project>
