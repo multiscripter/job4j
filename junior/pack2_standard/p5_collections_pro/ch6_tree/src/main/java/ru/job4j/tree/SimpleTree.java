@@ -16,6 +16,10 @@ import java.util.Objects;
  */
 class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
     /**
+     * Бинарность дерева.
+     */
+    private boolean binary;
+    /**
      * Корневой элемент дерева.
      */
     private Node<E> root;
@@ -82,6 +86,18 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
             }
         }
         return result;
+    }
+    /**
+     * Проверяет является ли дерево бинарным (каждый узел имеет 2 дочерних узла).
+     * @return true если дерево бинарное. Иначе false.
+     */
+    public boolean isBinary() {
+        this.binary = true;
+        Iterator<E> iter = this.iterator();
+        while (this.binary && iter.hasNext()) {
+            iter.next();
+        }
+        return this.binary;
     }
     /**
      * Получает объект итератора.
@@ -296,6 +312,9 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
         public E next() {
             if (this.cur == null) {
                 throw new NoSuchElementException();
+            }
+            if (SimpleTree.this.binary && this.cur.hasChildren() && this.cur.getChildren().size() % 2 != 0) {
+                SimpleTree.this.binary = false;
             }
             E tmp = this.cur.getValue();
             this.prev = this.cur;

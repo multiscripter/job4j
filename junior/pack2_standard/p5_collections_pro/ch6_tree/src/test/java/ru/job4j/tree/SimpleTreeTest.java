@@ -109,6 +109,31 @@ public class SimpleTreeTest {
         assertEquals(this.sb.toString(), sb.toString());
     }
     /**
+     * Теструет isBinary(). Дерево не бинарное.
+     */
+    @Test
+    public void testIsBinaryReturnFalse() {
+        assertFalse(this.st.isBinary());
+    }
+    /**
+     * Теструет isBinary(). Дерево бинарное.
+     */
+    @Test
+    public void testIsBinaryReturnTrue() {
+        User root = new User("Rep1-Rep4", new GregorianCalendar(1980, 2, 20), 1);
+        SimpleTree<User> st = new SimpleTree<>(root);
+        User rep1Rep1 = new User("Rep1-Rep4", new GregorianCalendar(1980, 2, 20), 1);
+        st.add(root, rep1Rep1);
+        User rep1Rep2 = new User("Rep1-Rep2", new GregorianCalendar(1980, 2, 20), 1);
+        st.add(root, rep1Rep2);
+        User rep1Rep2Rep1 = new User("Rep1-Rep2-Rep1", new GregorianCalendar(1980, 2, 20), 1);
+        st.add(rep1Rep2, rep1Rep2Rep1);
+        st.add(rep1Rep2, new User("Rep1-Rep2-Rep2", new GregorianCalendar(1980, 2, 20), 1));
+        st.add(rep1Rep2Rep1, new User("Rep1-Rep2-Rep1-Rep1", new GregorianCalendar(1980, 2, 20), 1));
+        st.add(rep1Rep2Rep1, new User("Rep1-Rep2-Rep1-Rep2", new GregorianCalendar(1980, 2, 20), 1));
+        assertTrue(st.isBinary());
+    }
+    /**
      * Теструет SimpleIterator.hasNext(). Следующий элемент есть.
      */
     @Test
