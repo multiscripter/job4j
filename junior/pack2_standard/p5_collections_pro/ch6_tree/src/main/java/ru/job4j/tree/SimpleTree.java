@@ -12,13 +12,13 @@ import java.util.Objects;
  * @param <E> обобщённый тип.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 1
- * @since 2017-06-19
+ * @since 2017-06-20
  */
 class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
     /**
      * Корневой элемент дерева.
      */
-    private List<Node<E>> root = new LinkedList<>();
+    private Node<E> root;
     /**
      * Количество узлов дерева.
      */
@@ -33,15 +33,7 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
      * @param root корень дерева.
      */
     SimpleTree(E root) {
-        this.add(root);
-    }
-    /**
-     * Добавляет элемент e в корень.
-     * @param e элемент, добавляемый в корень.
-     */
-    public void add(E e) {
-        this.root.clear();
-        this.root.add(new Node(null, e));
+        this.root = new Node(null, root);
         this.size = 1;
     }
     /**
@@ -53,16 +45,22 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
     @Override
     public boolean add(E parent, E child) {
         boolean result = false;
-        if (!this.root.isEmpty()) {
-            Node<E> node = this.find(this.root.get(0), parent);
-            if (node != null) {
-                result = node.add(child);
-                if (result) {
-                    this.size++;
-                }
+        Node<E> node = this.find(this.root, parent);
+        if (node != null) {
+            result = node.add(child);
+            if (result) {
+                this.size++;
             }
         }
         return result;
+    }
+    /**
+     * Проверяет содержится ли элемент в дереве.
+     * @param e элемент поиска.
+     * @return true если элемент e содержится в дереве. Иначе false.
+     */
+    public boolean contains(E e) {
+        return null != this.find(this.root, e) ? true : false;
     }
     /**
      * Ищет узед с элементом.
@@ -78,6 +76,9 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
             Iterator<Node<E>> iter = node.iterator();
             while (iter.hasNext()) {
                 result = this.find(iter.next(), e);
+                if (result != null) {
+                    break;
+                }
             }
         }
         return result;
@@ -89,6 +90,14 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
     @Override
     public Iterator<E> iterator() {
         return new SimpleIterator();
+    }
+    /**
+     * Добавляет элемент e в корень.
+     * @param e элемент, добавляемый в корень.
+     */
+    public void setRoot(E e) {
+        this.root = new Node(null, e);
+        this.size = 1;
     }
     /**
      * Устанавливает размер списка.
@@ -217,7 +226,7 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
      *
      * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
      * @version 1
-     * @since 2017-05-30
+     * @since 2017-06-20
      */
     private class SimpleIterator implements Iterator<E> {
         /**
@@ -225,15 +234,25 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
          */
         private int index = 0;
         /**
-         * Последний узел, полученный итератором.
+         * Текущий узел, полученный итератором.
          */
         private Node<E> cur;
+        /**
+         * Предпоследний узел, полученный итератором.
+         */
+        private Node<E> prev;
+        /**
+         * Направление итератора.
+         */
+        private boolean down;
         /**
          * Конструктор.
          */
         SimpleIterator() {
-            if (!SimpleTree.this.root.isEmpty()) {
-                this.cur = SimpleTree.this.root.get(0);
+            if (SimpleTree.this.root != null) {
+                this.cur = SimpleTree.this.root;
+                this.prev = null;
+                this.down = true;
             }
         }
         /**
@@ -250,23 +269,24 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
          */
         private Node<E> getNext(Node<E> node) {
             Node<E> next = null;
-            if (node.hasChildren()) {
-                next = this.getNext(node.getChildren().get(0));
+            if (node.hasChildren() && this.down) {
+                next = node.getChildren().get(0);
             } else {
                 int index = node.getParent().getChildren().indexOf(node);
                 try {
+                    this.down = true;
                     ListIterator<Node<E>> iter = node.getParent().getChildren().listIterator(index);
                     next = iter.next();
-                    //next = iter.next();
+                    next = iter.next();
                 } catch (NoSuchElementException nsee) {
                     try {
-                        next = node.getParent();
+                        this.down = false;
+                        next = this.getNext(node.getParent());
                     } catch (NullPointerException npe) {
-                        throw new NoSuchElementException();
+                        next = null;
                     }
                 }
             }
-            //System.out.println("next: " + next.getValue());
             return next;
         }
         /**
@@ -274,26 +294,31 @@ class SimpleTree<E extends Comparable<E>> implements ISimpleTree<E> {
          * @return значение следующего элемента списка.
          */
         public E next() {
-            try {
-                if (this.cur == null) {
-                    throw new NoSuchElementException();
-                }
-                E tmp = this.cur.getValue();
-                this.cur = this.getNext(this.cur);
-                this.index++;
-                //System.out.println("tmp: " + tmp);
-                return tmp;
-            } catch (NoSuchElementException e) {
+            if (this.cur == null) {
                 throw new NoSuchElementException();
             }
+            E tmp = this.cur.getValue();
+            this.prev = this.cur;
+            this.cur = SimpleTree.this.size() > 1 ? this.getNext(this.cur) : null;
+            this.index++;
+            return tmp;
         }
         /**
          * Удаляет текущий элемент из списка.
-         *
+         */
         public void remove() {
-            this.cur.setPrevious(this.cur.getPrevious().getPrevious());
-            this.cur.getPrevious().setNext(this.cur);
-            SimpleLinkedPriorityQueue.this.setSize(SimpleLinkedPriorityQueue.this.size() - 1);
-        }*/
+            if (this.prev == null) {
+                throw new IllegalStateException();
+            }
+            if (this.prev.equals(SimpleTree.this.root)) {
+                SimpleTree.this.root = null;
+            } else {
+                int index = this.prev.getParent().getChildren().indexOf(this.prev);
+                this.prev.getParent().getChildren().remove(index);
+            }
+            this.prev = null;
+            this.index--;
+            SimpleTree.this.setSize(SimpleTree.this.size() - 1);
+        }
     }
 }
