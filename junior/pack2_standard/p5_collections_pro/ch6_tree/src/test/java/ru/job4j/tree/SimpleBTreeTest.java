@@ -1,7 +1,10 @@
 package ru.job4j.tree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.TreeSet;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
@@ -45,6 +48,13 @@ public class SimpleBTreeTest {
         assertEquals("Foo", result);
     }
     /**
+     * Тестирует boolean add(E e). Попытка добавить дубликат.
+     */
+    @Test
+    public void testAddDublicate() {
+        assertFalse(this.sbt.add("P"));
+    }
+    /**
      * Тестирует boolean contains(E e). Элемент содержится в коллекции.
      */
     @Test
@@ -52,7 +62,7 @@ public class SimpleBTreeTest {
         for (int a = 0; a < this.names.length; a++) {
             assertTrue(this.sbt.contains(this.names[a]));
         }
-        //assertTrue(this.sbt.contains("J"));
+        assertTrue(this.sbt.contains("J"));
     }
     /**
      * Тестирует boolean contains(E e). Элемент отсутствует в коллекции.
@@ -122,13 +132,41 @@ public class SimpleBTreeTest {
      */
     @Test
     public void testRemoveLeftHasTwoChildren() {
-        String[] expected = {"V", "A", "C", "B", "D", "O", "M", "F", "I", "H", "G", "J", "K", "L", "N", "S", "P", "Q", "R", "T", "U", "Y", "X", "W", "Z"};
+        String[] expected = {"V", "F", "A", "C", "B", "D", "I", "H", "G", "J", "K", "L", "O", "M", "N", "S", "P", "Q", "R", "T", "U", "Y", "X", "W", "Z"};
         this.sbt.remove("E");
         String[] result = new String[expected.length];
         Iterator<String> iter = this.sbt.iterator();
         for (int a = 0; iter.hasNext(); a++) {
             result[a] = iter.next();
-            System.out.println("result[a]: " + result[a]);
+        }
+        assertArrayEquals(expected, result);
+    }
+    /**
+     * Тестирует boolean remove(E e). Правый узел имеет двух потомков.
+     */
+    @Test
+    public void testRemoveRightHasTwoChildren() {
+        String[] expected = {"V", "E", "A", "C", "B", "D", "O", "M", "F", "I", "H", "G", "J", "K", "L", "N", "S", "P", "Q", "R", "T", "U", "Z", "X", "W"};
+        this.sbt.remove("Y");
+        String[] result = new String[expected.length];
+        Iterator<String> iter = this.sbt.iterator();
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
+    }
+    /**
+     * Тестирует boolean remove(E e). В цыкле тестирует удаление каждого элемента.
+     */
+    @Test
+    public void testRemoveEachItem() {
+        String[] names = {"V", "E", "A", "C", "B", "D", "O", "M", "F", "I", "H", "G", "J", "K", "L", "N", "S", "P", "Q", "R", "T", "U", "Y", "X", "W", "Z"};
+        for (int a = 1; a < names.length; a++) {
+            this.beforeTest();
+            ArrayList<String> nl = new ArrayList<>(Arrays.asList(names));
+            this.sbt.remove(nl.remove(a));
+            TreeSet<String> ts = new TreeSet<>(nl);
+            assertEquals(25, ts.size());
         }
     }
     /**
@@ -144,13 +182,12 @@ public class SimpleBTreeTest {
     @Test
     public void testIterator() {
         String[] expected = {"V", "E", "A", "C", "B", "D", "O", "M", "F", "I", "H", "G", "J", "K", "L", "N", "S", "P", "Q", "R", "T", "U", "Y", "X", "W", "Z"};
-        //StringBuilder sb = new StringBuilder();
+        String[] result = new String[expected.length];
         Iterator<String> iter = this.sbt.iterator();
-        //while (iter.hasNext()) {
-        //    System.out.println(iter.next());
-            //sb.append(iter.next());
-        //}
-        //assertEquals(this.sb.toString(), sb.toString());
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
     }
     /**
      * Тестирует SimpleIterator.hasNext(). Следующий элемент есть.
@@ -194,13 +231,36 @@ public class SimpleBTreeTest {
      */
     @Test
     public void testIteratorRemove() {
+        String[] expected = {"V", "E", "C", "B", "D", "O", "M", "F", "I", "H", "G", "J", "K", "L", "N", "S", "P", "Q", "R", "T", "U", "Y", "X", "W", "Z"};
         Iterator iter = this.sbt.iterator();
         iter.next();
         iter.next();
         iter.next();
-        //iter.remove();
-        //iter.next();
-        //iter.remove();
-        //assertEquals("B", iter.next());
+        iter.remove();
+        String[] result = new String[expected.length];
+        Iterator<String> iter2 = this.sbt.iterator();
+        for (int a = 0; iter2.hasNext(); a++) {
+            result[a] = iter2.next();
+        }
+        assertArrayEquals(expected, result);
+    }
+    /**
+     * Теструет IllegalStateException, бросаемый из SimpleIterator.remove(). Не вызван next().
+     */
+    @Test(expected = IllegalStateException.class)
+    public void thenIteratorNextHasNotYetBeenCalled() {
+        Iterator<String> iter = this.sbt.iterator();
+        iter.remove();
+    }
+    /**
+     * Теструет IllegalStateException, бросаемый из SimpleIterator.remove(). Remove() вызван дважды.
+     */
+    @Test(expected = IllegalStateException.class)
+    public void thenIteratorRemoveCalledTwice() {
+        Iterator<String> iter = this.sbt.iterator();
+        iter.next();
+        iter.next();
+        iter.remove();
+        iter.remove();
     }
 }

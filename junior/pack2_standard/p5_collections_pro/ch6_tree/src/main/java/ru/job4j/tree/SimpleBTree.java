@@ -110,20 +110,21 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
         boolean result = false;
         Node<E> node = this.find(this.root, e);
         if (node.getValue().equals(e)) {
+            Node<E> parent = node.getParent();
             // Узел без потомков.
             if (!node.hasLeft() && !node.hasRight()) {
-                if (node.getParent().hasLeft() && node.getParent().getLeft().equals(node)) {
-                    node.getParent().removeLeft();
+                if (parent.hasLeft() && parent.getLeft().equals(node)) {
+                    parent.removeLeft();
                 } else {
-                    node.getParent().removeRight();
+                    parent.removeRight();
                 }
             // Узел имеет одного потомка.
-            } else if ((node.hasLeft() && !node.hasRight()) || (!node.hasLeft() && node.hasRight())) {
+            } else if (!node.hasLeft() || !node.hasRight()) {
                 Node<E> child = node.hasLeft() ? node.getLeft() : node.getRight();
-                if (node.getParent().hasLeft() && node.getParent().getLeft().equals(node)) {
-                    node.getParent().setLeft(child);
+                if (parent.hasLeft() && parent.getLeft().equals(node)) {
+                    parent.setLeft(child);
                 } else {
-                    node.getParent().setRight(child);
+                    parent.setRight(child);
                 }
                 child.setParent(node);
             // Узел имеет двух потомков.
@@ -132,16 +133,31 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
                 while (child.hasLeft()) {
                     child = child.getLeft();
                 }
-                System.out.println("child: " + child.getValue());
-                child.getParent().removeLeft();
+                if (child.getParent().hasLeft() && child.getParent().getLeft().equals(child)) {
+                    child.getParent().removeLeft();
+                } else if (child.getParent().hasRight() && child.getParent().getRight().equals(child)) {
+                    child.getParent().removeRight();
+                }
                 child.setLeft(node.getLeft());
                 node.getLeft().setParent(child);
-                child.setRight(node.getRight());
-                node.getRight().setParent(child);
-                if (node.getParent().hasLeft() && node.getParent().getLeft().equals(node)) {
-                    node.getParent().setLeft(child);
+                if (node.hasRight() && !node.getRight().equals(child)) {
+                    if (child.hasRight()) {
+                        Node<E> right = child.getRight();
+                        while (right.hasRight()) {
+                            right = right.getRight();
+                        }
+                        right.setRight(node.getRight());
+                        node.getRight().setParent(right);
+                    } else {
+                        child.setRight(node.getRight());
+                        node.getRight().setParent(child);
+                    }
+                }
+                child.setParent(parent);
+                if (parent.hasLeft() && parent.getLeft().equals(node)) {
+                    parent.setLeft(child);
                 } else {
-                    node.getParent().setRight(child);
+                    parent.setRight(child);
                 }
             }
             this.size--;
@@ -381,7 +397,6 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
          * @return true если следующий элемент существует, иначе false.
          */
         public boolean hasNext() {
-            //return this.index < size();
             return this.cur != null;
         }
         /**
@@ -391,18 +406,11 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
          */
         private Node<E> getNext(Node<E> node) {
             Node<E> next = null;
-            System.out.println("node.getValue(): " + node.getValue());
-            System.out.println("node.left: " + (node.hasLeft() ? node.getLeft().getValue() : ""));
-            System.out.println("node.right: " + (node.hasRight() ? node.getRight().getValue() : ""));
-            //System.out.println("this.left: " + (this.left != null ? this.left.getValue() : ""));
-            //System.out.println("this.right: " + (this.right != null ? this.right.getValue() : ""));
             if (this.down && node.hasLeft() && !node.getLeft().equals(this.left)) {
                 next = node.getLeft();
-                //this.left = next;
             } else if (node.hasRight() && !node.getRight().equals(this.right)) {
                 this.down = true;
                 next = node.getRight();
-                //this.right = next;
             } else {
                 this.down = false;
                 next = null;
@@ -416,25 +424,6 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
                     next = this.getNext(parent);
                 }
             }
-            /*
-            if (node.hasChildren() && this.down) {
-                next = node.getChildren().get(0);
-            } else {
-                int index = node.getParent().getChildren().indexOf(node);
-                try {
-                    this.down = true;
-                    ListIterator<Node<E>> iter = node.getParent().getChildren().listIterator(index);
-                    next = iter.next();
-                    next = iter.next();
-                } catch (NoSuchElementException nsee) {
-                    try {
-                        this.down = false;
-                        next = this.getNext(node.getParent());
-                    } catch (NullPointerException npe) {
-                        next = null;
-                    }
-                }
-            }*/
             return next;
         }
         /**
@@ -464,27 +453,8 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
                 this.cur = null;
                 this.index = 0;
             } else {
-                int subTreeNodeCount = 0;
-                if (this.down) {
-                    this.cur = this.prev.getParent();
-                    Iterator iter = new SimpleIterator(this.prev.getValue());
-                    while (iter.hasNext()) {
-                        subTreeNodeCount++;
-                        if (iter.next().equals(this.cur.getValue())) {
-                            break;
-                        }
-                    }
-                    System.out.println("subTreeNodeCount: " + subTreeNodeCount);
-                    this.index--;
-                    SimpleBTree.this.size -= subTreeNodeCount;
-                } else {
-                    subTreeNodeCount = 0;
-                    this.index -= subTreeNodeCount;
-                }
-                //int index = this.prev.getParent().getChildren().indexOf(this.prev);
-                //this.prev.getParent().getChildren().remove(index);
-                //this.index--;
-                //SimpleBTree.this.setSize(SimpleBTree.this.size() - 1);
+                SimpleBTree.this.remove(this.prev.getValue());
+                this.index--;
             }
             this.prev = null;
         }
