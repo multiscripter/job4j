@@ -47,11 +47,11 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
         } else {
             Node<E> node = this.find(this.root, e);
             int cmp = node.compareTo(e);
-            if (cmp < 0) {
+            if (cmp > 0) {
                 node.setLeft(e);
                 result = true;
                 this.size++;
-            } else if (cmp > 0) {
+            } else if (cmp < 0) {
                 node.setRight(e);
                 result = true;
                 this.size++;
@@ -86,12 +86,19 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
     private Node<E> find(Node<E> node, E e) {
         Node<E> result = node;
         int cmp = node.compareTo(e);
-        if (cmp < 0 && node.hasLeft()) {
+        if (cmp > 0 && node.hasLeft()) {
             result = this.find(node.getLeft(), e);
-        } else if (cmp > 0 && node.hasRight()) {
+        } else if (cmp < 0 && node.hasRight()) {
             result = this.find(node.getRight(), e);
         }
         return result;
+    }
+    /**
+     * Возвращает корневой узел.
+     * @return корневой узел.
+     */
+    public Node<E> getRootNode() {
+        return this.root;
     }
     /**
      * Получает объект итератора.
@@ -253,9 +260,17 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
          */
         private Node<E> prev;
         /**
-         * Посещённый потомок.
+         * Посещённый левый потомок.
          */
-        private Node<E> down;
+        private Node<E> left;
+        /**
+         * Посещённый правый потомок.
+         */
+        private Node<E> right;
+        /**
+         * Направление движения итератора.
+         */
+        private boolean down = true;
         /**
          * Конструктор.
          */
@@ -263,7 +278,8 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
             if (SimpleBTree.this.root != null) {
                 this.cur = SimpleBTree.this.root;
                 this.prev = null;
-                this.down = null;
+                this.left = null;
+                this.right = null;
             }
         }
         /**
@@ -280,16 +296,30 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
          */
         private Node<E> getNext(Node<E> node) {
             Node<E> next = null;
-            if (this.down == null && node.hasLeft()) {
-                //this.down = null;
+            //System.out.println("node.getValue(): " + node.getValue());
+            //System.out.println("node.left: " + (node.hasLeft() ? node.getLeft().getValue() : ""));
+            //System.out.println("node.right: " + (node.hasRight() ? node.getRight().getValue() : ""));
+            //System.out.println("this.left: " + (this.left != null ? this.left.getValue() : ""));
+            //System.out.println("this.right: " + (this.right != null ? this.right.getValue() : ""));
+            if (this.down && node.hasLeft() && !node.getLeft().equals(this.left)) {
                 next = node.getLeft();
-            } else if (node.hasRight() && !node.getRight().equals(this.down)) {
-                //this.down = null;
+                //this.left = next;
+            } else if (node.hasRight() && !node.getRight().equals(this.right)) {
+                this.down = true;
                 next = node.getRight();
+                //this.right = next;
             } else {
-                this.down = this.cur;
-                //System.out.println(node.getValue());
-                next = this.getNext(node.getParent());
+                this.down = false;
+                next = null;
+                if (!node.equals(SimpleBTree.this.root)) {
+                    Node<E> parent = node.getParent();
+                    if (parent.hasLeft() && parent.getLeft().equals(node)) {
+                        this.left = node;
+                    } else if (parent.hasRight() && parent.getRight().equals(node)) {
+                        this.right = node;
+                    }
+                    next = this.getNext(parent);
+                }
             }
             /*
             if (node.hasChildren() && this.down) {

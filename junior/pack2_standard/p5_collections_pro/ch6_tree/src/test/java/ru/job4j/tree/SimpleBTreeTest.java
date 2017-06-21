@@ -19,14 +19,17 @@ public class SimpleBTreeTest {
      */
     private SimpleBTree<String> sbt;
     /**
+     * Массив слов.
+     */
+    private String[] names = {"V", "E", "O", "A", "M", "S", "C", "P", "F", "I", "D", "J", "T", "K", "Y", "H", "L", "N", "X", "Q", "U", "G", "B", "Z", "W", "R"};
+    /**
      * Действия перед тестом.
      */
     @Before
     public void beforeTest() {
         this.sbt = new SimpleBTree<>();
-        String[] names = {"Victor", "Echo", "Oscar", "Alpha", "Mike", "Sierra", "Charlie", "Papa", "Foxtrot", "India", "Delta", "Juliet", "Tango", "Kilo", "Yankee", "Hotel", "Lima", "November", "Xray", "Quebec", "Uniform", "Golf", "Bravo", "Zulu", "Whiskey", "Romeo"};
-        for (int a = 0; a < names.length; a++) {
-            this.sbt.add(names[a]);
+        for (int a = 0; a < this.names.length; a++) {
+            this.sbt.add(this.names[a]);
         }
     }
     /**
@@ -44,7 +47,10 @@ public class SimpleBTreeTest {
      */
     @Test
     public void testContainsReturnTrue() {
-        assertTrue(this.sbt.contains("Juliet"));
+        for (int a = 0; a < this.names.length; a++) {
+            assertTrue(this.sbt.contains(this.names[a]));
+        }
+        //assertTrue(this.sbt.contains("J"));
     }
     /**
      * Теструет boolean contains(E e). Элемент отсутствует в коллекции.
