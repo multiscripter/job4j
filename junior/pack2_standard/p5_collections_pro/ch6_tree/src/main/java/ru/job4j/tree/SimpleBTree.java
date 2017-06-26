@@ -1,5 +1,6 @@
 package ru.job4j.tree;
 
+import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -105,6 +106,9 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
      * Переворачивает дерево. Алгоритм Depth-first search.
      */
     public void mirrorDFS() {
+        if (this.root == null || (!this.root.hasLeft() && !this.root.hasRight())) {
+            return;
+        }
         Node<E> cur = this.root;
         Node<E> left = null;
         Node<E> right = null;
@@ -129,7 +133,34 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
      * Переворачивает дерево. Алгоритм breadth-first search.
      */
     public void mirrorBFS() {
-        //
+        if (this.root == null || (!this.root.hasLeft() && !this.root.hasRight())) {
+            return;
+        }
+        Node<E> cur = null;
+        Node<E> left = null;
+        Node<E> right = null;
+        LinkedList<Node<E>> q = new LinkedList<>();
+        q.add(this.root);
+        while (!q.isEmpty()) {
+            cur = q.pollFirst();
+            if (cur == null) {
+                break;
+            }
+            if (cur.hasLeft() || cur.hasRight()) {
+                if (cur.hasLeft()) {
+                    left = cur.getLeft();
+                    q.add(left);
+                }
+                if (cur.hasRight()) {
+                    right = cur.getRight();
+                    q.add(right);
+                }
+                cur.setLeft(right);
+                cur.setRight(left);
+                left = null;
+                right = null;
+            }
+        }
     }
     /**
      * Удаляет элемент из дерева.
