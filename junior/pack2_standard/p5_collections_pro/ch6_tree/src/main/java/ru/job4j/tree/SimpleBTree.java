@@ -102,6 +102,36 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
         return new SimpleIterator();
     }
     /**
+     * Переворачивает дерево. Алгоритм Depth-first search.
+     */
+    public void mirrorDFS() {
+        Node<E> cur = this.root;
+        Node<E> left = null;
+        Node<E> right = null;
+        SimpleIterator iter = new SimpleIterator();
+        while (cur != null) {
+            if (cur.hasLeft() || cur.hasRight()) {
+                if (cur.hasLeft()) {
+                    left = cur.getLeft();
+                }
+                if (cur.hasRight()) {
+                    right = cur.getRight();
+                }
+                cur.setLeft(right);
+                cur.setRight(left);
+                left = null;
+                right = null;
+            }
+            cur = iter.getNext(cur);
+        }
+    }
+    /**
+     * Переворачивает дерево. Алгоритм breadth-first search.
+     */
+    public void mirrorBFS() {
+        //
+    }
+    /**
      * Удаляет элемент из дерева.
      * @param e удаляемый элемент.
      * @return true если элемент e удалён из дерева. Иначе false.
@@ -404,7 +434,7 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
          * @param node текущий узел.
          * @return следующий узел.
          */
-        private Node<E> getNext(Node<E> node) {
+        public Node<E> getNext(Node<E> node) {
             Node<E> next = null;
             if (this.down && node.hasLeft() && !node.getLeft().equals(this.left)) {
                 next = node.getLeft();

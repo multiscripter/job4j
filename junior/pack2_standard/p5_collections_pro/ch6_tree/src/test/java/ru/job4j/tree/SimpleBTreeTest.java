@@ -72,6 +72,20 @@ public class SimpleBTreeTest {
         assertFalse(this.sbt.contains("Foo"));
     }
     /**
+     * Тестирует void mirrorDFS().
+     */
+    @Test
+    public void testMirrorDFS() {
+        String[] expected = {"V", "Y", "Z", "X", "W", "E", "O", "S", "T", "U", "P", "Q", "R", "M", "N", "F", "I", "J", "K", "L", "H", "G", "A", "C", "D", "B"};
+        this.sbt.mirrorDFS();
+        String[] result = new String[expected.length];
+        Iterator<String> iter = this.sbt.iterator();
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
+    }
+    /**
      * Тестирует boolean remove(E e). Левый узел без потомков.
      */
     @Test
