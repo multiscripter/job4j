@@ -22,5 +22,6 @@
         <module>ch4_set</module>
         <module>ch5_map</module>
         <module>ch6_tree</module>
+        <module>ch7_control</module>
     </modules>
 </project>
