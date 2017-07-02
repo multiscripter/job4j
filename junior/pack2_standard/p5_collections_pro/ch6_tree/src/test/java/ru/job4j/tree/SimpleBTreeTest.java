@@ -86,6 +86,25 @@ public class SimpleBTreeTest {
         assertArrayEquals(expected, result);
     }
     /**
+     * Тестирует void mirrorDFS() на дереве из трёх элементов.
+     */
+    @Test
+    public void testMirrorDFStreeHasThreeElements() {
+        String[] names = {"V", "E", "Z"};
+        String[] expected = {"V", "Z", "E"};
+        SimpleBTree<String> sbt = new SimpleBTree<>();
+        for (int a = 0; a < names.length; a++) {
+            sbt.add(names[a]);
+        }
+        sbt.mirrorDFS();
+        String[] result = new String[expected.length];
+        Iterator<String> iter = sbt.iterator();
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
+    }
+    /**
      * Тестирует void mirrorBFS().
      */
     @Test
@@ -94,6 +113,25 @@ public class SimpleBTreeTest {
         this.sbt.mirrorBFS();
         String[] result = new String[expected.length];
         Iterator<String> iter = this.sbt.iterator();
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
+    }
+    /**
+     * Тестирует void mirrorBFS() на дереве из трёх элементов.
+     */
+    @Test
+    public void testMirrorBFStreeHasThreeElements() {
+        String[] names = {"V", "E", "Z"};
+        String[] expected = {"V", "Z", "E"};
+        SimpleBTree<String> sbt = new SimpleBTree<>();
+        for (int a = 0; a < names.length; a++) {
+            sbt.add(names[a]);
+        }
+        sbt.mirrorBFS();
+        String[] result = new String[expected.length];
+        Iterator<String> iter = sbt.iterator();
         for (int a = 0; iter.hasNext(); a++) {
             result[a] = iter.next();
         }
