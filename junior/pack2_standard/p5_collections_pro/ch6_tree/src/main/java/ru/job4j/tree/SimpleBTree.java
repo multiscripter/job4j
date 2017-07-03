@@ -1,5 +1,6 @@
 package ru.job4j.tree;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -59,6 +60,16 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
             }
         }
         return result;
+    }
+    /**
+     * Добавляет элементы в дерево.
+     * @param c коллекция добавляемых элементов.
+     */
+    public void addAll(Collection<? extends E> c) {
+        Iterator iter = c.iterator();
+        while (iter.hasNext()) {
+            this.add((E) iter.next());
+        }
     }
     /**
      * Добавляет элемент child в элемент parent.
