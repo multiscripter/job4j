@@ -33,9 +33,7 @@ public class SimpleBTreeTest {
     @Before
     public void beforeTest() {
         this.sbt = new SimpleBTree<>();
-        for (int a = 0; a < this.names.length; a++) {
-            this.sbt.add(this.names[a]);
-        }
+        this.sbt.addAll(Arrays.asList(this.names));
     }
     /**
      * Тестирует конструктор SimpleBTree(E e).
@@ -59,8 +57,8 @@ public class SimpleBTreeTest {
      */
     @Test
     public void testContainsReturnTrue() {
-        for (int a = 0; a < this.names.length; a++) {
-            assertTrue(this.sbt.contains(this.names[a]));
+        for (String item : this.names) {
+            assertTrue(this.sbt.contains(item));
         }
         assertTrue(this.sbt.contains("J"));
     }
@@ -70,6 +68,73 @@ public class SimpleBTreeTest {
     @Test
     public void testContainsReturnFalse() {
         assertFalse(this.sbt.contains("Foo"));
+    }
+    /**
+     * Тестирует void mirrorDFS().
+     */
+    @Test
+    public void testMirrorDFS() {
+        String[] expected = {"V", "Y", "Z", "X", "W", "E", "O", "S", "T", "U", "P", "Q", "R", "M", "N", "F", "I", "J", "K", "L", "H", "G", "A", "C", "D", "B"};
+        this.sbt.mirrorDFS();
+        String[] result = new String[expected.length];
+        Iterator<String> iter = this.sbt.iterator();
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
+    }
+    /**
+     * Тестирует void mirrorDFS() на дереве из трёх элементов.
+     */
+    @Test
+    public void testMirrorDFStreeHasThreeElements() {
+        String[] names = {"V", "E", "Z"};
+        String[] expected = {"V", "Z", "E"};
+        SimpleBTree<String> sbt = new SimpleBTree<>();
+        for (String item : names) {
+            sbt.add(item);
+        }
+        sbt.mirrorDFS();
+        String[] result = new String[expected.length];
+        Iterator<String> iter = sbt.iterator();
+        for (int a = 0; iter.hasNext(); a++) {
+            String cur = iter.next();
+            result[a] = cur;
+        }
+        assertArrayEquals(expected, result);
+    }
+    /**
+     * Тестирует void mirrorBFS().
+     */
+    @Test
+    public void testMirrorBFS() {
+        String[] expected = {"V", "Y", "Z", "X", "W", "E", "O", "S", "T", "U", "P", "Q", "R", "M", "N", "F", "I", "J", "K", "L", "H", "G", "A", "C", "D", "B"};
+        this.sbt.mirrorBFS();
+        String[] result = new String[expected.length];
+        Iterator<String> iter = this.sbt.iterator();
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
+    }
+    /**
+     * Тестирует void mirrorBFS() на дереве из трёх элементов.
+     */
+    @Test
+    public void testMirrorBFStreeHasThreeElements() {
+        String[] names = {"V", "E", "Z"};
+        String[] expected = {"V", "Z", "E"};
+        SimpleBTree<String> sbt = new SimpleBTree<>();
+        for (String item : names) {
+            sbt.add(item);
+        }
+        sbt.mirrorBFS();
+        String[] result = new String[expected.length];
+        Iterator<String> iter = sbt.iterator();
+        for (int a = 0; iter.hasNext(); a++) {
+            result[a] = iter.next();
+        }
+        assertArrayEquals(expected, result);
     }
     /**
      * Тестирует boolean remove(E e). Левый узел без потомков.

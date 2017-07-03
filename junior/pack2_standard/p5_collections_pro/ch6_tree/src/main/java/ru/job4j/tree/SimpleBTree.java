@@ -1,5 +1,7 @@
 package ru.job4j.tree;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -60,6 +62,16 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
         return result;
     }
     /**
+     * Добавляет элементы в дерево.
+     * @param c коллекция добавляемых элементов.
+     */
+    public void addAll(Collection<? extends E> c) {
+        Iterator iter = c.iterator();
+        while (iter.hasNext()) {
+            this.add((E) iter.next());
+        }
+    }
+    /**
      * Добавляет элемент child в элемент parent.
      * @param parent родительский элемент.
      * @param child дочерний элемент.
@@ -100,6 +112,66 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
     @Override
     public Iterator<E> iterator() {
         return new SimpleIterator();
+    }
+    /**
+     * Переворачивает дерево. Алгоритм Depth-first search.
+     */
+    public void mirrorDFS() {
+        if (this.root == null || (!this.root.hasLeft() && !this.root.hasRight())) {
+            return;
+        }
+        Node<E> cur = this.root;
+        Node<E> left = null;
+        Node<E> right = null;
+        SimpleIterator iter = new SimpleIterator();
+        while (cur != null) {
+            if (cur.hasLeft() || cur.hasRight()) {
+                if (cur.hasLeft()) {
+                    left = cur.getLeft();
+                }
+                if (cur.hasRight()) {
+                    right = cur.getRight();
+                }
+                cur.setLeft(right);
+                cur.setRight(left);
+                left = null;
+                right = null;
+            }
+            cur = iter.getNext(cur);
+        }
+    }
+    /**
+     * Переворачивает дерево. Алгоритм breadth-first search.
+     */
+    public void mirrorBFS() {
+        if (this.root == null || (!this.root.hasLeft() && !this.root.hasRight())) {
+            return;
+        }
+        Node<E> cur = null;
+        Node<E> left = null;
+        Node<E> right = null;
+        LinkedList<Node<E>> q = new LinkedList<>();
+        q.add(this.root);
+        while (!q.isEmpty()) {
+            cur = q.pollFirst();
+            if (cur == null) {
+                break;
+            }
+            if (cur.hasLeft() || cur.hasRight()) {
+                if (cur.hasLeft()) {
+                    left = cur.getLeft();
+                    q.add(left);
+                }
+                if (cur.hasRight()) {
+                    right = cur.getRight();
+                    q.add(right);
+                }
+                cur.setLeft(right);
+                cur.setRight(left);
+                left = null;
+                right = null;
+            }
+        }
     }
     /**
      * Удаляет элемент из дерева.
@@ -404,7 +476,7 @@ class SimpleBTree<E extends Comparable<E>> implements ISimpleTree<E> {
          * @param node текущий узел.
          * @return следующий узел.
          */
-        private Node<E> getNext(Node<E> node) {
+        public Node<E> getNext(Node<E> node) {
             Node<E> next = null;
             if (this.down && node.hasLeft() && !node.getLeft().equals(this.left)) {
                 next = node.getLeft();
