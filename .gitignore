@@ -16,4 +16,5 @@ target/
 *.asta
 .idea
 *.iml
-*.xml
+orders.xml
+OrderBookTask.txt
