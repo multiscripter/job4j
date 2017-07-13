@@ -3,7 +3,7 @@ package ru.job4j.control;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.TreeSet;
 /**
  * Класс Book реализует сущность Книга с заказами.
  *
@@ -23,7 +23,7 @@ class Book {
     /**
      * Заказы на покупку. Отсортированы по убыванию цены.
      */
-    private LinkedList<Order> buyPrice;
+    private TreeSet<Order> buyPrice;
     /**
      * Заказы на продажу. Отсортированы по id.
      */
@@ -31,7 +31,7 @@ class Book {
     /**
      * Заказы на продажу. Отсортированы по возрастанию цены.
      */
-    private LinkedList<Order> sellPrice;
+    private TreeSet<Order> sellPrice;
     /**
      * Конструктор.
      * @param name название книги.
@@ -39,9 +39,19 @@ class Book {
     Book(String name) {
         this.name = name;
         this.buy = new HashMap<>();
-        this.buyPrice = new LinkedList<>();
+        this.buyPrice = new TreeSet<>(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return Double.compare(o2.getPrice(), o1.getPrice());
+            }
+        });
         this.sell = new HashMap<>();
-        this.sellPrice = new LinkedList<>();
+        this.sellPrice = new TreeSet<>(new Comparator<Order>() {
+            @Override
+            public int compare(Order o1, Order o2) {
+                return Double.compare(o1.getPrice(), o2.getPrice());
+            }
+        });
     }
     /**
      * Добавляет заказ (на покупку или продажу) на книгу.
@@ -124,7 +134,7 @@ class Book {
         String askStr = null;
         boolean bidAgr = false;
         boolean askAgr = false;
-        this.sort();
+        //this.sort();
         Iterator<Order> iterBuy = this.buyPrice.iterator();
         Iterator<Order> iterSell = this.sellPrice.iterator();
         while (iterBuy.hasNext() || iterSell.hasNext()) {
@@ -228,15 +238,15 @@ class Book {
     }
     /**
      * Ищет совпадение.
-     * @param list список, в котором производится поиск.
+     * @param treeSet список, в котором производится поиск.
      * @param order поступивший заказ.
      * @return заказ из очереди заказов.
      */
-    public Order searchMatch(LinkedList<Order> list, Order order) {
+    public Order searchMatch(TreeSet<Order> treeSet, Order order) {
         Double price = order.getPrice();
         String op = order.getOperation();
         Order match = null;
-        Iterator<Order> iter = list.iterator();
+        Iterator<Order> iter = treeSet.iterator();
         Order item = null;
         while (iter.hasNext()) {
             item = iter.next();
@@ -261,7 +271,7 @@ class Book {
     }
     /**
      * Сортирует списки заказов на покупку и продажу.
-     */
+     *
     private void sort() {
         this.buyPrice.sort(new Comparator<Order>() {
             @Override
@@ -275,5 +285,5 @@ class Book {
                 return Double.compare(o1.getPrice(), o2.getPrice());
             }
         });
-    }
+    }*/
 }
