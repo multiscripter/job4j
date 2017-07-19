@@ -49,20 +49,39 @@ public class TextCounterTest {
      */
     @Test
     public void testConcurrency() {
+        System.out.println("#1017 junior.pack2.p7.ch1.task2 'Create waiting of output'");
         Thread t1 = new Thread() {
             @Override
             public void run() {
-                System.out.println("Thread 1. Words: " + TextCounterTest.this.tc1.countWords());
+                String tname = Thread.currentThread().getName();
+                System.out.println(tname + " runs.");
+                System.out.println(tname + " ends. Words: " + TextCounterTest.this.tc1.countWords());
             }
         };
         Thread t2 = new Thread() {
             @Override
             public void run() {
-                System.out.println("Thread 2: Spaces: " + TextCounterTest.this.tc2.countSpaces());
+                String tname = Thread.currentThread().getName();
+                System.out.println(tname + " runs.");
+                System.out.println(tname + " ends. Spaces: " + TextCounterTest.this.tc2.countSpaces());
             }
         };
+        t1.setName("Word counting thread");
+        t2.setName("Space counting thread");
         t1.start();
         t2.start();
+        try {
+            Thread.sleep(1000);
+            if (t1.isAlive()) {
+                t1.interrupt();
+            }
+            if (t2.isAlive()) {
+                t2.interrupt();
+            }
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("End task");
     }
     /**
      * Тестирует int countSpaces().
