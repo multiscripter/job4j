@@ -12,13 +12,7 @@ class TextCounter {
     /**
      * Строка с текстом.
      */
-    private String str;
-    /**
-     * Конструктор без параметров.
-     */
-    TextCounter() {
-        this.str = "";
-    }
+    private final String str;
     /**
      * Конструктор.
      * @param str строка с текстом.
@@ -73,12 +67,5 @@ class TextCounter {
      */
     int length() {
         return this.str.length();
-    }
-    /**
-     * Устанавливает строку с текстом.
-     * @param str строка с текстом.
-     */
-    void setString(String str) {
-        this.str = str.trim();
     }
 }

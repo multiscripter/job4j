@@ -1,10 +1,12 @@
 package ru.job4j.threads;
 
 import java.io.IOException;
-import java.nio.file.NoSuchFileException;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Paths;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -30,9 +32,13 @@ public class TextCounterTest {
     @Before
     public void beforeTest() {
         try {
-            byte[] encoded = Files.readAllBytes(Paths.get("src/main/java/ru/job4j/threads/textRu.txt"));
+            URI uri = this.getClass().getClassLoader().getResource("textRu.txt").toURI();
+            byte[] encoded = Files.readAllBytes(Paths.get(uri));
             this.tc1 = new TextCounter(new String(encoded, "UTF-8"));
             this.tc2 = new TextCounter(new String(encoded, "UTF-8"));
+        } catch (URISyntaxException ex) {
+            System.out.println("URISyntaxException.");
+            ex.printStackTrace();
         } catch (NoSuchFileException ex) {
             System.out.println("NoSuchFileException.");
             ex.printStackTrace();
@@ -84,15 +90,5 @@ public class TextCounterTest {
     @Test
     public void testLength() {
         assertEquals(552, this.tc1.length());
-    }
-    /**
-     * Тестирует void setString(String str) и конструктор TextCounter(String str).
-     */
-    @Test
-    public void testSetString() {
-        TextCounter tc3 = new TextCounter();
-        String str = new String("Appends the specified element to the end of this list.");
-        tc3.setString(str);
-        assertEquals(str.length(), tc3.length());
     }
 }
