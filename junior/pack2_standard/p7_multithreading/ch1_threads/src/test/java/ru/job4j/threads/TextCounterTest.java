@@ -1,10 +1,12 @@
 package ru.job4j.threads;
 
 import java.io.IOException;
-import java.nio.file.NoSuchFileException;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Paths;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -12,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  * Класс TextCounterTest тестирует класс TextCounter.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-07-17
  */
 public class TextCounterTest {
@@ -30,17 +32,21 @@ public class TextCounterTest {
     @Before
     public void beforeTest() {
         try {
-            byte[] encoded = Files.readAllBytes(Paths.get("src/main/java/ru/job4j/threads/textRu.txt"));
+            URI uri = this.getClass().getClassLoader().getResource("textRu.txt").toURI();
+            byte[] encoded = Files.readAllBytes(Paths.get(uri));
             this.tc1 = new TextCounter(new String(encoded, "UTF-8"));
             this.tc2 = new TextCounter(new String(encoded, "UTF-8"));
+        } catch (URISyntaxException ex) {
+            System.err.println("URISyntaxException.");
+            ex.printStackTrace();
         } catch (NoSuchFileException ex) {
-            System.out.println("NoSuchFileException.");
+            System.err.println("NoSuchFileException.");
             ex.printStackTrace();
         } catch (UnsupportedEncodingException ex) {
-            System.out.println("UnsupportedEncodingException.");
+            System.err.println("UnsupportedEncodingException.");
             ex.printStackTrace();
         } catch (IOException ex) {
-            System.out.println("IOException.");
+            System.err.println("IOException.");
             ex.printStackTrace();
         }
     }
@@ -54,16 +60,16 @@ public class TextCounterTest {
             @Override
             public void run() {
                 String tname = Thread.currentThread().getName();
-                System.out.println(tname + " runs.");
-                System.out.println(tname + " ends. Words: " + TextCounterTest.this.tc1.countWords());
+                System.out.println(String.format("%s runs.", tname));
+                System.out.println(String.format("%s ends. Words: %d.", tname, TextCounterTest.this.tc1.countWords()));
             }
         };
         Thread t2 = new Thread() {
             @Override
             public void run() {
                 String tname = Thread.currentThread().getName();
-                System.out.println(tname + " runs.");
-                System.out.println(tname + " ends. Spaces: " + TextCounterTest.this.tc2.countSpaces());
+                System.out.println(String.format("%s runs.", tname));
+                System.out.println(String.format("%s ends. Spaces: %d.", tname, TextCounterTest.this.tc2.countWords()));
             }
         };
         t1.setName("Word counting thread");
@@ -71,12 +77,16 @@ public class TextCounterTest {
         t1.start();
         t2.start();
         try {
+            t1.join();
+            t2.join();
             Thread.sleep(1000);
             if (t1.isAlive()) {
                 t1.interrupt();
+                System.out.println(String.format("Execution time of '%s' more then 1 sec.", t1.getName()));
             }
             if (t2.isAlive()) {
                 t2.interrupt();
+                System.out.println(String.format("Execution time of '%s' more then 1 sec.", t2.getName()));
             }
         } catch (InterruptedException ex) {
             ex.printStackTrace();
@@ -103,15 +113,5 @@ public class TextCounterTest {
     @Test
     public void testLength() {
         assertEquals(552, this.tc1.length());
-    }
-    /**
-     * Тестирует void setString(String str) и конструктор TextCounter(String str).
-     */
-    @Test
-    public void testSetString() {
-        TextCounter tc3 = new TextCounter();
-        String str = new String("Appends the specified element to the end of this list.");
-        tc3.setString(str);
-        assertEquals(str.length(), tc3.length());
     }
 }
