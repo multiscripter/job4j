@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  * Класс TextCounterTest тестирует класс TextCounter.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 3
  * @since 2017-07-17
  */
 public class TextCounterTest {
@@ -76,20 +76,19 @@ public class TextCounterTest {
         t2.setName("Space counting thread");
         t1.start();
         t2.start();
-        try {
-            t1.join();
-            t2.join();
-            Thread.sleep(1000);
-            if (t1.isAlive()) {
+        long start = System.currentTimeMillis();
+        while (!t1.isInterrupted() || !t2.isInterrupted()) {
+            if (System.currentTimeMillis() > start + 1000) {
+                if (!t1.isInterrupted()) {
+                    System.out.println(String.format("Execution time of '%s' more then 1 sec.", t1.getName()));
+                }
+                if (!t2.isInterrupted()) {
+                    System.out.println(String.format("Execution time of '%s' more then 1 sec.", t2.getName()));
+                }
                 t1.interrupt();
-                System.out.println(String.format("Execution time of '%s' more then 1 sec.", t1.getName()));
-            }
-            if (t2.isAlive()) {
                 t2.interrupt();
-                System.out.println(String.format("Execution time of '%s' more then 1 sec.", t2.getName()));
+                break;
             }
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
         }
         System.out.println("End task");
     }
