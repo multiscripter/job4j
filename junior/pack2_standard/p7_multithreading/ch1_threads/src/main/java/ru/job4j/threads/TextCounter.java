@@ -5,20 +5,52 @@ package ru.job4j.threads;
  * Класс TextCounter реализует функционал текстовой статистики.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-07-17
  */
 class TextCounter {
     /**
-     * Строка с текстом.
+     * Обёртка строки.
      */
-    private final String str;
+    class Str {
+        /**
+         * Строка с текстом.
+         */
+        private final String str;
+        /**
+         * Конструктор.
+         * @param str строка с текстом.
+         */
+        Str(String str) {
+            this.str = str.trim();
+        }
+        /**
+         * Возвращает символ по индексу из строки.
+         * @param index индекс символа в строке.
+         * @return символ.
+         */
+        public char charAt(int index) {
+            return this.str.charAt(index);
+        }
+        /**
+         * Возвращает длину строки.
+         * @return длина строки.
+         */
+        public int length() {
+            System.out.println("length()");
+            return this.str.length();
+        }
+    }
+    /**
+     * Экземпляр объекта обёртки строки.
+     */
+    private Str str;
     /**
      * Конструктор.
      * @param str строка с текстом.
      */
     TextCounter(String str) {
-        this.str = str.trim();
+        this.str = new Str(str);
     }
     /**
      * Возвращает количество пробелов в строке.
