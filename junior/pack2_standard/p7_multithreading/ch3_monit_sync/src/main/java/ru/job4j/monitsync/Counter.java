@@ -47,14 +47,20 @@ class Counter {
      * Возвращает число.
      * @return число.
      */
+    @GuardedBy("lock")
     public int getVal() {
-        return this.val;
+        synchronized (this.lock) {
+            return this.val;
+        }
     }
     /**
      * Возвращает строковое представление объекта.
      * @return строковое представление объекта.
      */
+    @GuardedBy("lock")
     public String toString() {
-        return String.format("{val: %d}", this.val);
+        synchronized (this.lock) {
+            return String.format("{val: %d}", this.val);
+        }
     }
 }
