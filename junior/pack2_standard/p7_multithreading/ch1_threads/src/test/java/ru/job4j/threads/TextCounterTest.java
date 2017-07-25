@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  * Класс TextCounterTest тестирует класс TextCounter.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 3
  * @since 2017-07-17
  */
 public class TextCounterTest {
@@ -40,13 +40,13 @@ public class TextCounterTest {
             System.out.println("URISyntaxException.");
             ex.printStackTrace();
         } catch (NoSuchFileException ex) {
-            System.out.println("NoSuchFileException.");
+            System.err.println("NoSuchFileException.");
             ex.printStackTrace();
         } catch (UnsupportedEncodingException ex) {
-            System.out.println("UnsupportedEncodingException.");
+            System.err.println("UnsupportedEncodingException.");
             ex.printStackTrace();
         } catch (IOException ex) {
-            System.out.println("IOException.");
+            System.err.println("IOException.");
             ex.printStackTrace();
         }
     }
@@ -55,20 +55,42 @@ public class TextCounterTest {
      */
     @Test
     public void testConcurrency() {
+        System.out.println("#1017 junior.pack2.p7.ch1.task2 'Create waiting of output'");
         Thread t1 = new Thread() {
             @Override
             public void run() {
-                System.out.println("Thread 1. Words: " + TextCounterTest.this.tc1.countWords());
+                String tname = Thread.currentThread().getName();
+                System.out.println(String.format("%s runs.", tname));
+                System.out.println(String.format("%s ends. Words: %d.", tname, TextCounterTest.this.tc1.countWords()));
             }
         };
         Thread t2 = new Thread() {
             @Override
             public void run() {
-                System.out.println("Thread 2: Spaces: " + TextCounterTest.this.tc2.countSpaces());
+                String tname = Thread.currentThread().getName();
+                System.out.println(String.format("%s runs.", tname));
+                System.out.println(String.format("%s ends. Spaces: %d.", tname, TextCounterTest.this.tc2.countWords()));
             }
         };
+        t1.setName("Word counting thread");
+        t2.setName("Space counting thread");
         t1.start();
         t2.start();
+        long start = System.currentTimeMillis();
+        while (!t1.isInterrupted() || !t2.isInterrupted()) {
+            if (System.currentTimeMillis() > start + 1000) {
+                if (!t1.isInterrupted()) {
+                    System.out.println(String.format("Execution time of '%s' more then 1 sec.", t1.getName()));
+                }
+                if (!t2.isInterrupted()) {
+                    System.out.println(String.format("Execution time of '%s' more then 1 sec.", t2.getName()));
+                }
+                t1.interrupt();
+                t2.interrupt();
+                break;
+            }
+        }
+        System.out.println("End task");
     }
     /**
      * Тестирует int countSpaces().
