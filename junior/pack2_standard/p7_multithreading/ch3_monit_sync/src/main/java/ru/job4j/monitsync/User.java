@@ -1,8 +1,6 @@
 package ru.job4j.monitsync;
 
 import java.util.Objects;
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
 /**
  * Class User реализует сущность Пользователь.
  *
@@ -10,7 +8,6 @@ import net.jcip.annotations.ThreadSafe;
  * @version 1
  * @since 2017-07-25
  */
-@ThreadSafe
 class User implements Comparable<User> {
     /**
      * Идентификатор пользователя.
@@ -38,11 +35,8 @@ class User implements Comparable<User> {
      * Получает счёт пользователя.
      * @return счёт пользователя.
      */
-    @GuardedBy("lock")
     public int getAmount() {
-        synchronized (this.lock) {
-            return this.amount;
-        }
+        return this.amount;
     }
     /**
      * Получает идентификатор пользователя.
@@ -56,65 +50,50 @@ class User implements Comparable<User> {
      * @param obj объект пользователя.
      * @return результат сравнения.
      */
-    @GuardedBy("lock")
     @Override
     public int compareTo(User obj) {
-        synchronized (this.lock) {
-            return this.hashCode() - obj.hashCode();
-        }
+        return this.hashCode() - obj.hashCode();
     }
     /**
      * Возвращает хэш-код объекта пользователя.
      * @return хэш-код объекта пользователя.
      */
-    @GuardedBy("lock")
     @Override
     public int hashCode() {
-        synchronized (this.lock) {
-            return Objects.hash(id, amount);
-        }
+        return Objects.hash(id, amount);
     }
     /**
      * Сравнивает объекты пользователя.
      * @param obj целевой объект, с которым сравнивается текущий объект.
      * @return true если объекты одинаковые, иначе false.
      */
-    @GuardedBy("lock")
     @Override
     public boolean equals(Object obj) {
-        synchronized (this.lock) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null || this.getClass() != obj.getClass()) {
-                return false;
-            }
-            User user = (User) obj;
-            if (this.id != user.id || this.amount != user.amount) {
-                return false;
-            }
+        if (this == obj) {
             return true;
         }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        if (this.id != user.id || this.amount != user.amount) {
+            return false;
+        }
+        return true;
     }
     /**
      * Устанавливает счёт пользователя.
      * @param amount количество.
      */
-    @GuardedBy("lock")
     public void setAmount(int amount) {
-        synchronized (this.lock) {
-            this.amount = amount;
-        }
+        this.amount = amount;
     }
     /**
      * Генерирует строковое представление объект пользователя.
      * @return строковое представление объект пользователя.
      */
-    @GuardedBy("lock")
     @Override
     public String toString() {
-        synchronized (this.lock) {
-            return String.format("User{id: %d, amount: %d}", this.getId(), this.getAmount());
-        }
+        return String.format("User{id: %d, amount: %d}", this.getId(), this.getAmount());
     }
 }
