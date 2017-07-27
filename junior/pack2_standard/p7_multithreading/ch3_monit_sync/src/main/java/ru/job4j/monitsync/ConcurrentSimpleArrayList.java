@@ -7,7 +7,7 @@ import java.util.RandomAccess;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 /**
- * Класс ConcurrentSimpleArrayList реализует сущность Списочный массив.
+ * Класс ConcurrentSimpleArrayList реализует сущность Потокобезопасный списочный массив.
  *
  * @param <E> параметризированный тип.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)

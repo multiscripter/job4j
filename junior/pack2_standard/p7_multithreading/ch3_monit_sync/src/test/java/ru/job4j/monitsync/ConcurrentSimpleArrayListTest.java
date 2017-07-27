@@ -1,6 +1,5 @@
 package ru.job4j.monitsync;
 
-//import java.util.Comparator;
 import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
