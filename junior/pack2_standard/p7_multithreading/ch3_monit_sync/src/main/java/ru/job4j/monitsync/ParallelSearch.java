@@ -43,7 +43,7 @@ class ParallelSearch {
     /**
      * Коллекция трэдов.
      */
-    private LinkedList<ThreadSearch> threads;
+    private ArrayList<ThreadSearch> threads;
     /**
      * Объект блокировки (монитора).
      */
@@ -65,7 +65,7 @@ class ParallelSearch {
         this.dirs = new HashSet<>();
         this.dirs.add(this.rootDir.getAbsoluteFile());
         this.files = new LinkedList<>();
-        this.threads = new LinkedList<>();
+        this.threads = new ArrayList<>();
         this.lock = new Object();
         this.text = text;
         this.exts = exts;
@@ -103,11 +103,14 @@ class ParallelSearch {
      */
     private void findMatches() {
         try {
-            for (ThreadSearch t : this.threads) {
-                t.start();
+            for (int a = 0; a < this.threads.size(); a++) {
+                while (Thread.activeCount() > 1000) {
+                    Thread.currentThread().sleep(100);
+                }
+                this.threads.get(a).start();
             }
-            for (ThreadSearch t : this.threads) {
-                t.join();
+            for (int a = 0; a < this.threads.size(); a++) {
+                this.threads.get(a).join();
             }
         } catch (InterruptedException ex) {
             ex.printStackTrace();
@@ -175,6 +178,8 @@ class ParallelSearch {
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
+            } finally {
+                Thread.currentThread().interrupt();
             }
         }
     }

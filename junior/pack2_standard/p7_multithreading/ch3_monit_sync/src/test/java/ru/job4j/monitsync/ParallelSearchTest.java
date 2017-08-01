@@ -17,9 +17,9 @@ public class ParallelSearchTest  {
      */
     @Test
     public void testingParallelSearch() {
-        ParallelSearch ps = new ParallelSearch("/var/www/site.name/wp-content/themes", "TPLURI", Arrays.asList(new String[]{"php", "js"}));
+        ParallelSearch ps = new ParallelSearch("D:\\web", "TPLURI", Arrays.asList(new String[]{"php", "js"}));
         List<String> result = ps.result();
-        assertEquals(4, result.size());
+        assertEquals(137, result.size());
     }
     /**
      * Тестирует исключение PathIsNotDirException.
