@@ -19,5 +19,6 @@
         <module>ch1_threads</module>
         <module>ch2_jmm</module>
         <module>ch3_monit_sync</module>
+        <module>ch4_wait_notify</module>
     </modules>
 </project>
