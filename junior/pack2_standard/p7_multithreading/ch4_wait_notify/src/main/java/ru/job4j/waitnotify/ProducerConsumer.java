@@ -1,6 +1,7 @@
 package ru.job4j.waitnotify;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 import net.jcip.annotations.GuardedBy;
@@ -26,7 +27,7 @@ class ProducerConsumer {
  *
  * @param <E> параметризированный тип.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-08-01
  */
 @ThreadSafe
@@ -40,9 +41,6 @@ class SimpleBlockingQueue<E> {
      */
     private int maxSize;
     /**
-     * Конструктор без параметров.
-     */
-    /**
      * Объект блокировки (монитора).
      */
     private Object lock;
@@ -52,7 +50,7 @@ class SimpleBlockingQueue<E> {
     SimpleBlockingQueue() {
         this.queue = new LinkedList<>();
         this.maxSize = 0;
-        this.lock = new Object();
+        this.lock = this;
     }
     /**
      * Конструктор.
@@ -77,8 +75,16 @@ class SimpleBlockingQueue<E> {
     @GuardedBy("lock")
     public boolean add(E e) {
         synchronized (this.lock) {
-            return this.queue.add(e);
+            boolean result = this.maxSize > 0 && this.size() == this.maxSize ? false : this.queue.add(e);
+            return result;
         }
+    }
+    /**
+     * Возвращает итератор.
+     * @return итератор.
+     */
+    public Iterator<E> iterator() {
+        return this.queue.iterator();
     }
     /**
      * Удаляет элемент с указанным индексом из очереди.
@@ -88,18 +94,64 @@ class SimpleBlockingQueue<E> {
     @GuardedBy("lock")
     public E remove(int index) {
         synchronized (this.lock) {
-            return this.queue.remove(index);
+            E result = index < this.size() ? this.queue.remove(index) : null;
+            return result;
         }
     }
     /**
      * Возвращает размер очереди.
      * @return размер очереди.
      */
-    @GuardedBy("lock")
     public int size() {
-        synchronized (this.lock) {
-            return this.queue.size();
-        }
+        return this.queue.size();
+    }
+}
+/**
+ * Класс Data реализует сущность "Данные".
+ *
+ * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
+ * @version 1
+ * @since 2017-08-02
+ */
+class Data {
+    /**
+     * Идентификатор производителя.
+     */
+    private int producerId;
+    /**
+     * Данные.
+     */
+    private int data;
+    /**
+     * Конструктор.
+     * @param producerId идентификатор производителя.
+     * @param data данные.
+     */
+    Data(int producerId, int data) {
+        this.producerId = producerId;
+        this.data = data;
+    }
+    /**
+     * Получает идентификатор производителя.
+     * @return идентификатор производителя.
+     */
+    public int getProducerId() {
+        return this.producerId;
+    }
+    /**
+     * Получает данные производителя.
+     * @return данные.
+     */
+    public int getData() {
+        return this.data;
+    }
+    /**
+     * Возвращает строковое представление объекта данных.
+     * @return строковое представление объекта данных.
+     */
+    @Override
+    public String toString() {
+        return String.format("Producer-%d. Data: %d", this.producerId, this.data);
     }
 }
 /**
@@ -113,40 +165,104 @@ class Producer extends Thread {
     /**
      * Счётчик объектов.
      */
-    private static int counter = 1;
+    private static int counter = 0;
     /**
      * Данные.
      */
     private int data;
     /**
-     * Имя объекта.
+     * Идентификатор.
      */
-    private String name;
+    private int id;
     /**
      * Объект блокирующей очереди.
      */
     private SimpleBlockingQueue sbq;
     /**
+     * Количество запросов к очереди.
+     */
+    private int reqs;
+    /**
      * Конструктор.
      * @param sbq объект блокирующей очереди.
+     * @param reqs количество запросов к очереди.
      */
-    Producer(SimpleBlockingQueue sbq) {
-        this.name = String.format("Producer-%d", counter++);
+    Producer(SimpleBlockingQueue sbq, int reqs) {
+        this.data = 1;
+        this.id = counter++;
+        this.setName(String.format("Producer-%d", this.id));
         this.sbq = sbq;
+        this.reqs = reqs;
     }
     /**
      * Производит данные.
      * @return произведённые данные.
      */
-    private String produce() {
-        return String.format("%s. Data: %d", this.name, this.data++);
+    private Data produce() {
+        return new Data(this.id, this.data++);
     }
     /**
      * Переопределёный метод.
      */
     @Override
     public void run() {
-        this.sbq.add(this.produce());
+        try {
+            Thread t = Thread.currentThread();
+            Data data;
+            while (this.reqs-- > 0) {
+                data = this.produce();
+                while (!this.sbq.add(data)) {
+                    t.sleep(5);
+                }
+            }
+            t.interrupt();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+/**
+ * Класс Collector реализует сущность "Сборщик данных".
+ *
+ * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
+ * @version 1
+ * @since 2017-08-02
+ */
+@ThreadSafe
+class Collector {
+    /**
+     * Массив.
+     */
+    private int[] collector;
+    /**
+     * Объект блокировки (монитора).
+     */
+    private Object lock;
+    /**
+     * Конструктор.
+     * @param size размер массива.
+     */
+    Collector(int size) {
+        this.collector = new int[size];
+        this.lock = this;
+    }
+    /**
+     * Получает массив.
+     * @return массив.
+     */
+    public int[] getCollector() {
+        return this.collector;
+    }
+    /**
+     * Устанавливает данные по индексу.
+     * @param index индекс элемента.
+     * @param value данные.
+     */
+    @GuardedBy("lock")
+    public void setValue(int index, int value) {
+        synchronized (this.lock) {
+            this.collector[index] += value;
+        }
     }
 }
 /**
@@ -158,6 +274,14 @@ class Producer extends Thread {
  */
 class Consumer extends Thread {
     /**
+     * Счётчик объектов.
+     */
+    private static int counter = 0;
+    /**
+     * Идентификатор объекта.
+     */
+    private int id;
+    /**
      * Объект рандомизатора.
      */
     private Random rnd;
@@ -166,25 +290,59 @@ class Consumer extends Thread {
      */
     private SimpleBlockingQueue sbq;
     /**
+     * Количество запросов к очереди.
+     */
+    private int reqs;
+    /**
+     * Объект сборщика.
+     */
+    private Collector collector;
+    /**
      * Конструктор.
      * @param sbq объект блокирующей очереди.
+     * @param reqs количество запросов к очереди.
+     * @param collector объект сборщика.
      */
-    Consumer(SimpleBlockingQueue sbq) {
+    Consumer(SimpleBlockingQueue sbq, int reqs, Collector collector) {
+        this.id = counter++;
+        this.setName(String.format("Consumer-%d", this.id));
         this.rnd = new Random(new Date().getTime());
         this.sbq = sbq;
+        this.reqs = reqs;
+        this.collector = collector;
     }
     /**
      * Потребляет данные.
      * @param data данные Производителя.
      */
-    private void consume(String data) {
-        //Сделать что-то с данными Производителя.
+    private void consume(Data data) {
+        if (data != null) {
+            this.collector.setValue(data.getProducerId(), data.getData());
+        }
     }
     /**
      * Переопределёный метод.
      */
     @Override
     public void run() {
-        this.consume((String) this.sbq.remove(this.rnd.nextInt(this.sbq.size())));
+        try {
+            Thread t = Thread.currentThread();
+            Data data;
+            int size;
+            int index;
+            while (this.reqs-- > 0) {
+                do {
+                    do {
+                        t.sleep(1);
+                        size = this.sbq.size();
+                    } while (size < 1);
+                    data = (Data) this.sbq.remove(this.rnd.nextInt(size));
+                } while (null == data);
+                this.consume(data);
+            }
+            t.interrupt();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 }
