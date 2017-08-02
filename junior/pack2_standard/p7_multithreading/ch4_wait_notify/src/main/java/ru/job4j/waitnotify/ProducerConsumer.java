@@ -1,9 +1,7 @@
 package ru.job4j.waitnotify;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Random;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 /**
@@ -27,7 +25,7 @@ class ProducerConsumer {
  *
  * @param <E> параметризированный тип.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 3
  * @since 2017-08-01
  */
 @ThreadSafe
@@ -75,7 +73,16 @@ class SimpleBlockingQueue<E> {
     @GuardedBy("lock")
     public boolean add(E e) {
         synchronized (this.lock) {
-            boolean result = this.maxSize > 0 && this.size() == this.maxSize ? false : this.queue.add(e);
+            boolean result = false;
+            try {
+                while (this.maxSize > 0 && this.maxSize == this.size()) {
+                    this.lock.wait();
+                }
+                result = this.queue.add(e);
+                this.lock.notifyAll();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
             return result;
         }
     }
@@ -87,14 +94,22 @@ class SimpleBlockingQueue<E> {
         return this.queue.iterator();
     }
     /**
-     * Удаляет элемент с указанным индексом из очереди.
-     * @param index индекс удаляемого элемента.
+     * Удаляет говной элемент очереди.
      * @return удалённый элемент.
      */
     @GuardedBy("lock")
-    public E remove(int index) {
+    public E remove() {
         synchronized (this.lock) {
-            E result = index < this.size() ? this.queue.remove(index) : null;
+            E result = null;
+            try {
+                while (this.size() == 0) {
+                    this.lock.wait();
+                }
+                result = this.queue.remove(0);
+                this.lock.notifyAll();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
             return result;
         }
     }
@@ -158,7 +173,7 @@ class Data {
  * Класс Producer реализует сущность "Производитель".
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-08-01
  */
 class Producer extends Thread {
@@ -206,19 +221,12 @@ class Producer extends Thread {
      */
     @Override
     public void run() {
-        try {
-            Thread t = Thread.currentThread();
-            Data data;
-            while (this.reqs-- > 0) {
-                data = this.produce();
-                while (!this.sbq.add(data)) {
-                    t.sleep(5);
-                }
-            }
-            t.interrupt();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+        Thread t = Thread.currentThread();
+        Data data;
+        while (this.reqs-- > 0) {
+            this.sbq.add(this.produce());
         }
+        t.interrupt();
     }
 }
 /**
@@ -269,7 +277,7 @@ class Collector {
  * Класс Consumer реализует сущность "Потребитель".
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-08-01
  */
 class Consumer extends Thread {
@@ -281,10 +289,6 @@ class Consumer extends Thread {
      * Идентификатор объекта.
      */
     private int id;
-    /**
-     * Объект рандомизатора.
-     */
-    private Random rnd;
     /**
      * Объект блокирующей очереди.
      */
@@ -306,7 +310,6 @@ class Consumer extends Thread {
     Consumer(SimpleBlockingQueue sbq, int reqs, Collector collector) {
         this.id = counter++;
         this.setName(String.format("Consumer-%d", this.id));
-        this.rnd = new Random(new Date().getTime());
         this.sbq = sbq;
         this.reqs = reqs;
         this.collector = collector;
@@ -325,24 +328,13 @@ class Consumer extends Thread {
      */
     @Override
     public void run() {
-        try {
-            Thread t = Thread.currentThread();
-            Data data;
-            int size;
-            int index;
-            while (this.reqs-- > 0) {
-                do {
-                    do {
-                        t.sleep(1);
-                        size = this.sbq.size();
-                    } while (size < 1);
-                    data = (Data) this.sbq.remove(this.rnd.nextInt(size));
-                } while (null == data);
-                this.consume(data);
-            }
-            t.interrupt();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
+        Thread t = Thread.currentThread();
+        Data data;
+        int size;
+        int index;
+        while (this.reqs-- > 0) {
+            this.consume((Data) this.sbq.remove());
         }
+        t.interrupt();
     }
 }
