@@ -5,6 +5,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
 /**
  * Класс ProducerConsumerTest иллюстрирует проблему "Producer–consumer".
+ * Producer генерирует данные и кладёт их в буфер.
+ * Сonsumer забирает данные, удаляя их из буфера.
+ * Проблема состоит в следующем:
+ * Producer не должен пытаться добавлить данные если буфер заполнен.
+ * Сonsumer не должен пытаться удалить данные если буфер пустой.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 1

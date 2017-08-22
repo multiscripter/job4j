@@ -5,7 +5,14 @@ import java.util.LinkedList;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 /**
- * Класс ProducerConsumer иллюстрирует проблему "Producer–consumer".
+ * Класс ProducerConsumer иллюстрирует проблему "Producer–consumer" (проблема ограниченного буфера).
+ * Producer генерирует данные и кладёт их в буфер.
+ * Сonsumer забирает данные, удаляя их из буфера.
+ * Проблема состоит в следующем:
+ * Producer не должен пытаться добавлить данные если буфер заполнен.
+ * Сonsumer не должен пытаться удалить данные если буфер пустой.
+ *
+ * Для синхронизации работы потоков использованы методы wait() и notifyAll().
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 1
@@ -63,7 +70,7 @@ class SimpleBlockingQueue<E> {
         }
         this.queue = new LinkedList<>();
         this.maxSize = maxSize;
-        this.lock = new Object();
+        this.lock = this;
     }
     /**
      * Добавляет элемент в конец очереди.
@@ -222,7 +229,6 @@ class Producer extends Thread {
     @Override
     public void run() {
         Thread t = Thread.currentThread();
-        Data data;
         while (this.reqs-- > 0) {
             this.sbq.add(this.produce());
         }
@@ -329,9 +335,6 @@ class Consumer extends Thread {
     @Override
     public void run() {
         Thread t = Thread.currentThread();
-        Data data;
-        int size;
-        int index;
         while (this.reqs-- > 0) {
             this.consume((Data) this.sbq.remove());
         }
