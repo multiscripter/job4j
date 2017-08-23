@@ -21,5 +21,6 @@
         <module>ch3_monit_sync</module>
         <module>ch4_wait_notify</module>
         <module>ch5_non_block</module>
+        <module>ch6_control</module>
     </modules>
 </project>
