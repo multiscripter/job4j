@@ -1,6 +1,8 @@
 package ru.job4j.jdbc;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -9,10 +11,24 @@ import static org.junit.Assert.assertArrayEquals;
 /**
  * Class TrackerTest тестирует методы класса Tracker.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 7
+ * @version 6
  * @since 2017-04-18
  */
 public class TrackerTest {
+    /**
+     * Действия перед тестом.
+     */
+    @Before
+    public void beforeTest() {
+        try {
+            Prepare pre = new Prepare();
+            pre.loadProperties("tracker.properties");
+            pre.setDbDriver(new PgSQLJDBCDriver());
+            pre.executeSql("junior.pack2.p8.ch4.task2.sql");
+        } catch (IOException | SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     /**
      * Тестирует Item add(Item item).
      */
@@ -35,14 +51,13 @@ public class TrackerTest {
         try {
             Tracker tracker = new Tracker();
             Item expected = new Item("Имя2", "Описание2");
-            String id = expected.getId();
             tracker.add(expected);
             Item found = new Item();
-            found = tracker.findById(id);
+            found = tracker.findById(expected.getId());
             found.setDesc("Новое описание Заявки2");
-            tracker.update(found);
+            assertTrue(tracker.update(found));
             Item result = new Item();
-            result = tracker.findById(id);
+            result = tracker.findById(expected.getId());
             assertEquals(expected, result);
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -55,10 +70,10 @@ public class TrackerTest {
     public void testFindById() {
         try {
             Tracker tracker = new Tracker();
+            String id = "Заявка3";
             Item expected = new Item("Имя3", "Описание3");
-            String id = expected.getId();
             tracker.add(expected);
-            Item result = tracker.findById(id);
+            Item result = tracker.findById(expected.getId());
             assertEquals(expected, result);
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -89,15 +104,12 @@ public class TrackerTest {
     public void testDelete() {
         try {
             Tracker tracker = new Tracker();
-            Item[] tasks = new Item[6];
-            for (int a = 0; a < tasks.length; a++) {
-                tasks[a] = new Item("Имя" + a, "Описание" + a);
-                tracker.add(tasks[a]);
+            String name = "Заявка";
+            for (int a = 1; a < 6; a++) {
+                tracker.add(new Item(name + a, "Описание" + a));
             }
-            String id = tasks[5].getId();
-            tracker.delete(id);
-            Item result = tracker.findById(id);
-            assertTrue(result.isEmpty());
+            Item[] found = tracker.findByName(name + 3);
+            assertTrue(tracker.delete(found[0].getId()));
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -108,7 +120,7 @@ public class TrackerTest {
     @Test
     public void testGetAll() {
         try {
-        Tracker tracker = new Tracker();
+            Tracker tracker = new Tracker();
             Item[] items = new Item[15];
             for (int a = 0; a < 15; a++) {
                 Item item = new Item("Имя" + a, "Описание" + a);
@@ -128,10 +140,9 @@ public class TrackerTest {
     public void testGetQuantity() {
         try {
             Tracker tracker = new Tracker();
-            int expected = 2;
             tracker.add(new Item("Имя1", "Описание1"));
             tracker.add(new Item("Имя2", "Описание2"));
-            assertEquals(expected, tracker.getQuantity());
+            assertEquals(2, tracker.getQuantity());
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

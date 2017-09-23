@@ -1,6 +1,7 @@
 package ru.job4j.jdbc;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Класс StartUITest тестирует работу приложения Tracker.
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 4
+ * @version 5
  * @since 2017-04-20
  */
 public class StartUITest {
@@ -22,28 +23,30 @@ public class StartUITest {
      */
     private Tracker tracker;
     /**
-     * Количество заявок.
-     */
-    private int taskQuantity;
-    /**
      * Массив заявок.
      */
-    private Item[] tasks;
+    private Item[] items;
     /**
      * Действия перед тестом.
      */
     @Before
     public void beforeTest() {
         this.tracker = new Tracker();
-        this.taskQuantity = 9;
-        this.tasks = new Item[this.taskQuantity];
+        int taskQuantity = 9;
         try {
-            for (int a = 0; a < this.taskQuantity; a++) {
-                this.tasks[a] = new Item("task" + a, "description for task" + a);
-                this.tracker.add(this.tasks[a]);
+            Prepare pre = new Prepare();
+            pre.loadProperties("tracker.properties");
+            pre.setDbDriver(new PgSQLJDBCDriver());
+            pre.executeSql("junior.pack2.p8.ch4.task2.sql");
+            this.items = new Item[taskQuantity];
+            // Fill db by test data.
+            for (int a = 0; a < taskQuantity; a++) {
+                Item item = new Item("task" + a, "description for task" + a);
+                this.tracker.add(item);
+                this.items[a] = item;
             }
-            this.tracker.add(new Item("task" + (this.taskQuantity - 1), "_description for task" + this.taskQuantity++));
-        } catch (SQLException ex) {
+            this.tracker.add(new Item("task" + (taskQuantity - 1), "_description for task" + taskQuantity++));
+        } catch (IOException | SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -80,10 +83,10 @@ public class StartUITest {
      */
     @Test
     public void checkEditItem() {
-        String[] expected = {this.tasks[3].getId(), "task2", "Edited description"};
+        String[] expected = {this.items[3].getId(), "task2", "Edited description"};
         Input input = new StubInput(new String[]{"2", expected[0], expected[1], expected[2], "y"});
         new StartUI(input, this.tracker).init();
-        Item item = this.tracker.findById(expected[0]);
+        Item item = this.tracker.findById(this.items[3].getId());
         String[] result = {item.getId(), item.getName(), item.getDesc()};
         assertEquals(expected, result);
     }
@@ -92,7 +95,7 @@ public class StartUITest {
      */
     @Test
     public void checkDeleteItem() {
-        String id = this.tasks[7].getId();
+        String id = this.items[7].getId();
         Input input = new StubInput(new String[]{"3", id, "y"});
         new StartUI(input, this.tracker).init();
         Item result = this.tracker.findById(id);
@@ -103,7 +106,7 @@ public class StartUITest {
      */
     @Test
     public void checkFindById() {
-        String id = this.tasks[8].getId();
+        String id = this.items[8].getId();
         Input input = new StubInput(new String[]{"4", id, "y"});
         new StartUI(input, this.tracker).init();
         String result = this.tracker.findById(id).getId();
@@ -117,7 +120,7 @@ public class StartUITest {
         PrintStream original = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
-        String id = this.tasks[8].getId();
+        String id = this.items[8].getId();
         Input input = new StubInput(new String[]{"4", id, "y"});
         new StartUI(input, this.tracker).init();
         String result = out.toString();
@@ -132,7 +135,7 @@ public class StartUITest {
      */
     @Test
     public void checkFindByIdUsingContains() {
-        String id = this.tasks[8].getId();
+        String id = this.items[8].getId();
         String expected = this.tracker.findById(id).toString();
         PrintStream original = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();

@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Class ItemTest тестирует методы класса Item.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 4
+ * @version 3
  * @since 2017-04-18
  */
 public class ItemTest {
@@ -21,6 +21,10 @@ public class ItemTest {
      * Драйвер бд.
      */
     private PgSQLJDBCDriver dbDriver;
+    /**
+     * Объект трэкера заявок.
+     */
+    private Tracker tracker;
     /**
      * Действия перед тестом.
      */
@@ -32,6 +36,7 @@ public class ItemTest {
             pre.setDbDriver(new PgSQLJDBCDriver());
             this.dbDriver = pre.getDbDriver();
             pre.executeSql("junior.pack2.p8.ch4.task2.sql");
+            this.tracker = new Tracker();
         } catch (IOException | SQLException ex) {
             ex.printStackTrace();
         }
@@ -42,26 +47,46 @@ public class ItemTest {
     @Test
     public void testEmpty() {
         Item item = new Item();
-        boolean result = item.isEmpty();
-        assertTrue(result);
+        assertTrue(item.isEmpty());
     }
     /**
      * Тестирует String getId().
      */
     @Test
     public void testGetId() {
-        String expected = "expected";
-        String result = "result";
         try (Connection con = this.dbDriver.getConnection()) {
             Item item = new Item("ItemTest testGetId имя", "ItemTest testGetId Описание");
-            result = item.getId();
+            this.tracker.add(item);
+            String result = item.getId();
             Statement stmt = con.createStatement();
             ResultSet resultSet = stmt.executeQuery("select max(id) from orders");
             resultSet.next();
-            expected = Integer.toString(resultSet.getInt(1));
+            String expected = Integer.toString(resultSet.getInt(1));
+            resultSet.close();
+            stmt.close();
+            assertEquals(expected, result);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        assertEquals(expected, result);
+    }
+    /**
+     * Тестирует String getDesc().
+     */
+    @Test
+    public void testGetDesc() {
+        try (Connection con = this.dbDriver.getConnection()) {
+            Item item = new Item("ItemTest testGetId имя", "ItemTest testGetId Описание");
+            this.tracker.add(item);
+            Statement stmt = con.createStatement();
+            ResultSet resultSet = stmt.executeQuery(String.format("select descr from orders where id = %d", Integer.parseInt(item.getId())));
+            resultSet.next();
+            String expected = resultSet.getString(1);
+            resultSet.close();
+            stmt.close();
+            String result = item.getDesc();
+            assertEquals(expected, result);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

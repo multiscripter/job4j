@@ -1,12 +1,5 @@
 package ru.job4j.jdbc;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 /**
  * Class Item реализует сущность Заявка.
@@ -16,10 +9,6 @@ import java.util.ArrayList;
  * @since 2017-04-18
  */
 public class Item {
-    /**
-     * Драйвер бд.
-     */
-    private static PgSQLJDBCDriver dbDriver;
     /**
      * Идентификатор заявки.
      */
@@ -49,72 +38,33 @@ public class Item {
      * Конструктор.
      * @param name имя заявки.
      * @param desc описание заявки.
-     * @throws SQLException ошибка SQL.
      */
-    public Item(String name, String desc) throws SQLException {
-        try {
-            this.addIntoDB(name, desc, System.currentTimeMillis());
-        } catch (SQLException ex) {
-            throw new SQLException(ex);
-        }
+    public Item(String name, String desc) {
         this.name = name;
         this.desc = desc;
+        this.created = System.currentTimeMillis();
         this.comments = new ArrayList<>();
     }
     /**
-     * Добавляет новую заявку в бд.
-     * @param name имя заявки.
-     * @param desc описание заявки.
-     * @param created время создания заявки.
-     * @throws SQLException ошибка SQL.
+     * Получет комментарии заявки.
+     * @return комментарии заявки.
      */
-    private void addIntoDB(String name, String desc, long created) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet resultSet = null;
-        try {
-            con = Item.getDbDriver().getConnection();
-            String query = "insert into orders (name, descr, created) values (?, ?, ?)";
-            pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, name);
-            pstmt.setString(2, desc);
-            pstmt.setTimestamp(3, new Timestamp(created));
-            pstmt.executeUpdate();
-            resultSet = pstmt.getGeneratedKeys();
-            resultSet.next();
-            this.id = Integer.toString(resultSet.getInt(1));
-            this.created = created;
-        } catch (SQLException ex) {
-            throw new SQLException(ex);
-        } finally {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
+    public String[] getComments() {
+        return this.comments.toArray(new String[this.comments.size()]);
     }
     /**
-     * Добавляет новую заявку в бд.
-     * @return true если заявка удалена из бд. Иначе false.
-     * @throws SQLException ошибка SQL.
+     * Получет время заявки.
+     * @return время заявки.
      */
-    public boolean deleteFromDB() throws SQLException {
-        boolean result = false;
-        try (Connection con = dbDriver.getConnection()) {
-            Statement stmt = con.createStatement();
-            int affectedRows = stmt.executeUpdate(String.format("delete from orders where id = %d", Integer.parseInt(this.id)));
-            if (affectedRows == 1) {
-                result = true;
-            }
-        } catch (SQLException ex) {
-            throw new SQLException(ex);
-        }
-        return result;
+    public long getCreated() {
+        return this.created;
+    }
+    /**
+     * Получет описание заявки.
+     * @return описание заявки.
+     */
+    public String getDesc() {
+        return this.desc;
     }
     /**
      * Получет идентификатор заявки.
@@ -131,71 +81,22 @@ public class Item {
         return this.name;
     }
     /**
-     * Устанавливает имя заявки.
-     * @param name имя.
-     * @throws SQLException ошибка SQL.
-     */
-    public void setName(String name) throws SQLException {
-        try (Connection con = dbDriver.getConnection()) {
-            Statement stmt = con.createStatement();
-            int affectedRows = stmt.executeUpdate(String.format("update orders set name = '%s' where id = %d", name, Integer.parseInt(this.id)));
-            if (affectedRows == 1) {
-                this.name = name;
-            }
-        } catch (SQLException ex) {
-            throw new SQLException(ex);
-        }
-    }
-    /**
-     * Получет описание заявки.
-     * @return описание заявки.
-     */
-    public String getDesc() {
-        return this.desc;
-    }
-    /**
-     * Устанавливает описание заявки.
-     * @param desc описание заявки.
-     * @throws SQLException ошибка SQL.
-     */
-    public void setDesc(String desc) throws SQLException {
-        try (Connection con = dbDriver.getConnection()) {
-            Statement stmt = con.createStatement();
-            int affectedRows = stmt.executeUpdate(String.format("update orders set descr = '%s' where id = %d", desc, Integer.parseInt(this.id)));
-            if (affectedRows == 1) {
-                this.desc = desc;
-            }
-        } catch (SQLException ex) {
-            throw new SQLException(ex);
-        }
-    }
-    /**
-     * Получет время заявки.
-     * @return время заявки.
-     */
-    public long getCreated() {
-        return this.created;
-    }
-    /**
-     * Получет комментарии заявки.
-     * @return комментарии заявки.
-     */
-    public String[] getComments() {
-        return this.comments.toArray(new String[this.comments.size()]);
-    }
-    /**
-     * Получет драйвер бд.
-     * @return dbDriver драйвер бд.
-     */
-    public static PgSQLJDBCDriver getDbDriver() {
-        return dbDriver;
-    }
-    /**
-     * Проверяет объект на пустоту.
+     * Переопределяет метод equals().
      * @return true если объект пустой, иначе false.
      */
-    public boolean isEmpty() {
-        return this.id == null && this.name == null && this.desc == null && this.created == 0L;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Item item = (Item) obj;
+        if (this.id != item.id || this.name != item.name || this.desc != item.desc || this.created != item.created) {
+            return false;
+        }
+        return true;
     }
     /**
      * Переопределяет метод hashCode().
@@ -212,22 +113,39 @@ public class Item {
         return result;
     }
     /**
-     * Переопределяет метод equals().
+     * Проверяет объект на пустоту.
      * @return true если объект пустой, иначе false.
      */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || this.getClass() != obj.getClass()) {
-            return false;
-        }
-        Item item = (Item) obj;
-        if (!this.id.equals(item.id) || !this.name.equals(item.name) || !this.desc.equals(item.desc) || this.created != item.created) {
-            return false;
-        }
-        return true;
+    public boolean isEmpty() {
+        return this.id == null && this.name == null && this.desc == null && this.created == 0L;
+    }
+    /**
+     * Устанавливает время заявки.
+     * @param created время заявки.
+     */
+    public void setCreated(long created) {
+    	this.created = created;
+    }
+    /**
+     * Устанавливает описание заявки.
+     * @param desc описание заявки.
+     */
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+    /**
+     * Устанавливает идентификатор заявки.
+     * @param id идентификатор заявки.
+     */
+    public void setId(String id) {
+    	this.id = id;
+    }
+    /**
+     * Устанавливает имя заявки.
+     * @param name имя.
+     */
+    public void setName(String name) {
+        this.name = name;
     }
     /**
      * Переопределяет метод toString().
@@ -245,16 +163,5 @@ public class Item {
         sb.append(", created: ");
         sb.append(this.getCreated());
         return sb.toString();
-    }
-    static {
-        try {
-            Prepare pre = new Prepare();
-            pre.loadProperties("tracker.properties");
-            pre.setDbDriver(new PgSQLJDBCDriver());
-            dbDriver = pre.getDbDriver();
-            pre.executeSql("junior.pack2.p8.ch4.task2.sql");
-        } catch (IOException | SQLException ex) {
-            ex.printStackTrace();
-        }
     }
 }

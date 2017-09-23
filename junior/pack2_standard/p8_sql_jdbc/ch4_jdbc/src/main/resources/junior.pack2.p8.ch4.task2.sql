@@ -4,3 +4,4 @@ create table if not exists orders (
 	descr text not null,
 	created timestamp not null default now()
 );
+delete from orders;

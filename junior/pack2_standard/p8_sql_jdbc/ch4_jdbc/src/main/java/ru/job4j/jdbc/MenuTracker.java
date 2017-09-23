@@ -290,21 +290,17 @@ class EditItem extends UserAction {
         }
         String name = input.ask("Enter new user name or just press Enter to go on: ");
         if (!name.isEmpty()) {
-            try {
-                item.setName(name);
-            } catch (SQLException ex) {
-                System.out.println("SQL error occured while setting name.");
-            }
+            item.setName(name);
         }
         String desc = input.ask("Enter new description or just press Enter to go on: ");
         if (!desc.isEmpty()) {
-            try {
-                item.setDesc(desc);
-            } catch (SQLException ex) {
-                System.out.println("SQL error occured while setting description.");
-            }
+            item.setDesc(desc);
         }
-        tracker.update(item);
+        try {
+            tracker.update(item);
+        } catch (SQLException ex) {
+            System.out.println("SQL error occured while updating task.");
+        }
         System.out.println("Task updated.");
         System.out.println("");
     }
