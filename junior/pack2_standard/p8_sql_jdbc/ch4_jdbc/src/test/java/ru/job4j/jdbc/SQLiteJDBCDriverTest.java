@@ -55,40 +55,38 @@ public class SQLiteJDBCDriverTest {
     }
     /**
      * Тестирует public Connection getConnection().
-     * @throws URISyntaxException ошибка синтаксиса URI.
-     * @throws SQLException ошибка SQL.
-     * @throws TransformerException ошибка преобразователя.
-     * @throws ParserConfigurationException ошибка конфигурирования парсера.
-     * @throws FileNotFoundException ошибка файл не найден.
-     * @throws XMLStreamException ошибка xml-потока.
      */
     @Test
-    public void testGetConnection() throws URISyntaxException, SQLException, TransformerException, ParserConfigurationException, FileNotFoundException, XMLStreamException {
-        this.lastTime = System.currentTimeMillis();
-        int expected = 0;
-        JuniorPack2p8ch4 app = new JuniorPack2p8ch4();
-        app.setConnection();
-        this.setTimeMark("Prepare");
-        app.createTable();
-        this.setTimeMark("Create table");
-        app.deleteData();
-        this.setTimeMark("Delete data");
-        app.insertData(this.iters);
-        this.setTimeMark("Insert data");
-        app.createXML();
-        this.setTimeMark("Create xml");
-        app.saveXML();
-        this.setTimeMark("Write xml into file");
-        app.xslt();
-        this.setTimeMark("XSLT");
-        int result = app.parseXML();
-        this.setTimeMark("Parse xml");
-        app.close();
-        this.setTimeMark("Close resources");
-        System.out.println("------------------------");
-        System.out.printf("%-20s%d\n", "Total time", this.totalTime);
-        System.out.printf("%-20s%d\n", "Elements", this.iters);
-        System.out.printf("%-20s%d\n", "Sum", result);
-        assertEquals(this.expected, result);
+    public void testGetConnection() {
+        try {
+            this.lastTime = System.currentTimeMillis();
+            int expected = 0;
+            JuniorPack2p8ch4 app = new JuniorPack2p8ch4();
+            app.setConnection();
+            this.setTimeMark("Prepare");
+            app.createTable();
+            this.setTimeMark("Create table");
+            app.deleteData();
+            this.setTimeMark("Delete data");
+            app.insertData(this.iters);
+            this.setTimeMark("Insert data");
+            app.createXML();
+            this.setTimeMark("Create xml");
+            app.saveXML();
+            this.setTimeMark("Write xml into file");
+            app.xslt();
+            this.setTimeMark("XSLT");
+            int result = app.parseXML();
+            this.setTimeMark("Parse xml");
+            app.close();
+            this.setTimeMark("Close resources");
+            System.out.println("------------------------");
+            System.out.printf("%-20s%d\n", "Total time", this.totalTime);
+            System.out.printf("%-20s%d\n", "Elements", this.iters);
+            System.out.printf("%-20s%d\n", "Sum", result);
+            assertEquals(this.expected, result);
+        } catch (URISyntaxException | SQLException | TransformerException | ParserConfigurationException | FileNotFoundException | XMLStreamException ex) {
+            ex.printStackTrace();
+        }
     }
 }
