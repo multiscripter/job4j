@@ -8,18 +8,18 @@ import java.sql.SQLException;
  * Класс PgSQLJDBCDriver реализует функционал работы с PostgreSQL.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-09-12
  */
 class PgSQLJDBCDriver {
     /**
-     * Имя бд.
-     */
-    private String db;
-    /**
      * Источник бд.
      */
     private String src;
+    /**
+     * Имя бд.
+     */
+    private String db;
     /**
      * Пароль пользователя бд.
      */
@@ -33,43 +33,41 @@ class PgSQLJDBCDriver {
      */
     private String protocol;
     /**
-     * Строка подключения.
-     */
-    private StringBuilder str =  new StringBuilder();
-    /**
      * Пользователь бд.
      */
     private String user;
     /**
      * Получает объект соединения с бд.
      * @return объект соединения с бд.
+     * @throws SQLException ошибка SQL.
      */
-    public Connection getConnection() {
-        Connection conn = null;
+    public Connection getConnection() throws SQLException {
+        Connection con = null;
         try {
+            StringBuilder str =  new StringBuilder();
             str.append("jdbc:");
             str.append(this.protocol);
+            str.append("://");
             str.append(this.src);
-            conn = DriverManager.getConnection(str.toString());
+            if (this.port != 0) {
+                str.append(":" + this.port);
+            }
+            str.append("/");
+            if (this.db != null) {
+                str.append(this.db);
+            }
+            con = DriverManager.getConnection(str.toString(), this.user, this.pass);
         } catch (SQLException ex) {
-            System.err.println("Ошибка SQL.");
-            ex.printStackTrace();
+            throw new SQLException(ex);
         }
-        return conn;
+        return con;
     }
     /**
      * Получает имя бд.
      * @return имя бд.
      */
-    public String getDb() {
+    public String getDB() {
         return this.db;
-    }
-    /**
-     * Получает хост бд.
-     * @return хост бд.
-     */
-    public String getSrc() {
-        return this.src;
     }
     /**
      * Получает номер порта подключения к субд.
@@ -86,6 +84,13 @@ class PgSQLJDBCDriver {
         return this.protocol;
     }
     /**
+     * Получает хост бд.
+     * @return хост бд.
+     */
+    public String getSrc() {
+        return this.src;
+    }
+    /**
      * Получает пользователя бд.
      * @return пользователь бд.
      */
@@ -96,8 +101,15 @@ class PgSQLJDBCDriver {
      * Устанавливает имя бд.
      * @param db имя бд.
      */
-    public void setDb(String db) {
+    public void setDB(String db) {
         this.db = db;
+    }
+    /**
+     * Устанавливает номер порта подключения к субд.
+     * @param port номер порта подключения к субд.
+     */
+    public void setPort(int port) {
+        this.port = port;
     }
     /**
      * Устанавливает хост бд.
@@ -112,13 +124,6 @@ class PgSQLJDBCDriver {
      */
     public void setPass(String pass) {
         this.pass = pass;
-    }
-    /**
-     * Устанавливает номер порта подключения к субд.
-     * @param port номер порта подключения к субд.
-     */
-    public void setPort(int port) {
-        this.port = port;
     }
     /**
      * Устанавливает протокол подключения к субд.
