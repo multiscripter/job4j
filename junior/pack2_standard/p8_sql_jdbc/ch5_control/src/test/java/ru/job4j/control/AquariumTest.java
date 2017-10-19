@@ -77,7 +77,7 @@ public class AquariumTest {
     }
     /**
      * Симулируем нелёгкую жысь в аквариуме.
-     */
+     *
     @Test
     public void semulateAquariumLife() {
         try {
@@ -91,5 +91,5 @@ public class AquariumTest {
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }
-    }
+    }*/
 }
