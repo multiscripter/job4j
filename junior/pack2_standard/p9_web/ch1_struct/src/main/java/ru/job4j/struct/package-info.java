@@ -5,4 +5,4 @@
 * @version 1
 * @since 2017-10-19
 */
-package ru.job4j.jdbc;
+package ru.job4j.struct;
