@@ -8,7 +8,7 @@
     <version>1.0</version>
     <name>p9_web</name>
     <url>http://job4j.ru</url>
-    
+
     <parent>
         <groupId>ru.job4j</groupId>
         <artifactId>pack2_standard</artifactId>
@@ -18,4 +18,18 @@
     <modules>
         <module>ch1_struct</module>
     </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+    <dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
