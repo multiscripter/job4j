@@ -8,7 +8,7 @@
     <version>1.0</version>
     <name>p9_web</name>
     <url>http://job4j.ru</url>
-    
+
     <parent>
         <groupId>ru.job4j</groupId>
         <artifactId>pack2_standard</artifactId>
