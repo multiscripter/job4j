@@ -74,7 +74,7 @@ class JobsParser {
      * @throws SQLException ошибка SQL.
      */
     private void db() throws IOException, SQLException {
-        JobsDB db = new JobsDB();
+        JobsDB db = new JobsDB(logger);
         db.loadProperties("jpack2p8ch5task3db.properties");
         db.setDbDriver(new PgSQLJDBCDriver());
         db.executeSql("junior.pack2.p8.ch5.task3.sql");

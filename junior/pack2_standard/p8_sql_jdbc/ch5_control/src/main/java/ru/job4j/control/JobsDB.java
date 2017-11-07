@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 import java.util.Properties;
+import org.apache.logging.log4j.Logger;
 /**
  * Класс JobsDB реализует класс работы с бд.
  *
@@ -24,6 +25,10 @@ class JobsDB {
      * Драйвер бд.
      */
     private PgSQLJDBCDriver dbDriver;
+    /**
+     * Логгер.
+     */
+    private final Logger logger;
     /**
      * Путь до файла.
      */
@@ -38,8 +43,10 @@ class JobsDB {
     private String tbl;
     /**
      * Конструктор.
+     * @param logger логгер.
      */
-    JobsDB() {
+    JobsDB(final Logger logger) {
+        this.logger = logger;
         this.path = String.format("%s../../../../../src/main/resources/", PgSQLJDBCDriver.class.getResource(".").getPath().replaceFirst("^/(.:/)", "$1"));
         this.props = new Properties();
     }
@@ -57,13 +64,9 @@ class JobsDB {
      * @throws SQLException ошибка SQL.
      */
     public int delete(JobOfferList offerList) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
         int[] affectedRows = null;
-        try {
-            con = this.dbDriver.getConnection();
-            String query = String.format("delete from %s where author = ? and pubdate = ? and title = ? and url = ?", this.tbl);
-            pstmt = con.prepareStatement(query);
+        String query = String.format("delete from %s where author = ? and pubdate = ? and title = ? and url = ?", this.tbl);
+        try (Connection con = this.dbDriver.getConnection(); PreparedStatement pstmt = con.prepareStatement(query)) {
             con.setAutoCommit(false);
             Iterator<JobOffer> iter = offerList.iterator();
             JobOffer jo;
@@ -76,16 +79,15 @@ class JobsDB {
                 pstmt.addBatch();
             }
             affectedRows = pstmt.executeBatch();
-            con.commit();
+            try {
+                con.commit();
+            } catch (SQLException ex) {
+                this.logger.error("delete() failed. Transaction is being rolled back");
+                con.rollback();
+                throw new SQLException(ex);
+            }
         } catch (SQLException ex) {
             throw new SQLException(ex);
-        } finally {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
         }
         return affectedRows.length;
     }
@@ -96,13 +98,15 @@ class JobsDB {
      * @throws SQLException ошибка SQL.
      */
     public void executeSql(String localName) throws IOException, SQLException {
-        byte[] bytes = Files.readAllBytes(Paths.get(path + localName));
-        String query = new String(bytes, "UTF-8");
-        Connection con = this.dbDriver.getConnection();
-        Statement stmt = con.createStatement();
-        stmt.execute(query);
-        stmt.close();
-        con.close();
+        try (Connection con = this.dbDriver.getConnection(); Statement stmt = con.createStatement()) {
+            byte[] bytes = Files.readAllBytes(Paths.get(path + localName));
+            String query = new String(bytes, "UTF-8");
+            stmt.execute(query);
+        } catch (IOException ex) {
+            throw new IOException(ex);
+        } catch (SQLException ex) {
+            throw new SQLException(ex);
+        }
     }
     /**
      * Получет драйвер бд.
@@ -117,14 +121,10 @@ class JobsDB {
      * @throws SQLException ошибка SQL.
      */
     public JobOfferList getJobOfferList() throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
         ResultSet rs = null;
         JobOfferList offerList = new JobOfferList();
-        try {
-            con = this.dbDriver.getConnection();
-            String query = String.format("select * from %s", this.tbl);
-            pstmt = con.prepareStatement(query);
+        String query = String.format("select * from %s", this.tbl);
+        try (Connection con = this.dbDriver.getConnection(); PreparedStatement pstmt = con.prepareStatement(query)) {
             rs = pstmt.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -134,14 +134,8 @@ class JobsDB {
         } catch (SQLException ex) {
             throw new SQLException(ex);
         } finally {
-            if (pstmt != null) {
-                pstmt.close();
-            }
             if (rs != null) {
                 rs.close();
-            }
-            if (con != null) {
-                con.close();
             }
         }
         return offerList;
@@ -153,13 +147,9 @@ class JobsDB {
      * @throws SQLException ошибка SQL.
      */
     public int insert(JobOfferList offerList) throws SQLException {
-        Connection con = null;
-        PreparedStatement pstmt = null;
         int[] affectedRows = null;
-        try {
-            con = this.dbDriver.getConnection();
-            String query = String.format("insert into %s (author, pubdate, title, jobtext, url) values (?, ?, ?, ?, ?)", this.tbl);
-            pstmt = con.prepareStatement(query);
+        String query = String.format("insert into %s (author, pubdate, title, jobtext, url) values (?, ?, ?, ?, ?)", this.tbl);
+        try (Connection con = this.dbDriver.getConnection(); PreparedStatement pstmt = con.prepareStatement(query)) {
             con.setAutoCommit(false);
             Iterator<JobOffer> iter = offerList.iterator();
             JobOffer jo;
@@ -173,16 +163,15 @@ class JobsDB {
                 pstmt.addBatch();
             }
             affectedRows = pstmt.executeBatch();
-            con.commit();
+            try {
+                con.commit();
+            } catch (SQLException ex) {
+                this.logger.error("Insert() failed. Transaction is being rolled back");
+                con.rollback();
+                throw new SQLException(ex);
+            }
         } catch (SQLException ex) {
             throw new SQLException(ex);
-        } finally {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
         }
         return affectedRows.length;
     }
