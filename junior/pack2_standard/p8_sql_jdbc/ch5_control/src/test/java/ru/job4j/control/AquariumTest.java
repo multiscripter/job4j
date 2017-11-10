@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.Properties;
 import java.util.Random;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 /**
@@ -34,7 +35,7 @@ public class AquariumTest {
     /**
      * Действия перед тестом.
      */
-    @Before
+    @Ignore@Before
     public void beforeTest() {
         try {
             this.plfn = "tuna.properties";
@@ -59,7 +60,7 @@ public class AquariumTest {
     /**
      * Тестирует int getPopulationSize().
      */
-    @Test
+    @Ignore@Test
     public void testGetPopulationSize() {
         try {
             Aquarium aq = new Aquarium(100);
@@ -77,7 +78,7 @@ public class AquariumTest {
     }
     /**
      * Симулируем нелёгкую жысь в аквариуме.
-     */
+     *
     @Test
     public void semulateAquariumLife() {
         try {
@@ -91,5 +92,5 @@ public class AquariumTest {
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }
-    }
+    }*/
 }
