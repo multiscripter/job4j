@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,13 +19,15 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Properties;
 import java.util.Set;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 /**
  * Класс UsersDB реализует сущность Драйвер бд.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-11-05
  */
 class UsersDB {
@@ -33,9 +36,9 @@ class UsersDB {
      */
     private final Logger logger;
 	/**
-     * Драйвер бд.
+     * DataSource.
      */
-	private PgSQLJDBCDriver dbDriver;
+	private DataSource ds;
 	/**
      * Путь до файла.
      */
@@ -69,16 +72,11 @@ class UsersDB {
      */
     public boolean addUser(User user) throws SQLException {
         boolean result = false;
-        Connection con = null;
-        Statement stmt = null;
-        try {
-            con = this.dbDriver.getConnection();
-            stmt = con.createStatement();
+        ResultSet rs = null;
+        try (Connection con = this.ds.getConnection(); Statement stmt = con.createStatement()) {
             String query = String.format("insert into %s (name, login, email, createDate) values ('%s', '%s', '%s', '%5$tY-%5$tm-%5$td')", this.tbl, user.getName(), user.getLogin(), user.getEmail(), user.getDate());
-            con = this.dbDriver.getConnection();
-            stmt = con.createStatement();
             if (stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS) > 0) {
-                ResultSet rs = stmt.getGeneratedKeys();
+                rs = stmt.getGeneratedKeys();
                 if (rs != null) {
                     rs.next();
                     user.setId(rs.getInt("id"));
@@ -88,11 +86,8 @@ class UsersDB {
         } catch (SQLException ex) {
             throw new SQLException(ex);
         } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (con != null) {
-                con.close();
+            if (rs != null) {
+                rs.close();
             }
         }
         return result;
@@ -105,24 +100,13 @@ class UsersDB {
      */
     public boolean deleteUser(int id) throws SQLException {
         boolean result = false;
-        Connection con = null;
-        Statement stmt = null;
-        try {
+        try (Connection con = this.ds.getConnection(); Statement stmt = con.createStatement()) {
             String query = String.format("delete from %s where id = %d", this.tbl, id);
-            con = this.dbDriver.getConnection();
-            stmt = con.createStatement();
             if (stmt.executeUpdate(query) == 1) {
                 result = true;
             }
         } catch (SQLException ex) {
             throw new SQLException(ex);
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
         }
         return result;
     }
@@ -145,9 +129,7 @@ class UsersDB {
             throw new NoUserAttributeException();
         }
         boolean result = false;
-        Connection con = null;
-        Statement stmt = null;
-        try {
+        try (Connection con = this.ds.getConnection(); Statement stmt = con.createStatement()) {
             String query = String.format("update %s set ", this.tbl);
             Set<String> keys = attrs.keySet();
             StringBuilder sb = new StringBuilder();
@@ -161,20 +143,11 @@ class UsersDB {
             }
             sb = sb.deleteCharAt(sb.length() - 1);
             sb.append(String.format(" where id = %d", id));
-            con = this.dbDriver.getConnection();
-            stmt = con.createStatement();
             if (stmt.executeUpdate(sb.toString()) == 1) {
                 result = true;
             }
         } catch (SQLException ex) {
             throw new SQLException(ex);
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
         }
         return result;
     }
@@ -187,21 +160,10 @@ class UsersDB {
     public void executeSql(String localName) throws IOException, SQLException {
         byte[] bytes = Files.readAllBytes(Paths.get(path + localName));
         String query = new String(bytes, "UTF-8");
-        Connection con = null;
-        Statement stmt = null;
-        try {
-            con = this.dbDriver.getConnection();
-            stmt = con.createStatement();
+        try (Connection con = this.ds.getConnection(); Statement stmt = con.createStatement()) {
             stmt.execute(query);
         } catch (SQLException ex) {
             throw new SQLException(ex);
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
         }
     }
     /**
@@ -213,14 +175,8 @@ class UsersDB {
      */
     public LinkedList<User> getUsers(final String order, final boolean desc) throws SQLException {
         LinkedList<User> users = new LinkedList<>();
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            String query = String.format("select * from %s order by %s %s", this.tbl, order.equals("") ? "id" : order, desc ? "desc" : "asc");
-            con = this.dbDriver.getConnection();
-            pstmt = con.prepareStatement(query);
-            rs = pstmt.executeQuery();
+        String query = String.format("select * from %s order by %s %s", this.tbl, order.equals("") ? "id" : order, desc ? "desc" : "asc");
+        try (Connection con = this.ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(query); ResultSet rs = pstmt.executeQuery()) {
             if (rs != null) {
                 while (rs.next()) {
                     GregorianCalendar date = new GregorianCalendar();
@@ -230,13 +186,6 @@ class UsersDB {
             }
         } catch (SQLException ex) {
             throw new SQLException(ex);
-        } finally {
-            if (pstmt != null) {
-                pstmt.close();
-            }
-            if (con != null) {
-                con.close();
-            }
         }
         return users;
     }
@@ -252,16 +201,15 @@ class UsersDB {
     }
     /**
      * Устанавливает драйвер бд.
-     * @param dbDriver драйвер бд.
+     * @throws NamingException ошибка работы с именами сущностей.
      */
-    public void setDbDriver(PgSQLJDBCDriver dbDriver) {
-        this.dbDriver = dbDriver;
-        this.dbDriver.setProtocol(this.props.getProperty("protocol"));
-        this.dbDriver.setSrc(this.props.getProperty("src"));
-        this.dbDriver.setPort(Integer.parseInt(this.props.getProperty("port")));
-        this.dbDriver.setUser(this.props.getProperty("user"));
-        this.dbDriver.setPass(this.props.getProperty("pass"));
-        this.dbDriver.setDB(this.props.getProperty("db"));
-        this.tbl = this.props.getProperty("tbl");
+    public void setDbDriver() throws NamingException {
+        try {
+            InitialContext initC = new InitialContext();
+            this.ds = (DataSource) initC.lookup("java:comp/env/jdbc/jpack2p9ch2task1Postgres");
+            this.tbl = this.props.getProperty("tbl");
+        } catch (NamingException ex) {
+            throw new NamingException(ex.getLocalizedMessage());
+        }
     }
 }

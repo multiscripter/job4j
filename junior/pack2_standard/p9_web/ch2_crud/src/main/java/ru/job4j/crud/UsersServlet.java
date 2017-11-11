@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.Scanner;
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +24,7 @@ import org.apache.logging.log4j.LogManager;
  * Класс UsersServlet реализует сущность Сервлет Пользователь.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-11-05
  */
 public class UsersServlet extends HttpServlet {
@@ -40,11 +41,11 @@ public class UsersServlet extends HttpServlet {
      */
     private String path;
 	/**
-	 * Конструктор.
+	 * Инициализатор.
 	 */
-	public UsersServlet() {
+	@Override
+	public void init() throws ServletException {
 		try {
-			Class.forName("org.postgresql.Driver").newInstance(); //load driver
 			// /var/lib/tomcat8/webapps/ch2_crud-1.0/WEB-INF/classes
 			this.path = new File(UsersServlet.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
 			this.path = this.path.replaceFirst("^/(.:/)", "$1");
@@ -57,9 +58,9 @@ public class UsersServlet extends HttpServlet {
             this.logger = LogManager.getLogger("UsersServlet");
 			this.db = new UsersDB();
 			this.db.loadProperties("junior.pack2.p9.ch2.task1.properties");
-			this.db.setDbDriver(new PgSQLJDBCDriver());
+			this.db.setDbDriver();
 			this.db.executeSql("junior.pack2.p9.ch2.task1.sql");
-		} catch (URISyntaxException | IOException | SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+		} catch (URISyntaxException | IOException | SQLException | NamingException ex) {
 			this.logger.error("ERROR", ex);
 		}
 	}
@@ -105,7 +106,7 @@ public class UsersServlet extends HttpServlet {
 	}
 	/**
 	 * Обрабатывает POST-запросы.
-	 * curl -d "name=%D0%A1%D0%BE%D0%B1%D1%87%D0%B0%D1%87%D0%BA%D0%B0&login=forsegirl&email=horse@mail.ru" -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" -X POST http://bot.net:8080/ch2_crud-1.0/
+	 * curl -d "name=%D0%9F%D0%BE%D0%BF%20%D0%93%D0%B0%D0%BF%D0%BE%D0%BD&login=gapon&email=gapon@mail.ru" -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" -X POST http://bot.net:8080/ch2_crud-1.0/
 	 */
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -158,7 +159,7 @@ public class UsersServlet extends HttpServlet {
 	 * @return идентификатор.
 	 */
 	private int getId(HttpServletRequest req) {
-		this.logger.error(req.getPathInfo());
+		this.logger.info(req.getPathInfo());
 		String[] path = req.getPathInfo().split("/");
 		return Integer.parseInt(path[path.length - 1]);
 	}
