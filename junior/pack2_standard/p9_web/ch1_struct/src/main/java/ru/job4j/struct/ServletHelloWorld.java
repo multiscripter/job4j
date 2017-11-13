@@ -27,7 +27,7 @@ public class ServletHelloWorld extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		PrintWriter writer = new PrintWriter(resp.getOutputStream());
-		writer.append("Hello, World! tomcat7-maven-plugin autodeployed. Test msg");
+		writer.append("Hello, World! tomcat7-maven-plugin autodeployed. Тестовое сообщение.");
 		writer.flush();
 	}
 }
