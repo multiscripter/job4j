@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.GregorianCalendar;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,14 +23,10 @@ import org.apache.logging.log4j.LogManager;
  * Класс Update реализует функционал обновления пользователя.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-11-09
  */
 public class Update extends HttpServlet {
-	/**
-     * Драйвер бд.
-     */
-	private UserStore db;
 	/**
      * Логгер.
      */
@@ -39,12 +36,15 @@ public class Update extends HttpServlet {
      */
     private String path;
     /**
+     * UserService.
+     */
+	private UserService us;
+    /**
 	 * Инициализатор.
 	 */
 	@Override
     public void init() throws ServletException {
     	try {
-			Class.forName("org.postgresql.Driver").newInstance(); //load driver
 			// /var/lib/tomcat8/webapps/ch3_ui-1.0/WEB-INF/classes
 			this.path = new File(Update.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
 			this.path = this.path.replaceFirst("^/(.:/)", "$1");
@@ -55,11 +55,8 @@ public class Update extends HttpServlet {
             ctx.stop();
             ctx.start(conf);
             this.logger = LogManager.getLogger("Update");
-			this.db = UserStore.getInstance();
-			this.db.loadProperties("junior.pack2.p9.ch3.task1.properties");
-			this.db.setDbDriver();
-			this.db.executeSql("junior.pack2.p9.ch3.task1.sql");
-		} catch (URISyntaxException | IOException | SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+			this.us = new UserService();
+		} catch (URISyntaxException | IOException ex) {
 			this.logger.error("ERROR", ex);
 		}
     }
@@ -75,7 +72,7 @@ public class Update extends HttpServlet {
 			resp.setCharacterEncoding(enc);
 			PrintWriter writer = new PrintWriter(resp.getOutputStream());
 			StringBuilder sb = new StringBuilder();
-			User user = this.db.getUser(Integer.parseInt(req.getParameter("id")));
+			User user = this.us.getUser(Integer.parseInt(req.getParameter("id")));
 			sb.append("<!DOCTYPE html>\n");
 			sb.append("<html lang='ru' xmlns='http://www.w3.org/1999/xhtml'>\n");
 			sb.append("<head>\n");
@@ -126,7 +123,7 @@ public class Update extends HttpServlet {
 			sb.append("</body>\n");
 			writer.append(sb.toString());
 			writer.flush();
-		} catch (SQLException ex) {
+		} catch (SQLException | ParseException ex) {
 			this.logger.error("ERROR", ex);
 		}
 	}
@@ -154,7 +151,7 @@ public class Update extends HttpServlet {
 			sb.append("</head>\n");
 			sb.append("<body>\n");
 			sb.append("    <h1>Редактирование пользователя</h1>\n");
-            if (this.db.editUser(user)) {
+            if (this.us.editUser(user)) {
 				sb.append(String.format("<p>Пользователь id:%d отредактирован.</p><br />\n", user.getId()));
 			} else {
 				sb.append(String.format("<p>Ошибка при редактировании пользователя id:%d.</p><br />\n", user.getId()));

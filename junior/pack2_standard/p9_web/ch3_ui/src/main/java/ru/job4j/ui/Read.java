@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.LinkedList;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,14 +23,10 @@ import org.apache.logging.log4j.LogManager;
  * Класс Read реализует реализует функционал чтения пользователей.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-11-08
  */
 public class Read extends HttpServlet {
-	/**
-     * Драйвер бд.
-     */
-	private UserStore db;
 	/**
      * Логгер.
      */
@@ -39,12 +36,15 @@ public class Read extends HttpServlet {
      */
     private String path;
     /**
+     * UserService.
+     */
+	private UserService us;
+    /**
 	 * Инициализатор.
 	 */
 	@Override
     public void init() throws ServletException {
     	try {
-			Class.forName("org.postgresql.Driver").newInstance(); //load driver
 			// /var/lib/tomcat8/webapps/ch3_ui-1.0/WEB-INF/classes
 			this.path = new File(Read.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
 			this.path = this.path.replaceFirst("^/(.:/)", "$1");
@@ -55,11 +55,8 @@ public class Read extends HttpServlet {
             ctx.stop();
             ctx.start(conf);
             this.logger = LogManager.getLogger("Read");
-			this.db = UserStore.getInstance();
-			this.db.loadProperties("junior.pack2.p9.ch3.task1.properties");
-			this.db.setDbDriver();
-			this.db.executeSql("junior.pack2.p9.ch3.task1.sql");
-		} catch (URISyntaxException | IOException | SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            this.us = new UserService();
+		} catch (URISyntaxException | IOException ex) {
 			this.logger.error("ERROR", ex);
 		}
     }
@@ -75,8 +72,8 @@ public class Read extends HttpServlet {
 			String enc = Charset.defaultCharset().toString();
 			resp.setCharacterEncoding(enc);
 			PrintWriter writer = new PrintWriter(resp.getOutputStream());
+			LinkedList<User> users = this.us.getUsers("id", false);
 			StringBuilder sb = new StringBuilder();
-			LinkedList<User> users = this.db.getUsers("id", false);
 			sb.append("<!DOCTYPE html>\n");
 			sb.append("<html lang='ru' xmlns='http://www.w3.org/1999/xhtml'>\n");
 			sb.append("<head>\n");
@@ -141,7 +138,7 @@ public class Read extends HttpServlet {
 			sb.append(String.format("<a href='%s://%s:%s%s/create/'>Добавить нового пользователя</a>\n", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
 			writer.append(sb.toString());
 			writer.flush();
-		} catch (SQLException ex) {
+		} catch (SQLException | ParseException ex) {
 			this.logger.error("ERROR", ex);
 		}
 	}

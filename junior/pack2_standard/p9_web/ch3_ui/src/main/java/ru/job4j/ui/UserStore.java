@@ -10,9 +10,10 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Properties;
 import org.apache.logging.log4j.Logger;
@@ -24,7 +25,7 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
  * Для конфигурирования пула соединений с бд не используется JNDI.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 3
+ * @version 4
  * @since 2017-11-05
  */
 class UserStore {
@@ -37,6 +38,10 @@ class UserStore {
          */
         public static final UserStore INSTANCE = new UserStore();
     }
+    /**
+     * Соединение с бд.
+     */
+    private Connection con;
     /**
      * Логгер.
      */
@@ -61,73 +66,51 @@ class UserStore {
 	 * Конструктор.
 	 */
 	private UserStore() {
-        this.logger = LogManager.getLogger("UsersServlet");
+        this.logger = LogManager.getLogger("UserStore");
         this.props = new Properties();
         try {
             this.path = new File(UserStore.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
     		this.path = this.path.replaceFirst("^/(.:/)", "$1");
-        } catch (URISyntaxException | NullPointerException ex) {
+    		this.loadProperties("junior.pack2.p9.ch3.task1.properties");
+    		this.setDbDriver();
+    		this.executeSqlScript("junior.pack2.p9.ch3.task1.sql");
+    		this.setConnection();
+        } catch (URISyntaxException | IOException | NullPointerException | SQLException ex) {
             this.logger.error("ERROR", ex);
         }
 	}
-    /**
-     * Добавляет пользователя.
-     * @param user новый пользователь.
-     * @return true если пользователь добавлен в бд. Иначе false.
+	/**
+     * Выполняет вудуеу sql-запрос.
+     * @param query sql-запрос.
+     * @return количество записей, затронутых запросом.
      * @throws SQLException ошибка SQL.
      */
-    public boolean addUser(User user) throws SQLException {
-        boolean result = false;
-        String query = String.format("insert into %s (name, login, email, createDate) values ('%s', '%s', '%s', '%5$tY-%5$tm-%5$td')", this.tbl, user.getName(), user.getLogin(), user.getEmail(), user.getDate());
-        try (Connection con = this.ds.getConnection(); Statement stmt = con.createStatement()) {
-            if (stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS) > 0) {
-                ResultSet rs = stmt.getGeneratedKeys();
-                if (rs != null) {
-                    rs.next();
-                    user.setId(rs.getInt("id"));
-                }
-                result = true;
-            }
-        } catch (SQLException ex) {
+	public int delete(String query) throws SQLException {
+        if (this.con == null) {
+			this.setConnection();
+    	}
+    	int affected = 0;
+		try (Statement stmt = this.con.createStatement()) {
+			affected = stmt.executeUpdate(query);
+		} catch (SQLException ex) {
             throw new SQLException(ex);
         }
-        return result;
-    }
+        return affected;
+	}
     /**
-     * Удаляет пользователя.
-     * @param id идентификатор.
-     * @return true если пользователь удалён из бд. Иначе false.
+     * Выполняет sql-запрос.
+     * @param query sql-запрос.
      * @throws SQLException ошибка SQL.
      */
-    public boolean deleteUser(int id) throws SQLException {
-        boolean result = false;
-        String query = String.format("delete from %s where id = %d", this.tbl, id);
-        try (Connection con = this.ds.getConnection(); Statement stmt = con.createStatement()) {
-            if (stmt.executeUpdate(query) == 1) {
-                result = true;
-            }
-        } catch (SQLException ex) {
+    public void executeSql(String query) throws SQLException {
+    	if (this.con == null) {
+			this.setConnection();
+    	}
+    	try (Statement stmt = this.con.createStatement()) {
+			stmt.execute(query);
+    	} catch (SQLException ex) {
             throw new SQLException(ex);
         }
-        return result;
-    }
-    /**
-     * Редактирует пользователя.
-     * @param user новый пользователь.
-     * @return true если пользователь обновлён в бд. Иначе false.
-     * @throws SQLException ошибка SQL.
-     */
-    public boolean editUser(User user) throws SQLException {
-        boolean result = false;
-        String query = String.format("update %s set name='%s', login='%s', email='%s' where id=%d", this.tbl, user.getName(), user.getLogin(), user.getEmail(), user.getId());
-        try (Connection con = this.ds.getConnection(); Statement stmt = con.createStatement()) {
-            if (stmt.executeUpdate(query) == 1) {
-                result = true;
-            }
-        } catch (SQLException ex) {
-            throw new SQLException(ex);
-        }
-        return result;
     }
     /**
      * Выполняет sql-скрипт.
@@ -135,7 +118,7 @@ class UserStore {
      * @throws IOException ошибка ввода-вывода.
      * @throws SQLException ошибка SQL.
      */
-    public void executeSql(String localName) throws IOException, SQLException {
+    private void executeSqlScript(String localName) throws IOException, SQLException {
         byte[] bytes = Files.readAllBytes(Paths.get(path + localName));
         String query = new String(bytes, "UTF-8");
         try (Connection con = this.ds.getConnection(); Statement stmt = con.createStatement()) {
@@ -152,63 +135,89 @@ class UserStore {
         return SingletonHolder.INSTANCE;
     }
     /**
-     * Получает пользователя по идентификатору.
-     * @param id идентификатор пользователя.
-     * @return пользователь.
-     * @throws SQLException ошибка SQL.
+     * Получает имя таблицы с пользователями.
+     * @return имя таблицы с пользователями.
      */
-    public User getUser(int id) throws SQLException {
-        User user = null;
-        String query = String.format("select * from %s where id = %d", this.tbl, id);
-        try (Connection con = this.ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(query); ResultSet rs = pstmt.executeQuery()) {
-            if (rs != null) {
-                rs.next();
-                GregorianCalendar date = new GregorianCalendar();
-                date.setTime(rs.getDate("createDate"));
-                user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("login"), rs.getString("email"), date);
-            }
-        } catch (SQLException ex) {
-            throw new SQLException(ex);
-        }
-        return user;
+    public String getTblName() {
+    	return this.tbl;
     }
     /**
-     * Получает всех пользователей.
-     * @param order имя столбца сортировки (по умолчанию id).
-     * @param desc направление сортировки (asc, desc. По умолчанию asc).
-     * @return Коллекция пользователей.
+     * Выполняет insert sql-запрос.
+     * @param query sql-запрос.
+     * @return карту с результатом запроса к бд.
      * @throws SQLException ошибка SQL.
      */
-    public LinkedList<User> getUsers(final String order, final boolean desc) throws SQLException {
-        LinkedList<User> users = new LinkedList<>();
-        String query = String.format("select * from %s order by %s %s", this.tbl, order.equals("") ? "id" : order, desc ? "desc" : "asc");
-        try (Connection con = this.ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(query); ResultSet rs = pstmt.executeQuery()) {
-            if (rs != null) {
-                while (rs.next()) {
-                    GregorianCalendar date = new GregorianCalendar();
-                    date.setTime(rs.getDate("createDate"));
-                    users.add(new User(rs.getInt("id"), rs.getString("name"), rs.getString("login"), rs.getString("email"), date));
+    public HashMap<String, String> insert(String query) throws SQLException {
+    	if (this.con == null) {
+			this.setConnection();
+    	}
+    	HashMap<String, String> entry = new HashMap<>();
+    	try (Statement stmt = this.con.createStatement()) {
+			if (stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS) > 0) {
+				ResultSet rs = stmt.getGeneratedKeys();
+                if (rs != null) {
+                    rs.next();
+                    ResultSetMetaData rsmd = rs.getMetaData();
+                	entry.put(rsmd.getColumnName(1), Integer.toString(rs.getInt(rsmd.getColumnName(1))));
                 }
-            }
-        } catch (SQLException ex) {
+			}
+    	} catch (SQLException ex) {
             throw new SQLException(ex);
         }
-        return users;
-    }
+        return entry;
+	}
 	/**
      * Загружает свойства соединения с бд.
      * @param localName локальное имя properties-файла.
      * @throws IOException ошибка ввода-вывода.
      */
-    public void loadProperties(String localName) throws IOException {
+    private void loadProperties(String localName) throws IOException {
         Path fName = Paths.get(path + localName);
         InputStream is = Files.newInputStream(fName);
         this.props.load(is);
     }
     /**
+     * Выполняет select sql-запрос.
+     * @param query sql-запрос.
+     * @return карту с результатом запроса к бд.
+     * @throws SQLException ошибка SQL.
+     */
+    public LinkedList<HashMap<String, String>> select(String query) throws SQLException {
+    	if (this.con == null) {
+			this.setConnection();
+    	}
+    	LinkedList<HashMap<String, String>> rl = new LinkedList<>();
+    	try (PreparedStatement pstmt = this.con.prepareStatement(query); ResultSet rs = pstmt.executeQuery()) {
+        	if (rs != null) {
+            	ResultSetMetaData rsmd = rs.getMetaData();
+            	while (rs.next()) {
+            		HashMap<String, String> entry = new HashMap<>();
+            		for (int a = 1; a < rsmd.getColumnCount() + 1; a++) {
+	            		entry.put(rsmd.getColumnName(a), rs.getString(a));
+	            	}
+            		rl.add(entry);
+            	}
+        	}
+        } catch (SQLException ex) {
+            throw new SQLException(ex);
+        }
+        return rl;
+    }
+    /**
+     * Устанавливает соединение с бд.
+     * @throws SQLException ошибка SQL.
+     */
+    private void setConnection() throws SQLException {
+    	try {
+    		this.con = this.ds.getConnection();
+        } catch (SQLException ex) {
+            throw new SQLException(ex);
+        }
+    }
+    /**
      * Устанавливает драйвер бд.
      */
-    public void setDbDriver() {
+    private void setDbDriver() {
         if (this.ds == null) {
             StringBuilder str =  new StringBuilder();
             str.append("jdbc:");
@@ -232,5 +241,14 @@ class UserStore {
             this.ds.setMaxOpenPreparedStatements(100);
             this.tbl = this.props.getProperty("tbl");
         }
+    }
+    /**
+     * Выполняет update sql-запрос.
+     * @param query sql-запрос.
+     * @return количество записей, затронутых запросом.
+     * @throws SQLException ошибка SQL.
+     */
+    public int update(String query) throws SQLException {
+    	return this.delete(query);
     }
 }

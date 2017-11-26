@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.GregorianCalendar;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,14 +23,10 @@ import org.apache.logging.log4j.LogManager;
  * Класс Create реализует функционал создания пользователя.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2
  * @since 2017-11-09
  */
 public class Create extends HttpServlet {
-	/**
-     * Драйвер бд.
-     */
-	private UserStore db;
 	/**
      * Логгер.
      */
@@ -39,12 +36,15 @@ public class Create extends HttpServlet {
      */
     private String path;
     /**
+     * UserService.
+     */
+	private UserService us;
+    /**
 	 * Инициализатор.
 	 */
 	@Override
     public void init() throws ServletException {
     	try {
-			Class.forName("org.postgresql.Driver").newInstance(); //load driver
 			// /var/lib/tomcat8/webapps/ch3_ui-1.0/WEB-INF/classes
 			this.path = new File(Create.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
 			this.path = this.path.replaceFirst("^/(.:/)", "$1");
@@ -55,11 +55,8 @@ public class Create extends HttpServlet {
             ctx.stop();
             ctx.start(conf);
             this.logger = LogManager.getLogger("Create");
-			this.db = UserStore.getInstance();
-			this.db.loadProperties("junior.pack2.p9.ch3.task1.properties");
-			this.db.setDbDriver();
-			this.db.executeSql("junior.pack2.p9.ch3.task1.sql");
-		} catch (URISyntaxException | IOException | SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+			this.us = new UserService();
+		} catch (URISyntaxException | IOException ex) {
 			this.logger.error("ERROR", ex);
 		}
     }
@@ -142,7 +139,7 @@ public class Create extends HttpServlet {
 			sb.append("</head>\n");
 			sb.append("<body>\n");
 			sb.append("    <h1>Создание пользователя</h1>\n");
-			if (this.db.addUser(user)) {
+			if (this.us.addUser(user)) {
 				sb.append(String.format("<p>Пользователь %s добавлен. ID: %s</p><br />\n", name, user.getId()));
 			} else {
 				sb.append(String.format("<p>Ошибка при добавлении пользователя %s.</p><br />\n", name));
@@ -151,7 +148,7 @@ public class Create extends HttpServlet {
 			sb.append("</body>\n");
 			writer.append(sb.toString());
 			writer.flush();
-		} catch (SQLException ex) {
+		} catch (SQLException | ParseException ex) {
 			this.logger.error("ERROR", ex);
 		}
 	}
