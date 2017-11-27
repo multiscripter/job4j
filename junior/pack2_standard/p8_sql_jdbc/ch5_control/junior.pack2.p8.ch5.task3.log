@@ -1,0 +1,802 @@
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/1
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/2
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/6
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/5
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/4
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/9
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/17
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/7
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/20
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/12
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/16
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/10
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/14
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/13
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/15
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/11
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/19
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/3
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/18
+2017-11-01 22:53:09 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/8
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/21
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/25
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/24
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/23
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/22
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/26
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/29
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/28
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/30
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/27
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/34
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/35
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/40
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/37
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/33
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/36
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/38
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/31
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/32
+2017-11-01 22:53:13 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/39
+2017-11-01 22:53:18 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/41
+2017-11-01 22:53:18 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/43
+2017-11-01 22:53:18 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/42
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/44
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/46
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/53
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/51
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/52
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/48
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/54
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/47
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/56
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/50
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/58
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/49
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/55
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/57
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/59
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/60
+2017-11-01 22:53:19 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/45
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/64
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/63
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/61
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/65
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/62
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/66
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/76
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/80
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/68
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/67
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/69
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/73
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/70
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/71
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/75
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/74
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/72
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/77
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/79
+2017-11-01 22:53:28 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/78
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/85
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/82
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/81
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/84
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/83
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/90
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/88
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/95
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/89
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/87
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/86
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/97
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/94
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/99
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/96
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/98
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/100
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/92
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/93
+2017-11-01 22:53:31 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/91
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/104
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/103
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/101
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/105
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/102
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/106
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/107
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/114
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/110
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/108
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/115
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/119
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/112
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/116
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/109
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/111
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/113
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/120
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/118
+2017-11-01 22:53:34 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/117
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/122
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/121
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/125
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/133
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/124
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/123
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/130
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/139
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/126
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/140
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/137
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/128
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/127
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/132
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/135
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/129
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/138
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/134
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/136
+2017-11-01 22:53:37 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/131
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/141
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/144
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/143
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/145
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/147
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/142
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/146
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/153
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/154
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/149
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/155
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/150
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/151
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/159
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/152
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/160
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/148
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/158
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/156
+2017-11-01 22:53:40 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/157
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/165
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/161
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/164
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/163
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/175
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/162
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/169
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/179
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/173
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/166
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/177
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/172
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/171
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/168
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/170
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/174
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/180
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/178
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/176
+2017-11-01 22:53:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/167
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/182
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/184
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/183
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/181
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/185
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/199
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/186
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/190
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/191
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/194
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/187
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/198
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/195
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/193
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/196
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/192
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/188
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/197
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/189
+2017-11-01 22:53:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/200
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/203
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/205
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/202
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/204
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/201
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/216
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/217
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/208
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/220
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/209
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/207
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/210
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/215
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/213
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/206
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/218
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/214
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/211
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/219
+2017-11-01 22:53:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/212
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/221
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/223
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/222
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/225
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/224
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/235
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/236
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/228
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/226
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/232
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/234
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/237
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/229
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/230
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/238
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/231
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/227
+2017-11-01 22:53:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/240
+2017-11-01 22:53:53 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/239
+2017-11-01 22:53:53 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/233
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/241
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/244
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/242
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/245
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/243
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/258
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/253
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/250
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/252
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/260
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/249
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/247
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/246
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/248
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/255
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/256
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/251
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/259
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/257
+2017-11-01 22:53:55 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/254
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/263
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/264
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/265
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/261
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/262
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/278
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/280
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/275
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/271
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/272
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/268
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/267
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/270
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/277
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/276
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/266
+2017-11-01 22:53:58 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/269
+2017-11-01 22:53:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/274
+2017-11-01 22:53:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/273
+2017-11-01 22:53:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/279
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/282
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/281
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/285
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/284
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/298
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/283
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/299
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/287
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/290
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/293
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/289
+2017-11-01 22:54:01 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/297
+2017-11-01 22:54:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/296
+2017-11-01 22:54:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/288
+2017-11-01 22:54:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/295
+2017-11-01 22:54:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/291
+2017-11-01 22:54:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/286
+2017-11-01 22:54:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/292
+2017-11-01 22:54:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/294
+2017-11-01 22:54:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/300
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/303
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/302
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/304
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/320
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/301
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/305
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/317
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/310
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/307
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/308
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/314
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/319
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/316
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/312
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/309
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/315
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/318
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/313
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/311
+2017-11-01 22:54:05 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/306
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/324
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/323
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/337
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/334
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/330
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/325
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/321
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/331
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/322
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/328
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/336
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/335
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/333
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/340
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/327
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/329
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/326
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/332
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/338
+2017-11-01 22:54:08 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/339
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/341
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/351
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/345
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/344
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/342
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/360
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/348
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/343
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/346
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/356
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/347
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/352
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/355
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/353
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/354
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/359
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/349
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/350
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/358
+2017-11-01 22:54:11 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/357
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/361
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/365
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/362
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/363
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/364
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/369
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/371
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/366
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/376
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/380
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/368
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/373
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/379
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/372
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/377
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/374
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/370
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/375
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/367
+2017-11-01 22:54:14 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/378
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/382
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/381
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/384
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/385
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/383
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/390
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/386
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/387
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/397
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/389
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/395
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/392
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/394
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/399
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/393
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/398
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/400
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/388
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/391
+2017-11-01 22:54:17 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/396
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/403
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/406
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/407
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/401
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/405
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/411
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/412
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/408
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/410
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/409
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/415
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/418
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/413
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/420
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/414
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/404
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/402
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/416
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/419
+2017-11-01 22:54:20 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/417
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/421
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/424
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/438
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/428
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/423
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/422
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/425
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/437
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/426
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/430
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/433
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/440
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/432
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/439
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/431
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/427
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/434
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/436
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/435
+2017-11-01 22:54:23 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/429
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/451
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/443
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/445
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/442
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/458
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/441
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/444
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/450
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/453
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/447
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/460
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/455
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/452
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/454
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/456
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/449
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/457
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/459
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/448
+2017-11-01 22:54:26 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/446
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/465
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/463
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/467
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/461
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/462
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/464
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/471
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/468
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/476
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/477
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/473
+2017-11-01 22:54:29 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/466
+2017-11-01 22:54:30 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/469
+2017-11-01 22:54:30 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/470
+2017-11-01 22:54:30 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/472
+2017-11-01 22:54:30 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/478
+2017-11-01 22:54:30 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/479
+2017-11-01 22:54:30 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/480
+2017-11-01 22:54:30 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/475
+2017-11-01 22:54:30 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/474
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/484
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/482
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/481
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/485
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/483
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/489
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/496
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/493
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/490
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/488
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/492
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/487
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/486
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/500
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/499
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/497
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/498
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/495
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/491
+2017-11-01 22:54:36 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/494
+2017-11-01 22:54:42 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/504
+2017-11-01 22:54:42 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/502
+2017-11-01 22:54:42 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/503
+2017-11-01 22:54:42 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/505
+2017-11-01 22:54:42 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/509
+2017-11-01 22:54:42 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/508
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/516
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/506
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/501
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/510
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/512
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/514
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/517
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/520
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/518
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/507
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/513
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/515
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/511
+2017-11-01 22:54:43 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/519
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/526
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/525
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/529
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/521
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/523
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/524
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/522
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/531
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/537
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/538
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/539
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/527
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/540
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/534
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/533
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/530
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/535
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/536
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/528
+2017-11-01 22:54:46 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/532
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/544
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/542
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/541
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/555
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/552
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/557
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/548
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/549
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/546
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/554
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/545
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/543
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/560
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/550
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/551
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/559
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/547
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/556
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/553
+2017-11-01 22:54:49 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/558
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/561
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/562
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/565
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/564
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/563
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/575
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/566
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/579
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/568
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/567
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/573
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/571
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/577
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/578
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/580
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/572
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/576
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/569
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/574
+2017-11-01 22:54:52 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/570
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/584
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/583
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/581
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/585
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/589
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/590
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/582
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/596
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/588
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/592
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/586
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/593
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/591
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/587
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/595
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/597
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/594
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/599
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/598
+2017-11-01 22:54:56 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/600
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/601
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/619
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/610
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/616
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/604
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/606
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/617
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/603
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/620
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/615
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/608
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/618
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/614
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/612
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/607
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/602
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/613
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/605
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/611
+2017-11-01 22:54:59 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/609
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/623
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/621
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/625
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/624
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/640
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/637
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/639
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/638
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/633
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/631
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/622
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/635
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/627
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/628
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/629
+2017-11-01 22:55:02 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/634
+2017-11-01 22:55:03 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/636
+2017-11-01 22:55:03 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/630
+2017-11-01 22:55:03 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/626
+2017-11-01 22:55:03 ERROR JobsParser:127 - url: http://www.sql.ru/forum/job-offers/632
+2017-11-07 17:24:03 ERROR JobsParser:68 - ERROR
+java.sql.SQLException: java.sql.SQLException: org.postgresql.util.PSQLException: ВАЖНО: база данных "jp2p8ch5t3" не существует (pgjdbc: autodetected server-encoding to be windows-1251, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)
+	at ru.job4j.control.JobsDB.executeSql(JobsDB.java:106) ~[classes/:?]
+	at ru.job4j.control.JobsParser.db(JobsParser.java:80) ~[classes/:?]
+	at ru.job4j.control.JobsParser.begin(JobsParser.java:66) [classes/:?]
+	at ru.job4j.control.JobsParserTest.checkJobsParser(JobsParserTest.java:65) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_121]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_121]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_121]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_121]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252) [surefire-junit4-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141) [surefire-junit4-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112) [surefire-junit4-2.12.4.jar:2.12.4]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_121]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_121]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_121]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_121]
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189) [surefire-api-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165) [surefire-booter-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85) [surefire-booter-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115) [surefire-booter-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75) [surefire-booter-2.12.4.jar:2.12.4]
+Caused by: java.sql.SQLException: org.postgresql.util.PSQLException: ВАЖНО: база данных "jp2p8ch5t3" не существует (pgjdbc: autodetected server-encoding to be windows-1251, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)
+	at ru.job4j.control.PgSQLJDBCDriver.getConnection(PgSQLJDBCDriver.java:61) ~[classes/:?]
+	at ru.job4j.control.JobsDB.executeSql(JobsDB.java:99) ~[classes/:?]
+	... 33 more
+Caused by: org.postgresql.util.PSQLException: ВАЖНО: база данных "jp2p8ch5t3" не существует (pgjdbc: autodetected server-encoding to be windows-1251, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2477) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.v3.QueryExecutorImpl.readStartupMessages(QueryExecutorImpl.java:2603) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.v3.QueryExecutorImpl.<init>(QueryExecutorImpl.java:125) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:227) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:49) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:194) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.Driver.makeConnection(Driver.java:450) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.Driver.connect(Driver.java:252) ~[postgresql-42.1.4.jar:42.1.4]
+	at java.sql.DriverManager.getConnection(DriverManager.java:664) ~[?:1.8.0_121]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_121]
+	at ru.job4j.control.PgSQLJDBCDriver.getConnection(PgSQLJDBCDriver.java:59) ~[classes/:?]
+	at ru.job4j.control.JobsDB.executeSql(JobsDB.java:99) ~[classes/:?]
+	... 33 more
+2017-11-07 17:57:52 ERROR JobsParser:68 - ERROR
+java.sql.SQLException: java.sql.SQLException: org.postgresql.util.PSQLException: ВАЖНО: база данных "jp2p8ch5t3" не существует (pgjdbc: autodetected server-encoding to be windows-1251, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)
+	at ru.job4j.control.JobsDB.executeSql(JobsDB.java:108) ~[classes/:?]
+	at ru.job4j.control.JobsParser.db(JobsParser.java:80) ~[classes/:?]
+	at ru.job4j.control.JobsParser.begin(JobsParser.java:66) [classes/:?]
+	at ru.job4j.control.JobsParserTest.checkJobsParser(JobsParserTest.java:65) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_121]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_121]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_121]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_121]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252) [surefire-junit4-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141) [surefire-junit4-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112) [surefire-junit4-2.12.4.jar:2.12.4]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_121]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_121]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_121]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_121]
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189) [surefire-api-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165) [surefire-booter-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85) [surefire-booter-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115) [surefire-booter-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75) [surefire-booter-2.12.4.jar:2.12.4]
+Caused by: java.sql.SQLException: org.postgresql.util.PSQLException: ВАЖНО: база данных "jp2p8ch5t3" не существует (pgjdbc: autodetected server-encoding to be windows-1251, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)
+	at ru.job4j.control.PgSQLJDBCDriver.getConnection(PgSQLJDBCDriver.java:61) ~[classes/:?]
+	at ru.job4j.control.JobsDB.executeSql(JobsDB.java:101) ~[classes/:?]
+	... 33 more
+Caused by: org.postgresql.util.PSQLException: ВАЖНО: база данных "jp2p8ch5t3" не существует (pgjdbc: autodetected server-encoding to be windows-1251, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2477) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.v3.QueryExecutorImpl.readStartupMessages(QueryExecutorImpl.java:2603) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.v3.QueryExecutorImpl.<init>(QueryExecutorImpl.java:125) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:227) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:49) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:194) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.Driver.makeConnection(Driver.java:450) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.Driver.connect(Driver.java:252) ~[postgresql-42.1.4.jar:42.1.4]
+	at java.sql.DriverManager.getConnection(DriverManager.java:664) ~[?:1.8.0_121]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_121]
+	at ru.job4j.control.PgSQLJDBCDriver.getConnection(PgSQLJDBCDriver.java:59) ~[classes/:?]
+	at ru.job4j.control.JobsDB.executeSql(JobsDB.java:101) ~[classes/:?]
+	... 33 more
+2017-11-07 17:58:51 ERROR JobsParser:68 - ERROR
+java.sql.SQLException: java.sql.SQLException: org.postgresql.util.PSQLException: ВАЖНО: база данных "jp2p8ch5t3" не существует (pgjdbc: autodetected server-encoding to be windows-1251, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)
+	at ru.job4j.control.JobsDB.executeSql(JobsDB.java:108) ~[classes/:?]
+	at ru.job4j.control.JobsParser.db(JobsParser.java:80) ~[classes/:?]
+	at ru.job4j.control.JobsParser.begin(JobsParser.java:66) [classes/:?]
+	at ru.job4j.control.JobsParserTest.checkJobsParser(JobsParserTest.java:65) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_121]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_121]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_121]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_121]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252) [surefire-junit4-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141) [surefire-junit4-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112) [surefire-junit4-2.12.4.jar:2.12.4]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_121]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_121]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_121]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_121]
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189) [surefire-api-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165) [surefire-booter-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85) [surefire-booter-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115) [surefire-booter-2.12.4.jar:2.12.4]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75) [surefire-booter-2.12.4.jar:2.12.4]
+Caused by: java.sql.SQLException: org.postgresql.util.PSQLException: ВАЖНО: база данных "jp2p8ch5t3" не существует (pgjdbc: autodetected server-encoding to be windows-1251, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)
+	at ru.job4j.control.PgSQLJDBCDriver.getConnection(PgSQLJDBCDriver.java:61) ~[classes/:?]
+	at ru.job4j.control.JobsDB.executeSql(JobsDB.java:101) ~[classes/:?]
+	... 33 more
+Caused by: org.postgresql.util.PSQLException: ВАЖНО: база данных "jp2p8ch5t3" не существует (pgjdbc: autodetected server-encoding to be windows-1251, if the message is not readable, please check database logs and/or host, port, dbname, user, password, pg_hba.conf)
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2477) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.v3.QueryExecutorImpl.readStartupMessages(QueryExecutorImpl.java:2603) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.v3.QueryExecutorImpl.<init>(QueryExecutorImpl.java:125) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:227) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:49) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:194) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.Driver.makeConnection(Driver.java:450) ~[postgresql-42.1.4.jar:42.1.4]
+	at org.postgresql.Driver.connect(Driver.java:252) ~[postgresql-42.1.4.jar:42.1.4]
+	at java.sql.DriverManager.getConnection(DriverManager.java:664) ~[?:1.8.0_121]
+	at java.sql.DriverManager.getConnection(DriverManager.java:247) ~[?:1.8.0_121]
+	at ru.job4j.control.PgSQLJDBCDriver.getConnection(PgSQLJDBCDriver.java:59) ~[classes/:?]
+	at ru.job4j.control.JobsDB.executeSql(JobsDB.java:101) ~[classes/:?]
+	... 33 more

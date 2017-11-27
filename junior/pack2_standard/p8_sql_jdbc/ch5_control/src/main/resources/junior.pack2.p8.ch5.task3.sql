@@ -1,10 +1,8 @@
-/* MySQL */
-create database jpack2p8ch5task3;
-
-create table jobs (
-    id integer unique not null,
-    thread varchar(128) not null,
+create table if not exists joboffers (
+    id serial primary key,
     author varchar(64) not null,
-    pubdate timestamp not null,
-    jobtext text not null
+    pubdate bigint not null,
+    title varchar(128) not null,
+    jobtext text not null,
+    url varchar(512) unique not null
 );

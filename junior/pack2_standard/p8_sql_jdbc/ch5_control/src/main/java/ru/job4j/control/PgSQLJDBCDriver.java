@@ -1,4 +1,4 @@
-package ru.job4j.jdbc;
+package ru.job4j.control;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

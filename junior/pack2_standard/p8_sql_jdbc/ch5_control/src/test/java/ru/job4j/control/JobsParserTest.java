@@ -1,11 +1,19 @@
 package ru.job4j.control;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.xml.XmlConfigurationFactory;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.junit.Before;
 import org.junit.Test;
 /**
@@ -29,16 +37,23 @@ public class JobsParserTest {
      */
     @Before
     public void beforeTest() {
+        String path = this.getClass().getResource(".").getPath().replaceFirst("^/(.:/)", "$1");
+        path = String.format("%s../../../../../src/main/resources/", path);
+        Logger logger = LogManager.getLogger("JobsParserTest");
+        XmlConfigurationFactory xcf = new XmlConfigurationFactory();
         try {
+            ConfigurationSource source = new ConfigurationSource(new FileInputStream(new File(path + "log4j2.xml")));
+            Configuration conf = xcf.getConfiguration(new LoggerContext("JobsParserTestContext"), source);
+            LoggerContext ctx = (LoggerContext) LogManager.getContext(true);
+            ctx.stop();
+            ctx.start(conf);
             this.plfn = "sql.ru.properties";
-            String path = this.getClass().getResource(".").getPath().replaceFirst("^/(.:/)", "$1");
-            path = String.format("%s../../../../../src/main/resources/", path);
             Path fName = Paths.get(path + this.plfn);
             InputStream is = Files.newInputStream(fName);
             this.props = new Properties();
             this.props.load(is);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.error("ERROR", ex);
         }
     }
     /**
@@ -46,11 +61,7 @@ public class JobsParserTest {
      */
     @Test
     public void checkJobsParser() {
-        try {
-            JobsParser parser = new JobsParser(this.props, 10);
-            parser.parse();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        JobsParser parser = new JobsParser(this.props, 20);
+        parser.begin();
     }
 }
