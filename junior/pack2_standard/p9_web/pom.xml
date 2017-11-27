@@ -18,6 +18,7 @@
     <modules>
         <module>ch1_struct</module>
         <module>ch2_crud</module>
+        <module>ch3_ui</module>
     </modules>
 
     <properties>
@@ -25,7 +26,7 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+    	<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
