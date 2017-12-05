@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+	<display-name>p9.ch4_jsp JSP</display-name>
+    <!-- Открывается в браузере по адресу: http://bot.net:8080/ch4_jsp-1.0/ -->
+    
+    <servlet>
+		<servlet-name>Create</servlet-name>
+		<servlet-class>ru.job4j.jsp.Create</servlet-class>
+		<description>Servlet 'Create' creates user.</description>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>Create</servlet-name>
+		<url-pattern>/create/</url-pattern>
+	</servlet-mapping>
+    
+	<servlet>
+		<servlet-name>Read</servlet-name>
+		<servlet-class>ru.job4j.jsp.Read</servlet-class>
+		<description>Servlet 'Read' reads users from storage.</description>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Read</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Update</servlet-name>
+		<servlet-class>ru.job4j.jsp.Update</servlet-class>
+		<description>Servlet 'Update' updates user.</description>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>Update</servlet-name>
+		<url-pattern>/update/</url-pattern>
+	</servlet-mapping>
+    
+    <servlet>
+		<servlet-name>Delete</servlet-name>
+		<servlet-class>ru.job4j.jsp.Delete</servlet-class>
+		<description>Servlet 'Delete' deletes user.</description>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>Delete</servlet-name>
+		<url-pattern>/delete/</url-pattern>
+	</servlet-mapping>
+</web-app>

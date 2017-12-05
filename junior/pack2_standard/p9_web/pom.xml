@@ -19,6 +19,7 @@
         <module>ch1_struct</module>
         <module>ch2_crud</module>
         <module>ch3_ui</module>
+        <module>ch4_jsp</module>
     </modules>
 
     <properties>
