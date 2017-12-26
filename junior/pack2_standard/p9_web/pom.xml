@@ -22,6 +22,8 @@
         <module>ch4_jsp</module>
         <module>ch5_mvc_jstl</module>
         <module>ch6_filter</module>
+        <module>ch7_testing</module>
+        <module>ch8_html_css</module>
     </modules>
 
     <properties>
@@ -41,6 +43,14 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.1.4</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+        <!-- API http://www.javadoc.io/doc/org.mockito/mockito-core/1.10.19 -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
