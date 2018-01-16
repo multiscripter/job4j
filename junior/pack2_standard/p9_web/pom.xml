@@ -24,6 +24,7 @@
         <module>ch6_filter</module>
         <module>ch7_testing</module>
         <module>ch8_html_css</module>
+        <module>ch9_control</module>
     </modules>
 
     <properties>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+	<display-name>p9.ch9 Control</display-name>
+    <!-- Открывается в браузере по адресу: http://bot.net:8080/ch9_control-1.0/ -->
+    
+    <servlet>
+		<servlet-name>Create</servlet-name>
+		<servlet-class>ru.job4j.control.Create</servlet-class>
+		<description>Servlet 'Create' creates user.</description>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>Create</servlet-name>
+		<url-pattern>/create/</url-pattern>
+	</servlet-mapping>
+    
+	<servlet>
+		<servlet-name>Read</servlet-name>
+		<servlet-class>ru.job4j.control.Read</servlet-class>
+		<description>Servlet 'Read' reads users from storage.</description>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Read</servlet-name>
+		<url-pattern></url-pattern>
+	</servlet-mapping>
+    
+	<servlet>
+		<servlet-name>Update</servlet-name>
+		<servlet-class>ru.job4j.control.Update</servlet-class>
+		<description>Servlet 'Update' updates user.</description>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>Update</servlet-name>
+		<url-pattern>/update/</url-pattern>
+	</servlet-mapping>
+    
+    <servlet>
+		<servlet-name>Delete</servlet-name>
+		<servlet-class>ru.job4j.control.Delete</servlet-class>
+		<description>Servlet 'Delete' deletes user.</description>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>Delete</servlet-name>
+		<url-pattern>/delete/</url-pattern>
+	</servlet-mapping>
+    
+    <servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>ru.job4j.control.Login</servlet-class>
+		<description>Servlet 'Login' login user.</description>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/login/</url-pattern>
+	</servlet-mapping>
+    
+    <!-- Фильтр на права. -->
+    <filter>
+		<filter-name>AuthFilter</filter-name>
+		<filter-class>ru.job4j.control.AuthFilter</filter-class>
+		<description>Filter requests.</description>
+	</filter>
+    <filter-mapping>
+		<filter-name>AuthFilter</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
+</web-app>
