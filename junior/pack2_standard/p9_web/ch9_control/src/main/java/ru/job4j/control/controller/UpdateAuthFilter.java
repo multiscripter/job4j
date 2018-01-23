@@ -1,11 +1,7 @@
 package ru.job4j.control.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.sql.SQLException;
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -14,24 +10,19 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.core.config.ConfigurationSource;
-import org.apache.logging.log4j.core.config.xml.XmlConfigurationFactory;
-import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import ru.job4j.control.persistence.DBDriver;
 import ru.job4j.control.persistence.RoleDAO;
 import ru.job4j.control.service.Role;
 import ru.job4j.control.service.User;
 /**
- * Класс AuthFilter реализует фильтр авторизации пользователей.
+ * Класс UpdateAuthFilter реализует фильтр авторизации пользователей.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 2018-01-23
- * @since 2018-01-12
+ * @since 2018-01-23
  */
-public class AuthFilter implements Filter {
+public class UpdateAuthFilter extends AuthFilter {
     /**
      * Логгер.
      */
@@ -48,19 +39,10 @@ public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         try {
+            super.init(filterConfig);
             this.logger = LogManager.getLogger(this.getClass().getName());
-			// /var/lib/tomcat8/webapps/ch9_control-1.0/WEB-INF/classes
-            // \Program FIles\Apache Software Foundation\Tomcat 8.5\webapps\ch9_control-1.0\WEB-INF\classes
-            String path = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
-            path = path.replaceFirst("^/(.:/)", "$1");
-			XmlConfigurationFactory xcf = new XmlConfigurationFactory();
-			ConfigurationSource source = new ConfigurationSource(new FileInputStream(new File(path + "log4j2.xml")));
-            Configuration conf = xcf.getConfiguration(new LoggerContext("ch9_control_context"), source);
-            LoggerContext ctx = (LoggerContext) LogManager.getContext(true);
-            ctx.stop();
-            ctx.start(conf);
             this.role = (new RoleDAO()).getRoleByName("administrator");
-		} catch (IOException | SQLException | URISyntaxException ex) {
+		} catch (SQLException ex) {
 			this.logger.error("ERROR", ex);
 		}
     }
@@ -83,26 +65,13 @@ public class AuthFilter implements Filter {
             if (sess.getAttribute("auth") != null) {
                 user = (User) sess.getAttribute("auth");
             }
-            if (ctxURI.contains("/create") || ctxURI.contains("/delete")) {
-                if (user == null || user.getRoleId() != this.role.getId()) {
-                    resp.sendRedirect(String.format("%s/login/", req.getContextPath()));
-                    return;
-                }
+            if (user == null || (user.getId() != Integer.parseInt(req.getParameter("id")) && user.getRoleId() != this.role.getId())) {
+                resp.sendRedirect(String.format("%s/login/", req.getContextPath()));
+                return;
             }
             chain.doFilter(request, response);
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
-    }
-    /**
-	 * Вызывается при уничтожении сервлета.
-	 */
-    @Override
-    public void destroy() {
-        try {
-            DBDriver.getInstance().close();
-        } catch (SQLException ex) {
-			this.logger.error("ERROR", ex);
-		}
     }
 }

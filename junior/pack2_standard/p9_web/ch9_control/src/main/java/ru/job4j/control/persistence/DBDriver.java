@@ -2,7 +2,6 @@ package ru.job4j.control.persistence;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -24,7 +23,7 @@ import ru.job4j.control.service.PropertyLoader;
  * Для конфигурирования пула соединений с бд не используется JNDI.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-16
+ * @version 2018-01-23
  * @since 2017-11-05
  */
 public class DBDriver {
@@ -41,10 +40,6 @@ public class DBDriver {
      * Соединение с бд.
      */
     private Connection con;
-    /**
-     * Общее локальное имя для sql и properties файлов.
-     */
-    private static String localName;
     /**
      * Логгер.
      */
@@ -71,12 +66,12 @@ public class DBDriver {
             Class.forName("org.postgresql.Driver").newInstance(); //load driver
             this.path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
     		this.path = this.path.replaceFirst("^/(.:/)", "$1");
-            PropertyLoader pl = new PropertyLoader(DBDriver.localName + ".properties");
+            PropertyLoader pl = new PropertyLoader("junior.pack2.p9.ch9.task1.properties");
     		this.props = pl.getProperties();
     		this.setDbDriver();
-    		this.executeSqlScript(DBDriver.localName + ".sql");
+    		this.executeSqlScript("junior.pack2.p9.ch9.task1.sql");
     		this.setConnection();
-        } catch (URISyntaxException | IOException | NullPointerException | SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
 	}
@@ -87,8 +82,6 @@ public class DBDriver {
     public void close() throws SQLException {
         if (!this.ds.isClosed()) {
             this.ds.close();
-            this.ds = null;
-            this.con = null;
         }
     }
 	/**
@@ -144,11 +137,9 @@ public class DBDriver {
     }
     /**
      * Получает псенглетон.
-     * @param localName общее локальное имя для sql и properties файлов.
      * @return сенглетон.
      */
-    public static DBDriver getInstance(String localName) {
-        DBDriver.localName = localName;
+    public static DBDriver getInstance() {
         return SingletonHolder.INSTANCE;
     }
     /**
@@ -156,7 +147,7 @@ public class DBDriver {
      * @return true если объект драйвера закрыт. Иначе false.
      */
     public boolean isClosed() {
-        return this.ds == null && this.con == null;
+        return this.ds.isClosed();
     }
     /**
      * Проверяет установлен ли драйвер.
@@ -229,7 +220,7 @@ public class DBDriver {
      * @throws SQLException исключение SQL.
      */
     public void setConnection() throws SQLException {
-        if (this.con == null) {
+        if (!this.ds.isClosed()) {
             try {
                 this.con = this.ds.getConnection();
             } catch (SQLException ex) {

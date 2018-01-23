@@ -10,7 +10,7 @@ import ru.job4j.control.service.MusicType;
  * Класс MusicTypeDAO реализует слой DAO между MusicType и бд.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-16
+ * @version 2018-01-23
  * @since 2018-01-10
  */
 public class MusicTypeDAO {
@@ -26,7 +26,7 @@ public class MusicTypeDAO {
      * Конструктор.
      */
     public MusicTypeDAO() {
-    	this.db = DBDriver.getInstance("junior.pack2.p9.ch9.task1");
+    	this.db = DBDriver.getInstance();
         this.logger = LogManager.getLogger("MusicTypeDAO");
     }
     /**

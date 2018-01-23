@@ -34,7 +34,7 @@ import ru.job4j.control.service.User;
  * Класс ReadTest тестирует класс Read.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-15
+ * @version 2018-01-23
  * @since 2018-01-12
  */
 public class ReadTest {
@@ -95,7 +95,7 @@ public class ReadTest {
     @Before
     public void beforeTest() {
         try {
-            this.driver = DBDriver.getInstance("junior.pack2.p9.ch9.task1");
+            this.driver = DBDriver.getInstance();
             if (!this.driver.isDBDriverSet()) {
                 this.driver.setDbDriver();
             }

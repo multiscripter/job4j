@@ -10,7 +10,7 @@ import ru.job4j.control.service.Role;
  * Класс RoleDAO реализует слой DAO между Role и бд.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-10
+ * @version 2018-01-23
  * @since 2017-12-08
  */
 public class RoleDAO {
@@ -27,7 +27,7 @@ public class RoleDAO {
      */
     public RoleDAO() {
     	this.logger = LogManager.getLogger("RoleDAO");
-    	this.db = DBDriver.getInstance("junior.pack2.p9.ch9.task1");
+    	this.db = DBDriver.getInstance();
     }
     /**
 	 * Получает роль по идентификатору.

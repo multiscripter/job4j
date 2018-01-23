@@ -10,7 +10,7 @@ import ru.job4j.control.service.Address;
  * Класс AddressDAO реализует слой DAO между Address и бд.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-16
+ * @version 2018-01-23
  * @since 2018-01-10
  */
 public class AddressDAO {
@@ -27,7 +27,7 @@ public class AddressDAO {
      */
     public AddressDAO() {
     	this.logger = LogManager.getLogger("AddressDAO");
-    	this.db = DBDriver.getInstance("junior.pack2.p9.ch9.task1");
+    	this.db = DBDriver.getInstance();
     }
     /**
 	 * Получает адрес по идентификатору.

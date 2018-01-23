@@ -40,7 +40,7 @@ import ru.job4j.control.service.User;
  * Класс UpdateTest тестирует класс Update.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-15
+ * @version 2018-01-23
  * @since 2018-01-14
  */
 public class UpdateTest {
@@ -106,7 +106,7 @@ public class UpdateTest {
     @Before
     public void beforeTest() {
         try {
-            this.driver = DBDriver.getInstance("junior.pack2.p9.ch9.task1");
+            this.driver = DBDriver.getInstance();
             if (!this.driver.isDBDriverSet()) {
                 this.driver.setDbDriver();
             }
@@ -115,6 +115,7 @@ public class UpdateTest {
             this.servlet = new Update();
             this.servlet.init(conf);
             this.enc = Charset.defaultCharset().toString();
+            this.attributes.put("encoding", this.enc);
             this.us = new UserDAO();
             this.us.setEncoding(this.enc);
             this.testUser = new User();
@@ -186,6 +187,7 @@ public class UpdateTest {
             String expected = String.format("Пользователь id: %d отредактирован.", id);
             HttpServletRequest req = mock(HttpServletRequest.class);
             HttpServletResponse resp = mock(HttpServletResponse.class);
+            when(req.getAttribute("encoding")).thenReturn(this.enc);
             when(req.getParameter("id")).thenReturn(Integer.toString(id));
             when(req.getParameter("role")).thenReturn("2");
             when(req.getParameter("login")).thenReturn(new String("fakelogin".getBytes(this.enc), "ISO-8859-1"));

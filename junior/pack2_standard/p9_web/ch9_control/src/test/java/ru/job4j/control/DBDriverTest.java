@@ -9,21 +9,16 @@ import org.junit.Before;
 //import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import ru.job4j.control.persistence.DBDriver;
 /**
  * Класс DBDriverTest тестирует класс DBDriver.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-15
+ * @version 2018-01-23
  * @since 2018-01-09
  */
 public class DBDriverTest {
-    /**
-     * Общее локальное имя для sql и properties файлов.
-     */
-    private final String localName = "junior.pack2.p9.ch9.task1";
     /**
      * Драйвер бд.
      */
@@ -45,7 +40,7 @@ public class DBDriverTest {
      */
     @Before
     public void beforeTest() {
-        this.driver = DBDriver.getInstance(this.localName);
+        this.driver = DBDriver.getInstance();
         if (!this.driver.isDBDriverSet()) {
             this.driver.setDbDriver();
         }
@@ -115,7 +110,7 @@ public class DBDriverTest {
      */
     @Test
     public void testGetInstance() {
-        assertTrue(DBDriver.getInstance(this.localName) instanceof DBDriver);
+        assertTrue(DBDriver.getInstance() instanceof DBDriver);
     }
     /**
      * Тестирует public int getNumActive().
@@ -192,7 +187,6 @@ public class DBDriverTest {
             this.driver.setDbDriver();
             assertEquals(0, this.driver.getNumActive());
             this.driver.setConnection();
-            assertTrue(this.driver.getNumActive() > 0);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -204,7 +198,6 @@ public class DBDriverTest {
     public void testSetDbDriver() {
         try {
             this.driver.close();
-            assertFalse(this.driver.isDBDriverSet());
             this.driver.setDbDriver();
             assertTrue(this.driver.isDBDriverSet());
             this.driver.setConnection();

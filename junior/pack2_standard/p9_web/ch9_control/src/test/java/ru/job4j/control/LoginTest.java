@@ -33,7 +33,7 @@ import ru.job4j.control.service.User;
  * Класс LoginTest тестирует класс Login.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-15
+ * @version 2018-01-23
  * @since 2018-01-12
  */
 public class LoginTest {
@@ -94,7 +94,7 @@ public class LoginTest {
     @Before
     public void beforeTest() {
         try {
-            this.driver = DBDriver.getInstance("junior.pack2.p9.ch9.task1");
+            this.driver = DBDriver.getInstance();
             if (!this.driver.isDBDriverSet()) {
                 this.driver.setDbDriver();
             }
@@ -103,6 +103,7 @@ public class LoginTest {
             this.servlet = new Login();
             this.servlet.init(conf);
             this.enc = Charset.defaultCharset().toString();
+            this.attributes.put("encoding", this.enc);
             this.us = new UserDAO();
             this.us.setEncoding(this.enc);
         } catch (ServletException ex) {

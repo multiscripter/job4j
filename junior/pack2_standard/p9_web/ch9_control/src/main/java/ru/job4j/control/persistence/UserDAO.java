@@ -19,7 +19,7 @@ import ru.job4j.control.service.User;
  * Класс UserDAO реализует слой DAO между User и бд.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-16
+ * @version 2018-01-23
  * @since 2017-11-26
  */
 public class UserDAO {
@@ -40,7 +40,7 @@ public class UserDAO {
      */
     public UserDAO() {
     	this.logger = LogManager.getLogger("UserDAO");
-    	this.db = DBDriver.getInstance("junior.pack2.p9.ch9.task1");
+    	this.db = DBDriver.getInstance();
     }
     /**
      * Добавляет пользователя.

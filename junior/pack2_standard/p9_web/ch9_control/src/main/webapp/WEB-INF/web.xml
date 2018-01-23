@@ -6,7 +6,7 @@
     
     <servlet>
 		<servlet-name>Create</servlet-name>
-		<servlet-class>ru.job4j.control.Create</servlet-class>
+		<servlet-class>ru.job4j.control.controller.Create</servlet-class>
 		<description>Servlet 'Create' creates user.</description>
 	</servlet>
     <servlet-mapping>
@@ -16,7 +16,7 @@
     
 	<servlet>
 		<servlet-name>Read</servlet-name>
-		<servlet-class>ru.job4j.control.Read</servlet-class>
+		<servlet-class>ru.job4j.control.controller.Read</servlet-class>
 		<description>Servlet 'Read' reads users from storage.</description>
 	</servlet>
 	<servlet-mapping>
@@ -26,7 +26,7 @@
     
 	<servlet>
 		<servlet-name>Update</servlet-name>
-		<servlet-class>ru.job4j.control.Update</servlet-class>
+		<servlet-class>ru.job4j.control.controller.Update</servlet-class>
 		<description>Servlet 'Update' updates user.</description>
 	</servlet>
     <servlet-mapping>
@@ -36,7 +36,7 @@
     
     <servlet>
 		<servlet-name>Delete</servlet-name>
-		<servlet-class>ru.job4j.control.Delete</servlet-class>
+		<servlet-class>ru.job4j.control.controller.Delete</servlet-class>
 		<description>Servlet 'Delete' deletes user.</description>
 	</servlet>
     <servlet-mapping>
@@ -46,7 +46,7 @@
     
     <servlet>
 		<servlet-name>Login</servlet-name>
-		<servlet-class>ru.job4j.control.Login</servlet-class>
+		<servlet-class>ru.job4j.control.controller.Login</servlet-class>
 		<description>Servlet 'Login' login user.</description>
 	</servlet>
     <servlet-mapping>
@@ -54,14 +54,39 @@
 		<url-pattern>/login/</url-pattern>
 	</servlet-mapping>
     
-    <!-- Фильтр на права. -->
+    <filter>
+		<filter-name>LoginAuthFilter</filter-name>
+		<filter-class>ru.job4j.control.controller.LoginAuthFilter</filter-class>
+		<description>Filter requests.</description>
+	</filter>
+    <filter-mapping>
+		<filter-name>LoginAuthFilter</filter-name>
+		<url-pattern>/login/*</url-pattern>
+	</filter-mapping>
+    
+    <filter>
+		<filter-name>UpdateAuthFilter</filter-name>
+		<filter-class>ru.job4j.control.controller.UpdateAuthFilter</filter-class>
+		<description>Filter requests.</description>
+	</filter>
+    <filter-mapping>
+		<filter-name>UpdateAuthFilter</filter-name>
+		<url-pattern>/update/*</url-pattern>
+	</filter-mapping>
+    
     <filter>
 		<filter-name>AuthFilter</filter-name>
-		<filter-class>ru.job4j.control.AuthFilter</filter-class>
+		<filter-class>ru.job4j.control.controller.AuthFilter</filter-class>
+		<description>Filter requests.</description>
+	</filter>
+    <filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>ru.job4j.control.controller.EncodingFilter</filter-class>
 		<description>Filter requests.</description>
 	</filter>
     <filter-mapping>
 		<filter-name>AuthFilter</filter-name>
+        <filter-name>EncodingFilter</filter-name>
 		<url-pattern>*</url-pattern>
 	</filter-mapping>
 </web-app>
