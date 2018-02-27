@@ -13,7 +13,7 @@ import java.util.Iterator;
 /**
  * LiftChecker реализует сущность Проверятель лифта.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-02-12
+ * @version 2018-02-27
  * @since 2018-02-05
  */
 class LiftChecker extends Thread {
@@ -40,7 +40,7 @@ class LiftChecker extends Thread {
     /**
      * Текущий статус лифта.
      */
-    private int[] status;
+    private final int[] status;
     /**
      * Канал сокета.
      */
@@ -83,7 +83,7 @@ class LiftChecker extends Thread {
             this.sockCh.connect(new InetSocketAddress(this.address, this.port));
             while (!this.sockCh.finishConnect()) {
                 System.err.println("Establishing connection to server.");
-                this.sleep(20);
+                sleep(20);
             }
             result = this.sockCh.isConnected();
         } catch (IllegalMonitorStateException | InterruptedException | IOException ex) {
@@ -180,8 +180,6 @@ class LiftChecker extends Thread {
                         String str = new String(inData);
                         str = str.subSequence(0, str.indexOf('\0')).toString();
                         result = Integer.parseInt(str);
-                        //result = Integer.parseInt(new String(inData).trim());
-                        //System.out.println("Server response: " + result);
                         listIn.clear();
                         break;
                     }
@@ -209,7 +207,7 @@ class LiftChecker extends Thread {
                 this.status[1] = this.exchange("StatusDoor:0");
                 //System.err.println("StatusDoor: " + this.status[1]);
                 //System.err.println(String.format("this.status[0]: %d, [1]: %d", this.status[0], this.status[1]));
-                this.sleep(1000);
+                sleep(1000);
             }
         } catch (ClosedChannelException ex) {
             ex.printStackTrace();

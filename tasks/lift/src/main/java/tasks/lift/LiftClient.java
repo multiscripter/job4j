@@ -13,7 +13,7 @@ import java.util.Iterator;
 /**
  * LiftClient реализует сущность Пользователь лифта.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-02-19
+ * @version 2018-02-27
  * @since 2018-01-25
  */
 class LiftClient extends Thread implements ILift {
@@ -36,7 +36,7 @@ class LiftClient extends Thread implements ILift {
     /**
      * Источник ввода данных.
      */
-    private AbstractLiftIO io;
+    private final AbstractLiftIO io;
     /**
      * Статус.
      */
@@ -44,15 +44,15 @@ class LiftClient extends Thread implements ILift {
     /**
      * Проверятель лифта.
      */
-    private LiftChecker checker;
+    private final LiftChecker checker;
     /**
      * Опрашиватель проверятеля лифта.
      */
-    private LiftCheckerAsker asker;
+    private final LiftCheckerAsker asker;
     /**
      * Меню лифта.
      */
-    private LiftMenu menu;
+    private final LiftMenu menu;
     /**
      * Номер порта сервера.
      */
@@ -118,7 +118,7 @@ class LiftClient extends Thread implements ILift {
             this.sockCh.connect(new InetSocketAddress(this.address, this.port));
             while (!this.sockCh.finishConnect()) {
                 System.err.println("Establishing connection to server.");
-                this.sleep(20);
+                sleep(20);
             }
             result = this.sockCh.isConnected();
         } catch (IllegalMonitorStateException | InterruptedException | IOException ex) {
@@ -132,15 +132,9 @@ class LiftClient extends Thread implements ILift {
      * Получает текущий этаж.
      * @return текущий этаж.
      */
+    @Override
     public int getCurrentFloor() {
         return this.curFloor;
-    }
-    /**
-     * Получает целевой этаж.
-     * @return целевой этаж.
-     */
-    public int getDestFloor() {
-        return this.destFloor;
     }
     /**
      * Получает статус.

@@ -6,7 +6,7 @@ import java.util.LinkedList;
  * Класс BoundedQueue реализует сущность Ограниченая очередь.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-02-21
+ * @version 2018-02-27
  * @since 2018-01-18
  */
 class BoundedQueue {
@@ -60,21 +60,21 @@ class BoundedQueue {
      * @param o проверяемый элемент.
      * @return true если элемент содержится в очереди. Иначе false.
      */
-    public boolean contains(Object o) {
+    public synchronized boolean contains(Integer o) {
         return this.queue.contains(o);
     }
     /**
      * Проверяет очередь на пустоту.
      * @return true если очередь пуста. Иначе false.
      */
-    public boolean isEmpty() {
+    public synchronized boolean isEmpty() {
         return this.queue.size() == 0;
     }
     /**
      * Получает головной элемент очереди.
      * @return головной элемент очереди.
      */
-    public Integer peek() {
+    public synchronized Integer peek() {
         return this.queue.peek();
     }
     /**
@@ -88,7 +88,7 @@ class BoundedQueue {
      * Возвращает размер очереди.
      * @return размер очереди.
      */
-    public int size() {
+    public synchronized int size() {
         return this.queue.size();
     }
     /**

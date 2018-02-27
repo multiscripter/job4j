@@ -6,7 +6,7 @@ import java.util.LinkedList;
  * Класс CommandQueue реализует сущность Очередь комманд.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-02-21
+ * @version 2018-02-27
  * @since 2018-02-21
  */
 class CommandQueue extends LinkedList<String> {
@@ -15,6 +15,7 @@ class CommandQueue extends LinkedList<String> {
      * @param cmd команда.
      * @return true если команда добавлена в конец очереди. Иначе false.
      */
+    @Override
     public synchronized boolean add(String cmd) {
         boolean result = false;
         if (cmd != null && !this.contains(cmd)) {
@@ -26,6 +27,7 @@ class CommandQueue extends LinkedList<String> {
      * Добавляет команду в начало очереди.
      * @param cmd команда.
      */
+    @Override
     public synchronized void addFirst(String cmd) {
         if (cmd != null && !this.contains(cmd)) {
             super.addFirst(cmd);
@@ -36,6 +38,7 @@ class CommandQueue extends LinkedList<String> {
      * @param cmd команда.
      * @return true если команда добавлена в конец очереди.
      */
+    @Override
     public synchronized boolean offerFirst(String cmd) {
         this.addFirst(cmd);
         return true;
@@ -49,7 +52,7 @@ class CommandQueue extends LinkedList<String> {
         boolean result = false;
         if (cmd != null && this.size() > 0) {
             Iterator<String> iter = this.iterator();
-            String cur = null;
+            String cur;
             while (iter.hasNext()) {
                 cur = iter.next();
                 if (cur.compareTo(cmd) == 0) {

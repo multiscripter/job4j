@@ -22,7 +22,7 @@ import java.util.TimerTask;
  * Lift реализует сущность Лифт.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-02-21
+ * @version 2018-02-27
  * @since 2018-01-18
  */
 class Lift extends Thread implements ILift {
@@ -38,10 +38,6 @@ class Lift extends Thread implements ILift {
      * Очередь комманд.
      */
     private CommandQueue cmdQueue;
-    /**
-     * Текущая команда.
-     */
-    private String command;
     /**
      * Текущий этаж.
      */
@@ -95,7 +91,6 @@ class Lift extends Thread implements ILift {
         }
         this.capacity = 8;
         this.cmdQueue = new CommandQueue();
-        this.command = null;
         this.curFloor = 1;
         this.dataStorage = new HashMap<>();
         this.doorsOpened = false;
@@ -139,7 +134,7 @@ class Lift extends Thread implements ILift {
      */
     public int actionCall(Integer floor) {
         //System.err.println("actionCall(). floorsQueue: " + this.floorsQueue.toString() + ", this.cmdQueue: " + this.cmdQueue.toString());
-        int result = 0;
+        int result;
         if (floor < 1 || floor > this.liftParams.get("floors")) {
             this.removeCmd("Call:" + floor);
             result = 2;
@@ -158,7 +153,6 @@ class Lift extends Thread implements ILift {
             } else {
                 result = 1;
             }
-            //result = !this.floorsQueue.contains(floor) ? this.floorsQueue.add(floor) ? 1 : 0 : 0;
             if (result == 1) {
                 this.removeCmd("Call:" + floor);
                 this.execute();
@@ -213,7 +207,7 @@ class Lift extends Thread implements ILift {
                                     break;
                                 }
                                 Lift.this.doorTimer++;
-                                this.sleep(1000);
+                                sleep(1000);
                             }
                             Lift.this.working = false;
                             Lift.this.execute();
@@ -327,8 +321,7 @@ class Lift extends Thread implements ILift {
     private int callMethod(String command) throws IllegalAccessException, InvocationTargetException,  NoSuchMethodException {
         String[] strs = command.split(":");
         int num = Integer.parseInt(strs[1].trim());
-        java.lang.reflect.Method method = null;
-        method = Lift.class.getMethod("action" + strs[0], Integer.class);
+        java.lang.reflect.Method method = Lift.class.getMethod("action" + strs[0], Integer.class);
         return (int) method.invoke(Lift.this, num);
     }
     /**
@@ -366,24 +359,10 @@ class Lift extends Thread implements ILift {
         return result;
     }
     /**
-     * Останавливает сервер.
-     */
-    public void finish() {
-        if (this.selector != null) {
-            try {
-                this.selector.close();
-                this.servSockCh.socket().close();
-                this.servSockCh.close();
-            } catch (IOException ex) {
-                System.err.println("IO exception in stop().");
-                ex.printStackTrace();
-            }
-        }
-    }
-    /**
      * Получает текущий этаж.
      * @return текущий этаж.
      */
+    @Override
     public int getCurrentFloor() {
         return this.curFloor;
     }
@@ -400,13 +379,6 @@ class Lift extends Thread implements ILift {
      */
     public boolean isDoorsOpened() {
         return this.doorsOpened;
-    }
-    /**
-     * Проверяет работает ли лифт.
-     * @return true если лифт работает. Иначе false.
-     */
-    public boolean isWorking() {
-        return this.working;
     }
     /**
      * Главный метод.
@@ -442,13 +414,9 @@ class Lift extends Thread implements ILift {
         int result = -1;
         try {
             if (command.startsWith("Status")) {
-                if (this.cmdQueue.offerFirst(command)) {
-                    result = 1;
-                }
+                this.cmdQueue.offerFirst(command);
             } else if (!this.cmdQueue.contains(command)) {
-                if (this.cmdQueue.add(command)) {
-                    result = 1;
-                }
+                this.cmdQueue.add(command);
             }
             result = this.execute();
         } catch (Exception ex) {

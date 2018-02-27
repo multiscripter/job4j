@@ -4,7 +4,7 @@ import java.util.Arrays;
 /**
  * LiftCheckerAsker реализует сущность Опрашиватель проверятеля лифта.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-02-12
+ * @version 2018-02-27
  * @since 2018-02-05
  */
 class LiftCheckerAsker extends Thread {
@@ -47,7 +47,7 @@ class LiftCheckerAsker extends Thread {
                         this.lastStatus = Arrays.copyOf(status, status.length);
                         this.client.setStatus(status);
                     }
-                    this.sleep(200);
+                    sleep(200);
                 }
             } catch (InterruptedException ex) {
                 this.client.setStatus(null);

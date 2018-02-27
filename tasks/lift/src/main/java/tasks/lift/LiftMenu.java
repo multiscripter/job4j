@@ -5,7 +5,7 @@ import java.util.HashMap;
  * LiftMenu реализует сущность Меню лифта.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-02-19
+ * @version 2018-02-27
  * @since 2018-01-22
  */
 class LiftMenu {
@@ -32,15 +32,6 @@ class LiftMenu {
         this.client = client;
     }
     /**
-     * Получает сообщение по коду.
-     * @param num номер действия.
-     * @param code код сообщения.
-     * @return сообщение.
-     */
-    public String getMessage(final int num, final int code) {
-        return this.actions.get(num).getMessage(code);
-    }
-    /**
      * Инициализирует меню лифта.
      */
     public void fillActions() {
@@ -63,6 +54,15 @@ class LiftMenu {
             moveMsgs.put(3, "You already on selected floor");
             this.actions.put(LiftActions.MOVE.ordinal(), new ActionMove(LiftActions.MOVE, moveMsgs));
         }
+    }
+    /**
+     * Получает сообщение по коду.
+     * @param num номер действия.
+     * @param code код сообщения.
+     * @return сообщение.
+     */
+    public String getMessage(final int num, final int code) {
+        return this.actions.get(num).getMessage(code);
     }
     /**
      * Выполняет действие, выбранное пользователем.
@@ -106,6 +106,7 @@ class ActionExit extends LiftAction {
      * @param io источник ввода и вывода данных.
      * @return команда в виде строки.
      */
+    @Override
     public String execute(final LiftClient client, final AbstractLiftIO io) {
         io.write(this.getMessage(0));
         return "exit";
@@ -133,6 +134,7 @@ class ActionCall extends LiftAction {
      * @param io источник ввода и вывода данных.
      * @return команда в виде строки.
      */
+    @Override
     public String execute(final LiftClient client, final AbstractLiftIO io) {
         io.write(String.format("Calling lift to floor %d.", client.getCurrentFloor()));
         return String.format("Call:%d", client.getCurrentFloor());
@@ -160,6 +162,7 @@ class ActionMove extends LiftAction {
      * @param io источник ввода и вывода данных.
      * @return команда в виде строки.
      */
+    @Override
     public String execute(final LiftClient client, final AbstractLiftIO io) {
         io.write("Please, enter floor number.");
         String numStr = "";
