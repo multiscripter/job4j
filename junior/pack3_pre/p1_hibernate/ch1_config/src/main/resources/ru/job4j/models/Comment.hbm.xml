@@ -1,0 +1,11 @@
+<hibernate-mapping>
+    <class name="ru.job4j.models.Comment" table="comments">
+        <id name="id" type="int" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="itemId" column="item_id" type="int"/>
+        <property name="userId" column="user_id" type="int"/>
+        <property name="comment" column="comment" type="string"/>
+        <property name="created" column="created" type="timestamp"/>
+    </class>
+</hibernate-mapping>

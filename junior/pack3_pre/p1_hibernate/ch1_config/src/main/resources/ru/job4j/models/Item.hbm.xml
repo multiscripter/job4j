@@ -1,0 +1,11 @@
+<hibernate-mapping>
+    <class name="ru.job4j.models.Item" table="items">
+        <id name="id" type="int" column="id">
+            <generator class="identity"/>
+        </id>
+        <property name="userId" column="user_id" type="int"/>
+        <property name="name" column="name" type="string"/>
+        <property name="desc" column="descr" type="string"/>
+        <property name="created" column="created" type="timestamp"/>
+    </class>
+</hibernate-mapping>
