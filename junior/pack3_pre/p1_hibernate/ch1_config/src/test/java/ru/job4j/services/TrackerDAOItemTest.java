@@ -16,7 +16,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.config.DBDriver;
 import ru.job4j.models.Item;
@@ -55,7 +55,7 @@ public class TrackerDAOItemTest {
     /**
      * Тестирует public void create(E obj).
      */
-    @Ignore@Test
+    @Test
     public void testCreate() {
         try {
             String name = "TrackerDAOItemTest";
@@ -77,7 +77,7 @@ public class TrackerDAOItemTest {
     /**
      * Тестирует public void delete(E obj).
      */
-    @Ignore@Test
+    @Test
     public void testDelete() {
         try {
             int id = 1;
@@ -95,7 +95,7 @@ public class TrackerDAOItemTest {
     /**
      * Тестирует public List<E> read(E obj).
      */
-    @Ignore@Test
+    @Test
     public void testRead() {
         try {
             LinkedList<HashMap<String, String>> result = this.driver.select("select * from items order by id");
@@ -121,7 +121,7 @@ public class TrackerDAOItemTest {
     /**
      * Тестирует public void update(E obj).
      */
-    @Ignore@Test
+    @Test
     public void testUpdate() {
         try {
             String name = "HibernateDBDriverItemTest";

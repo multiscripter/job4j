@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
  * Класс TrackerRepository реализует шаблон Репозиторий.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-03-15
+ * @version 2018-03-16
  * @since 2018-03-10
  * @param <T> параметризированный тип.
  */
@@ -26,19 +25,11 @@ public class TrackerRepository<T> {
     /**
      * Фабрика.
      */
-    private final EntityManager manager;
+    private final EntityManager manager = Persistence.createEntityManagerFactory(this.getClass().getSimpleName()).createEntityManager();
     /**
      * Логгер.
      */
-    private final Logger logger;
-    /**
-	 * Конструктор.
-	 */
-    public TrackerRepository() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory(this.getClass().getSimpleName());
-        this.manager = factory.createEntityManager();
-        this.logger = LogManager.getLogger(this.getClass().getSimpleName());
-    }
+    private final Logger logger = LogManager.getLogger(this.getClass().getSimpleName());
     /**
      * Получает список полей по заданному критерию.
      * @param obj объект.

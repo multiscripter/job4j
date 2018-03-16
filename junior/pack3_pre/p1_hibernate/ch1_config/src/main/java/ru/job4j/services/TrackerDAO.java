@@ -6,13 +6,12 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 /**
  * Класс TrackerDAO реализует слой DAO.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-03-12
+ * @version 2018-03-16
  * @since 2018-03-05
  * @param <T> параметризированный тип.
  */
@@ -20,18 +19,11 @@ public class TrackerDAO<T> {
     /**
      * Фабрика.
      */
-    private final SessionFactory factory;
+    private final SessionFactory factory = new Configuration().configure().buildSessionFactory();
     /**
      * Логгер.
      */
-    private final Logger logger;
-    /**
-	 * Конструктор.
-	 */
-    public TrackerDAO() {
-        this.factory = new Configuration().configure().buildSessionFactory();
-        this.logger = LogManager.getLogger(this.getClass().getName());
-    }
+    private final Logger logger = LogManager.getLogger(this.getClass().getName());
     /**
      * Закрывает фабрику.
      */
@@ -44,17 +36,7 @@ public class TrackerDAO<T> {
      * @throws javax.persistence.PersistenceException исключение JPA.
      */
     public void create(T obj) throws PersistenceException {
-        Transaction tx = null;
-        try (Session session = this.factory.openSession()) {
-            tx = session.beginTransaction();
-            session.save(obj);
-            tx.commit();
-        } catch (Exception ex) {
-            this.logger.error("ERROR", ex);
-            if (tx != null) {
-                tx.rollback();
-            }
-        }
+        this.process(obj, "create");
     }
     /**
      * Удаляет объект.
@@ -62,16 +44,32 @@ public class TrackerDAO<T> {
      * @throws javax.persistence.PersistenceException исключение JPA.
      */
     public void delete(T obj) throws PersistenceException {
-        Transaction tx = null;
+        this.process(obj, "delete");
+    }
+    /**
+     * Удаляет объект.
+     * @param obj объект.
+     * @param action действие над объектом.
+     * @throws javax.persistence.PersistenceException исключение JPA.
+     */
+    private void process(T obj, String action) throws PersistenceException {
         try (Session session = this.factory.openSession()) {
-            tx = session.beginTransaction();
-            session.delete(obj);
-            tx.commit();
+            session.beginTransaction();
+            if (action.equals("create")) {
+                session.save(obj);
+            } else if (action.equals("delete")) {
+                session.delete(obj);
+            } else if (action.equals("update")) {
+                session.update(obj);
+            }
+            try {
+                session.getTransaction().commit();
+            } catch (Exception ex) {
+                this.logger.error("ERROR", ex);
+                session.getTransaction().rollback();
+            }
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
-            if (tx != null) {
-                tx.rollback();
-            }
         }
     }
     /**
@@ -82,16 +80,17 @@ public class TrackerDAO<T> {
      */
     public List<T> read(T obj) throws PersistenceException {
         List<T> objs = null;
-        Transaction tx = null;
         try (Session session = this.factory.openSession()) {
-            tx = session.beginTransaction();
+            session.beginTransaction();
             objs = session.createQuery(String.format("from %s", obj.getClass().getSimpleName())).list();
-            tx.commit();
+            try {
+                session.getTransaction().commit();
+            } catch (Exception ex) {
+                this.logger.error("ERROR", ex);
+                session.getTransaction().rollback();
+            }
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
-            if (tx != null) {
-                tx.rollback();
-            }
         }
         return objs;
     }
@@ -101,16 +100,6 @@ public class TrackerDAO<T> {
      * @throws javax.persistence.PersistenceException исключение JPA.
      */
     public void update(T obj) throws PersistenceException {
-        Transaction tx = null;
-        try (Session session = this.factory.openSession()) {
-            tx = session.beginTransaction();
-            session.update(obj);
-            session.getTransaction().commit();
-        } catch (Exception ex) {
-            this.logger.error("ERROR", ex);
-            if (tx != null) {
-                tx.rollback();
-            }
-        }
+        this.process(obj, "update");
     }
 }

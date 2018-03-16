@@ -9,14 +9,14 @@ import java.util.SimpleTimeZone;
  * Класс Comment реализует сущность Комментарий.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-03-09
+ * @version 2018-03-15
  * @since 2018-03-09
  */
 public class Comment {
     /**
      * Текст комментария.
      */
-    private String comment;
+    private String comment = "";
     /**
      * Дата создания.
      */
@@ -37,7 +37,6 @@ public class Comment {
      * Конструктор без параметров.
      */
     public Comment() {
-        this.comment = "";
         SimpleTimeZone tz = new SimpleTimeZone(0, "GMT");
         tz.setID("GMT+00:00");
         this.created = new GregorianCalendar(tz);
