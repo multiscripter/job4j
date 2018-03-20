@@ -39,7 +39,7 @@ public class DBDriverTest {
     public void beforeTest() {
         this.logger = LogManager.getLogger(this.getClass().getName());
         try {
-            this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch1task1", "postgres", "postgresrootpass");
+            this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch1task0", "postgres", "postgresrootpass");
             this.path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             this.path = path.replaceFirst("^/(.:/)", "$1");
         } catch (URISyntaxException ex) {
@@ -52,7 +52,7 @@ public class DBDriverTest {
     @Test
     public void testDelete() {
         try {
-            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task1.sql");
+            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.sql");
             int affected = this.driver.delete("delete from users");
             assertEquals(3, affected);
         } catch (Exception ex) {
@@ -80,7 +80,7 @@ public class DBDriverTest {
     @Test
     public void testDeleteConnectionClosed() {
         try {
-            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task1.sql");
+            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.sql");
             this.driver.close();
             int affected = this.driver.delete("delete from users");
             assertEquals(3, affected);
@@ -137,7 +137,7 @@ public class DBDriverTest {
         try {
             SQLException e = null;
             try {
-                this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task1.test.sql");
+                this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.test.sql");
             } catch (SQLException ex) {
                 e = ex;
             } finally {
@@ -154,7 +154,7 @@ public class DBDriverTest {
     public void testIsValid() {
         try {
             this.driver.setPass("postgresrootpass");
-            this.driver.setUrl("jdbc:postgresql://localhost:5432/jpack3p1ch1task1");
+            this.driver.setUrl("jdbc:postgresql://localhost:5432/jpack3p1ch1task0");
             this.driver.setUser("postgres");
             this.driver.setConnection();
             assertTrue(this.driver.isValid());
@@ -168,7 +168,7 @@ public class DBDriverTest {
     @Test
     public void testSelect() {
         try {
-            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task1.sql");
+            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.sql");
             LinkedList<HashMap<String, String>> result = this.driver.select("select * from users");
             assertTrue(result.size() > 0);
         } catch (Exception ex) {
@@ -209,7 +209,7 @@ public class DBDriverTest {
     @Test
     public void testUpdate() {
         try {
-            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task1.sql");
+            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.sql");
             int affected = this.driver.update("update users set login = 'Zorro' where id = 1");
             assertEquals(1, affected);
         } catch (Exception ex) {

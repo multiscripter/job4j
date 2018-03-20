@@ -43,10 +43,10 @@ public class TrackerDAOItemTest {
     public void beforeTest() {
         this.logger = LogManager.getLogger(this.getClass().getName());
         try {
-            this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch1task1", "postgres", "postgresrootpass");
+            this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch1task0", "postgres", "postgresrootpass");
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
-            this.driver.executeSqlScript(path + "junior.pack3.p1.ch1.task1.sql");
+            this.driver.executeSqlScript(path + "junior.pack3.p1.ch1.task0.sql");
         } catch (IOException | SQLException | URISyntaxException ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
