@@ -57,11 +57,17 @@
             <version>3.5.4-Final</version>
             <type>pom</type>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-annotations</artifactId>
             <version>3.5.6-Final</version>
-        </dependency>
+        </dependency> -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate.common/hibernate-commons-annotations
+        <dependency>
+            <groupId>org.hibernate.common</groupId>
+            <artifactId>hibernate-commons-annotations</artifactId>
+            <version>5.0.3.Final</version>
+        </dependency> -->
     </dependencies>
 </project>

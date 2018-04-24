@@ -1,0 +1,82 @@
+body {
+    cursor: default;
+    min-width: 320px;
+}
+
+label {
+    cursor: pointer;
+}
+
+th {
+    white-space: nowrap;
+}
+
+td {
+    position: relative;
+}
+
+td:nth-child(4) {
+    width: 172px;
+}
+
+textarea {
+    min-height: 38px;
+}
+
+.col-btns .btn {
+    width: 100%;
+}
+
+.col-btns .btn + .btn {
+    margin-top: 0.75rem;
+}
+
+.col-btns .d-none + .btn {
+    margin-top: 0;
+}
+
+.is-invalid + .invalid-feedback {
+    background: #fff;
+    border: 1px solid #dc3545;
+    border-radius: 4px;
+    display: block;
+    line-height: normal;
+    margin-top: 7px;
+    padding: 0 5px 3px;
+    position: absolute;
+    width: auto;
+    z-index: 1;
+}
+
+.is-invalid + .invalid-feedback:before,
+.is-invalid + .invalid-feedback:after {
+    content: '';
+    height: 10px;
+    left: 10px;
+    position: absolute;
+    width: 10px;
+}
+
+.is-invalid + .invalid-feedback:before {
+    border: 5px solid transparent;
+    border-bottom: 7px solid #dc3545;
+    top: -13px;
+}
+
+.is-invalid + .invalid-feedback:after {
+    border: 5px solid transparent;
+    border-bottom: 7px solid #fff;
+    top: -12px;
+}
+
+@media only screen and (min-width: 768px) {
+    
+}
+
+@media only screen and (min-width: 1024px) {
+    
+}
+
+@media only screen and (min-width: 1280px) {
+    
+}
