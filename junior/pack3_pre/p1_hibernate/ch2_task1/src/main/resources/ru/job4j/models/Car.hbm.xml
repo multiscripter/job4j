@@ -1,0 +1,20 @@
+<hibernate-mapping>
+    <class name="ru.job4j.models.Car" table="cars">
+        <id name="id" column="id" type="int">
+            <generator class="identity"/>
+        </id>
+        <property name="name" column="name" type="string"/>
+        <bag name="bodies" table="cars_bodies">
+            <key column="car_id"/>
+            <many-to-many column="body_id" class="ru.job4j.models.Body" />
+        </bag>
+        <bag name="engines" table="cars_engines">
+            <key column="car_id"/>
+            <many-to-many column="engine_id" class="ru.job4j.models.Engine" />
+        </bag>
+        <bag name="gearboxes" table="cars_gearboxes">
+            <key column="car_id"/>
+            <many-to-many column="gearbox_id" class="ru.job4j.models.Gearbox" />
+        </bag>
+    </class>
+</hibernate-mapping>

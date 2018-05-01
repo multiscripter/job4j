@@ -17,5 +17,8 @@
 
     <modules>
         <module>ch1_config</module>
+        <module>ch1_task1</module>
+        <module>ch1_task2</module>
+        <module>ch2_task1</module>
     </modules>
 </project>
