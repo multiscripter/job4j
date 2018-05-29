@@ -90,6 +90,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
+                    <compilerArgument>-Xlint</compilerArgument>
                     <compilerVersion>1.8</compilerVersion>
                 </configuration>
             </plugin>

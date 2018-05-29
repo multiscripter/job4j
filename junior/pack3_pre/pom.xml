@@ -32,12 +32,12 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.2.14.Final</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>5.2.14.Final</version>
-        </dependency>
+        </dependency> -->
         <!-- https://mvnrepository.com/artifact/org.hibernate.javax.persistence/hibernate-jpa-2.0-api -->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
@@ -50,13 +50,13 @@
             <artifactId>hibernate-validator</artifactId>
             <version>6.0.7.Final</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate -->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
             <version>3.5.4-Final</version>
             <type>pom</type>
-        </dependency>
+        </dependency> -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations
         <dependency>
             <groupId>org.hibernate</groupId>
