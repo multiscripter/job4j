@@ -21,5 +21,6 @@
         <module>ch1_task2</module>
         <module>ch2_task1</module>
         <module>ch2_task1v2</module>
+        <module>ch2_task2</module>
     </modules>
 </project>

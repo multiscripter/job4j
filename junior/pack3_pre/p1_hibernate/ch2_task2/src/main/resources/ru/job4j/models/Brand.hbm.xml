@@ -1,0 +1,17 @@
+<hibernate-mapping>
+    <class name="ru.job4j.models.Brand" table="brands">
+        <id name="id" column="id" type="int">
+            <generator class="identity"/>
+        </id>
+        <property name="name" column="name" type="string"/>
+        <!-- one-to-one one-way relationship Brand -> Founder -->
+        <many-to-one
+            name="founder"
+            column="founder_id"
+            unique="true"
+            not-null="true"
+            cascade="all"
+            lazy="false"
+            class="ru.job4j.models.Founder" />
+    </class>
+</hibernate-mapping>
