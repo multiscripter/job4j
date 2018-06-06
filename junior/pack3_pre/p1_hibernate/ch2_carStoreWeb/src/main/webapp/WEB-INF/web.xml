@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+	<display-name>junior.pack3.p1.ch2.task2 Car store</display-name>
+    <!-- Открывается в браузере по адресу: http://bot.net:8080/ch2_carStoreWeb/ -->
+    
+	<servlet>
+		<servlet-name>Index</servlet-name>
+		<servlet-class>ru.job4j.web.Index</servlet-class>
+		<description>Servlet 'Index' shows main page.</description>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Index</servlet-name>
+		<url-pattern></url-pattern>
+	</servlet-mapping>
+    
+    <servlet>
+		<servlet-name>OfferCreate</servlet-name>
+		<servlet-class>ru.job4j.web.OfferCreate</servlet-class>
+		<description>Servlet 'OfferCreate' creates car offer.</description>
+        <multipart-config>
+            <location>/</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OfferCreate</servlet-name>
+		<url-pattern>/offer-create/</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>OfferUpdate</servlet-name>
+		<servlet-class>ru.job4j.web.OfferUpdate</servlet-class>
+		<description>Servlet 'Update' updates car offer.</description>
+		<multipart-config>
+			<location>/</location>
+			<max-file-size>20848820</max-file-size>
+			<max-request-size>418018841</max-request-size>
+			<file-size-threshold>1048576</file-size-threshold>
+		</multipart-config>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>OfferUpdate</servlet-name>
+		<url-pattern>/offer-update/</url-pattern>
+	</servlet-mapping>
+
+    <servlet>
+		<servlet-name>OfferDelete</servlet-name>
+		<servlet-class>ru.job4j.web.OfferDelete</servlet-class>
+		<description>Servlet 'Delete' deletes car offer.</description>
+	</servlet>
+    <servlet-mapping>
+		<servlet-name>OfferDelete</servlet-name>
+		<url-pattern>/offer-delete/</url-pattern>
+	</servlet-mapping>
+    
+    <filter>
+		<filter-name>EncodingFilter</filter-name>
+		<filter-class>ru.job4j.web.EncodingFilter</filter-class>
+		<description>Filter requests.</description>
+	</filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
+</web-app>
