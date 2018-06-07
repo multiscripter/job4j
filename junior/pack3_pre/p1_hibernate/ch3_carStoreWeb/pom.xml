@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ch3_carStoreWeb</artifactId>
+    <packaging>war</packaging>
+
+    <parent>
+        <groupId>ru.job4j</groupId>
+        <artifactId>p1_hibernate</artifactId>
+        <version>1.0</version>
+    </parent>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jstl/jstl -->
+        <!-- JavaServer Pages Standard Tag Library -->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+        <!-- API http://www.javadoc.io/doc/org.mockito/mockito-core/1.10.19 -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Simple Logging Facade for Java (SLF4J) http://www.slf4j.org/ -->
+        <!-- https://ru.wikipedia.org/wiki/Slf4J -->
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency> -->
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.3</version>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                    <!--
+                    <packagingExcludes>
+                        WEB-INF/lib/jsoup-1.10.3.jar,
+                        WEB-INF/lib/sqlite-jdbc-3.7.2.jar
+                    </packagingExcludes>-->
+                </configuration>
+            </plugin>
+            <!-- Plugun for deploy war to Tomcat. Work with Tomcat 7 and 8.
+            For deploy use command:   mvn tomcat7:deploy
+            For redeploy use command: mvn tomcat7:redeploy -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <path>/ch3_carStoreWeb/</path>
+                    <update>true</update>
+                    <url>http://localhost:8080/manager/text</url>
+                    <username>fuckin-autodeployer</username>
+                    <password>fuckin-autodeployer-pass</password>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

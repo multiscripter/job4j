@@ -1,0 +1,9 @@
+<hibernate-mapping>
+    <class name="ru.job4j.models.Founder" table="founders">
+        <id name="id" column="id" type="int">
+            <generator class="identity"/>
+        </id>
+        <property name="nameLast" column="name_last" type="string"/>
+        <property name="name" column="name" type="string"/>
+    </class>
+</hibernate-mapping>
