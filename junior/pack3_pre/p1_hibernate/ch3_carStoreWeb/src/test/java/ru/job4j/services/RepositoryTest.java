@@ -11,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-//import org.junit.Ignore;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.checking.DBDriver;
 import ru.job4j.models.Body;
@@ -130,7 +130,7 @@ public class RepositoryTest {
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      * Тип: User.
      */
-    @Test
+    @Ignore@Test
     public void testGetByIdWithTypeUser() {
         try {
             int id = 1;
@@ -153,7 +153,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Test
+    @Ignore@Test
     public void testGetByIdWithTypeBrand() {
         try {
             int id = 1;
@@ -181,7 +181,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Test
+    @Ignore@Test
     public void testGetCarByIdWithTypeOffer() {
         try {
             int id = 1;
@@ -280,7 +280,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Test
+    @Ignore@Test
     public void testGetByNameWithTypeUser() {
         try {
             String name = "testUser1";
@@ -303,7 +303,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Test
+    @Ignore@Test
     public void testGetCarListByBodyIdEquals1() {
         try {
             List<Car> expected = new ArrayList<>();
@@ -328,7 +328,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Test
+    @Ignore@Test
     public void testGetOfferListByIdIn() {
         try {
             List<Offer> expected = new ArrayList<>();
@@ -353,7 +353,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Test
+    @Ignore@Test
     public void testGetOfferListByIdBetween() {
         try {
             List<Offer> expected = new ArrayList<>();
@@ -379,7 +379,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Test
+    @Ignore@Test
     public void testGetWithOfferOrderBy() {
         try {
             List<Offer> expected = new ArrayList<>();
@@ -396,6 +396,26 @@ public class RepositoryTest {
             for (IModel item : this.repo.get("Offer", params)) {
                 actual.add((Offer) item);
             }
+            assertEquals(expected, actual);
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
+    }
+    /**
+     * Тестирует public List<Offer> getOffersByBrand(String orderDir) throws Exception.
+     */
+    @Test
+    public void testGetOffersByBrand() {
+        try {
+            List<Offer> expected = new ArrayList<>();
+            String brandId = "1";
+            String orderBy = "offers.id";
+            String orderDir = "desc";
+            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id and brands.id = %s group by offers.id, users.id, cars.id, brands.id, founders.id, bodies.id order by %s %s", brandId, orderBy, orderDir);
+            List<HashMap<String, String>> result = this.driver.select(query);
+            this.fillOfferList(expected, result);
+            List<Offer> actual = this.repo.getOffersByBrandId("1", "desc");
             assertEquals(expected, actual);
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);

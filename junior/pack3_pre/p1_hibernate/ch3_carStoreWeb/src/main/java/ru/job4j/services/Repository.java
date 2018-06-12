@@ -1,5 +1,6 @@
 package ru.job4j.services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -9,11 +10,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import ru.job4j.models.IModel;
+import ru.job4j.models.Offer;
 /**
  * Класс Repository реализует репозиторий для моделей, имплементирующих IModel.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-06-07
+ * @version 2018-06-12
  * @since 2018-04-27
  */
 public class Repository {
@@ -91,6 +93,30 @@ public class Repository {
      */
     public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception {
         String query = this.getQuery(type, params);
+        return this.getResult(query);
+    }
+    /**
+     * Получает список предложений по имени бренда, отсортированный по возрастанию или убыванию.
+     * @param brandId идентификатор бренда.
+     * @param orderDir направление сортировки.
+     * @return список предложений.
+     * @throws Exception исключение.
+     */
+    public List<Offer> getOffersByBrandId(String brandId, String orderDir) throws Exception {
+        String query = String.format("select offer from Offer offer join offer.car.brand as brands_item where brands_item.id = '%s' order by offer.id %s", brandId, "desc".equals(orderDir) ? "desc" : "");
+        List<Offer> items = new ArrayList<>();
+        for (IModel item : this.getResult(query)) {
+            items.add((Offer) item);
+        }
+        return items;
+    }
+    /**
+     * Получает список с результатами запроса к бд.
+     * @param query SQL-запрос к бд.
+     * @return список с результатами запроса.
+     * @throws Exception исключение.
+     */
+    private List<IModel> getResult(String query) throws Exception {
         List<IModel> items;
         try (final Session session = this.factory.openSession()) {
             session.beginTransaction();
