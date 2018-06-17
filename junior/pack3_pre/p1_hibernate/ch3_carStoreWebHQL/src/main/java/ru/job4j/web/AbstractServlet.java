@@ -34,13 +34,13 @@ public abstract class AbstractServlet extends HttpServlet {
     	try {
             // Установить часовой пояс по умолчанию для всего приложения.
             TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-            // /var/lib/tomcat8/webapps/ch3_carStoreWeb/WEB-INF/classes
-            // \Program FIles\Apache Software Foundation\Tomcat 8.5\webapps\ch3_carStoreWeb\WEB-INF\classes
+            // /var/lib/tomcat8/webapps/ch3_carStoreWebHQL/WEB-INF/classes
+            // \Program FIles\Apache Software Foundation\Tomcat 8.5\webapps\ch3_carStoreWebHQL\WEB-INF\classes
             String path = new File(AbstractServlet.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
 			path = path.replaceFirst("^/(.:/)", "$1");
 			XmlConfigurationFactory xcf = new XmlConfigurationFactory();
 			ConfigurationSource source = new ConfigurationSource(new FileInputStream(new File(path + "log4j2.xml")));
-            Configuration conf = xcf.getConfiguration(new LoggerContext("ch3_carStoreWeb_context"), source);
+            Configuration conf = xcf.getConfiguration(new LoggerContext("ch3_carStoreWebHQL_context"), source);
             LoggerContext ctx = (LoggerContext) LogManager.getContext(true);
             ctx.stop();
             ctx.start(conf);

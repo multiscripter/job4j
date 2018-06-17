@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.checking.DBDriver;
 import ru.job4j.models.Body;
@@ -89,7 +89,7 @@ public class DAOTest {
      * Тестирует public int create(T obj) throws PersistenceException.
      * Тип: Body.
      */
-    @Ignore@Test
+    @Test
     public void testCreateWithTypeBody() {
         try {
             Body expected = new Body(0, "targa");
@@ -108,7 +108,7 @@ public class DAOTest {
      * Тестирует public int create(T obj) throws PersistenceException.
      * Тип: Brand.
      */
-    @Ignore@Test
+    @Test
     public void testCreateWithTypeBrand() {
         try {
             Founder f = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -137,12 +137,12 @@ public class DAOTest {
      * Тестирует public int create(T obj) throws PersistenceException.
      * Тип: Car.
      */
-    @Ignore@Test
+    @Test
     public void testCreateWithTypeCar() {
         try {
             Car expected = new Car();
             expected.setId(0);
-            expected.setName("Niva");
+            expected.setName("Нива");
             List<Body> ebodies = new ArrayList<>();
             ebodies.add(new Body(3, "universal"));
             expected.setBodies(ebodies);
@@ -178,7 +178,7 @@ public class DAOTest {
      * Тестирует public int create(T obj) throws PersistenceException.
      * Тип: Offer.
      */
-    @Ignore@Test
+    @Test
     public void testCreateWithTypeOffer() {
         try {
             Offer expected = this.getOffer();
@@ -242,7 +242,7 @@ public class DAOTest {
      * Тестирует public void delete(T obj) throws PersistenceException.
      * Тип: Brand.
      */
-    @Ignore@Test
+    @Test
     public void testDeleteWithTypeBrand() {
         try {
             Founder founder = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -267,7 +267,7 @@ public class DAOTest {
      * Тестирует public void delete(T obj) throws PersistenceException.
      * Тип: Car.
      */
-    @Ignore@Test
+    @Test
     public void testDeleteWithTypeCar() {
         try {
             Founder founder = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -304,7 +304,7 @@ public class DAOTest {
      * Тестирует public void delete(T obj) throws PersistenceException.
      * Тип: Offer.
      */
-    @Ignore@Test
+    @Test
     public void testDeleteWithTypeOffer() {
         try {
             Offer expected = this.getOffer();
@@ -323,7 +323,7 @@ public class DAOTest {
      * Тестирует private U U process(final Function<Session, U> command).
      * @throws java.lang.Exception исключение.
      */
-    @Ignore@Test(expected = Exception.class)
+    @Test(expected = Exception.class)
     public void testProcess() throws Exception {
         this.dao.create(null);
     }
@@ -331,7 +331,7 @@ public class DAOTest {
      * Тестирует public List<T> read(T obj) throws PersistenceException.
      * Тип: Founder.
      */
-    @Ignore@Test
+    @Test
     public void testReadWithTypeFounder() {
         try {
             List<Founder> expected = new ArrayList<>();
@@ -355,7 +355,7 @@ public class DAOTest {
      * Тестирует public List<T> read(T obj) throws PersistenceException.
      * Тип: Brand.
      */
-    @Ignore@Test
+    @Test
     public void testReadWithTypeBrand() {
         try {
             List<Brand> expected = new ArrayList<>();
@@ -379,7 +379,7 @@ public class DAOTest {
      * Тестирует public List<T> read(T obj) throws PersistenceException.
      * Тип: Car.
      */
-    @Ignore@Test
+    @Test
     public void testReadWithTypeCar() {
         try {
             List<Car> expected = new ArrayList<>();
@@ -425,7 +425,7 @@ public class DAOTest {
      * Тестирует public void update(E obj).
      * Тип: Founder.
      */
-    @Ignore@Test
+    @Test
     public void testUpdateWithTypeFounder() {
         try {
             Founder expected = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -449,7 +449,7 @@ public class DAOTest {
      * Тестирует public void update(E obj).
      * Тип: Brand.
      */
-    @Ignore@Test
+    @Test
     public void testUpdateWithTypeBrand() {
         try {
             Founder f = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -482,12 +482,12 @@ public class DAOTest {
      * Тестирует public void update(E obj).
      * Тип: Car.
      */
-    @Ignore@Test
+    @Test
     public void testUpdateWithTypeCar() {
         try {
             Car expected = new Car();
             expected.setId(0);
-            expected.setName("Niva");
+            expected.setName("Нива");
             List<Body> ebodies = new ArrayList<>();
             ebodies.add(new Body(3, "universal"));
             expected.setBodies(ebodies);
@@ -537,19 +537,19 @@ public class DAOTest {
      * Тестирует public void update(E obj).
      * Тип: Offer.
      */
-    @Ignore@Test
+    @Test
     public void testUpdateWithTypeOffer() {
         try {
             Car car = new Car();
             car.setId(0);
-            car.setName("Niva");
+            car.setName("Нива");
             List<Body> bodies = new ArrayList<>();
             bodies.add(new Body(3, "universal"));
             car.setBodies(bodies);
-            Founder founder = new Founder(0, "ЦК КПСС", "Совет министров СССР");
+            Founder founder = new Founder(0, "ВСНХ", "Ford");
             int id = this.dao.create(founder);
             founder.setId(id);
-            Brand brand = new Brand(0, "ВАЗ", founder);
+            Brand brand = new Brand(0, "ГАЗ", founder);
             id = this.dao.create(brand);
             brand.setId(id);
             car.setBrand(brand);
@@ -604,7 +604,6 @@ public class DAOTest {
     @After
     public void afterTest() {
         try {
-            this.logger.error("DAOTest.afterTest()");
             this.driver.executeSqlScript(this.path);
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);

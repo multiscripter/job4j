@@ -95,7 +95,7 @@ public class OfferDeleteTest {
      */
     private void createFakeFotos(int id) throws Exception {
         String path = new File(".").getCanonicalPath();
-        path = String.format("%s/webapps/ch3_carStoreWeb/fotos", path);
+        path = String.format("%s/webapps/ch3_carStoreWebHQL/fotos", path);
         String fotosPath = Paths.get(path).normalize().toString();
         String dirName = String.format("%s/%d", fotosPath, id);
         File dir = new File(dirName);

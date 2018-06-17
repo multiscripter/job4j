@@ -2,7 +2,7 @@
 
 <web-app>
 	<display-name>junior.pack3.p1.ch3.task1 Car store with filters</display-name>
-    <!-- Открывается в браузере по адресу: http://bot.net:8080/ch3_carStoreWeb/ -->
+    <!-- Открывается в браузере по адресу: http://bot.net:8080/ch3_carStoreWebHQL/ -->
     
 	<servlet>
 		<servlet-name>Index</servlet-name>

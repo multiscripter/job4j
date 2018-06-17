@@ -11,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.checking.DBDriver;
 import ru.job4j.models.Body;
@@ -130,7 +130,7 @@ public class RepositoryTest {
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      * Тип: User.
      */
-    @Ignore@Test
+    @Test
     public void testGetByIdWithTypeUser() {
         try {
             int id = 1;
@@ -153,7 +153,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetByIdWithTypeBrand() {
         try {
             int id = 1;
@@ -181,7 +181,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetCarByIdWithTypeOffer() {
         try {
             int id = 1;
@@ -280,7 +280,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetByNameWithTypeUser() {
         try {
             String name = "testUser1";
@@ -303,7 +303,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetCarListByBodyIdEquals1() {
         try {
             List<Car> expected = new ArrayList<>();
@@ -328,7 +328,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetOfferListByIdIn() {
         try {
             List<Offer> expected = new ArrayList<>();
@@ -353,7 +353,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetOfferListByIdBetween() {
         try {
             List<Offer> expected = new ArrayList<>();
@@ -379,7 +379,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetWithOfferOrderBy() {
         try {
             List<Offer> expected = new ArrayList<>();

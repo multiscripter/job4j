@@ -69,11 +69,11 @@ public class OfferCreate extends AbstractServlet {
              * не позволяет покрыть сервлет тестами из-за того,
              * что нельзя сделать mock для ServletContext
              * до вызова Servlet.init(conf); Поэтому пришлось хардкорно
-             * прописать ContextPath (ch3_carStoreWeb) и объявить его в pom.xml.
+             * прописать ContextPath (ch3_carStoreWebHQL) и объявить его в pom.xml.
              * К тому же это позволило избавиться от версии, добавляемой
              * Томкэтом в ContextPath.
              */
-            path = String.format("%s/webapps/ch3_carStoreWeb/fotos", path);
+            path = String.format("%s/webapps/ch3_carStoreWebHQL/fotos", path);
             String fotosPath = Paths.get(path).normalize().toString();
             this.handler = new Handler(enc, fotosPath);
             //this.logger.error("tempdir: " + this.getServletContext().getAttribute("javax.servlet.context.tempdir"));
@@ -83,7 +83,7 @@ public class OfferCreate extends AbstractServlet {
     }
     /**
      * Обрабатывает GET-запросы.
-     * http://bot.net:8080/ch3_carStoreWeb/offer-create/
+     * http://bot.net:8080/ch3_carStoreWebHQL/offer-create/
      * @param req объект запроса.
      * @param resp объект ответа сервера.
      * @throws javax.servlet.ServletException исключение сервлета.
@@ -109,7 +109,7 @@ public class OfferCreate extends AbstractServlet {
     }
     /**
      * Обрабатывает POST-запросы.
-     * http://bot.net:8080/ch3_carStoreWeb/offer-create/
+     * http://bot.net:8080/ch3_carStoreWebHQL/offer-create/
      * @param req запрос.
      * @param resp ответ.
      * @throws javax.servlet.ServletException исключение сервлета.

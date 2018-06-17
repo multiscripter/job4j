@@ -8,16 +8,16 @@
         </console>
     
         <!-- file Appenders -->
-        <file name="logfileDebugLinux" fileName="./logs/junior.pack3.p1.ch3_carStoreWeb_debug.log">
+        <file name="logfileDebugLinux" fileName="./logs/junior.pack3.p1.ch3_carStoreWebHQL_debug.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
         </file>
-        <file name="logfileDebugWin" fileName="logs\junior.pack3.p1.ch3_carStoreWeb_debug.log">
+        <file name="logfileDebugWin" fileName="logs\junior.pack3.p1.ch3_carStoreWebHQL_debug.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
         </file>
-        <file name="logfileErrorLinux" fileName="./logs/junior.pack3.p1.ch3_carStoreWeb_error.log">
+        <file name="logfileErrorLinux" fileName="./logs/junior.pack3.p1.ch3_carStoreWebHQL_error.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
         </file>
-        <file name="logfileErrorWin" fileName="logs\junior.pack3.p1.ch3_carStoreWeb_error.log">
+        <file name="logfileErrorWin" fileName="logs\junior.pack3.p1.ch3_carStoreWebHQL_error.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
         </file>
     </appenders>
