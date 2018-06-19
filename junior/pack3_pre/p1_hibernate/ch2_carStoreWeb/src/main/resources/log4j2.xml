@@ -8,10 +8,16 @@
         </console>
     
         <!-- file Appenders -->
-        <file name="logfileLinux" fileName="./logs/junior.pack3.p1.ch2_carStoreWeb.log">
+        <file name="logfileDebugLinux" fileName="./logs/junior.pack3.p1.ch2_carStoreWeb_debug.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
         </file>
-        <file name="logfileWin" fileName="logs\junior.pack3.p1.ch2_carStoreWeb.log">
+        <file name="logfileDebugWin" fileName="logs\junior.pack3.p1.ch2_carStoreWeb_debug.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
+        </file>
+        <file name="logfileErrorLinux" fileName="./logs/junior.pack3.p1.ch2_carStoreWeb_error.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
+        </file>
+        <file name="logfileErrorWin" fileName="logs\junior.pack3.p1.ch2_carStoreWeb_error.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
         </file>
     </appenders>
@@ -25,13 +31,13 @@
         <!-- Log SQL statements -->
         <logger name="org.hibernate.SQL" level="debug" additivity="false">
             <!-- <appender-ref ref="console" /> -->
-            <appender-ref ref="logfileLinux" />
-            <appender-ref ref="logfileWin" />
+            <appender-ref ref="logfileDebugLinux" />
+            <appender-ref ref="logfileDebugWin" />
         </logger>
     
         <root level="error">
-            <appender-ref ref="logfileLinux" />
-            <appender-ref ref="logfileWin" />
+            <appender-ref ref="logfileErrorLinux" />
+            <appender-ref ref="logfileErrorWin" />
         </root>
     </loggers>
 </configuration>

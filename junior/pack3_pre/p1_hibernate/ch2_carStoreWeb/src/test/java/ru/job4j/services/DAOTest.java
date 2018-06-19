@@ -217,7 +217,7 @@ public class DAOTest {
      * Тестирует public void delete(T obj) throws PersistenceException.
      * Тип: Founder.
      */
-    @Test
+    @Ignore@Test
     public void testDeleteWithTypeFounder() {
         try {
             Founder founder = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -318,7 +318,7 @@ public class DAOTest {
      * Тестирует private U U process(final Function<Session, U> command).
      * @throws java.lang.Exception исключение.
      */
-    @Ignore@Test(expected = Exception.class)
+    @Test(expected = Exception.class)
     public void testProcess() throws Exception {
         this.dao.create(null);
     }
