@@ -1,13 +1,14 @@
 package ru.job4j.control;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
 /**
  * Класс BombermanTest тестирует работу класса Bomberman.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 4
+ * @version 2018-07-11
  * @since 2017-08-25
  */
 public class BombermanTest {
@@ -25,7 +26,7 @@ public class BombermanTest {
     /**
      * Игра в демо-режиме.
      */
-    @Test
+    @Ignore@Test
     public void checkAutoPlay() {
         this.board.generate(1, 5, 10);
         this.board.start();

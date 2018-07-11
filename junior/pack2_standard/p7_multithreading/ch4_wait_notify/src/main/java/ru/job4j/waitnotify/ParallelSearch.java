@@ -1,4 +1,4 @@
-package ru.job4j.monitsync;
+package ru.job4j.waitnotify;
 
 import java.io.File;
 import java.io.FileInputStream;

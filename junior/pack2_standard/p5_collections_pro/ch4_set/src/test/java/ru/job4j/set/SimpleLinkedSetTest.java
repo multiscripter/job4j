@@ -2,6 +2,7 @@ package ru.job4j.set;
 
 import java.util.Iterator;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -11,7 +12,7 @@ import static org.junit.Assert.assertTrue;
  * Класс SimpleLinkedSetTest тестирует класс SimpleLinkedSet<E>.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-07-11
  * @since 2017-06-03
  */
 public class SimpleLinkedSetTest {
@@ -32,6 +33,7 @@ public class SimpleLinkedSetTest {
     /**
      * Тестирует бинарый поиск. 100000 записей.
      */
+    @Ignore
     @Test
     public void testBinarySearch100K() {
         SimpleLinkedSet<String> sls2 = new SimpleLinkedSet<>();

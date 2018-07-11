@@ -21,6 +21,6 @@
         <module>ch3_decisions</module>
         <module>ch4_cycles</module>
         <module>ch5_arrays</module>
-        <module>ch6_control</module>
+        <module>ch6_control_p1</module>
     </modules>
 </project>

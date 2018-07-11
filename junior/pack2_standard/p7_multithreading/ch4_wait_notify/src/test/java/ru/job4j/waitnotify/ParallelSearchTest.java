@@ -1,5 +1,6 @@
-package ru.job4j.monitsync;
+package ru.job4j.waitnotify;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -8,7 +9,7 @@ import static org.junit.Assert.assertEquals;
  * Класс ParallelSearchTest тестирует класс ParallelSearch.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-07-11
  * @since 2017-07-31
  */
 public class ParallelSearchTest  {
@@ -17,9 +18,14 @@ public class ParallelSearchTest  {
      */
     @Test
     public void testingParallelSearch() {
-        ParallelSearch ps = new ParallelSearch("D:\\web\\", "TPLURI", Arrays.asList(new String[]{"php", "js"}));
-        List<String> result = ps.result();
-        assertEquals(137, result.size());
+        String localFileName = "D:\\web";
+        File dir = new File(localFileName);
+        if (dir.isDirectory()) {
+            ParallelSearch ps = new ParallelSearch(localFileName, "TPLURI", Arrays.asList(new String[]{"php", "js"}));
+
+            List<String> result = ps.result();
+            assertEquals(137, result.size());
+        }
     }
     /**
      * Тестирует исключение PathIsNotDirException.

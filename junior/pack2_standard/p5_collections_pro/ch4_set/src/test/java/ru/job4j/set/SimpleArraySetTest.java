@@ -2,6 +2,7 @@ package ru.job4j.set;
 
 import java.util.Iterator;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -11,7 +12,7 @@ import static org.junit.Assert.assertTrue;
  * Класс SimpleArraySetTest тестирует класс SimpleArraySet<E>.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-07-11
  * @since 2017-06-01
  */
 public class SimpleArraySetTest {
@@ -32,7 +33,7 @@ public class SimpleArraySetTest {
     /**
      * Тестирует линейный поиск. 100000 записей.
      */
-    @Test
+    @Ignore@Test
     public void testLinearSearch100K() {
         SimpleArraySet<String> sas = new SimpleArraySet<>();
         System.out.print("testLinearSearch100K: ");

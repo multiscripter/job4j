@@ -67,14 +67,6 @@ class SimpleArrayList<E> extends SimpleAdstractList<E> implements ISimpleList<E>
         return this.objects.length;
     }
     /**
-     * Проверяет содержится ли указанный объект в множестве.
-     * @param o объект проверки.
-     * @return true если указанный объект содержится в множестве. Иначе false.
-     */
-    public boolean contains(Object o) {
-        
-    }
-    /**
      * Увеличивает размер массива объектов коллекции.
      */
     private void increaseCapacity() {

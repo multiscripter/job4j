@@ -18,5 +18,6 @@
     <modules>
         <module>p1_base_syntax</module>
         <module>p2_oop</module>
+        <module>p5_collections</module>
     </modules>
 </project>
