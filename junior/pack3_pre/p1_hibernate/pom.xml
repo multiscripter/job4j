@@ -24,6 +24,5 @@
         <module>ch2_carStoreWeb</module>
         <module>ch3_carStoreWebHQL</module>
         <module>ch4_carStoreIntegrationTests</module>
-        <module>ch4_test</module>
     </modules>
 </project>
