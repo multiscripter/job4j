@@ -10,4 +10,14 @@
         <artifactId>p8_sql_jdbc</artifactId>
         <version>1.0</version>
     </parent>
+    
+    <dependencies>
+        <!-- https://jsoup.org/ -->
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.3</version>
+        </dependency>
+    </dependencies>
 </project>

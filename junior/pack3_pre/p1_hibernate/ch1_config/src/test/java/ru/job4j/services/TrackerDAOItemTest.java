@@ -26,9 +26,13 @@ import ru.job4j.models.Item;
  */
 public class TrackerDAOItemTest {
     /**
+     * Имя СУБД.
+     */
+    private String db;
+    /**
      * Item DAO.
      */
-    private TrackerDAO<Item> hdb = new TrackerDAO();
+    private TrackerDAO<Item> dao = new TrackerDAO();
     /**
      * Драйвер бд.
      */
@@ -43,10 +47,17 @@ public class TrackerDAOItemTest {
     @Before
     public void beforeTest() {
         try {
-            this.driver = new DBDriver("jdbc:h2:mem:jpack3p1ch1task0", "sa", "");
+            this.db = "H2"; // H2 | PostgreSQL
+            if (db.equals("H2")) {
+                // http://www.h2database.com/html/features.html#in_memory_databases
+                this.driver = new DBDriver("jdbc:h2:./jpack3p1ch1task0;IFEXISTS=TRUE;DB_CLOSE_DELAY=-1", "sa", "");
+            } else if (db.equals("PostgreSQL")) {
+                this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch1task0", "postgres",
+ "postgresrootpass");
+            }
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
-            path = String.format("%s../../src/test/resources/junior.pack3.p1.ch1.task0.test.sql", path);
+            path = String.format("%s../../src/test/resources/junior.pack3.p1.ch1.task0.%s.sql", path, this.db);
             this.driver.executeSqlScript(path);
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
@@ -62,7 +73,7 @@ public class TrackerDAOItemTest {
             String name = "TrackerDAOItemTest";
             String desc = "Текст заявки TrackerDAOItemTest";
             Item expected = new Item(0, 1, name, desc, 0L);
-            int id = this.hdb.create(expected);
+            int id = this.dao.create(expected);
             System.err.println("id: " + id);
             expected.setId(id);
             String query = String.format("select * from \"items\" where id = %d", id);
@@ -84,8 +95,7 @@ public class TrackerDAOItemTest {
         try {
             int id = 1;
             Item item = new Item(id, 0, "Fake", "Fake", 0L);
-            TrackerDAO<Item> hdb = new TrackerDAO();
-            hdb.delete(item); // Удлаяет запросом: delete from items where id=?
+            this.dao.delete(item); // Удлаяет запросом: delete from items where id=?
             LinkedList<HashMap<String, String>> result = this.driver.select(String.format("select user_id from items where id = %d", id));
             assertTrue(result.isEmpty());
         } catch (Exception ex) {
@@ -110,8 +120,7 @@ public class TrackerDAOItemTest {
                 long t = sdf.parse(cur.get("created")).getTime();
                 expected[a++] = new Item(Integer.parseInt(cur.get("id")), Integer.parseInt(cur.get("user_id")), cur.get("name"), cur.get("descr"), t);
             }
-            TrackerDAO<Item> hdb = new TrackerDAO();
-            List<Item> items = hdb.read(new Item());
+            List<Item> items = this.dao.read(new Item());
             assertArrayEquals(expected, items.toArray(new Item[items.size()]));
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
@@ -127,10 +136,9 @@ public class TrackerDAOItemTest {
             String name = "HibernateDBDriverItemTest";
             String desc = "Текст заявки HibernateDBDriverItemTest";
             Item expected = new Item(0, 1, name, desc, 0L);
-            TrackerDAO<Item> hdb = new TrackerDAO();
-            hdb.create(expected);
+            this.dao.create(expected);
             expected.setDesc("Обновлённый текст заявки.");
-            hdb.update(expected);
+            this.dao.update(expected);
             LinkedList<HashMap<String, String>> result = this.driver.select(String.format("select * from items where id = %d", expected.getId()));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:m:s");
             long t = sdf.parse(result.get(0).get("created")).getTime();
@@ -146,6 +154,12 @@ public class TrackerDAOItemTest {
      */
     @After
     public void afterTest() {
-        this.hdb.close();
+        try {
+            this.dao.close();
+            this.driver.close();
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
     }
 }

@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.After;
 import org.junit.Before;
 //import org.junit.Ignore;
 import org.junit.Test;
@@ -39,10 +40,10 @@ public class DBDriverTest {
     public void beforeTest() {
         this.logger = LogManager.getLogger(this.getClass().getName());
         try {
-            this.driver = new DBDriver("jdbc:h2:mem:jpack3p1ch1task0", "sa", "");
+            this.driver = new DBDriver("jdbc:h2:mem:DBDriverTest;DB_CLOSE_DELAY=-1", "sa", "");
             this.path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             this.path = path.replaceFirst("^/(.:/)", "$1");
-            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.sql");
+            this.driver.executeSqlScript(this.path + "../../src/test/resources/junior.pack3.p1.ch1.task0.H2.sql");
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
@@ -129,7 +130,7 @@ public class DBDriverTest {
     @Test(expected = SQLException.class)
     public void testExecuteSqlScriptThrowsSQLException() throws SQLException {
         try {
-            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.test.sql");
+            this.driver.executeSqlScript(this.path + "../../src/test/resources/junior.pack3.p1.ch1.task0.test.sql");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -194,6 +195,18 @@ public class DBDriverTest {
         try {
             int affected = this.driver.update("update \"users\" set login = 'Zorro' where id = 1");
             assertEquals(1, affected);
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
+    }
+    /**
+     * Действия после теста.
+     */
+    @After
+    public void afterTest() {
+        try {
+            this.driver.close();
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();

@@ -73,10 +73,10 @@
                 <version>3.2.0</version>
                 <configuration>
                     <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-                    <packagingExcludes>
-                        WEB-INF/lib/jsoup-1.10.3.jar,
-                        WEB-INF/lib/sqlite-jdbc-3.7.2.jar
-                    </packagingExcludes>
+                    <!--<packagingExcludes>
+                        WEB-INF/lib/some-name.jar,
+                        WEB-INF/lib/another-name.jar
+                    </packagingExcludes>-->
                 </configuration>
             </plugin>
             <!-- Plugun for deploy war to Tomcat. Work with Tomcat 7 and 8.
