@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Before;
-//import org.junit.Ignore;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.config.DBDriver;
 import ru.job4j.models.User;
@@ -54,7 +54,7 @@ public class TrackerRepositoryTest {
     /**
      * Тестирует public List<Tuple> getFields(T obj, HashMap<String, List<String>> params).
      */
-    @Test
+    @Ignore@Test
     public void testGetFields() {
         try {
             LinkedList<HashMap<String, String>> expected = this.driver.select("select id, name from users order by id");
@@ -78,7 +78,7 @@ public class TrackerRepositoryTest {
     /**
      * Тестирует public List<T> getObjects(T obj, HashMap<String, List<String>> params).
      */
-    @Test
+    @Ignore@Test
     public void testGetObjects() {
         try {
             LinkedList<HashMap<String, String>> result = this.driver.select("select * from users where id > 1 order by id");

@@ -13,11 +13,11 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedList;
 /**
- * Класс DBDriver демонстрирует установку соединения с СУБД.
+ * Класс DBDriver используется в тестах для проверки классов, работающих с СУБД.
  *
  * @see https://docs.oracle.com/javase/tutorial/jdbc/basics/connecting.html
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-03-10
+ * @version 2018-06-29
  * @since 2018-03-07
  */
 public class DBDriver {
@@ -91,22 +91,38 @@ public class DBDriver {
         }
     }
     /**
-     * Выполняет sql-скрипт.
+     * Выполняет набор инструкций из sql-скрипта.
      * @param name имя sql-файла.
+     * @return массив, каждое значение которого является количеством строк,
+     * затронутых инструкцией.
      * @throws IOException исключение ввода-вывода.
      * @throws SQLException исключение SQL.
      */
-    public void executeSqlScript(String name) throws IOException, SQLException {
+    public int[] executeSqlScript(String name) throws IOException, SQLException {
+        int[] affectedRowsArr;
         if (this.con == null || this.con.isClosed()) {
 			this.setConnection();
     	}
         byte[] bytes = Files.readAllBytes(Paths.get(name));
         String query = new String(bytes, "UTF-8");
+        String[] commands = query.split(";");
+        con.setAutoCommit(false);
         try (Statement stmt = this.con.createStatement()) {
-            stmt.execute(query);
+            for (String command : commands) {
+                stmt.addBatch(command);
+            }
+            affectedRowsArr = stmt.executeBatch();
+            try {
+                con.commit();
+            } catch (SQLException ex) {
+                con.rollback();
+                throw new SQLException(ex);
+            }
         } catch (SQLException ex) {
             throw new SQLException(ex);
         }
+        con.setAutoCommit(true);
+        return affectedRowsArr;
     }
     /**
      * Проверяет соединение на валидность.

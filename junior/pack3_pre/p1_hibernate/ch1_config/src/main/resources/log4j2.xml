@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.boraji.com/hibernate-5-log4j-2-configuration-example -->
 <configuration>
     <appenders>
-        <file name="logfileLinux" fileName="junior.pack3.p1.ch1.task0.log">
+        <!-- console Appender -->
+        <console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+        </console>
+    
+        <!-- file Appenders -->
+        <file name="logfileDebugLinux" fileName="./logs/junior.pack3.p1.ch1_config_debug.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
         </file>
-        <!--<file name="logfileWin" fileName="junior.pack3.p1.ch1.task0.log">
+        <file name="logfileDebugWin" fileName="logs\junior.pack3.p1.ch1_config_debug.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
-        </file>-->
+        </file>
+        <file name="logfileErrorLinux" fileName="./logs/junior.pack3.p1.ch1_config_error.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
+        </file>
+        <file name="logfileErrorWin" fileName="logs\junior.pack3.p1.ch1_config_error.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
+        </file>
     </appenders>
     
     <loggers>
+        <!-- Log everything in hibernate
+        <logger name="org.hibernate" level="info" additivity="false">
+            <appender-ref ref="console" />
+        </logger> -->
+        
+        <!-- Log everything -->
+        <logger name="org.hibernate" level="debug" additivity="false">
+            <!-- <appender-ref ref="console" /> -->
+            <appender-ref ref="logfileDebugLinux" />
+            <appender-ref ref="logfileDebugWin" />
+        </logger>
+    
         <root level="error">
-            <appender-ref ref="logfileLinux" />
-            <!--<appender-ref ref="logfileWin" />-->
+            <appender-ref ref="logfileErrorLinux" />
+            <appender-ref ref="logfileErrorWin" />
         </root>
     </loggers>
 </configuration>

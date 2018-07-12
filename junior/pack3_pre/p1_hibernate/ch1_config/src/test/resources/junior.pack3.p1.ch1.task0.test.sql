@@ -3,7 +3,7 @@ drop table if exists "items";
 drop table if exists "users";
 
 create table "users" (
-    id serial primary key,
+    id IDENTITY primary key,
     name varchar(64) not null,
     login varchar(64) not null,
     email varchar(128) not null unique,
@@ -15,7 +15,7 @@ insert into "users" (name, login, email, created, pass) values ('Навальн�
 insert into "users" (name, login, email, created, pass) values ('Жирик', 'zhirik', 'zhirik@ldpr.ru', '1976-06-04', 'a4a4ff13a635bd92d6c69ada92ac2a90');
 
 create table "items" (
-    id serial primary key,
+    id IDENTITY primary key,
     user_id int not null,
 	name varchar (128) not null,
 	descr text not null,
@@ -26,7 +26,7 @@ insert into "items" (name, user_id, descr, created) values ('Тестовая з
 insert into "items" (name, user_id, descr, created) values ('Тестовая заявка 3', 3, 'Текст тестовой заявки 3', '2018-03-03 23:39:00');
 
 create table "comments" (
-    id serial primary key,
+    id IDENTITY primary key,
 	item_id int not null,
     user_id int not null,
 	comment text not null,

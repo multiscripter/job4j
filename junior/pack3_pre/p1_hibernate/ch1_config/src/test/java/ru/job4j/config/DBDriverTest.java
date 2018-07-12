@@ -2,7 +2,6 @@ package ru.job4j.config;
 
 import java.io.IOException;
 import java.io.File;
-import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -11,12 +10,13 @@ import org.apache.logging.log4j.LogManager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
+//import org.junit.Ignore;
 import org.junit.Test;
 /**
  * Класс DBDriverTest тестирует класс DBDriver.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-03-09
+ * @version 2018-07-11
  * @since 2018-03-09
  */
 public class DBDriverTest {
@@ -39,10 +39,12 @@ public class DBDriverTest {
     public void beforeTest() {
         this.logger = LogManager.getLogger(this.getClass().getName());
         try {
-            this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch1task0", "postgres", "postgresrootpass");
+            this.driver = new DBDriver("jdbc:h2:mem:jpack3p1ch1task0", "sa", "");
             this.path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             this.path = path.replaceFirst("^/(.:/)", "$1");
-        } catch (URISyntaxException ex) {
+            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.sql");
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
@@ -52,10 +54,10 @@ public class DBDriverTest {
     @Test
     public void testDelete() {
         try {
-            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.sql");
-            int affected = this.driver.delete("delete from users");
+            int affected = this.driver.delete("delete from \"users\"");
             assertEquals(3, affected);
         } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
@@ -67,9 +69,10 @@ public class DBDriverTest {
     public void testDeleteConnectionEstablished() {
         try {
             this.driver.setConnection();
-            int affected = this.driver.delete("delete from users");
-            assertEquals(0, affected);
+            int affected = this.driver.delete("delete from \"users\"");
+            assertEquals(3, affected);
         } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
@@ -80,28 +83,22 @@ public class DBDriverTest {
     @Test
     public void testDeleteConnectionClosed() {
         try {
-            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.sql");
             this.driver.close();
-            int affected = this.driver.delete("delete from users");
+            int affected = this.driver.delete("delete from \"users\"");
             assertEquals(3, affected);
         } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
     /**
      * Тестирует public int delete(String query) throws SQLException.
      * Выброс SQLException.
+     * @throws java.sql.SQLException исключение SQL.
      */
-    @Test
-    public void testDeleteThrowsSQLException() {
-        SQLException e = null;
-        try {
-            this.driver.delete("delete from zzzz");
-        } catch (SQLException ex) {
-            e = ex;
-        } finally {
-            assertEquals(e.getClass(), SQLException.class);
-        }
+    @Test(expected = SQLException.class)
+    public void testDeleteThrowsSQLException() throws SQLException {
+        this.driver.delete("delete from zzzz");
     }
     /**
      * Тестирует public void executeSql(String query) throws SQLException.
@@ -109,40 +106,30 @@ public class DBDriverTest {
     @Test
     public void testExecuteSql() {
         try {
-            this.driver.executeSql("select * from users");
+            this.driver.executeSql("select * from \"users\"");
         } catch (SQLException ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
     /**
      * Тестирует public void executeSql(String query) throws SQLException.
+     * Выброс SQLException.
+     * @throws java.sql.SQLException исключение SQL.
      */
-    @Test
-    public void testExecuteSqlThrowsSQLException() {
-        SQLException e = null;
-        try {
-            this.driver.executeSql("select * from test_table");
-        } catch (SQLException ex) {
-            e = ex;
-        } finally {
-            assertEquals(e.getClass(), SQLException.class);
-        }
+    @Test(expected = SQLException.class)
+    public void testExecuteSqlThrowsSQLException() throws SQLException {
+        this.driver.executeSql("select * from test_table");
     }
     /**
      * Тестирует public void executeSqlScript(String name) throws IOException, SQLException.
      * Выброс SQLException.
+     * @throws java.sql.SQLException исключение SQL.
      */
-    @Test
-    public void testExecuteSqlScriptThrowsSQLException() {
+    @Test(expected = SQLException.class)
+    public void testExecuteSqlScriptThrowsSQLException() throws SQLException {
         try {
-            SQLException e = null;
-            try {
-                this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.test.sql");
-            } catch (SQLException ex) {
-                e = ex;
-            } finally {
-                assertEquals(e.getClass(), SQLException.class);
-            }
+            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.test.sql");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -153,12 +140,13 @@ public class DBDriverTest {
     @Test
     public void testIsValid() {
         try {
-            this.driver.setPass("postgresrootpass");
-            this.driver.setUrl("jdbc:postgresql://localhost:5432/jpack3p1ch1task0");
-            this.driver.setUser("postgres");
+            this.driver.setPass("");
+            this.driver.setUrl("jdbc:h2:mem:jpack3p1ch1task0");
+            this.driver.setUser("sa");
             this.driver.setConnection();
             assertTrue(this.driver.isValid());
         } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
@@ -168,27 +156,21 @@ public class DBDriverTest {
     @Test
     public void testSelect() {
         try {
-            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.sql");
-            LinkedList<HashMap<String, String>> result = this.driver.select("select * from users");
+            LinkedList<HashMap<String, String>> result = this.driver.select("select * from \"users\"");
             assertTrue(result.size() > 0);
         } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
     /**
      * Тестирует public LinkedList<HashMap<String, String>> select(String query) throws SQLException.
      * Выброс SQLException.
+     * @throws java.sql.SQLException исключение SQL.
      */
-    @Test
-    public void testSelectThrowsSQLException() {
-        SQLException e = null;
-        try {
-            this.driver.select("select * from test_table");
-        } catch (SQLException ex) {
-            e = ex;
-        } finally {
-            assertEquals(e.getClass(), SQLException.class);
-        }
+    @Test(expected = SQLException.class)
+    public void testSelectThrowsSQLException() throws SQLException {
+        this.driver.select("select * from test_table");
     }
     /**
      * Тестирует public void setConnection() throws SQLException.
@@ -200,6 +182,7 @@ public class DBDriverTest {
             this.driver.setConnection();
             assertTrue(this.driver.isValid());
         } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
@@ -209,10 +192,10 @@ public class DBDriverTest {
     @Test
     public void testUpdate() {
         try {
-            this.driver.executeSqlScript(this.path + "junior.pack3.p1.ch1.task0.sql");
-            int affected = this.driver.update("update users set login = 'Zorro' where id = 1");
+            int affected = this.driver.update("update \"users\" set login = 'Zorro' where id = 1");
             assertEquals(1, affected);
         } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
