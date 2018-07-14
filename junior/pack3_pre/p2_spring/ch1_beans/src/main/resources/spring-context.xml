@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="storageMemory" class="ru.job4j.services.StorageMemory" />
+    <bean id="storageJDBC" class="ru.job4j.services.StorageMemory" />
+    <bean id="storageFile" class="ru.job4j.services.StorageFile" />
+
+    <!-- Создание бина с помощью конструктора -->
+    <bean id="userStorageMemory" class="ru.job4j.services.UserStorage">
+        <constructor-arg name="storage" ref="storageMemory"></constructor-arg>
+    </bean>
+
+    <!-- Создание бина с помощью статического фабричного метода -->
+    <bean id="userStorageJDBC" class="ru.job4j.services.StorageJDBC" factory-method="getInstance" />
+
+    <!-- Создание бина с помощью фабричного метода экземпляра -->
+    <bean id="userStorageFactory" class="ru.job4j.services.UserStorageFactory" />
+    <bean id="userStorageFile" factory-bean="userStorageFactory" factory-method="getUserStorageFile" />
+
+    <!--<context:component-scan base-package="ru.job4j" />-->
+</beans>
