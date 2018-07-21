@@ -77,7 +77,7 @@ public class Item {
             return false;
         }
         Item item = (Item) obj;
-        return !(this.id != item.id || this.userId != item.userId || (this.name == null ? item.name != null : !this.name.equals(item.name)) || (this.desc == null ? item.desc != null : !this.desc.equals(item.desc)) || (this.created == null ? this.created != null : !this.created.equals(item.created)));
+        return !(this.id != item.getId() || this.userId != item.getUserId() || (this.name == null ? item.getName() != null : !this.name.equals(item.getName())) || (this.desc == null ? item.getDesc() != null : !this.desc.equals(item.getDesc())) || (this.created == null ? item.getCreated() != null : !this.created.getTime().equals(item.getCreated())));
     }
     /**
      * Получет дата заявки.

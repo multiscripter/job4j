@@ -6,7 +6,7 @@
     <session-factory>
         <!-- Database connection settings -->
         <!-- http://www.h2database.com/html/features.html#in_memory_databases -->
-        <property name="hibernate.connection.url">jdbc:h2:mem:jpack3p1ch1task0;DB_CLOSE_DELAY=-1</property>
+        <property name="hibernate.connection.url">jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</property>
         <property name="hibernate.connection.driver_class">org.h2.Driver</property>
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.connection.password"></property>

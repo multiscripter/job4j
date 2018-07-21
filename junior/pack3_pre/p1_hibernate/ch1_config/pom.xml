@@ -21,12 +21,12 @@
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
-        <!-- HyperSQL Database @see http://hsqldb.org/ -->
+        <!-- HyperSQL Database @see http://hsqldb.org/
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>2.4.1</version>
             <scope>test</scope>
-        </dependency>
+        </dependency> -->
     </dependencies>
 </project>

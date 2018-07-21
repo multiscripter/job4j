@@ -13,9 +13,9 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.After;
-import org.junit.AfterClass;
+//import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
+//import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.config.DBDriver;
@@ -51,15 +51,15 @@ public class TrackerDAOItemTest {
     /**
      * Действия перед тестом.
      */
-    @BeforeClass
-    public static void beforeAllTests() {
+    @Before
+    public void beforeAllTests() {
         System.err.println("beforeAllTests()");
         try {
             if (db.equals("H2")) {
                 // http://www.h2database.com/html/features.html#in_memory_databases
                 // В H2 алиасы по умолчанию могут быть выкючены.
                 // http://www.h2database.com/html/faq.html#column_names_incorrect
-                driver = new DBDriver("jdbc:h2:mem:jpack3p1ch1task0;DB_CLOSE_DELAY=-1;IFEXISTS=TRUE", "sa", "");
+                driver = new DBDriver("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;IFEXISTS=TRUE", "sa", "");
             } else if (db.equals("HyperSQL")) {
                 driver = new DBDriver("jdbc:hsqldb:mem:jpack3p1ch1task0;get_column_name=false;ifexists=true", "SA", "");
             } else if (db.equals("PostgreSQL")) {
@@ -69,7 +69,7 @@ public class TrackerDAOItemTest {
             path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
             path = String.format("%s../../src/test/resources/junior.pack3.p1.ch1.task0.%s.sql", path, db);
-            dao = new TrackerDAO(String.format("hibernate.%s.cfg.xml", db));
+            dao = new TrackerDAO();
         } catch (Exception ex) {
             logger.error("ERROR", ex);
             ex.printStackTrace();
@@ -77,7 +77,7 @@ public class TrackerDAOItemTest {
     }
     /**
      * Действия перед тестом.
-     */
+     *
     @Before
     public void beforeEachTest() {
         System.err.println("beforeEachTest()");
@@ -87,7 +87,7 @@ public class TrackerDAOItemTest {
             logger.error("ERROR", ex);
             ex.printStackTrace();
         }
-    }
+    }*/
     /**
      * Тестирует public void create(E obj).
      */
@@ -100,26 +100,27 @@ public class TrackerDAOItemTest {
         //    System.err.println("key: " + name + ", value: " + props.get(name));
         //}
         try {
-            String q = String.format("select count(*) as count from \"items\"");
-            List<HashMap<String, String>> r = driver.select(q);
-            int count = Integer.parseInt(r.get(0).get("COUNT"));
-            System.err.println("+++ driver. rows: " + count);
+            //String q = String.format("select count(*) as count from \"items\"");
+            //List<HashMap<String, String>> r = driver.select(q);
+            //int count = Integer.parseInt(r.get(0).get("COUNT"));
+            //System.err.println("+++ driver. rows: " + count);
             List<Item> items = dao.read(new Item());
             System.err.println("+++ dao. rows: " + items.size());
             String name = "TrackerDAOItemTest";
             String desc = "Текст заявки TrackerDAOItemTest";
-            Item expected = new Item(0, 1, name, desc, 0L);
+            Item expected = new Item(4, 1, name, desc, 0L);
             int id = dao.create(expected);
-            r = driver.select(q);
-            count = Integer.parseInt(r.get(0).get("COUNT"));
-            System.err.println("+++ driver. rows: " + count);
+            //r = driver.select(q);
+            //count = Integer.parseInt(r.get(0).get("COUNT"));
+            //System.err.println("+++ driver. rows: " + count);
             items = dao.read(new Item());
             System.err.println("+++ dao. rows: " + items.size());
             System.err.println("id: " + id);
             expected.setId(id);
-            String query = String.format("select * from \"items\" where id = %d", id);
+            String query = String.format("select * from items where id = %d", id);
             List<HashMap<String, String>> result = driver.select(query);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:m:s");
+            //result.forEach(System.err::println);
             long t = sdf.parse(result.get(0).get("CREATED")).getTime();
             Item actual = new Item(Integer.parseInt(result.get(0).get("ID")), Integer.parseInt(result.get(0).get("USER_ID")), result.get(0).get("NAME"), result.get(0).get("DESCR"), t);
             assertEquals(expected, actual);
@@ -147,7 +148,7 @@ public class TrackerDAOItemTest {
     /**
      * Тестирует public List<E> read(E obj).
      */
-    @Ignore@Test
+    @Test
     public void testRead() {
         try {
             LinkedList<HashMap<String, String>> result = driver.select("select * from items order by id");
@@ -158,8 +159,8 @@ public class TrackerDAOItemTest {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:m:s");
             while (iter.hasNext()) {
                 cur = iter.next();
-                long t = sdf.parse(cur.get("created")).getTime();
-                expected[a++] = new Item(Integer.parseInt(cur.get("id")), Integer.parseInt(cur.get("user_id")), cur.get("name"), cur.get("descr"), t);
+                long t = sdf.parse(cur.get("CREATED")).getTime();
+                expected[a++] = new Item(Integer.parseInt(cur.get("ID")), Integer.parseInt(cur.get("USER_ID")), cur.get("NAME"), cur.get("DESCR"), t);
             }
             List<Item> items = dao.read(new Item());
             assertArrayEquals(expected, items.toArray(new Item[items.size()]));
@@ -205,16 +206,16 @@ public class TrackerDAOItemTest {
     }
     /**
      * Действия после всех тестов.
-     */
+     *
     @AfterClass
     public static void afterAllTest() {
         System.err.println("afterAllTest()");
         try {
-            dao.close();
-            driver.close();
+            //dao.close();
+            //driver.close();
         } catch (Exception ex) {
             logger.error("ERROR", ex);
             ex.printStackTrace();
         }
-    }
+    }*/
 }
