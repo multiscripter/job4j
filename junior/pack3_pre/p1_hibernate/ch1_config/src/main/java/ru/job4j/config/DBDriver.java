@@ -165,6 +165,7 @@ public class DBDriver {
      */
     public void setConnection() throws SQLException {
         if (this.con == null || this.con.isClosed()) {
+            System.err.println("+++ DBDriver.setConnection()");
             this.con = DriverManager.getConnection(this.url, this.user, this.pass);
         }
     }

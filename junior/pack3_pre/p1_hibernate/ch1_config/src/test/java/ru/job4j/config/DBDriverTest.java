@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
-//import org.junit.Ignore;
+import org.junit.Ignore;
 import org.junit.Test;
 /**
  * Класс DBDriverTest тестирует класс DBDriver.
@@ -36,7 +36,7 @@ public class DBDriverTest {
     /**
      * Действия перед тестом.
      */
-    @Before
+    @Ignore@Before
     public void beforeTest() {
         this.logger = LogManager.getLogger(this.getClass().getName());
         try {
@@ -52,7 +52,7 @@ public class DBDriverTest {
     /**
      * Тестирует public int delete(String query) throws SQLException.
      */
-    @Test
+    @Ignore@Test
     public void testDelete() {
         try {
             int affected = this.driver.delete("delete from \"users\"");
@@ -66,7 +66,7 @@ public class DBDriverTest {
      * Тестирует public int delete(String query) throws SQLException.
      * Явная установка соединения.
      */
-    @Test
+    @Ignore@Test
     public void testDeleteConnectionEstablished() {
         try {
             this.driver.setConnection();
@@ -81,7 +81,7 @@ public class DBDriverTest {
      * Тестирует public int delete(String query) throws SQLException.
      * Соединение закрыто.
      */
-    @Test
+    @Ignore@Test
     public void testDeleteConnectionClosed() {
         try {
             this.driver.close();
@@ -97,14 +97,14 @@ public class DBDriverTest {
      * Выброс SQLException.
      * @throws java.sql.SQLException исключение SQL.
      */
-    @Test(expected = SQLException.class)
+    @Ignore@Test(expected = SQLException.class)
     public void testDeleteThrowsSQLException() throws SQLException {
         this.driver.delete("delete from zzzz");
     }
     /**
      * Тестирует public void executeSql(String query) throws SQLException.
      */
-    @Test
+    @Ignore@Test
     public void testExecuteSql() {
         try {
             this.driver.executeSql("select * from \"users\"");
@@ -118,7 +118,7 @@ public class DBDriverTest {
      * Выброс SQLException.
      * @throws java.sql.SQLException исключение SQL.
      */
-    @Test(expected = SQLException.class)
+    @Ignore@Test(expected = SQLException.class)
     public void testExecuteSqlThrowsSQLException() throws SQLException {
         this.driver.executeSql("select * from test_table");
     }
@@ -127,7 +127,7 @@ public class DBDriverTest {
      * Выброс SQLException.
      * @throws java.sql.SQLException исключение SQL.
      */
-    @Test(expected = SQLException.class)
+    @Ignore@Test(expected = SQLException.class)
     public void testExecuteSqlScriptThrowsSQLException() throws SQLException {
         try {
             this.driver.executeSqlScript(this.path + "../../src/test/resources/junior.pack3.p1.ch1.task0.test.sql");
@@ -138,7 +138,7 @@ public class DBDriverTest {
     /**
      * Тестирует public boolean isValid() throws SQLException.
      */
-    @Test
+    @Ignore@Test
     public void testIsValid() {
         try {
             this.driver.setPass("");
@@ -154,7 +154,7 @@ public class DBDriverTest {
     /**
      * Тестирует public LinkedList<HashMap<String, String>> select(String query) throws SQLException.
      */
-    @Test
+    @Ignore@Test
     public void testSelect() {
         try {
             LinkedList<HashMap<String, String>> result = this.driver.select("select * from \"users\"");
@@ -169,14 +169,14 @@ public class DBDriverTest {
      * Выброс SQLException.
      * @throws java.sql.SQLException исключение SQL.
      */
-    @Test(expected = SQLException.class)
+    @Ignore@Test(expected = SQLException.class)
     public void testSelectThrowsSQLException() throws SQLException {
         this.driver.select("select * from test_table");
     }
     /**
      * Тестирует public void setConnection() throws SQLException.
      */
-    @Test
+    @Ignore@Test
     public void testSetConnection() {
         try {
             this.driver.close();
@@ -190,7 +190,7 @@ public class DBDriverTest {
     /**
      * Тестирует public int update(String query) throws SQLException.
      */
-    @Test
+    @Ignore@Test
     public void testUpdate() {
         try {
             int affected = this.driver.update("update \"users\" set login = 'Zorro' where id = 1");
@@ -203,7 +203,7 @@ public class DBDriverTest {
     /**
      * Действия после теста.
      */
-    @After
+    @Ignore@After
     public void afterTest() {
         try {
             this.driver.close();

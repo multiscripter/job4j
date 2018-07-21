@@ -1,6 +1,7 @@
 package ru.job4j.services;
 
 import java.util.List;
+import java.util.Map;
 import javax.persistence.PersistenceException;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +13,7 @@ import ru.job4j.utils.HibernateSessionFactory;
  * Класс TrackerDAO реализует слой DAO.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-07-11
+ * @version 2018-07-21
  * @since 2018-03-05
  * @param <T> параметризированный тип.
  */
@@ -20,11 +21,31 @@ public class TrackerDAO<T> {
     /**
      * Фабрика.
      */
-    private final SessionFactory factory = HibernateSessionFactory.get();
+    private final SessionFactory factory;
     /**
      * Логгер.
      */
     private final Logger logger = LogManager.getLogger(this.getClass().getSimpleName());
+    /**
+     * Получает.
+     * @return карта со свойствами SessionFactory.
+     */
+    public Map<String, Object> get() {
+        return this.factory.getProperties();
+    }
+    /**
+     * Конструктор без параметров.
+     */
+    public TrackerDAO() {
+        this.factory = HibernateSessionFactory.get();
+    }
+    /**
+     * Конструктор.
+     * @param localFileName имя файла конфигурации.
+     */
+    public TrackerDAO(String localFileName) {
+        this.factory = HibernateSessionFactory.get(localFileName);
+    }
     /**
      * Закрывает фабрику.
      */
