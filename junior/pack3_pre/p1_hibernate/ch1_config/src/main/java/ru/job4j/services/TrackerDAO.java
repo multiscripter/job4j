@@ -8,12 +8,11 @@ import org.apache.logging.log4j.LogManager;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.job4j.utils.HibernateSessionFactory;
-
 /**
  * Класс TrackerDAO реализует слой DAO.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-07-21
+ * @version 2018-07-22
  * @since 2018-03-05
  * @param <T> параметризированный тип.
  */
@@ -30,7 +29,7 @@ public class TrackerDAO<T> {
      * Получает.
      * @return карта со свойствами SessionFactory.
      */
-    public Map<String, Object> get() {
+    public Map<String, Object> getProperties() {
         return this.factory.getProperties();
     }
     /**
@@ -76,7 +75,7 @@ public class TrackerDAO<T> {
      * @return идентификатор для save() и null для остальных операций.
      * @throws javax.persistence.PersistenceException исключение JPA.
      */
-    private int process(T obj, String action) throws PersistenceException {
+    private Integer process(T obj, String action) throws PersistenceException {
         Integer result = null;
         try (Session session = this.factory.openSession()) {
             session.beginTransaction();

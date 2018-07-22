@@ -9,7 +9,7 @@ import java.util.SimpleTimeZone;
  * Class Item реализует сущность Заявка.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-03-10
+ * @version 2018-07-21
  * @since 2017-04-18
  */
 public class Item {

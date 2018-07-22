@@ -149,7 +149,7 @@ public class DBDriver {
             	while (rs.next()) {
             		HashMap<String, String> entry = new HashMap<>();
             		for (int a = 1; a < rsmd.getColumnCount() + 1; a++) {
-	            		entry.put(rsmd.getColumnName(a), rs.getString(a));
+	            		entry.put(rsmd.getColumnName(a).toLowerCase(), rs.getString(a));
 	            	}
             		rl.add(entry);
             	}
@@ -165,7 +165,6 @@ public class DBDriver {
      */
     public void setConnection() throws SQLException {
         if (this.con == null || this.con.isClosed()) {
-            System.err.println("+++ DBDriver.setConnection()");
             this.con = DriverManager.getConnection(this.url, this.user, this.pass);
         }
     }

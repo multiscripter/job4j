@@ -4,21 +4,71 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
-    <persistence-unit name="TrackerRepository">
+
+    <!-- H2 -->
+    <persistence-unit name="TrackerRepository.H2">
         <description>
-            Persistence unit for Hibernate TrackerRepository
+            Persistence unit for Hibernate TrackerRepository DBMS H2
         </description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>ru.job4j.services.TrackerRepository</class>
         <properties>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1" />
             <property name="javax.persistence.jdbc.driver"
-                      value="org.postgresql.Driver" />
+                      value="org.h2.Driver" />
+            <property name="javax.persistence.jdbc.user"
+                      value="sa" />
+            <property name="javax.persistence.jdbc.password"
+                      value="" />
+            <property name="org.hibernate.dialect"
+                      value="org.hibernate.dialect.H2Dialect" />
+            <property name="hibernate.show_sql"
+                      value="true" />
+        </properties>
+    </persistence-unit>
+
+    <!-- HyperSQL -->
+    <persistence-unit name="TrackerRepository.HyperSQL">
+        <description>
+            Persistence unit for Hibernate TrackerRepository DBMS HyperSQL
+        </description>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>ru.job4j.services.TrackerRepository</class>
+        <properties>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:hsqldb:mem:jpack3p1ch1task0;get_column_name=false" />
+            <property name="javax.persistence.jdbc.driver"
+                      value="org.hsqldb.jdbc.JDBCDriver" />
+            <property name="javax.persistence.jdbc.user"
+                      value="SA" />
+            <property name="javax.persistence.jdbc.password"
+                      value="" />
+            <property name="org.hibernate.dialect"
+                      value="org.hibernate.dialect.HSQLDialect" />
+            <property name="hibernate.show_sql"
+                      value="true" />
+        </properties>
+    </persistence-unit>
+
+    <!-- PostgreSQL -->
+    <persistence-unit name="TrackerRepository.PostgreSQL">
+        <description>
+            Persistence unit for Hibernate TrackerRepository DBMS PostgreSQL
+        </description>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>ru.job4j.services.TrackerRepository</class>
+        <properties>
             <property name="javax.persistence.jdbc.url"
                       value="jdbc:postgresql://localhost:5432/jpack3p1ch1task0" />
+            <property name="javax.persistence.jdbc.driver"
+                      value="org.postgresql.Driver" />
             <property name="javax.persistence.jdbc.user"
                       value="postgres" />
             <property name="javax.persistence.jdbc.password"
                       value="postgresrootpass" />
+            <property name="org.hibernate.dialect"
+                      value="org.hibernate.dialect.PostgreSQL95Dialect" />
             <property name="hibernate.show_sql"
                       value="true" />
         </properties>

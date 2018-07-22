@@ -24,7 +24,6 @@ public class HibernateSessionFactory {
      * Строит фабрику сессий с файлом конфигурации по умолчанию (hibernate.cfg.xml).
      */
     private static void buildSessionFactory() {
-        System.err.println("+++ HibernateSessionFactory.buildSessionFactory()");
         try {
             FACTORY.put("hibernate.cfg.xml", new Configuration().configure().buildSessionFactory());
         } catch (Throwable ex) {
@@ -36,7 +35,6 @@ public class HibernateSessionFactory {
      * @param localFileName имя файла конфигурации.
      */
     private static void buildSessionFactory(String localFileName) {
-        System.err.println("+++ HibernateSessionFactory.buildSessionFactory(localFileName)");
         try {
             FACTORY.put(localFileName, new Configuration().configure(localFileName).buildSessionFactory());
         } catch (Throwable ex) {

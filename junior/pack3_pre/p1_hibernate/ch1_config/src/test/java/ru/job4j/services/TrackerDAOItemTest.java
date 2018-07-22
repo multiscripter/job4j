@@ -6,17 +6,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-//import java.util.Map;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import org.junit.After;
-//import org.junit.AfterClass;
+import org.junit.AfterClass;
 import org.junit.Before;
-//import org.junit.BeforeClass;
-import org.junit.Ignore;
+import org.junit.BeforeClass;
+//import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.config.DBDriver;
 import ru.job4j.models.Item;
@@ -24,7 +22,7 @@ import ru.job4j.models.Item;
  * Класс TrackerDAOItemTest тестирует класс TrackerDAO на типе Item.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-07-21
+ * @version 2018-07-22
  * @since 2018-03-08
  */
 public class TrackerDAOItemTest {
@@ -51,9 +49,8 @@ public class TrackerDAOItemTest {
     /**
      * Действия перед тестом.
      */
-    @Before
-    public void beforeAllTests() {
-        System.err.println("beforeAllTests()");
+    @BeforeClass
+    public static void beforeAllTests() {
         try {
             if (db.equals("H2")) {
                 // http://www.h2database.com/html/features.html#in_memory_databases
@@ -69,7 +66,7 @@ public class TrackerDAOItemTest {
             path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
             path = String.format("%s../../src/test/resources/junior.pack3.p1.ch1.task0.%s.sql", path, db);
-            dao = new TrackerDAO();
+            dao = new TrackerDAO(String.format("hibernate.%s.cfg.xml", db));
         } catch (Exception ex) {
             logger.error("ERROR", ex);
             ex.printStackTrace();
@@ -77,53 +74,35 @@ public class TrackerDAOItemTest {
     }
     /**
      * Действия перед тестом.
-     *
+     */
     @Before
     public void beforeEachTest() {
-        System.err.println("beforeEachTest()");
         try {
             driver.executeSqlScript(path);
         } catch (Exception ex) {
             logger.error("ERROR", ex);
             ex.printStackTrace();
         }
-    }*/
+    }
     /**
      * Тестирует public void create(E obj).
      */
     @Test
     public void testCreate() {
-        System.err.println("testCreate()");
-        //key: hibernate.connection.url
-        //Map<String, Object> props = dao.get();
-        //for (String name : props.keySet()) {
-        //    System.err.println("key: " + name + ", value: " + props.get(name));
-        //}
         try {
-            //String q = String.format("select count(*) as count from \"items\"");
-            //List<HashMap<String, String>> r = driver.select(q);
-            //int count = Integer.parseInt(r.get(0).get("COUNT"));
-            //System.err.println("+++ driver. rows: " + count);
-            List<Item> items = dao.read(new Item());
-            System.err.println("+++ dao. rows: " + items.size());
             String name = "TrackerDAOItemTest";
             String desc = "Текст заявки TrackerDAOItemTest";
             Item expected = new Item(4, 1, name, desc, 0L);
             int id = dao.create(expected);
-            //r = driver.select(q);
-            //count = Integer.parseInt(r.get(0).get("COUNT"));
-            //System.err.println("+++ driver. rows: " + count);
-            items = dao.read(new Item());
-            System.err.println("+++ dao. rows: " + items.size());
-            System.err.println("id: " + id);
             expected.setId(id);
             String query = String.format("select * from items where id = %d", id);
             List<HashMap<String, String>> result = driver.select(query);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:m:s");
-            //result.forEach(System.err::println);
-            long t = sdf.parse(result.get(0).get("CREATED")).getTime();
-            Item actual = new Item(Integer.parseInt(result.get(0).get("ID")), Integer.parseInt(result.get(0).get("USER_ID")), result.get(0).get("NAME"), result.get(0).get("DESCR"), t);
+            long t = sdf.parse(result.get(0).get("created")).getTime();
+            Item actual = new Item(Integer.parseInt(result.get(0).get("id")), Integer.parseInt(result.get(0).get("user_id")), result.get(0).get("name"), result.get(0).get("descr"), t);
             assertEquals(expected, actual);
+            //LinkedList<HashMap<String, String>> result = driver.select(String.format("select * from items"));
+            //result.forEach(System.err::println);
         } catch (Exception ex) {
             logger.error("ERROR", ex);
             ex.printStackTrace();
@@ -132,7 +111,7 @@ public class TrackerDAOItemTest {
     /**
      * Тестирует public void delete(E obj).
      */
-    @Ignore@Test
+    @Test
     public void testDelete() {
         try {
             int id = 1;
@@ -159,8 +138,8 @@ public class TrackerDAOItemTest {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd H:m:s");
             while (iter.hasNext()) {
                 cur = iter.next();
-                long t = sdf.parse(cur.get("CREATED")).getTime();
-                expected[a++] = new Item(Integer.parseInt(cur.get("ID")), Integer.parseInt(cur.get("USER_ID")), cur.get("NAME"), cur.get("DESCR"), t);
+                long t = sdf.parse(cur.get("created")).getTime();
+                expected[a++] = new Item(Integer.parseInt(cur.get("id")), Integer.parseInt(cur.get("user_id")), cur.get("name"), cur.get("descr"), t);
             }
             List<Item> items = dao.read(new Item());
             assertArrayEquals(expected, items.toArray(new Item[items.size()]));
@@ -172,7 +151,7 @@ public class TrackerDAOItemTest {
     /**
      * Тестирует public void update(E obj).
      */
-    @Ignore@Test
+    @Test
     public void testUpdate() {
         try {
             String name = "HibernateDBDriverItemTest";
@@ -192,30 +171,15 @@ public class TrackerDAOItemTest {
         }
     }
     /**
-     * Действия после теста.
-     */
-    @After
-    public void afterEachTest() {
-        /*System.err.println("afterEachTest()");
-        try {
-            dao.close();
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }*/
-    }
-    /**
      * Действия после всех тестов.
-     *
+     */
     @AfterClass
     public static void afterAllTest() {
-        System.err.println("afterAllTest()");
         try {
-            //dao.close();
-            //driver.close();
+            driver.close();
         } catch (Exception ex) {
             logger.error("ERROR", ex);
             ex.printStackTrace();
         }
-    }*/
+    }
 }

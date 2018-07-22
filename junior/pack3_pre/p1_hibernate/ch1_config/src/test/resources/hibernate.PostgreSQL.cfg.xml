@@ -10,7 +10,7 @@
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">postgresrootpass</property>
         <!-- SQL dialect -->
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
         <!-- JDBC connection pool (use the built-in) -->
         <property name="hibernate.connection.pool_size">1</property>
         <!-- Enable Hibernate's automatic session context management -->

@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
  * Класс TrackerRepository реализует шаблон Репозиторий.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-03-16
+ * @version 2018-07-22
  * @since 2018-03-10
  * @param <T> параметризированный тип.
  */
@@ -25,11 +25,18 @@ public class TrackerRepository<T> {
     /**
      * Фабрика.
      */
-    private final EntityManager manager = Persistence.createEntityManagerFactory(this.getClass().getSimpleName()).createEntityManager();
+    private final EntityManager manager;
     /**
      * Логгер.
      */
     private final Logger logger = LogManager.getLogger(this.getClass().getSimpleName());
+    /**
+     * Конструктор.
+     * @param name динамически устанавливаемая часть имени persistence-unit.
+     */
+    public TrackerRepository(String name) {
+        this.manager = Persistence.createEntityManagerFactory(String.format("%s.%s", this.getClass().getSimpleName(), name)).createEntityManager();
+    }
     /**
      * Получает список полей по заданному критерию.
      * @param obj объект.
