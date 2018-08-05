@@ -16,6 +16,7 @@
 
     <modules>
         <module>ch1_beans</module>
+        <module>ch1_storages</module>
     </modules>
     
     <dependencies>
