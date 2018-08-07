@@ -96,7 +96,6 @@ class Menu {
                 sb.append(LS);
                 System.out.println(sb.toString());
             } catch (Exception ex) {
-                System.out.println("Error. User not added.");
                 ex.printStackTrace();
             }
         }

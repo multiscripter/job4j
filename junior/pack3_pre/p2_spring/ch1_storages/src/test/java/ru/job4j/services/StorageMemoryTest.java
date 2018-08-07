@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  * Класс StorageMemoryTest тестирует класс Storage с хранением данных в RAM.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-08-05
+ * @version 2018-08-07
  * @since 2018-07-19
  */
 public class StorageMemoryTest {
@@ -67,7 +67,7 @@ public class StorageMemoryTest {
             Storage storage = new Storage();
             User expected = new User(0, "MemoryUser1");
             storage.add(expected);
-            String query = String.format("select user.id as id, user.name as name from users where id = %d", expected.getId());
+            String query = String.format("select users.id as id, users.name as name from users where id = %d", expected.getId());
             List<HashMap<String, String>> result = this.driver.select(query);
             User actual = new User(Integer.parseInt(result.get(0).get("id")), result.get(0).get("name"));
             assertEquals(expected, actual);
@@ -94,7 +94,7 @@ public class StorageMemoryTest {
             Storage storage = (Storage) ctx.getBean("storageMemory");
             User expected = new User(0, "MemoryUser2");
             storage.add(expected);
-            String query = String.format("select user.id as id, user.name as name from users where id = %d", expected.getId());
+            String query = String.format("select users.id as id, users.name as name from users where id = %d", expected.getId());
             List<HashMap<String, String>> result = this.driver.select(query);
             User actual = new User(Integer.parseInt(result.get(0).get("id")), result.get(0).get("name"));
             assertEquals(expected, actual);
