@@ -20,3 +20,6 @@ orders.xml
 OrderBookTask.txt
 *.db
 *.log
+
+# Ignore concrete files.
+/junior/pack3_pre/p2_spring/ch1_storages/jpack3p2ch1task2/
