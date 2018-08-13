@@ -8,7 +8,7 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean id="storageMemory" class="ru.job4j.services.Storage">
-        <constructor-arg type="java.lang.String" value="hibernate.Memory.HyperSQL.cfg.xml" />
+        <constructor-arg type="java.lang.String" value="hibernate.cfg.xml" />
     </bean>
     <!--<bean id="storageDBMS" class="ru.job4j.services.Storage">
         <constructor-arg type = "java.lang.String" value = "hibernate.DBMS.PostgreSQL.cfg.xml" />
