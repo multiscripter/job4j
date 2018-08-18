@@ -1,8 +1,6 @@
 package ru.job4j.models;
 
 import java.util.Objects;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -12,14 +10,10 @@ import static org.junit.Assert.assertTrue;
  * Класс UserTest тестирует класс User.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-07-19
+ * @version 2018-08-18
  * @since 2018-07-19
  */
 public class UserTest {
-    /**
-     * Логгер.
-     */
-    private Logger logger = LogManager.getLogger(this.getClass().getSimpleName());
     /**
      * Пользоваетль.
      */
