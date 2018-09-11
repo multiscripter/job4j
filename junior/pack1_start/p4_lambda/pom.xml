@@ -17,5 +17,7 @@
 
     <modules>
         <module>ch00_func_iface</module>
+        <module>ch01_method_ref</module>
+        <module>ch02_scope_exception</module>
     </modules>
 </project>
