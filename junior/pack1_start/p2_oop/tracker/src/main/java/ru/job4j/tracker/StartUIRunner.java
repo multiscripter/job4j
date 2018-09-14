@@ -1,13 +1,13 @@
 package ru.job4j.tracker;
 
 /**
- * Class StartUITest реализует сущность тестирования пользовательского интрефэйса трэкера.
+ * Class StartUIRunner реализует сущность тестирования пользовательского интрефэйса трэкера.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-09-14
  * @since 2017-04-19
  */
-public class StartUITest {
+public class StartUIRunner {
     /**
      * Точка входа в программу.
      * @param args массив аргументов командной строки.
