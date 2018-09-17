@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 /**
  * Класс StartUI реализует сущность пользовательского интрефэйса трэкера.
  *
@@ -50,7 +51,8 @@ public class StartUI {
      * Инициализирует трэкер и интерфэйс пользователя.
      */
     public void init() {
-        System.out.println(MenuActions.values().length);
+        Consumer<String> out = x -> System.out.println(x);
+        out.accept(Integer.toString(MenuActions.values().length));
         MenuActions[] actions = MenuActions.values();
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
         menu.fillActions();
@@ -61,7 +63,7 @@ public class StartUI {
              * @param tracker объект трэкера.
              */
             public void execute(Input input, Tracker tracker) {
-                System.out.println("Buy our program for 10$.");
+                out.accept("Buy our program for 10$.");
                 System.exit(0);
             }
         };
@@ -70,8 +72,8 @@ public class StartUI {
             menu.show();
             menu.select(input.ask("Select: ", this.range.stream().mapToInt(i -> i).toArray()));
         } while (!"y".equals(this.input.ask("Exit? y|n: ")));
-        System.out.println("Buy our program for 10$.");
-        System.out.println("");
+        out.accept("Buy our program for 10$.");
+        out.accept("");
     }
     /**
      * Точка входа в программу.
