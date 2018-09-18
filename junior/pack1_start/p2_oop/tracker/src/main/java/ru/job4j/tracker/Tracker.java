@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 /**
  * Class Tracker реализует сущность Трэкер заявок.
@@ -59,9 +60,10 @@ public class Tracker {
     public Item findById(String id) {
         Item uItem = new Item();
         Iterator<Item> iter = this.items.iterator();
+        Predicate<String> p = s -> id.equals(s);
         while (iter.hasNext()) {
             Item item = iter.next();
-            if (id.equals(item.getId())) {
+            if (p.test(item.getId())) {
                 uItem = item;
                 break;
             }
@@ -76,9 +78,10 @@ public class Tracker {
     public Item[] findByName(String name) {
         ArrayList<Item> found = new ArrayList<>();
         Iterator<Item> iter = this.items.iterator();
+        Predicate<String> p = s -> name.equals(s);
         while (iter.hasNext()) {
             Item item = iter.next();
-            if (name.equals(item.getName())) {
+            if (p.test(item.getName())) {
                 found.add(item);
             }
         }
