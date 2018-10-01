@@ -26,7 +26,6 @@ class Bishop extends Figure {
         if (Math.abs(this.getCell().getCol() - dest.getCol()) != Math.abs(this.getCell().getRow() - dest.getRow())) {
             throw new ImposibleMoveException(this.getCell().getPosition(), dest.getPosition());
         }
-        Cell[] way = super.way(dest);
-        return way;
+        return super.way(dest);
     }
 }

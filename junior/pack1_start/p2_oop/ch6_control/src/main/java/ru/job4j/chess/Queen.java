@@ -28,7 +28,6 @@ class Queen extends Figure {
         if (Math.abs(src[0] - dst[0]) != Math.abs(src[1] - dst[1]) && Math.abs(src[0] - dst[0]) != 0 && Math.abs(src[1] - dst[1]) != 0) {
             throw new ImposibleMoveException(this.getCell().getPosition(), dest.getPosition());
         }
-        Cell[] way = super.way(dest);
-        return way;
+        return super.way(dest);
     }
 }

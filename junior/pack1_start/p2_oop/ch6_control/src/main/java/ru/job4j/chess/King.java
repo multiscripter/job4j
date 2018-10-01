@@ -28,7 +28,6 @@ class King extends Figure {
         if ((src[0] == dst[0] && Math.abs(src[1] - dst[1]) > 1) || (src[1] == dst[1] && Math.abs(src[0] - dst[0]) > 1) || Math.abs(src[0] - dst[0]) + Math.abs(src[1] - dst[1]) > 2) {
             throw new ImposibleMoveException(this.getCell().getPosition(), dest.getPosition());
         }
-        Cell[] way = super.way(dest);
-        return way;
+        return super.way(dest);
     }
 }

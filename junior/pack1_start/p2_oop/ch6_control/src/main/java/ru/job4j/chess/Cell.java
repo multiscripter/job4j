@@ -100,7 +100,7 @@ class Cell {
      * @return true если поле непустое, иначе false;
      */
     public boolean isOccupied() {
-        return this.figure != null ? true : false;
+        return this.figure != null;
     }
     /**
      * Устанавливает фигуру в поле.

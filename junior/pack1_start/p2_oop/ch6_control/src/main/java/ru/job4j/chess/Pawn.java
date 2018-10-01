@@ -28,7 +28,6 @@ class Pawn extends Figure {
         if (dst[0] != src[0] || (this.getColor() == Color.BLACK && ((src[1] < dst[1]) || (src[1] - dst[1] > 2 && src[1] == 6) || (src[1] - dst[1] != 1 && src[1] < 6))) || (this.getColor() == Color.WHITE && ((src[1] > dst[1]) || (dst[1] - src[1] > 2 && src[1] == 1) || (dst[1] - src[1] != 1 && src[1] > 1)))) {
             throw new ImposibleMoveException(this.getCell().getPosition(), dest.getPosition());
         }
-        Cell[] way = super.way(dest);
-        return way;
+        return super.way(dest);
     }
 }

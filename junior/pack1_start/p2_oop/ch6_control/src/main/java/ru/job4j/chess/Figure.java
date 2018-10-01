@@ -101,7 +101,7 @@ abstract class Figure {
         Cell[] way = new Cell[Math.abs(colShift != 0 ? colShift : rowShift)];
         colShift = colShift == 0 ? 0 : colShift < 0 ? 1 : -1;
         rowShift = rowShift == 0 ? 0 : rowShift < 0 ? 1 : -1;
-        for (int a = 0, cycles = way.length; a < cycles; a++) {
+        for (int a = 0; a < way.length; a++) {
             tmpCol += colShift;
             tmpRow += rowShift;
             way[a] = this.cell.getBoard().getCell(tmpCol, tmpRow);
