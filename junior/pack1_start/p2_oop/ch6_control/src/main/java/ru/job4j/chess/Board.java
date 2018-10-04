@@ -112,11 +112,16 @@ class Board {
     public boolean move(Cell source, Cell dest) throws ImposibleMoveException, OccupiedWayException, FigureNotFoundException {
         Figure figure = source.getFigure();
         Cell[] way = figure.way(dest);
-        for (Cell cell : way) {
+        Arrays.asList(way).forEach(n -> {
+            if (n.isOccupied()) {
+                throw new OccupiedWayException();
+            }
+        });
+        /*for (Cell cell : way) {
             if (cell.isOccupied()) {
                 throw new OccupiedWayException();
             }
-        }
+        }*/
         dest.setFigure(figure);
         source.setFigure(null);
         return true;
