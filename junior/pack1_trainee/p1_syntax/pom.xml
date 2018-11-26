@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ru.job4j</groupId>
+    <artifactId>p1_syntax</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>p1_syntax</name>
+    <url>http://job4j.ru</url>
+    
+    <parent>
+        <groupId>ru.job4j</groupId>
+        <artifactId>pack1_trainee</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <modules>
+        <module>ch1_maven</module>
+        <module>ch3_datatypes</module>
+        <module>ch4_decisions</module>
+        <module>ch5_cycles</module>
+        <module>ch6_arrays</module>
+        <module>ch7_control</module>
+    </modules>
+</project>

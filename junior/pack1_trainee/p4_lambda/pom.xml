@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ru.job4j</groupId>
+    <artifactId>p4_lambda</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>p4_lambda</name>
+    <url>http://job4j.ru</url>
+    
+    <parent>
+        <groupId>ru.job4j</groupId>
+        <artifactId>pack1_trainee</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <modules>
+        <module>ch00_func_iface</module>
+        <module>ch01_method_ref</module>
+        <module>ch02_scope_exception</module>
+        <module>ch1_mathfunc</module>
+    </modules>
+</project>

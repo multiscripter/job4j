@@ -10,8 +10,8 @@
     <url>http://job4j.ru</url>
     
     <modules>
-        <module>pack1_start</module>
-        <module>pack2_standard</module>
+        <module>pack1_trainee</module>
+        <module>pack2_junior</module>
         <module>pack3_pre</module>
     </modules>
 

@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ru.job4j</groupId>
+    <artifactId>p1_collections_pro</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0</version>
+    <name>p1_collections_pro</name>
+    <url>http://job4j.ru</url>
+    
+    <parent>
+        <groupId>ru.job4j</groupId>
+        <artifactId>pack2_junior</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <modules>
+        <module>ch1_iterator</module>
+        <module>ch2_generic</module>
+        <module>ch3_list</module>
+        <module>ch4_set</module>
+        <module>ch5_map</module>
+        <module>ch6_tree</module>
+        <module>ch7_control</module>
+    </modules>
+</project>

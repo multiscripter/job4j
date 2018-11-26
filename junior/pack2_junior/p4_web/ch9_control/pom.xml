@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ch9_control</artifactId>
+    <version>1.0</version>
+    <packaging>war</packaging>
+
+    <parent>
+        <groupId>ru.job4j</groupId>
+        <artifactId>p4_web</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
+        <!-- https://docs.oracle.com/javaee/7/api/javax/inject/package-summary.html -->
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-dbcp -->
+        <!-- Tomcat Database Connection Pooling package -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-dbcp</artifactId>
+            <version>9.0.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jdbc -->
+        <!-- Java Database Connectivity -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jdbc</artifactId>
+            <version>8.0.32</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jstl/jstl -->
+        <!-- JavaServer Pages Standard Tag Library -->
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/taglibs/standard -->
+        <!-- Standard Tag Library -->
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                    <!--<packagingExcludes>
+                        WEB-INF/lib/some-name.jar,
+                        WEB-INF/lib/another-name.jar
+                    </packagingExcludes>-->
+                </configuration>
+            </plugin>
+            <!-- Plugun for deploy war to Tomcat. Work with Tomcat 7 and 8.
+            For deploy use command:   mvn tomcat7:deploy
+            For redeploy use command: mvn tomcat7:redeploy -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <path>/${project.build.finalName}</path>
+                    <update>true</update>
+                    <url>http://localhost:8080/manager/text</url>
+                    <username>fuckin-autodeployer</username>
+                    <password>fuckin-autodeployer-pass</password>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

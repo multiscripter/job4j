@@ -1,0 +1,26 @@
+Автодиплой собранного Maven`ом war-файла в Tomcat:
+
+1. Добавить в pom.xml проекта секцию:
+<plugin>
+	<groupId>org.apache.tomcat.maven</groupId>
+	<artifactId>tomcat7-maven-plugin</artifactId>
+	<version>2.2</version>
+	<configuration>
+		<path>/${project.build.finalName}</path>
+		<update>true</update>
+		<url>http://localhost:8080/manager/text</url>
+		<username>fuckin-autodeployer</username>
+		<password>fuckin-autodeployer-pass</password>
+	</configuration>
+</plugin>
+
+2. Добавить в /etc/tomcat8/tomcat-users.xml строки:
+<role rolename="manager" />
+<role rolename="manager-script" />
+<user username="fuckin-autodeployer" password="fuckin-autodeployer-pass" roles="manager,manager-script" />
+
+3. 
+Диплой производится командой:
+mvn tomcat7:deploy
+Редиплой производится командой:
+mvn tomcat7:redeploy
