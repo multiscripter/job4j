@@ -20,5 +20,6 @@
         <module>ch01_method_ref</module>
         <module>ch02_scope_exception</module>
         <module>ch1_mathfunc</module>
+        <module>ch2_stream_api</module>
     </modules>
 </project>
