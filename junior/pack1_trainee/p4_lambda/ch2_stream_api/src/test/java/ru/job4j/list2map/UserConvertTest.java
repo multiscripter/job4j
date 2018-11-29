@@ -1,0 +1,31 @@
+package ru.job4j.list2map;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+/**
+ * Класс UserConvertTest тестирует класс UserConvert.
+ *
+ * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
+ * @version 2018-11-29
+ * @since 2017-05-11
+ */
+public class UserConvertTest {
+    /**
+     * Тестирует public HashMap<Integer, User> process(List<User> list).
+     */
+    @Test
+    public void testProcess() {
+        String[][] users = new String[][]{{"Foo", "FooCity"}, {"Bar", "BarCity"}, {"Baz", "BazCity"}};
+        ArrayList<User> list = new ArrayList<>();
+        HashMap<Integer, User> expected = new HashMap<>();
+        for (int a = 0; a < users.length;) {
+            User user = new User(users[a][0], users[a][1]);
+            list.add(user);
+            expected.put(++a, user);
+        }
+        HashMap actual = new UserConvert().process(list);
+        assertEquals(expected, actual);
+    }
+}
