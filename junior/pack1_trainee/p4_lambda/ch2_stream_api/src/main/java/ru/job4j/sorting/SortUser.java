@@ -16,7 +16,7 @@ class SortUser {
     /**
      * Сортирует пользователей.
      * @param list список пользователей.
-     * @return Set с отсортированными пользователями.
+     * @return Множество с отсортированными пользователями.
      */
     Set<User> sort(List<User> list) {
         return new TreeSet<>(list);
@@ -24,9 +24,31 @@ class SortUser {
     /**
      * Сортирует пользователей с использованием Stream API.
      * @param list список пользователей.
-     * @return Set с отсортированными пользователями.
+     * @return список с отсортированными пользователями.
      */
-    ArrayList<User> testSortStreamAsc(List<User> list) {
+    List<User> sortByAge(List<User> list) {
         return new ArrayList<>(list.stream().sorted((o1, o2) -> o1.getAge() - o2.getAge()).collect(Collectors.toList()));
+    }
+    /**
+     * Сортирует пользователей по имени в лексикографическом порядке, потом по возрасту с использованием Stream API.
+     * @param list список пользователей.
+     * @return список с отсортированными пользователями.
+     */
+    public List<User> sortByAllFields(List<User> list) {
+        return new ArrayList<>(list.stream().sorted((o1, o2) -> {
+            int result = o1.getName().compareTo(o2.getName());
+            if (result == 0) {
+                result = o1.getAge() - o2.getAge();
+            }
+            return result;
+        }).collect(Collectors.toList()));
+    }
+    /**
+     * Сортирует пользователей по длине имени с использованием Stream API.
+     * @param list список пользователей.
+     * @return список с отсортированными пользователями.
+     */
+    public List<User> sortByNameLength(List<User> list) {
+        return new ArrayList<>(list.stream().sorted((o1, o2) -> o1.getName().length() - o2.getName().length()).collect(Collectors.toList()));
     }
 }
