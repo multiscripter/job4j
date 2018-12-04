@@ -16,7 +16,7 @@ class UserConvert {
      * @return отображение с пользователями.
      */
     public HashMap<Integer, User> process(List<User> list) {
-        HashMap hm = new HashMap();
+        HashMap<Integer, User> hm = new HashMap<>();
         list.forEach(x -> hm.put(x.getId(), x));
         return hm;
     }
