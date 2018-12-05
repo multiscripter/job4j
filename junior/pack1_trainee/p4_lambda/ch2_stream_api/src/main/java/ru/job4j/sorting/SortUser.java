@@ -1,9 +1,10 @@
 package ru.job4j.sorting;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 /**
  * Class SortUser реализует сортировку пользователей.
@@ -35,13 +36,7 @@ class SortUser {
      * @return список с отсортированными пользователями.
      */
     public List<User> sortByAllFields(List<User> list) {
-        return new ArrayList<>(list.stream().sorted((o1, o2) -> {
-            int result = o1.getName().compareTo(o2.getName());
-            if (result == 0) {
-                result = o1.getAge() - o2.getAge();
-            }
-            return result;
-        }).collect(Collectors.toList()));
+        return new ArrayList<>(list.stream().sorted(Comparator.comparing(User::getName).thenComparing(User::getAge)).collect(Collectors.toList()));
     }
     /**
      * Сортирует пользователей по длине имени с использованием Stream API.
