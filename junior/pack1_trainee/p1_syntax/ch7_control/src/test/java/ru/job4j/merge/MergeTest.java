@@ -1,38 +1,49 @@
 package ru.job4j.merge;
 
 import org.junit.Test;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
+import static org.junit.Assert.assertArrayEquals;
 /**
- * Class MergeTest тестирует методы класса Merge.
+ * Класс MergeTest тестирует методы класса Merge.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-06
  * @since 2017-04-13
  */
 public class MergeTest {
 	/**
-     * Тестирует метод int[] merge(int[] first, int[] second).
+     * Тестирует public int[] merge(int[] first, int[] second).
      */
 	@Test
-	public void testMergeIntArraysFirstLongerSecond() {
+	public void testMergeIntArraysFirstLongerThenSecond() {
 		Merge merge = new Merge();
 		int[] first = {-5, -2, 0, 2, 4, 6};
 		int[] second = {-4, -2, 1, 3, 7};
 		int[] expected = {-5, -4, -2, -2, 0, 1, 2, 3, 4, 6, 7};
-		int[] result = merge.merge(first, second);
-		assertThat(result, is(expected));
+		int[] actual = merge.merge(first, second);
+		assertArrayEquals(expected, actual);
 	}
 	/**
-     * Тестирует метод int[] merge(int[] first, int[] second).
+     * Тестирует public int[] merge(int[] first, int[] second).
      */
 	@Test
-	public void testMergeIntArraysSecondLongerFirst() {
+	public void testMergeIntArraysSecondLongerThenFirst() {
 		Merge merge = new Merge();
 		int[] first = {-4, -2, 0, 4, 6};
 		int[] second = {-5, -2, 1, 2, 3, 7};
 		int[] expected = {-5, -4, -2, -2, 0, 1, 2, 3, 4, 6, 7};
-		int[] result = merge.merge(first, second);
-		assertThat(result, is(expected));
+		int[] actual = merge.merge(first, second);
+		assertArrayEquals(expected, actual);
 	}
+    /**
+     * Тестирует public int[] merge(int[] first, int[] second).
+     * Оба массива одинаковой длины.
+     */
+	@Test
+	public void testMergeIntArraysBothHaveSameLength() {
+        Merge merge = new Merge();
+        int[] first = {-4, -2, 0, 4, 6};
+        int[] second = {-5, -2, 1, 2, 3};
+        int[] expected = {-5, -4, -2, -2, 0, 1, 2, 3, 4, 6};
+        int[] actual = merge.merge(first, second);
+        assertArrayEquals(expected, actual);
+    }
 }

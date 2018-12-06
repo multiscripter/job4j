@@ -7,7 +7,7 @@ import java.util.TreeMap;
  * Class Bank реализует сущность Банк.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-06
  * @since 2017-05-15
  */
 class Bank {
@@ -50,17 +50,10 @@ class Bank {
     }
     /**
      * Получает пользователей.
-     * @return дерево пользователей.
-     */
-    public TreeMap<String, User> getUsers() {
-        return this.users;
-    }
-    /**
-     * Получает пользователей.
      * @return список пользователей.
      */
     public List<User> getUsersAsList() {
-        return new LinkedList(this.users.values());
+        return new LinkedList<>(this.users.values());
     }
     /**
      * Добавляет счёт пользователя.
@@ -70,7 +63,7 @@ class Bank {
     public void addAccountToUser(User user, Account account) {
         List<Account> userAccounts = this.accounts.get(user);
         if (userAccounts == null) {
-            userAccounts = new LinkedList();
+            userAccounts = new LinkedList<>();
         }
         userAccounts.add(account);
         this.accounts.put(user, userAccounts);
@@ -90,10 +83,8 @@ class Bank {
      * @return список со счетами.
      */
     public List<Account> getAccounts() {
-        List<Account> accounts = new LinkedList();
-        for (List<Account> userAccounts : this.accounts.values()) {
-            accounts.addAll(userAccounts);
-        }
+        List<Account> accounts = new LinkedList<>();
+        this.accounts.values().forEach(accounts::addAll);
         return accounts;
     }
     /**

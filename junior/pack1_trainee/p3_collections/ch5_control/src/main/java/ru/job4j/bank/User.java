@@ -5,7 +5,7 @@ import java.util.Objects;
  * Class User реализует сущность Пользователь.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-06
  * @since 2017-05-15
  */
 class User implements Comparable<User> {
@@ -85,10 +85,7 @@ class User implements Comparable<User> {
             return false;
         }
         User user = (User) obj;
-        if (this.name != user.name || this.passport != user.passport) {
-            return false;
-        }
-        return true;
+        return !(this.name.equals(user.name) || this.passport.equals(user.passport));
     }
     /**
      * Генерирует строковое представление объект пользователя.

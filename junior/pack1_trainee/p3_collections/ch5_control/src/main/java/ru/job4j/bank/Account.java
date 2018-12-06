@@ -2,10 +2,10 @@ package ru.job4j.bank;
 
 import java.util.Objects;
 /**
- * Class Account реализует сущность Банковский счёт.
+ * Класс Account реализует сущность Банковский счёт.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-06
  * @since 2017-05-15
  */
 class Account {
@@ -61,10 +61,8 @@ class Account {
             return false;
         }
         Account account = (Account) obj;
-        if (this.requisites != account.getRequisites() || this.value != account.getValue()) {
-            return false;
-        }
-        return true;
+        return !(this.requisites.equals(account.getRequisites()) || this.value
+                != account.getValue());
     }
     /**
      * Возвращает хэш-код банковского счёта.

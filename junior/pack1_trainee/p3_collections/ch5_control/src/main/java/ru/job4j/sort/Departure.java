@@ -3,17 +3,13 @@ package ru.job4j.sort;
 import java.util.LinkedList;
 import java.util.List;
 /**
- * Class Departure реализует сущность Департамент организации.
+ * Класс Departure реализует сущность Департамент организации.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 2018-12-06
  * @since 2017-05-18
  */
 class Departure implements Comparable<Departure> {
-    /**
-     * Название текущего департамента.
-     */
-    private String name;
     /**
      * Название текущего департамента вместе с предками.
      */
@@ -28,16 +24,7 @@ class Departure implements Comparable<Departure> {
      */
     Departure(String fullName) {
         this.fullName = fullName;
-        String[] names = this.fullName.split("\\\\");
-        this.name = names[names.length - 1];
-        this.subDeps = new LinkedList();
-    }
-    /**
-     * Получает строку с именем текущего департамента.
-     * @return строка с именем текущего департамента.
-     */
-    public String getName() {
-        return this.name;
+        this.subDeps = new LinkedList<>();
     }
     /**
      * Получает строку с именем текущего департамента вместе с предками.
@@ -68,8 +55,7 @@ class Departure implements Comparable<Departure> {
      */
     @Override
     public int compareTo(Departure obj) {
-        int result = this.getFullName().compareTo(obj.getFullName());
-        return result;
+        return this.getFullName().compareTo(obj.getFullName());
     }
     /**
      * Проверяет объекты департаментов на равенство.

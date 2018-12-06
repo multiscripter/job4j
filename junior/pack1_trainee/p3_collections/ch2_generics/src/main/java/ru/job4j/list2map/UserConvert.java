@@ -6,7 +6,7 @@ import java.util.List;
  * Класс UserConvert реализует функционал конвертации List в HashMap.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-06
  * @since 2017-05-11
  */
 class UserConvert {
@@ -16,7 +16,7 @@ class UserConvert {
      * @return отображение с пользователями.
      */
     public HashMap<Integer, User> process(List<User> list) {
-        HashMap hm = new HashMap();
+        HashMap<Integer, User> hm = new HashMap<>();
         for (User user : list) {
             hm.put(user.getId(), user);
         }

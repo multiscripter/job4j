@@ -1,7 +1,7 @@
 package ru.job4j.array;
 
 /**
- * Class Turn для переворота массива.
+ * Класс Turn реализует функционал переворота массива.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
  * @version 2
  * @since 2017-04-10

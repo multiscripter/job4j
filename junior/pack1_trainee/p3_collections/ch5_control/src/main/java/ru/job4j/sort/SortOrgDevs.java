@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 /**
- * Class SortOrgDevs. Сортировка подразделений организации.
+ * Класс SortOrgDevs. Сортировка подразделений организации.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
  * @version 2

@@ -6,13 +6,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 /**
  * Класс StartUITest тестирует работу приложения Tracker.
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 4
+ * @version 2018-12-06
  * @since 2017-04-20
  */
 public class StartUITest {
@@ -74,7 +74,7 @@ public class StartUITest {
         new StartUI(input, this.tracker).init();
         Item item = this.tracker.findById(expected[0]);
         String[] result = {item.getId(), item.getName(), item.getDesc()};
-        assertEquals(expected, result);
+        assertArrayEquals(expected, result);
     }
     /**
      * Тестирует функционал удаления заявки.

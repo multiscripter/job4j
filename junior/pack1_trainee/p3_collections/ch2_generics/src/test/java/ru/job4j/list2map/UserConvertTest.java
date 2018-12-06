@@ -8,12 +8,12 @@ import static org.junit.Assert.assertEquals;
  * Класс UserConvertTest тестирует класс UserConvert.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-06
  * @since 2017-05-11
  */
 public class UserConvertTest {
     /**
-     * Тестирует process().
+     * Тестирует public HashMap<Integer, User> process(List<User> list).
      */
     @Test
     public void testProcess() {
@@ -26,7 +26,7 @@ public class UserConvertTest {
             expected.put(++a, user);
         }
         UserConvert uc = new UserConvert();
-        HashMap result = uc.process(list);
-        assertEquals(expected, result);
+        HashMap actual = uc.process(list);
+        assertEquals(expected, actual);
     }
 }

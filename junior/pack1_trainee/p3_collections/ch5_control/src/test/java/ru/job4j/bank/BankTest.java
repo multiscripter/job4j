@@ -10,10 +10,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 /**
- * Class BankTest тестирует класс Bank.
+ * Класс BankTest тестирует класс Bank.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-06
  * @since 2017-05-15
  */
 public class BankTest {
@@ -26,10 +26,6 @@ public class BankTest {
      */
     private User testUser2;
     /**
-     * Реквизиты тестового счёта.
-     */
-    private String requisites;
-    /**
      * Тестовый счёт.
      */
     private Account testAccount;
@@ -40,7 +36,7 @@ public class BankTest {
     /**
      * Объект Comparator.
      */
-    private Comparator comparator;
+    private Comparator<Account> comparator;
     /**
      * Объект банка.
      */
@@ -53,8 +49,7 @@ public class BankTest {
         this.bank = new Bank();
         this.testUser = new User("TestUser", "TestPassport");
         this.bank.addUser(this.testUser);
-        this.requisites = "0OIKZHGH";
-        this.testAccount = new Account(this.requisites, 9999.99);
+        this.testAccount = new Account("0OIKZHGH", 9999.99);
         this.bank.addAccountToUser(this.testUser, this.testAccount);
         this.testUser2 = new User("josa", "josaDokumenti");
         this.bank.addUser(this.testUser2);
@@ -118,7 +113,7 @@ public class BankTest {
         this.bank.addAccountToUser(this.testUser, account);
         List<Account> accounts = this.bank.getAccounts();
         for (Account item : accounts) {
-            if (item.getRequisites() == requisites) {
+            if (item.getRequisites().equals(requisites)) {
                 result = true;
                 break;
             }
@@ -146,7 +141,7 @@ public class BankTest {
      */
     @Test
     public void testGetAccounts() {
-        List<Account> expected = new LinkedList();
+        List<Account> expected = new LinkedList<>();
         expected.add(this.testAccount);
         expected.add(this.testAccount2);
         User bar = new User("Bar", "BarPassport");
@@ -164,7 +159,7 @@ public class BankTest {
      */
     @Test
     public void testGetUserAccounts() {
-        List<Account> expected = new LinkedList();
+        List<Account> expected = new LinkedList<>();
         User baz = new User("Baz", "BazPazzportz");
         this.bank.addUser(baz);
         String[] strs = new String[]{"rlNDuKON", "2Fj9DjAv", "RUVTgzhR", "6nOV9RsH", "DCbeJ9BT"};

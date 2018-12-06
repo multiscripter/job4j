@@ -26,11 +26,7 @@ public class StringComparator implements Comparator<String> {
             }
         }
         if (result == 0) {
-            if (left.length() < right.length()) {
-                result = -1;
-            } else if (left.length() > right.length()) {
-                result = 1;
-            }
+            result = Integer.compare(left.length(), right.length());
         }
         return result;
     }

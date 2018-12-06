@@ -3,12 +3,12 @@ package ru.job4j.sort;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 /**
- * Class SortOrgDevsTest тестирует класс SortOrgDevs.
+ * Класс SortOrgDevsTest тестирует класс SortOrgDevs.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-06
  * @since 2017-05-17
  */
 public class SortOrgDevsTest {
@@ -30,8 +30,8 @@ public class SortOrgDevsTest {
     @Test
     public void testGetNamesOrderAsc() {
         String[] expected = new String[]{"K1", "K1\\SK1", "K1\\SK1\\SSK1", "K1\\SK1\\SSK2", "K1\\SK2", "K2", "K2\\SK1", "K2\\SK1\\SSK1", "K2\\SK1\\SSK2"};
-        String[] result = this.sod.getNamesOrderAsc();
-        assertEquals(expected, result);
+        String[] actual = this.sod.getNamesOrderAsc();
+        assertArrayEquals(expected, actual);
     }
     /**
      * Тестирует getNamesOrderDesc().
@@ -39,8 +39,8 @@ public class SortOrgDevsTest {
     @Test
     public void testGetNamesOrderDesc() {
         String[] expected = new String[]{"K2", "K2\\SK1", "K2\\SK1\\SSK2", "K2\\SK1\\SSK1", "K1", "K1\\SK2", "K1\\SK1", "K1\\SK1\\SSK2", "K1\\SK1\\SSK1"};
-        String[] result = this.sod.getNamesOrderDesc();
-        assertEquals(expected, result);
+        String[] actual = this.sod.getNamesOrderDesc();
+        assertArrayEquals(expected, actual);
     }
     /**
      * Тестирует getSubDepsNames().
@@ -49,7 +49,7 @@ public class SortOrgDevsTest {
     public void testGetSubDepsNames() {
         String[] expected = new String[]{"K1\\SK1\\SSK1", "K1\\SK1\\SSK2"};
         List<String> subDepsNames = this.sod.getDepByFullName("K1\\SK1").getSubDepsNames();
-        String[] result = subDepsNames.toArray(new String[subDepsNames.size()]);
-        assertEquals(expected, result);
+        String[] actual = subDepsNames.toArray(new String[subDepsNames.size()]);
+        assertArrayEquals(expected, actual);
     }
 }

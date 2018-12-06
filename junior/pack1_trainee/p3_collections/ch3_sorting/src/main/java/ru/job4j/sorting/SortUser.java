@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.Set;
 /**
- * Class SortUser реализует сортировку пользователей.
+ * Класс SortUser реализует сортировку пользователей.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 2018-12-06
  * @since 2017-05-12
  */
 class SortUser {
@@ -16,7 +16,7 @@ class SortUser {
      * @param list список пользователей.
      * @return TreeSet с отсортированными пользователями.
      */
-    Set<User> sort(List<User> list) {
+    public Set<User> sort(List<User> list) {
         return new TreeSet<>(list);
     }
 }

@@ -6,15 +6,15 @@ import java.util.TreeSet;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 /**
- * Class SortUserTest тестирует класс SortUser.
+ * Класс SortUserTest тестирует класс SortUser.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 2018-12-06
  * @since 2017-05-12
  */
 public class SortUserTest {
     /**
-     * Тестирует sort().
+     * Тестирует public Set<User> sort(List<User> list).
      */
     @Test
     public void testSort() {
@@ -33,8 +33,8 @@ public class SortUserTest {
             }
         });
         SortUser su = new SortUser();
-        TreeSet<User> sorted = (TreeSet) su.sort(usersList);
-        ArrayList<User> result = new ArrayList<>(sorted);
-        assertEquals(expected, result);
+        TreeSet<User> sorted = (TreeSet<User>) su.sort(usersList);
+        ArrayList<User> actual = new ArrayList<>(sorted);
+        assertEquals(expected, actual);
     }
 }
