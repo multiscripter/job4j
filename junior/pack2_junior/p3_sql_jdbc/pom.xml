@@ -19,6 +19,6 @@
         <module>ch1_crud</module>
         <module>ch3_join</module>
         <module>ch4_jdbc</module>
-        <module>ch5_control</module>
+        <module>pack2_p3_ch5_control</module>
     </modules>
 </project>

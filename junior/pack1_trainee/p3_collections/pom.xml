@@ -19,6 +19,6 @@
         <module>ch1_collections</module>
         <module>ch2_generics</module>
         <module>ch3_sorting</module>
-        <module>ch5_control</module>
+        <module>pack1_p3_ch5_control</module>
     </modules>
 </project>
