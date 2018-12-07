@@ -1,18 +1,12 @@
 package ru.job4j.control;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.LinkedList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -71,10 +65,6 @@ public class DeleteTest {
      */
     private DBDriver driver;
     /**
-     * Кодировка окружения.
-     */
-    private String enc;
-    /**
      * Заглушка диспатчера реквеста.
      */
     @Mock
@@ -100,7 +90,7 @@ public class DeleteTest {
         try {
             this.driver.executeSql("delete from users where id > 4");
             this.driver.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -118,9 +108,8 @@ public class DeleteTest {
             this.attributes = new ConcurrentHashMap<>();
             this.servlet = new Delete();
             this.servlet.init(conf);
-            this.enc = Charset.defaultCharset().toString();
             this.us = new UserDAO();
-            this.us.setEncoding(this.enc);
+            this.us.setEncoding(Charset.defaultCharset().toString());
             this.delUser = new User();
             this.delUser.setAddress(new Address(5, "РФ", "Москва", "ЛДПР"));
             this.delUser.setLogin("deleted");
@@ -128,7 +117,7 @@ public class DeleteTest {
             this.delUser.setRole(new Role(3, "user"));
             this.delUser.setMusicTypes(new LinkedList<>(Arrays.asList(new MusicType(3, "pop"))));
             this.us.addUser(this.delUser);
-        } catch (NoSuchAlgorithmException | ParseException | ServletException | SQLException | UnsupportedEncodingException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -153,9 +142,8 @@ public class DeleteTest {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 String key = invocation.getArgumentAt(0, String.class);
-                Object value = attributes.get(key);
-                //System.out.println("get attribute value for key=" + key + " : " + value);
-                return value;
+                //System.out.println("get attribute value for key=" + key + " : " + attributes.get(key));
+                return attributes.get(key);
             }
         }).when(req).getAttribute(Mockito.anyString());
     }
@@ -177,7 +165,7 @@ public class DeleteTest {
             servlet.doGet(req, resp);
             User actual = (User) req.getAttribute("user");
             assertEquals(this.delUser, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | ServletException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -198,7 +186,7 @@ public class DeleteTest {
             servlet.doPost(req, resp);
             String actual = (String) req.getAttribute("message");
             assertEquals(expected, actual);
-        } catch (IOException | ServletException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

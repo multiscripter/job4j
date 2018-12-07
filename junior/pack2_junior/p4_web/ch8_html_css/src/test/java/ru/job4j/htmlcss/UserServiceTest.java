@@ -1,11 +1,6 @@
 package ru.job4j.htmlcss;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -15,19 +10,14 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-
 /**
  * Класс UserServiceTest тестирует класс UserService.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-07
  * @since 2017-12-17
  */
 public class UserServiceTest {
-    /**
-     * Кодировка окружения.
-     */
-    private String enc;
     /**
      * UserService.
      */
@@ -37,9 +27,8 @@ public class UserServiceTest {
      */
     @Before
     public void beforeTest() {
-        this.enc = Charset.defaultCharset().toString();
         this.us = new UserService();
-        this.us.setEncoding(enc);
+        this.us.setEncoding(Charset.defaultCharset().toString());
     }
     /**
      * Тестирует public String getPassHash(String pass) throws NoSuchAlgorithmException, UnsupportedEncodingException.
@@ -50,7 +39,7 @@ public class UserServiceTest {
             String expected = "fea80f2db003d4ebc4536023814aa885";
             String actual = this.us.getPassHash("Lorem ipsum dolor sit amet");
             assertEquals(expected, actual);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -76,7 +65,7 @@ public class UserServiceTest {
             expected.setCity(new City(1, "Москва", new LinkedList<>(Arrays.asList(1, 2))));
             User actual = us.getUserById(1);
             assertEquals(expected, actual);
-        } catch (IOException | ParseException | SQLException | NoSuchAlgorithmException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -104,7 +93,7 @@ public class UserServiceTest {
             expected.setCity(new City(1, "Москва", new LinkedList<>(Arrays.asList(1, 2))));
             User actual = this.us.getUserByLogPass(login, pass);
             assertEquals(expected, actual);
-        } catch (IOException | ParseException | SQLException | NoSuchAlgorithmException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

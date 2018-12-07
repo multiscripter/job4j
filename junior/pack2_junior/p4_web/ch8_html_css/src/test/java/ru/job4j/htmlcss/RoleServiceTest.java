@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
  * Класс RoleServiceTest тестирует класс RoleService.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-07
  * @since 2017-12-18
  */
 public class RoleServiceTest {
@@ -36,7 +36,7 @@ public class RoleServiceTest {
             Role expected = new Role(roleId, "administrator");
             Role actual = this.rls.getRoleById(roleId);
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -48,7 +48,7 @@ public class RoleServiceTest {
     public void testGetRoleByIdThrowsSQLException() throws SQLException {
         try {
             this.rls.getRoleById(-1);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             assertTrue(ex instanceof SQLException);
         }
     }
@@ -62,7 +62,7 @@ public class RoleServiceTest {
             Role expected = new Role(2, roleName);
             Role actual = this.rls.getRoleByName(roleName);
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -77,7 +77,7 @@ public class RoleServiceTest {
             expected.add(new Role(2, "user"));
             LinkedList<Role> actual = this.rls.getRoles();
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

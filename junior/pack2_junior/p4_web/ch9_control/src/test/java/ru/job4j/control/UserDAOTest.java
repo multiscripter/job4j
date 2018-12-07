@@ -1,11 +1,7 @@
 package ru.job4j.control;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import org.junit.After;
@@ -22,12 +18,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
 /**
  * Класс UserDAOTest тестирует класс UserDAO.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-23
+ * @version 2018-12-07
  * @since 2017-12-17
  */
 public class UserDAOTest {
@@ -59,13 +54,17 @@ public class UserDAOTest {
      */
     @Before
     public void beforeTest() {
-        this.driver = DBDriver.getInstance();
-        if (!this.driver.isDBDriverSet()) {
-            this.driver.setDbDriver();
+        try {
+            this.driver = DBDriver.getInstance();
+            if (!this.driver.isDBDriverSet()) {
+                this.driver.setDbDriver();
+            }
+            this.enc = Charset.defaultCharset().toString();
+            this.us = new UserDAO();
+            this.us.setEncoding(this.enc);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        this.enc = Charset.defaultCharset().toString();
-        this.us = new UserDAO();
-        this.us.setEncoding(this.enc);
     }
     /**
      * Тестирует public boolean addUser(User user) throws SQLException, ParseException, NoSuchAlgorithmException, UnsupportedEncodingException.
@@ -83,7 +82,7 @@ public class UserDAOTest {
             this.driver.executeSql("delete from users_musictypes where user_id > 5");
             this.driver.executeSql("delete from users where id > 4");
             this.driver.executeSql("delete from addresses where id > 5");
-        } catch (NoSuchAlgorithmException | ParseException | SQLException | UnsupportedEncodingException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -101,7 +100,7 @@ public class UserDAOTest {
             u5.setMusicTypes(new LinkedList<>(Arrays.asList(new MusicType(3, "pop"))));
             this.us.addUser(u5);
             assertTrue(this.us.deleteUser(u5.getId()));
-        } catch (NoSuchAlgorithmException | ParseException | SQLException | UnsupportedEncodingException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -120,7 +119,7 @@ public class UserDAOTest {
             u5.setRole(new Role(3, "user"));
             u5.setMusicTypes(new LinkedList<>(Arrays.asList(new MusicType(3, "pop"))));
             assertFalse(this.us.deleteUser(u5.getId()));
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -144,7 +143,7 @@ public class UserDAOTest {
             u5.setMusicTypes(new LinkedList<>(Arrays.asList(new MusicType(3, "pop"), new MusicType(2, "rock"))));
             assertTrue(this.us.editUser(u5));
             this.us.deleteUser(u5.getId());
-        } catch (NoSuchAlgorithmException | ParseException | SQLException | UnsupportedEncodingException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -164,7 +163,7 @@ public class UserDAOTest {
             String expected = "fea80f2db003d4ebc4536023814aa885";
             String actual = this.us.getPassHash("Lorem ipsum dolor sit amet");
             assertEquals(expected, actual);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -179,7 +178,7 @@ public class UserDAOTest {
             User expected = this.us.getUserById(userId);
             User actual = this.us.getUserByAddress(address);
             assertEquals(expected, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -193,7 +192,7 @@ public class UserDAOTest {
             Address address = new Address(100, "Зимбабве", "Москва",
                     "Кремль");
             assertNull(this.us.getUserByAddress(address));
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -213,7 +212,7 @@ public class UserDAOTest {
             expected.setMusicTypes(new LinkedList<>(Arrays.asList(new MusicType(3, "pop"), new MusicType(1, "rap"), new MusicType(2, "rock"))));
             User actual = this.us.getUserById(userId);
             assertEquals(expected, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -225,7 +224,7 @@ public class UserDAOTest {
     public void testGetUserByIdWithNonexistentId() {
         try {
             assertNull(this.us.getUserById(-1));
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -246,7 +245,7 @@ public class UserDAOTest {
             expected.setMusicTypes(new LinkedList<>(Arrays.asList(new MusicType(3, "pop"), new MusicType(1, "rap"), new MusicType(2, "rock"))));
             User actual = this.us.getUserByLogPass(login, pass);
             assertEquals(expected, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -258,7 +257,7 @@ public class UserDAOTest {
     public void testGetUserByLogPassWithNonexistentLogin() {
         try {
             assertNull(this.us.getUserByLogPass("NonexistentLogin", "pass"));
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -277,7 +276,7 @@ public class UserDAOTest {
             mtypes[1] = new MusicType(2, "rock");
             LinkedList<User> actual = this.us.getUsersByMusicTypes(mtypes, "id", false);
             assertEquals(expected, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -292,7 +291,7 @@ public class UserDAOTest {
             expected.add(this.us.getUserById(2));
             LinkedList<User> actual = this.us.getUsersByRole(new Role(1, "administrator"), "id", false);
             assertEquals(expected, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -306,7 +305,7 @@ public class UserDAOTest {
             LinkedList<User> actual = this.us.getUsersByRole(new Role(5,
                     "owner"), "id", false);
             assertTrue(actual.isEmpty());
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -359,7 +358,7 @@ public class UserDAOTest {
             expected.add(u5);*/
             LinkedList<User> actual = this.us.getUsers("", false);
             assertEquals(expected, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -370,8 +369,10 @@ public class UserDAOTest {
     public void testGetUsersThrowsSQLException() {
         try {
             this.us.getUsers("nonexistens_order", false);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | SQLException ex) {
+        } catch (SQLException ex) {
             assertTrue(ex instanceof SQLException);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     /**
@@ -379,8 +380,12 @@ public class UserDAOTest {
      */
     @Test
     public void testSetEncoding() {
-        this.us.setEncoding("ISO-8859-1");
-        assertEquals("ISO-8859-1", this.us.getEncoding());
-        this.us.setEncoding(this.enc);
+        try {
+            this.us.setEncoding("ISO-8859-1");
+            assertEquals("ISO-8859-1", this.us.getEncoding());
+            this.us.setEncoding(this.enc);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }

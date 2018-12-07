@@ -1,16 +1,11 @@
 package ru.job4j.control;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.LinkedList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -57,10 +52,6 @@ public class ReadTest {
      */
     private DBDriver driver;
     /**
-     * Кодировка окружения.
-     */
-    private String enc;
-    /**
      * Заглушка диспатчера реквеста.
      */
     @Mock
@@ -85,7 +76,7 @@ public class ReadTest {
     public void afterTest() {
         try {
             this.driver.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -103,10 +94,9 @@ public class ReadTest {
             this.attributes = new ConcurrentHashMap<>();
             this.servlet = new Read();
             this.servlet.init(conf);
-            this.enc = Charset.defaultCharset().toString();
             this.us = new UserDAO();
-            this.us.setEncoding(this.enc);
-        } catch (ServletException ex) {
+            this.us.setEncoding(Charset.defaultCharset().toString());
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -131,9 +121,8 @@ public class ReadTest {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 String key = invocation.getArgumentAt(0, String.class);
-                Object value = attributes.get(key);
-                //System.out.println("get attribute value for key=" + key + " : " + value);
-                return value;
+                //System.out.println("get attribute value for key=" + key + " : " + attributes.get(key));
+                return attributes.get(key);
             }
         }).when(req).getAttribute(Mockito.anyString());
     }
@@ -152,7 +141,7 @@ public class ReadTest {
             this.servlet.doGet(req, resp);
             LinkedList<User> actual = (LinkedList<User>) req.getAttribute("users");
             assertEquals(expected, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | ServletException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

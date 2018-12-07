@@ -1,6 +1,5 @@
 package ru.job4j.control;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import org.junit.Before;
 //import org.junit.Ignore;
@@ -42,7 +41,7 @@ public class PropertyLoaderTest {
     @Test
     public void testGetPropertiesList() {
         try {
-            LinkedList<Property> expected = new LinkedList();
+            LinkedList<Property> expected = new LinkedList<>();
             expected.add(new Property("db", "jpack2p9ch9task1"));
             expected.add(new Property("pass", "postgresrootpass"));
             expected.add(new Property("port", "5432"));
@@ -57,7 +56,7 @@ public class PropertyLoaderTest {
             this.pl.load("junior.pack2.p9.ch9.task1.properties");
             LinkedList<Property> actual = this.pl.getPropertiesList();
             assertEquals(expected, actual);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -69,7 +68,7 @@ public class PropertyLoaderTest {
         try {
             this.pl.load("junior.pack2.p9.ch9.task1.properties");
             assertFalse(this.pl.getProperties().isEmpty());
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

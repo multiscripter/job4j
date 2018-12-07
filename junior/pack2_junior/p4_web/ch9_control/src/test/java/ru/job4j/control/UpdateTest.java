@@ -1,18 +1,12 @@
 package ru.job4j.control;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.LinkedList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,7 +34,7 @@ import ru.job4j.control.service.User;
  * Класс UpdateTest тестирует класс Update.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-23
+ * @version 2018-12-07
  * @since 2018-01-14
  */
 public class UpdateTest {
@@ -96,7 +90,7 @@ public class UpdateTest {
         try {
             this.us.deleteUser(this.testUser.getId());
             this.driver.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -125,7 +119,7 @@ public class UpdateTest {
             this.testUser.setRole(new Role(3, "user"));
             this.testUser.setMusicTypes(new LinkedList<>(Arrays.asList(new MusicType(3, "pop"))));
             this.us.addUser(this.testUser);
-        } catch (NoSuchAlgorithmException | ParseException | ServletException | SQLException | UnsupportedEncodingException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -150,9 +144,8 @@ public class UpdateTest {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 String key = invocation.getArgumentAt(0, String.class);
-                Object value = attributes.get(key);
-                //System.out.println("get attribute value for key=" + key + " : " + value);
-                return value;
+                //System.out.println("get attribute value for key=" + key + " : " + attributes.get(key));
+                return attributes.get(key);
             }
         }).when(req).getAttribute(Mockito.anyString());
     }
@@ -173,7 +166,7 @@ public class UpdateTest {
             servlet.doGet(req, resp);
             User actual = (User) req.getAttribute("user");
             assertEquals(this.testUser, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | ServletException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -204,7 +197,7 @@ public class UpdateTest {
             servlet.doPost(req, resp);
             String actual = (String) req.getAttribute("message");
             assertEquals(expected, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | ServletException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

@@ -15,7 +15,7 @@ import ru.job4j.control.persistence.DBDriver;
  * Класс DBDriverTest тестирует класс DBDriver.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-23
+ * @version 2018-12-07
  * @since 2018-01-09
  */
 public class DBDriverTest {
@@ -31,7 +31,7 @@ public class DBDriverTest {
         try {
             this.driver.executeSql("delete from users where id > 4");
             this.driver.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -40,9 +40,13 @@ public class DBDriverTest {
      */
     @Before
     public void beforeTest() {
-        this.driver = DBDriver.getInstance();
-        if (!this.driver.isDBDriverSet()) {
-            this.driver.setDbDriver();
+        try {
+            this.driver = DBDriver.getInstance();
+            if (!this.driver.isDBDriverSet()) {
+                this.driver.setDbDriver();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     /**
@@ -55,7 +59,7 @@ public class DBDriverTest {
             assertTrue(this.driver.isClosed());
             this.driver.setDbDriver();
             this.driver.setConnection();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -68,7 +72,7 @@ public class DBDriverTest {
             this.driver.insert("insert into users (login, pass, role_id, addr_id) values ('login_a', 'pass_a', 2, 1)");
             int actual = this.driver.delete("delete from users where login = 'login_a'");
             assertEquals(1, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -81,6 +85,8 @@ public class DBDriverTest {
             this.driver.delete("delete from users where login = 'nonexistent_login'");
         } catch (SQLException ex) {
             assertTrue(ex instanceof SQLException);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     /**
@@ -90,7 +96,7 @@ public class DBDriverTest {
     public void testExecuteSql() {
         try {
             this.driver.executeSql("select count(*) from users");
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -103,6 +109,8 @@ public class DBDriverTest {
             this.driver.executeSql("select count(*) from nonexistent_table");
         } catch (SQLException ex) {
             assertTrue(ex instanceof SQLException);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     /**
@@ -110,14 +118,22 @@ public class DBDriverTest {
      */
     @Test
     public void testGetInstance() {
-        assertTrue(DBDriver.getInstance() instanceof DBDriver);
+        try {
+            assertTrue(DBDriver.getInstance() instanceof DBDriver);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     /**
      * Тестирует public int getNumActive().
      */
     @Test
     public void testGetNumActive() {
-        assertEquals(0, this.driver.getNumActive());
+        try {
+            assertEquals(0, this.driver.getNumActive());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     /**
      * Тестирует public HashMap<String, String> insert(String query) throws SQLException.
@@ -127,7 +143,7 @@ public class DBDriverTest {
         try {
             HashMap<String, String> result = this.driver.insert("insert into users (login, pass, role_id, addr_id) values ('login_b', 'pass_b', 2, 2)");
             assertTrue(Integer.parseInt(result.get("id")) > 0);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -140,6 +156,8 @@ public class DBDriverTest {
             this.driver.insert("insert into users (login, pass, role_id, addr_id) values (no values)");
         } catch (SQLException ex) {
             assertTrue(ex instanceof SQLException);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     /**
@@ -147,7 +165,11 @@ public class DBDriverTest {
      */
     @Test
     public void testIsDBDriverSet() {
-        assertTrue(this.driver.isDBDriverSet());
+        try {
+            assertTrue(this.driver.isDBDriverSet());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     /**
      * Тестирует public LinkedList<HashMap<String, String>> select(String query) throws SQLException.
@@ -162,7 +184,7 @@ public class DBDriverTest {
                 actual.add(entry.get("name"));
             }
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -175,6 +197,8 @@ public class DBDriverTest {
             this.driver.select("select name from roles order by %%%");
         } catch (SQLException ex) {
             assertTrue(ex instanceof SQLException);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     /**
@@ -187,7 +211,7 @@ public class DBDriverTest {
             this.driver.setDbDriver();
             assertEquals(0, this.driver.getNumActive());
             this.driver.setConnection();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -201,7 +225,7 @@ public class DBDriverTest {
             this.driver.setDbDriver();
             assertTrue(this.driver.isDBDriverSet());
             this.driver.setConnection();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -215,7 +239,7 @@ public class DBDriverTest {
             int id = Integer.parseInt(result.get("id"));
             String query = String.format("update users set login = 'login_c_updated' where id = %d", id);
             assertEquals(1, this.driver.update(query));
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -229,6 +253,8 @@ public class DBDriverTest {
             this.driver.update(query);
         } catch (SQLException ex) {
             assertTrue(ex instanceof SQLException);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

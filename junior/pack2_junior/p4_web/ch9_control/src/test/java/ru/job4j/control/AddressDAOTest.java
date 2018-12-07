@@ -15,7 +15,7 @@ import ru.job4j.control.service.Address;
  * Класс AddressDAOTest тестирует класс AddressDAO.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-23
+ * @version 2018-12-07
  * @since 2018-01-10
  */
 public class AddressDAOTest {
@@ -34,7 +34,7 @@ public class AddressDAOTest {
     public void afterTest() {
         try {
             this.driver.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
 			ex.printStackTrace();
 		}
     }
@@ -43,11 +43,15 @@ public class AddressDAOTest {
      */
     @Before
     public void beforeTest() {
-        this.driver = DBDriver.getInstance();
-        if (!this.driver.isDBDriverSet()) {
-            this.driver.setDbDriver();
+        try {
+            this.driver = DBDriver.getInstance();
+            if (!this.driver.isDBDriverSet()) {
+                this.driver.setDbDriver();
+            }
+            this.as = new AddressDAO();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        this.as = new AddressDAO();
     }
     /**
      * Тестирует public Address getAddressById(final int id) throws SQLException.
@@ -59,7 +63,7 @@ public class AddressDAOTest {
             Address expected = new Address(addressId, "РФ", "Москва", "Кремль");
             Address actual = this.as.getAddressById(addressId);
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -72,6 +76,8 @@ public class AddressDAOTest {
             this.as.getAddressById(-1);
         } catch (SQLException ex) {
             assertTrue(ex instanceof SQLException);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     /**
@@ -88,7 +94,7 @@ public class AddressDAOTest {
             expected.add(new Address(4, "США", "Вашингтон", "Капитолийский холм"));
             LinkedList<Address> actual = this.as.getAddresses();
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

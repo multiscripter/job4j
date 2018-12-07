@@ -15,7 +15,7 @@ import ru.job4j.control.service.Role;
  * Класс RoleDAOTest тестирует класс RoleDAO.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-23
+ * @version 2018-12-07
  * @since 2017-12-18
  */
 public class RoleDAOTest {
@@ -34,7 +34,7 @@ public class RoleDAOTest {
     public void afterTest() {
         try {
             this.driver.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -43,11 +43,15 @@ public class RoleDAOTest {
      */
     @Before
     public void beforeTest() {
-        this.driver = DBDriver.getInstance();
-        if (!this.driver.isDBDriverSet()) {
-            this.driver.setDbDriver();
+        try {
+            this.driver = DBDriver.getInstance();
+            if (!this.driver.isDBDriverSet()) {
+                this.driver.setDbDriver();
+            }
+            this.rls = new RoleDAO();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        this.rls = new RoleDAO();
     }
     /**
      * Тестирует public Role getRoleById(final int id) throws SQLException.
@@ -59,7 +63,7 @@ public class RoleDAOTest {
             Role expected = new Role(roleId, "administrator");
             Role actual = this.rls.getRoleById(roleId);
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -73,6 +77,8 @@ public class RoleDAOTest {
             this.rls.getRoleById(-1);
         } catch (SQLException ex) {
             assertTrue(ex instanceof SQLException);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     /**
@@ -85,7 +91,7 @@ public class RoleDAOTest {
             Role expected = new Role(3, roleName);
             Role actual = this.rls.getRoleByName(roleName);
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -101,6 +107,8 @@ public class RoleDAOTest {
             assertEquals(expected, actual);
         } catch (SQLException ex) {
             assertTrue(ex instanceof SQLException);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     /**
@@ -115,7 +123,7 @@ public class RoleDAOTest {
             expected.add(new Role(3, "user"));
             LinkedList<Role> actual = this.rls.getRoles();
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

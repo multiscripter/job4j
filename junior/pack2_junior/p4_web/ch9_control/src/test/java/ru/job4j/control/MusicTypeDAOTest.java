@@ -15,7 +15,7 @@ import ru.job4j.control.service.MusicType;
  * Класс MusicTypeDAOTest тестирует класс MusicTypeDAO.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-01-23
+ * @version 2018-12-07
  * @since 2018-01-10
  */
 public class MusicTypeDAOTest {
@@ -34,7 +34,7 @@ public class MusicTypeDAOTest {
     public void afterTest() {
         try {
             this.driver.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
 			ex.printStackTrace();
 		}
     }
@@ -43,11 +43,15 @@ public class MusicTypeDAOTest {
      */
     @Before
     public void beforeTest() {
-        this.driver = DBDriver.getInstance();
-        if (!this.driver.isDBDriverSet()) {
-            this.driver.setDbDriver();
+        try {
+            this.driver = DBDriver.getInstance();
+            if (!this.driver.isDBDriverSet()) {
+                this.driver.setDbDriver();
+            }
+            this.mts = new MusicTypeDAO();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        this.mts = new MusicTypeDAO();
     }
     /**
      * Тестирует public LinkedList<MusicType> getMusicTypesByIds(final String[] ids) throws SQLException.
@@ -59,7 +63,7 @@ public class MusicTypeDAOTest {
             MusicType expected = new MusicType(id, "rap");
             MusicType actual = this.mts.getMusicTypesByIds(new String[]{Integer.toString(id)}).getFirst();
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -72,6 +76,8 @@ public class MusicTypeDAOTest {
             this.mts.getMusicTypesByIds(new String[]{"-1"});
         } catch (SQLException ex) {
             assertTrue(ex instanceof SQLException);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
     /**
@@ -86,7 +92,7 @@ public class MusicTypeDAOTest {
             expected.add(new MusicType(2, "rock"));
             LinkedList<MusicType> actual = this.mts.getMusicTypes();
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -102,7 +108,7 @@ public class MusicTypeDAOTest {
             expected.add(new MusicType(2, "rock"));
             LinkedList<MusicType> actual = this.mts.getUserMusicTypesByUserId(1);
             assertEquals(expected, actual);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -113,7 +119,7 @@ public class MusicTypeDAOTest {
     public void testGetUserMusicTypesByUserIdThrowsSQLException() {
         try {
             this.mts.getUserMusicTypesByUserId(-1);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
