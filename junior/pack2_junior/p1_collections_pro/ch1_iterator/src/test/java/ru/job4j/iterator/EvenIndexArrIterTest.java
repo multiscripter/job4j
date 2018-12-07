@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
  * Класс EvenIndexArrIterTest тестирует класс EvenIndexArrIter.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-07
  * @since 2017-05-22
  */
 public class EvenIndexArrIterTest {
@@ -67,7 +67,7 @@ public class EvenIndexArrIterTest {
     public void checkIteratorArrEvenLengthFirstElemHasValueOne() {
         int[] arr = new int[]{1, 2, 3, 4, 5, 6};
         int[] expected = new int[]{2, 4, 6};
-        ArrayList<Integer> al = new ArrayList();
+        ArrayList<Integer> al = new ArrayList<>();
         EvenIndexArrIter enai = new EvenIndexArrIter(arr);
         while (enai.hasNext()) {
             al.add((Integer) enai.next());
@@ -82,7 +82,7 @@ public class EvenIndexArrIterTest {
     public void checkIteratorArrEvenLengthFirstElemHasValueZero() {
         int[] arr = new int[]{0, 1, 2, 3, 4, 5, 6};
         int[] expected = new int[]{0, 2, 4, 6};
-        ArrayList<Integer> al = new ArrayList();
+        ArrayList<Integer> al = new ArrayList<>();
         EvenIndexArrIter enai = new EvenIndexArrIter(arr);
         while (enai.hasNext()) {
             al.add((Integer) enai.next());
@@ -97,7 +97,7 @@ public class EvenIndexArrIterTest {
     public void checkIteratorArrOddLengthFirstElemHasValueOne() {
         int[] arr = new int[]{1, 2, 3, 4, 5, 6, 7};
         int[] expected = new int[]{2, 4, 6};
-        ArrayList<Integer> al = new ArrayList();
+        ArrayList<Integer> al = new ArrayList<>();
         EvenIndexArrIter enai = new EvenIndexArrIter(arr);
         while (enai.hasNext()) {
             al.add((Integer) enai.next());
@@ -112,7 +112,7 @@ public class EvenIndexArrIterTest {
     public void checkIteratorArrOddLengthFirstElemHasValueZero() {
         int[] arr = new int[]{0, 1, 2, 3, 4, 5, 6, 7};
         int[] expected = new int[]{0, 2, 4, 6};
-        ArrayList<Integer> al = new ArrayList();
+        ArrayList<Integer> al = new ArrayList<>();
         EvenIndexArrIter enai = new EvenIndexArrIter(arr);
         while (enai.hasNext()) {
             al.add((Integer) enai.next());
@@ -127,7 +127,7 @@ public class EvenIndexArrIterTest {
     public void checkIteratorArrEvenLengthFirstElemHasValueMinusThree() {
         int[] arr = new int[]{-3, -2, -1, 0, 1, 2, 3, 4};
         int[] expected = new int[]{-2, 0, 2, 4};
-        ArrayList<Integer> al = new ArrayList();
+        ArrayList<Integer> al = new ArrayList<>();
         EvenIndexArrIter enai = new EvenIndexArrIter(arr);
         while (enai.hasNext()) {
             al.add((Integer) enai.next());
@@ -142,7 +142,7 @@ public class EvenIndexArrIterTest {
     public void checkIteratorArrOddLengthFirstElemHasValueMinusFour() {
         int[] arr = new int[]{-4, -3, -2, -1, 0, 1, 2, 3, 4};
         int[] expected = new int[]{-4, -2, 0, 2, 4};
-        ArrayList<Integer> al = new ArrayList();
+        ArrayList<Integer> al = new ArrayList<>();
         EvenIndexArrIter enai = new EvenIndexArrIter(arr);
         while (enai.hasNext()) {
             al.add((Integer) enai.next());

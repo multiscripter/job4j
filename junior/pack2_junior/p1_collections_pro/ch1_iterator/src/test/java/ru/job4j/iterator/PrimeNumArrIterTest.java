@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
  * Класс PrimeNumArrIterTest тестирует класс PrimeNumArrIter.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-07
  * @since 2017-05-22
  */
 public class PrimeNumArrIterTest {
@@ -66,7 +66,7 @@ public class PrimeNumArrIterTest {
     public void testNext() {
         int[] arr = new int[]{-2, 0, 1, 2, 4, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17};
         int[] expected = new int[]{1, 2, 7, 11, 13, 17};
-        ArrayList<Integer> al = new ArrayList();
+        ArrayList<Integer> al = new ArrayList<>();
         PrimeNumArrIter pnai = new PrimeNumArrIter(arr);
         while (pnai.hasNext()) {
             al.add((Integer) pnai.next());

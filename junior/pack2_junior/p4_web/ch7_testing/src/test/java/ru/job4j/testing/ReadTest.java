@@ -1,10 +1,6 @@
 package ru.job4j.testing;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Date;
@@ -13,7 +9,6 @@ import java.util.LinkedList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,7 +26,7 @@ import org.mockito.stubbing.Answer;
  * Класс ReadTest тестирует класс Read.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-11-26
+ * @version 2018-12-07
  * @since 2017-12-18
  */
 public class ReadTest {
@@ -122,9 +117,8 @@ public class ReadTest {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 String key = invocation.getArgumentAt(0, String.class);
-                Object value = attributes.get(key);
-                //System.out.println("get attribute value for key=" + key + " : " + value);
-                return value;
+                //System.out.println("get attribute value for key=" + key + " : " + attributes.get(key));
+                return attributes.get(key);
             }
         }).when(req).getAttribute(Mockito.anyString());
     }
@@ -143,7 +137,7 @@ public class ReadTest {
             servlet.doGet(req, resp);
             LinkedList<User> actual = (LinkedList<User>) req.getAttribute("users");
             assertEquals(expected, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | ServletException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }

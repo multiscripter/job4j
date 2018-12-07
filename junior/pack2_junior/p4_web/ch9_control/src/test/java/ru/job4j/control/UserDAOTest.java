@@ -161,8 +161,8 @@ public class UserDAOTest {
     @Test
     public void testGetPassHash() {
         try {
-            String expected = "1b681368da947ac64e12e6349bd74c77";
-            String actual = this.us.getPassHash("Аргентина манит негра");
+            String expected = "fea80f2db003d4ebc4536023814aa885";
+            String actual = this.us.getPassHash("Lorem ipsum dolor sit amet");
             assertEquals(expected, actual);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
             ex.printStackTrace();

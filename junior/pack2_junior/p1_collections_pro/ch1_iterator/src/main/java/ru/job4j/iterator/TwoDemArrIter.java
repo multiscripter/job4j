@@ -4,16 +4,16 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 /**
  * Класс TwoDemArrIter реализует итератор для двухмерного массива int[][].
- *
+ * @param <T> параметризированный тип.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 2018-12-07
  * @since 2017-05-18
  */
-class TwoDemArrIter implements Iterator {
+class TwoDemArrIter<T> implements Iterator<T> {
     /**
      * Двухмерный массив.
      */
-    private int[][] arr;
+    private T[][] arr;
     /**
      * Текущий индекс массива.
      */
@@ -26,11 +26,11 @@ class TwoDemArrIter implements Iterator {
      * Конструктор.
      * @param arr двухмерный массив.
      */
-    TwoDemArrIter(int[][] arr) {
+    TwoDemArrIter(T[][] arr) {
         this.arr = arr;
         this.index = 0;
-        for (int a = 0; a < this.arr.length; a++) {
-            this.length += this.arr[a].length;
+        for (T[] anArr : this.arr) {
+            this.length += anArr.length;
         }
     }
     /**
@@ -44,7 +44,7 @@ class TwoDemArrIter implements Iterator {
      * Возвращает значение следующего элемента массива.
      * @return значение следующего элемента массива.
      */
-    public Object next() {
+    public T next() {
         int x = 0, y = 0, cur = 0;
         for (int a = 0; a < this.arr.length; a++, x++) {
             cur += this.arr[a].length;
@@ -55,7 +55,7 @@ class TwoDemArrIter implements Iterator {
         }
         this.index++;
         try {
-            return new Integer(this.arr[x][y]);
+            return this.arr[x][y];
         } catch (Exception ex) {
             throw new NoSuchElementException();
         }

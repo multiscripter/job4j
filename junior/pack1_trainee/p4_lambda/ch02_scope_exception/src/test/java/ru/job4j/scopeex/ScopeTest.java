@@ -4,11 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 /**
  * Класс ScopeTest демострирует область видимости и лямбда.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-09-11
+ * @version 2018-12-07
  * @since 2018-09-11
  */
 public class ScopeTest {
@@ -17,9 +16,9 @@ public class ScopeTest {
      */
     @Test
     public void tryToAssingOuterVar() {
+        /*
         List<String> names = Arrays.asList("Petr", "Nick", "Ban");
         String last = null;
-        /*
         names.forEach(
             // Ошибка компиляции.
             // local variables referenced from a lambda expression must be final or effectively final
@@ -42,58 +41,14 @@ public class ScopeTest {
         assertArrayEquals(expected, actual);
     }
     /**
-     * Обёртка.
-     * @param <T> параметризированный тип.
-     */
-    public class Wrapper<T> {
-        /**
-         * Объект исключения.
-         */
-        private T ex = null;
-        /**
-         * Получает значение.
-         * @return значение.
-         */
-        public T get() {
-            return this.ex;
-        }
-        /**
-         * Устанавливает значение.
-         * @param ex значение.
-         */
-        public void set(T ex) {
-            this.ex = ex;
-        }
-        /**
-         * Проверяет значение на пустоту.
-         * @return true если значение пусто. Иначе false.
-         */
-        boolean isEmpty() {
-            return this.ex == null;
-        }
-    }
-    /**
      * Демострирует выброс исключения из лямбда.
+     * Обращение к несуществующему элементу массива.
      */
-    @Test
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void lambdaThrowsException() {
-        String expected = "java.lang.ArrayIndexOutOfBoundsException";
         List<String> names = Arrays.asList("Petr", "Nick", "Ban");
         String[] test = {null};
-        Wrapper<Exception> exw = new Wrapper();
-        String actual = null;
-        names.forEach(
-            n -> {
-                try {
-                    test[1] = n;
-                } catch (Exception ex) {
-                    exw.set(ex);
-                }
-            }
-        );
-        if (!exw.isEmpty()) {
-            actual = exw.get().getClass().getName();
-        }
-        assertEquals(expected, actual);
+        names.forEach(n -> test[1] = n);
+        System.out.println(test[1]);
     }
 }

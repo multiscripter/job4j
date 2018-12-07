@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
  * Класс EvenNumArrIterTest тестирует класс EvenNumArrIter.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-07
  * @since 2017-05-22
  */
 public class EvenNumArrIterTest {
@@ -66,7 +66,7 @@ public class EvenNumArrIterTest {
     public void testNext() {
         int[] arr = new int[]{-5, -3, -2, 0, 1, 2, 3, 5, 6, 7, 8, 10};
         int[] expected = new int[]{-2, 0, 2, 6, 8, 10};
-        ArrayList<Integer> al = new ArrayList();
+        ArrayList<Integer> al = new ArrayList<>();
         EvenNumArrIter enai = new EvenNumArrIter(arr);
         while (enai.hasNext()) {
             al.add((Integer) enai.next());
@@ -81,7 +81,7 @@ public class EvenNumArrIterTest {
     public void testNextEmptyResult() {
         int[] arr = new int[]{-5, -3, 1, 3, 5, 7, 11, 111};
         int[] expected = new int[]{};
-        ArrayList<Integer> al = new ArrayList();
+        ArrayList<Integer> al = new ArrayList<>();
         EvenNumArrIter enai = new EvenNumArrIter(arr);
         while (enai.hasNext()) {
             al.add((Integer) enai.next());

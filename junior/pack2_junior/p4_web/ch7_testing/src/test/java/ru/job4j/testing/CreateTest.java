@@ -1,10 +1,6 @@
 package ru.job4j.testing;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Date;
@@ -12,7 +8,6 @@ import java.util.GregorianCalendar;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,7 +26,7 @@ import org.mockito.stubbing.Answer;
  * Класс CreateTest тестирует класс Create.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-11-26
+ * @version 2018-12-07
  * @since 2017-12-18
  */
 public class CreateTest {
@@ -140,7 +135,7 @@ public class CreateTest {
             when(ctx.getRequestDispatcher("/WEB-INF/views/createGet.jsp")).thenReturn(reqDesp);
             this.setAttributeStorage(req);
             servlet.doGet(req, resp);
-        } catch (IOException | ServletException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -169,7 +164,7 @@ public class CreateTest {
             String expected = String.format("Пользователь %s добавлен. ID: %s", user.getName(), user.getId());
             String actual = (String) req.getAttribute("message");
             assertEquals(expected, actual);
-        } catch (IOException | NoSuchAlgorithmException | ParseException | ServletException | SQLException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
