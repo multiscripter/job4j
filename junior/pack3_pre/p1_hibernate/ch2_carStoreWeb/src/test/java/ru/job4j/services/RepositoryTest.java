@@ -1,9 +1,6 @@
 package ru.job4j.services;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.checking.DBDriver;
 import ru.job4j.models.Body;
@@ -26,7 +23,7 @@ import static org.junit.Assert.assertEquals;
  * Класс RepositoryTest тестирует класс Repository.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-05-21
+ * @version 2018-12-08
  * @since 2018-05-10
  */
 public class RepositoryTest {
@@ -53,7 +50,7 @@ public class RepositoryTest {
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
             this.driver.executeSqlScript(path + "../../src/main/resources/junior.pack3.p1.ch2.task2.sql");
-        } catch (IOException | SQLException | URISyntaxException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
@@ -125,7 +122,7 @@ public class RepositoryTest {
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      * Тип: User.
      */
-    @Ignore@Test
+    @Test
     public void testGetByIdWithTypeUser() {
         try {
             int id = 1;
@@ -148,7 +145,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetByIdWithTypeBrand() {
         try {
             int id = 1;
@@ -176,7 +173,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetByIdWithTypeOffer() {
         try {
             int id = 1;
@@ -222,7 +219,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetByNameWithTypeUser() {
         try {
             String name = "testUser1";
@@ -245,7 +242,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetCarListByBodyIdEquals1() {
         try {
             List<Car> expected = new ArrayList<>();
@@ -270,7 +267,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetOfferListByIdIn() {
         try {
             List<Offer> expected = new ArrayList<>();
@@ -295,7 +292,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetOfferListByIdBetween() {
         try {
             List<Offer> expected = new ArrayList<>();
@@ -321,7 +318,7 @@ public class RepositoryTest {
     /**
      * Тестирует public List<IModel> get(final String type, HashMap<String, List<String[]>> params) throws Exception.
      */
-    @Ignore@Test
+    @Test
     public void testGetWithOfferOrderBy() {
         try {
             List<Offer> expected = new ArrayList<>();
@@ -349,6 +346,11 @@ public class RepositoryTest {
      */
     @After
     public void afterTest() {
-        this.repo.close();
+        try {
+            this.repo.close();
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
     }
 }

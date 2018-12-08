@@ -1,9 +1,6 @@
 package ru.job4j.services;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,7 +19,7 @@ import ru.job4j.models.Item;
  * Класс ItemRepositoryTest тестирует класс ItemRepository.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-03-29
+ * @version 2018-12-08
  * @since 2018-03-28
  */
 public class ItemRepositoryTest {
@@ -47,7 +44,7 @@ public class ItemRepositoryTest {
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
             this.driver.executeSqlScript(path + "../../src/main/resources/junior.pack3.p1.ch1.task1.sql");
-        } catch (IOException | SQLException | URISyntaxException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
@@ -68,7 +65,7 @@ public class ItemRepositoryTest {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
             while (iter.hasNext()) {
                 cur = iter.next();
-                expected[a++] = new Item(Integer.parseInt(cur.get("id")), cur.get("item"), cur.get("descr"), sdf.parse(cur.get("created")).getTime(), cur.get("done").equals("t") ? true : false);
+                expected[a++] = new Item(Integer.parseInt(cur.get("id")), cur.get("item"), cur.get("descr"), sdf.parse(cur.get("created")).getTime(), cur.get("done").equals("t"));
             }
             ItemRepository repos = new ItemRepository();
             HashMap<String, String> params = new HashMap<>();
@@ -96,7 +93,7 @@ public class ItemRepositoryTest {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
             while (iter.hasNext()) {
                 cur = iter.next();
-                expected[a++] = new Item(Integer.parseInt(cur.get("id")), cur.get("item"), cur.get("descr"), sdf.parse(cur.get("created")).getTime(), cur.get("done").equals("t") ? true : false);
+                expected[a++] = new Item(Integer.parseInt(cur.get("id")), cur.get("item"), cur.get("descr"), sdf.parse(cur.get("created")).getTime(), cur.get("done").equals("t"));
             }
             ItemRepository repos = new ItemRepository();
             HashMap<String, String> params = new HashMap<>();
@@ -128,7 +125,7 @@ public class ItemRepositoryTest {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
             while (iter.hasNext()) {
                 cur = iter.next();
-                expected[a++] = new Item(Integer.parseInt(cur.get("id")), cur.get("item"), cur.get("descr"), sdf.parse(cur.get("created")).getTime(), cur.get("done").equals("t") ? true : false);
+                expected[a++] = new Item(Integer.parseInt(cur.get("id")), cur.get("item"), cur.get("descr"), sdf.parse(cur.get("created")).getTime(), cur.get("done").equals("t"));
             }
             ItemRepository repos = new ItemRepository();
             HashMap<String, String> params = new HashMap<>();
@@ -159,7 +156,7 @@ public class ItemRepositoryTest {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
             while (iter.hasNext()) {
                 cur = iter.next();
-                expected[a++] = new Item(Integer.parseInt(cur.get("id")), cur.get("item"), cur.get("descr"), sdf.parse(cur.get("created")).getTime(), cur.get("done").equals("t") ? true : false);
+                expected[a++] = new Item(Integer.parseInt(cur.get("id")), cur.get("item"), cur.get("descr"), sdf.parse(cur.get("created")).getTime(), cur.get("done").equals("t"));
             }
             ItemRepository repos = new ItemRepository();
             HashMap<String, String> params = new HashMap<>();

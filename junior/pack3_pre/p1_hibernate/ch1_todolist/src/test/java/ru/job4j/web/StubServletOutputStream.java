@@ -25,7 +25,7 @@ public class StubServletOutputStream extends ServletOutputStream {
     }
     /**
      * Переопределённый метод.
-     * @param i
+     * @param i целое число.
      * @throws java.io.IOException исключение ввода-вывода.
      */
     @Override

@@ -1,10 +1,6 @@
 package ru.job4j.services;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +19,7 @@ import ru.job4j.models.Item;
  * Класс ItemDAOTest тестирует класс ItemDAO.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-04-25
+ * @version 2018-12-08
  * @since 2018-04-04
  */
 public class ItemDAOTest {
@@ -53,7 +49,7 @@ public class ItemDAOTest {
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
             this.driver.executeSqlScript(path + "../../src/main/resources/junior.pack3.p1.ch1.task2.sql");
-        } catch (IOException | SQLException | URISyntaxException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
@@ -124,7 +120,7 @@ public class ItemDAOTest {
             long created = sdf.parse(result.get(0).get("created")).getTime();
             Item actual = new Item(Integer.parseInt(result.get(0).get("id")), result.get(0).get("item"), result.get(0).get("descr"), created, result.get(0).get("done").equals("t"));
             assertEquals(expected, actual);
-        } catch (NumberFormatException | ParseException | SQLException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
@@ -134,6 +130,11 @@ public class ItemDAOTest {
      */
     @After
     public void afterTest() {
-        this.idao.close();
+        try {
+            this.idao.close();
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
     }
 }

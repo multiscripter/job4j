@@ -1,9 +1,6 @@
 package ru.job4j.services;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  * Класс CarRepositoryTest тестирует класс CarRepository.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-05-15
+ * @version 2018-12-08
  * @since 2018-05-14
  */
 public class CarRepositoryTest {
@@ -51,7 +48,7 @@ public class CarRepositoryTest {
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
             this.driver.executeSqlScript(path + "../../src/main/resources/junior.pack3.p1.ch2.task1v2.sql");
-        } catch (IOException | SQLException | URISyntaxException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
@@ -162,6 +159,11 @@ public class CarRepositoryTest {
      */
     @After
     public void afterTest() {
-        this.repo.close();
+        try {
+            this.repo.close();
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
     }
 }

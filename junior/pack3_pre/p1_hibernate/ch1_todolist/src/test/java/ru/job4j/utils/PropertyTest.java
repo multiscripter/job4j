@@ -57,7 +57,7 @@ public class PropertyTest {
      */
     @Test
     public void testEqualsWithDifferentClassObject() {
-        assertFalse(this.prop.equals(new String()));
+        assertFalse(this.prop.equals(""));
     }
     /**
      * Тестирует public boolean equals(Object obj).

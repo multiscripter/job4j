@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,7 +26,7 @@ import ru.job4j.services.ItemRepository;
  * Класс ReadTest тестирует класс Read.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-04-20
+ * @version 2018-12-08
  * @since 2018-04-20
  */
 public class ReadTest {
@@ -62,7 +61,7 @@ public class ReadTest {
     /**
      * ItemRepository.
      */
-    private final ItemRepository ir = new ItemRepository();
+    private ItemRepository ir;
     /**
      * Действия перед тестом.
      */
@@ -71,9 +70,10 @@ public class ReadTest {
         try {
             MockitoAnnotations.initMocks(this);
             this.attributes = new ConcurrentHashMap<>();
+            this.ir = new ItemRepository();
             this.servlet = new Read();
             this.servlet.init(conf);
-        } catch (ServletException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -98,9 +98,8 @@ public class ReadTest {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 String key = invocation.getArgumentAt(0, String.class);
-                Object value = attributes.get(key);
-                //System.out.println("get attribute value for key=" + key + " : " + value);
-                return value;
+                //System.out.println("get attribute value for key=" + key + " : " + attributes.get(key));
+                return attributes.get(key);
             }
         }).when(req).getAttribute(Mockito.anyString());
     }

@@ -29,7 +29,7 @@ import ru.job4j.services.Repository;
  * Класс OfferCreateTest тестирует класс OfferCreate.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-06-06
+ * @version 2018-12-08
  * @since 2018-05-28
  */
 public class OfferCreateTest {
@@ -53,7 +53,7 @@ public class OfferCreateTest {
     /**
      * Repository.
      */
-    private Repository repo = new Repository();
+    private Repository repo;
     /**
      * Заглушка диспатчера реквеста.
      */
@@ -69,6 +69,7 @@ public class OfferCreateTest {
     @Before
     public void beforeTest() {
         try {
+            this.repo = new Repository();
             this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch3task1", "postgres", "postgresrootpass");
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             this.path = path.replaceFirst("^/(.:/)", "$1");
@@ -137,12 +138,17 @@ public class OfferCreateTest {
     @After
     public void afterTest() {
         try {
-            this.driver.executeSqlScript(this.path);
+            try {
+                this.driver.executeSqlScript(this.path);
+            } catch (Exception ex) {
+                this.logger.error("ERROR", ex);
+                ex.printStackTrace();
+            } finally {
+                this.repo.close();
+            }
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
-        } finally {
-            this.repo.close();
         }
     }
 }

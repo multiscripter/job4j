@@ -34,7 +34,7 @@ import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
  * Класс OfferCreateTest тестирует класс OfferCreate.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-07-03
+ * @version 2018-12-08
  * @since 2018-05-28
  */
 public class OfferCreateTest {
@@ -58,7 +58,7 @@ public class OfferCreateTest {
     /**
      * Repository.
      */
-    private Repository repo = new Repository();
+    private Repository repo;
     /**
      * Заглушка диспатчера реквеста.
      */
@@ -77,7 +77,7 @@ public class OfferCreateTest {
             String db = "HyperSQL"; // HyperSQL | PostgreSQL
             if (db.equals("HyperSQL")) {
                 /**
-                 * По-умолчанию HSQLDB в запросах использует имёна столбцов из схемы таблицы, игнорируя алиасы !!!
+                 * По-умолчанию HSQLDB в запросах использует имена столбцов из схемы таблицы, игнорируя алиасы !!!
                  * То есть запрос "select col_name as col_alias from . . . " вернёт в результирующем наборе
                  * col_name=значение, а не col_alias=значение. Выключается это совершенно дибильное поведение
                  * опцией get_column_name=false
@@ -87,6 +87,7 @@ public class OfferCreateTest {
                 this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch4task1", "postgres",
  "postgresrootpass");
             }
+            this.repo = new Repository();
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             this.path = path.replaceFirst("^/(.:/)", "$1");
             this.path = String.format("%s../../src/test/resources/junior.pack3.p1.ch4.task1.%s.sql", this.path, db);
@@ -159,12 +160,17 @@ public class OfferCreateTest {
     @After
     public void afterTest() {
         try {
-            this.driver.executeSqlScript(this.path);
+            try {
+                this.driver.executeSqlScript(this.path);
+            } catch (Exception ex) {
+                this.logger.error("ERROR", ex);
+                ex.printStackTrace();
+            } finally {
+                this.repo.close();
+            }
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
-        } finally {
-            this.repo.close();
         }
     }
 }

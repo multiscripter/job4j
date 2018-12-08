@@ -27,7 +27,7 @@ import ru.job4j.services.Repository;
  * Класс IndexTest тестирует класс Index.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-06-06
+ * @version 2018-12-08
  * @since 2018-05-28
  */
 public class IndexTest {
@@ -43,7 +43,7 @@ public class IndexTest {
     /**
      * Repository.
      */
-    private Repository repo = new Repository();
+    private Repository repo;
     /**
      * Заглушка диспатчера реквеста.
      */
@@ -60,6 +60,7 @@ public class IndexTest {
     public void beforeTest() {
         try {
             MockitoAnnotations.initMocks(this);
+            this.repo = new Repository();
             this.servlet = new Index();
             ServletConfig conf = mock(ServletConfig.class);
             this.servlet.init(conf);
@@ -99,6 +100,11 @@ public class IndexTest {
      */
     @After
     public void afterTest() {
-        this.repo.close();
+        try {
+            this.repo.close();
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
     }
 }

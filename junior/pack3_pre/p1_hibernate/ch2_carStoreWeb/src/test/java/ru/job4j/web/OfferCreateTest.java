@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
@@ -27,7 +26,7 @@ import ru.job4j.services.Repository;
  * Класс OfferCreateTest тестирует класс OfferCreate.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-05-29
+ * @version 2018-12-08
  * @since 2018-05-28
  */
 public class OfferCreateTest {
@@ -43,7 +42,7 @@ public class OfferCreateTest {
     /**
      * Repository.
      */
-    private Repository repo = new Repository();
+    private Repository repo;
     /**
      * Заглушка диспатчера реквеста.
      */
@@ -60,10 +59,11 @@ public class OfferCreateTest {
     public void beforeTest() {
         try {
             MockitoAnnotations.initMocks(this);
+            this.repo = new Repository();
             this.servlet = new OfferCreate();
             ServletConfig conf = mock(ServletConfig.class);
             this.servlet.init(conf);
-        } catch (ServletException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
@@ -79,7 +79,7 @@ public class OfferCreateTest {
             HttpServletResponse resp = mock(HttpServletResponse.class);
             ServletFileUpload sfu = mock(ServletFileUpload.class);
             HashMap<String, String> fields = mock(HashMap.class);
-            List<FileItem> items = new ArrayList();
+            List<FileItem> items = new ArrayList<>();
             String name = "TestName";
             String carId = "1";
             String body = "2";

@@ -67,7 +67,7 @@ public class DBDriver {
         if (this.con == null || this.con.isClosed()) {
 			this.setConnection();
     	}
-    	int affected = 0;
+    	int affected;
 		try (Statement stmt = this.con.createStatement()) {
 			affected = stmt.executeUpdate(query);
 		} catch (SQLException ex) {

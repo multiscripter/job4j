@@ -34,7 +34,7 @@ import ru.job4j.services.DAO;
  * Класс OfferDeleteTest тестирует класс OfferDelete.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-06-18
+ * @version 2018-12-08
  * @since 2018-05-29
  */
 public class OfferDeleteTest {
@@ -46,7 +46,7 @@ public class OfferDeleteTest {
     /**
      * DAO.
      */
-    private DAO dao = new DAO();
+    private DAO dao;
     /**
      * Драйвер бд.
      */
@@ -87,6 +87,7 @@ public class OfferDeleteTest {
                 this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch4task1", "postgres",
  "postgresrootpass");
             }
+            this.dao = new DAO();
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             this.path = path.replaceFirst("^/(.:/)", "$1");
             this.path = String.format("%s../../src/test/resources/junior.pack3.p1.ch4.task1.%s.sql", this.path, db);
@@ -275,12 +276,17 @@ public class OfferDeleteTest {
     @After
     public void afterTest() {
         try {
-            this.driver.executeSqlScript(this.path);
+            try {
+                this.driver.executeSqlScript(this.path);
+            } catch (Exception ex) {
+                this.logger.error("ERROR", ex);
+                ex.printStackTrace();
+            } finally {
+                this.dao.close();
+            }
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
-        } finally {
-            this.dao.close();
         }
     }
 }

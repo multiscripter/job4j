@@ -12,7 +12,7 @@ import org.junit.Test;
  * Класс ItemTest тестирует класс Item.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-04-25
+ * @version 2018-12-08
  * @since 2018-04-20
  */
 public class ItemTest {
@@ -61,7 +61,7 @@ public class ItemTest {
      */
     @Test
     public void testEqualsDifferentClasses() {
-        assertFalse(this.item.equals(new String()));
+        assertFalse(this.item.equals(""));
     }
     /**
      * Тестирует public boolean equals(Object obj).

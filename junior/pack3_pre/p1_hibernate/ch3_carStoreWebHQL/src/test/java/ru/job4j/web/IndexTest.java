@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
@@ -27,7 +26,7 @@ import ru.job4j.services.Repository;
  * Класс IndexTest тестирует класс Index.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-06-06
+ * @version 2018-12-08
  * @since 2018-05-28
  */
 public class IndexTest {
@@ -43,7 +42,7 @@ public class IndexTest {
     /**
      * Repository.
      */
-    private Repository repo = new Repository();
+    private Repository repo;
     /**
      * Заглушка диспатчера реквеста.
      */
@@ -59,11 +58,12 @@ public class IndexTest {
     @Before
     public void beforeTest() {
         try {
+            this.repo = new Repository();
             MockitoAnnotations.initMocks(this);
             this.servlet = new Index();
             ServletConfig conf = mock(ServletConfig.class);
             this.servlet.init(conf);
-        } catch (ServletException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
@@ -99,6 +99,11 @@ public class IndexTest {
      */
     @After
     public void afterTest() {
-        this.repo.close();
+        try {
+            this.repo.close();
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
     }
 }

@@ -2,12 +2,13 @@ package ru.job4j.utils;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 /**
  * Класс FilterTest тестирует класс Filter.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-04-22
+ * @version 2018-12-08
  * @since 2018-04-22
  */
 public class FilterTest {
@@ -34,7 +35,7 @@ public class FilterTest {
      */
     @Test
     public void testGetFilters() {
-        assertEquals(new String[]{"isExists", "isFilled"}, this.filter.getFilters());
+        assertArrayEquals(new String[]{"isExists", "isFilled"}, this.filter.getFilters());
     }
     /**
      * Тестирует public String getValue().

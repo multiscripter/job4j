@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import org.mockito.Mock;
@@ -33,7 +33,7 @@ import ru.job4j.services.DAO;
  * Класс OfferDeleteTest тестирует класс OfferDelete.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-05-29
+ * @version 2018-12-08
  * @since 2018-05-29
  */
 public class OfferDeleteTest {
@@ -45,7 +45,7 @@ public class OfferDeleteTest {
     /**
      * DAO.
      */
-    private DAO dao = new DAO();
+    private DAO dao;
     /**
      * Логгер.
      */
@@ -70,6 +70,7 @@ public class OfferDeleteTest {
             path = path.replaceFirst("^/(.:/)", "$1");
             driver.executeSqlScript(path + "../../src/main/resources/junior.pack3.p1.ch2.task2.sql");
             MockitoAnnotations.initMocks(this);
+            this.dao = new DAO();
             this.servlet = new OfferDelete();
             ServletConfig conf = mock(ServletConfig.class);
             this.servlet.init(conf);
@@ -126,7 +127,7 @@ public class OfferDeleteTest {
     /**
      * Тестирует public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException.
      */
-    @Ignore@Test
+    @Test
     public void testDoGet() {
         try {
             Offer expected = this.getOffer();
@@ -150,7 +151,7 @@ public class OfferDeleteTest {
     /**
      * Тестирует public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException.
      */
-    @Ignore@Test
+    @Test
     public void testDoPost() {
         try {
             Offer offer = this.getOffer();
@@ -179,7 +180,7 @@ public class OfferDeleteTest {
      * Тестирует public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException.
      * Ошибка. Объявление не существует.
      */
-    @Ignore@Test
+    @Test
     public void testDoPostErrorOfferNotExists() {
         try {
             HttpServletRequest req = mock(HttpServletRequest.class);
@@ -203,7 +204,7 @@ public class OfferDeleteTest {
      * Тестирует public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException.
      * Ошибка. Пользователь не имеет прав для удаления объявления.
      */
-    @Ignore@Test
+    @Test
     public void testDoPostErrorUserHasNoRights() {
         try {
             HttpServletRequest req = mock(HttpServletRequest.class);
@@ -227,7 +228,7 @@ public class OfferDeleteTest {
      * Тестирует public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException.
      * Фатальная ошибка.
      */
-    @Ignore@Test
+    @Test
     public void testDoPostFatalError() {
         try {
             HttpServletRequest req = mock(HttpServletRequest.class);

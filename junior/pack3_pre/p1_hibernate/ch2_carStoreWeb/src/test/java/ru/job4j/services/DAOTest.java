@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.checking.DBDriver;
 import ru.job4j.models.Body;
@@ -24,14 +24,14 @@ import ru.job4j.models.User;
  * Класс DAOTest тестирует класс DAO.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-05-21
+ * @version 2018-12-08
  * @since 2018-05-15
  */
 public class DAOTest {
     /**
      * DAO моделей.
      */
-    private DAO dao = new DAO();
+    private DAO dao;
     /**
      * Драйвер бд.
      */
@@ -46,6 +46,7 @@ public class DAOTest {
     @Before
     public void beforeTest() {
         try {
+            this.dao = new DAO();
             this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch2task2", "postgres", "postgresrootpass");
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
@@ -84,7 +85,7 @@ public class DAOTest {
      * Тестирует public int create(T obj) throws PersistenceException.
      * Тип: Body.
      */
-    @Ignore@Test
+    @Test
     public void testCreateWithTypeBody() {
         try {
             Body expected = new Body(0, "targa");
@@ -103,7 +104,7 @@ public class DAOTest {
      * Тестирует public int create(T obj) throws PersistenceException.
      * Тип: Brand.
      */
-    @Ignore@Test
+    @Test
     public void testCreateWithTypeBrand() {
         try {
             Founder f = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -132,7 +133,7 @@ public class DAOTest {
      * Тестирует public int create(T obj) throws PersistenceException.
      * Тип: Car.
      */
-    @Ignore@Test
+    @Test
     public void testCreateWithTypeCar() {
         try {
             Car expected = new Car();
@@ -173,7 +174,7 @@ public class DAOTest {
      * Тестирует public int create(T obj) throws PersistenceException.
      * Тип: Offer.
      */
-    @Ignore@Test
+    @Test
     public void testCreateWithTypeOffer() {
         try {
             Offer expected = this.getOffer();
@@ -217,7 +218,7 @@ public class DAOTest {
      * Тестирует public void delete(T obj) throws PersistenceException.
      * Тип: Founder.
      */
-    @Ignore@Test
+    @Test
     public void testDeleteWithTypeFounder() {
         try {
             Founder founder = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -237,7 +238,7 @@ public class DAOTest {
      * Тестирует public void delete(T obj) throws PersistenceException.
      * Тип: Brand.
      */
-    @Ignore@Test
+    @Test
     public void testDeleteWithTypeBrand() {
         try {
             Founder founder = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -262,7 +263,7 @@ public class DAOTest {
      * Тестирует public void delete(T obj) throws PersistenceException.
      * Тип: Car.
      */
-    @Ignore@Test
+    @Test
     public void testDeleteWithTypeCar() {
         try {
             Founder founder = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -299,7 +300,7 @@ public class DAOTest {
      * Тестирует public void delete(T obj) throws PersistenceException.
      * Тип: Offer.
      */
-    @Ignore@Test
+    @Test
     public void testDeleteWithTypeOffer() {
         try {
             Offer expected = this.getOffer();
@@ -326,7 +327,7 @@ public class DAOTest {
      * Тестирует public List<T> read(T obj) throws PersistenceException.
      * Тип: Founder.
      */
-    @Ignore@Test
+    @Test
     public void testReadWithTypeFounder() {
         try {
             List<Founder> expected = new ArrayList<>();
@@ -350,7 +351,7 @@ public class DAOTest {
      * Тестирует public List<T> read(T obj) throws PersistenceException.
      * Тип: Brand.
      */
-    @Ignore@Test
+    @Test
     public void testReadWithTypeBrand() {
         try {
             List<Brand> expected = new ArrayList<>();
@@ -374,7 +375,7 @@ public class DAOTest {
      * Тестирует public List<T> read(T obj) throws PersistenceException.
      * Тип: Car.
      */
-    @Ignore@Test
+    @Test
     public void testReadWithTypeCar() {
         try {
             List<Car> expected = new ArrayList<>();
@@ -420,7 +421,7 @@ public class DAOTest {
      * Тестирует public void update(E obj).
      * Тип: Founder.
      */
-    @Ignore@Test
+    @Test
     public void testUpdateWithTypeFounder() {
         try {
             Founder expected = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -444,7 +445,7 @@ public class DAOTest {
      * Тестирует public void update(E obj).
      * Тип: Brand.
      */
-    @Ignore@Test
+    @Test
     public void testUpdateWithTypeBrand() {
         try {
             Founder f = new Founder(0, "ЦК КПСС", "Совет министров СССР");
@@ -477,7 +478,7 @@ public class DAOTest {
      * Тестирует public void update(E obj).
      * Тип: Car.
      */
-    @Ignore@Test
+    @Test
     public void testUpdateWithTypeCar() {
         try {
             Car expected = new Car();
@@ -532,7 +533,7 @@ public class DAOTest {
      * Тестирует public void update(E obj).
      * Тип: Offer.
      */
-    @Ignore@Test
+    @Test
     public void testUpdateWithTypeOffer() {
         try {
             Car car = new Car();
@@ -598,6 +599,11 @@ public class DAOTest {
      */
     @After
     public void afterTest() {
-        this.dao.close();
+        try {
+            this.dao.close();
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
     }
 }

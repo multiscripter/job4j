@@ -1,9 +1,6 @@
 package ru.job4j.services;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +23,7 @@ import static org.junit.Assert.assertEquals;
  * Класс RepositoryTest тестирует класс Repository.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-06-07
+ * @version 2018-12-08
  * @since 2018-05-10
  */
 public class RepositoryTest {
@@ -58,7 +55,7 @@ public class RepositoryTest {
             this.path = path.replaceFirst("^/(.:/)", "$1");
             this.path = this.path + "../../src/main/resources/junior.pack3.p1.ch3.task1.sql";
             this.driver.executeSqlScript(this.path);
-        } catch (IOException | SQLException | URISyntaxException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
@@ -428,12 +425,17 @@ public class RepositoryTest {
     @After
     public void afterTest() {
         try {
-            this.driver.executeSqlScript(this.path);
+            try {
+                this.driver.executeSqlScript(this.path);
+            } catch (Exception ex) {
+                this.logger.error("ERROR", ex);
+                ex.printStackTrace();
+            } finally {
+                this.repo.close();
+            }
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
             ex.printStackTrace();
-        } finally {
-            this.repo.close();
         }
     }
 }

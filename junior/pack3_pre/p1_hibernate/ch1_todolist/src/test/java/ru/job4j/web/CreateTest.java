@@ -2,7 +2,6 @@ package ru.job4j.web;
 
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static org.junit.Assert.assertEquals;
@@ -21,7 +20,7 @@ import ru.job4j.services.ItemDAO;
  * Класс CreateTest тестирует класс Create.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-04-24
+ * @version 2018-12-08
  * @since 2018-04-24
  */
 public class CreateTest {
@@ -41,7 +40,7 @@ public class CreateTest {
     /**
      * ItemDAO.
      */
-	private final ItemDAO idao = new ItemDAO();
+	private ItemDAO idao;
     /**
      * Действия перед тестом.
      */
@@ -50,9 +49,10 @@ public class CreateTest {
         try {
             MockitoAnnotations.initMocks(this);
             this.attributes = new ConcurrentHashMap<>();
+            this.idao = new ItemDAO();
             this.servlet = new Create();
             this.servlet.init(conf);
-        } catch (ServletException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -77,9 +77,8 @@ public class CreateTest {
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 String key = invocation.getArgumentAt(0, String.class);
-                Object value = attributes.get(key);
-                //System.out.println("get attribute value for key=" + key + " : " + value);
-                return value;
+                //System.out.println("get attribute value for key=" + key + " : " + attributes.get(key));
+                return attributes.get(key);
             }
         }).when(req).getAttribute(Mockito.anyString());
     }
