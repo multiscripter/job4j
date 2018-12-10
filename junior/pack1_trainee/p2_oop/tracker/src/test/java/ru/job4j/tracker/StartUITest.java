@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Класс StartUITest тестирует работу приложения Tracker.
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-06
+ * @version 2018-12-10
  * @since 2017-04-20
  */
 public class StartUITest {
@@ -21,20 +21,16 @@ public class StartUITest {
      */
     private Tracker tracker;
     /**
-     * Количество заявок.
-     */
-    private int taskQuantity;
-    /**
      * Действия перед тестом.
      */
     @Before
     public void beforeTest() {
         this.tracker = new Tracker();
-        this.taskQuantity = 9;
-        for (int a = 0; a < this.taskQuantity; a++) {
+        int taskQuantity = 9;
+        for (int a = 0; a < taskQuantity; a++) {
             this.tracker.add(new Item(this.tracker.generateId(), "task" + a, "description for task" + a));
         }
-        this.tracker.add(new Item(this.tracker.generateId(), "task" + (this.taskQuantity - 1), "_description for task" + this.taskQuantity++));
+        this.tracker.add(new Item(this.tracker.generateId(), "task" + (taskQuantity - 1), "_description for task" + ++taskQuantity));
     }
     /**
      * Тестирует функционал добавления новой заявки.

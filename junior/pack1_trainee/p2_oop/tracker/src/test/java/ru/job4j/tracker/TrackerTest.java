@@ -4,11 +4,10 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertArrayEquals;
-
 /**
- * Class TrackerTest тестирует методы класса Tracker.
+ * Класс TrackerTest тестирует методы класса Tracker.
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 5
+ * @version 2018-12-10
  * @since 2017-04-18
  */
 public class TrackerTest {
@@ -19,8 +18,8 @@ public class TrackerTest {
     public void testAdd() {
         Tracker tracker = new Tracker();
         Item expected = new Item("Заявка1", "Имя1", "Описание1");
-        Item result = tracker.add(expected);
-        assertEquals(expected, result);
+        Item actual = tracker.add(expected);
+        assertEquals(expected, actual);
     }
     /**
      * Тестирует void update(Item uItem).
@@ -31,13 +30,11 @@ public class TrackerTest {
         String id = "Заявка2";
         Item expected = new Item(id, "Имя2", "Описание2");
         tracker.add(expected);
-        Item found = new Item();
-        found = tracker.findById(id);
+        Item found = tracker.findById(id);
         found.setDesc("Новое описание Заявки2");
         tracker.update(found);
-        Item result = new Item();
-        result = tracker.findById(id);
-        assertEquals(expected, result);
+        Item actual = tracker.findById(id);
+        assertEquals(expected, actual);
     }
     /**
      * Тестирует Item findById(String id).
@@ -48,8 +45,8 @@ public class TrackerTest {
         String id = "Заявка3";
         Item expected = new Item(id, "Имя3", "Описание3");
         tracker.add(expected);
-        Item result = tracker.findById(id);
-        assertEquals(expected, result);
+        Item actual = tracker.findById(id);
+        assertEquals(expected, actual);
     }
     /**
      * Тестирует Item findByName(String id).
