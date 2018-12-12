@@ -2,21 +2,17 @@ package ru.job4j.bank;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
-
 /**
  * Класс Bank реализует сущность Банк.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-11
+ * @version 2018-12-12
  * @since 2017-05-15
  */
 class Bank {
-    /**
-     * Список счетов пользователя.
-     */
-    private TreeMap<String, User> users;
     /**
      * Список счетов пользователя.
      */
@@ -25,7 +21,6 @@ class Bank {
      * Конструктор.
      */
     Bank() {
-        this.users = new TreeMap<>();
         this.accounts = new TreeMap<>();
     }
     /**
@@ -46,7 +41,7 @@ class Bank {
      * @param user пользователь.
      */
     public void addUser(User user) {
-        this.users.put(user.getPassport(), user);
+        this.accounts.put(user, new LinkedList<>());
     }
     /**
      * Удаляет счёт пользователя.
@@ -65,14 +60,14 @@ class Bank {
      * @param user пользователь.
      */
     public void deleteUser(User user) {
-        this.users.remove(user.getPassport());
+        this.accounts.remove(user);
     }
     /**
      * Получает пользователей.
      * @return список пользователей.
      */
     public List<User> getUsersAsList() {
-        return this.users.values().stream().collect(Collectors.toList());
+        return this.accounts.keySet().stream().collect(Collectors.toList());
     }
     /**
      * Получает пользователя.
@@ -80,7 +75,8 @@ class Bank {
      * @return пользователь.
      */
     public User getUserByPassport(String passport) {
-        return this.users.get(passport);
+        Optional<User> oUser = this.accounts.keySet().stream().filter(x -> x.getPassport().equals(passport)).findFirst();
+        return oUser.isPresent() ? oUser.get() : null;
     }
     /**
      * Получает список со счетами.
