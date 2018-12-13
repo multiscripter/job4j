@@ -1,6 +1,7 @@
 package ru.job4j.chess;
 
 import java.util.Arrays;
+import java.util.function.Predicate;
 /**
  * Класс Board реализует сущность "Шахматная доска". Поле A1 - чёрное слева внизу. Белые фигуры начинают внизу.
  *
@@ -111,16 +112,23 @@ public class Board {
     public boolean move(Cell source, Cell dest) throws ImposibleMoveException, OccupiedWayException, FigureNotFoundException {
         Figure figure = source.getFigure();
         Cell[] way = figure.way(dest);
-        Arrays.asList(way).forEach(n -> {
-            if (n.isOccupied()) {
-                throw new OccupiedWayException();
-            }
-        });
         /*for (Cell cell : way) {
             if (cell.isOccupied()) {
                 throw new OccupiedWayException();
             }
         }*/
+        /*
+        Arrays.asList(way).forEach(n -> {
+            if (n.isOccupied()) {
+                throw new OccupiedWayException();
+            }
+        });*/
+        Predicate<Cell> p = Cell::isOccupied;
+        Arrays.asList(way).stream().forEach(x -> {
+            if (p.test(x)) {
+                throw new OccupiedWayException();
+            }
+        });
         dest.setFigure(figure);
         source.setFigure(null);
         return true;
