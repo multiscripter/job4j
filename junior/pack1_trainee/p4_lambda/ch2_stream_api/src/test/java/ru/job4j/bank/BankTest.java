@@ -9,13 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 /**
  * Класс BankTest тестирует класс Bank.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-11
+ * @version 2018-12-12
  * @since 2017-05-15
  */
 public class BankTest {
@@ -128,6 +129,26 @@ public class BankTest {
         assertTrue(result);
     }
     /**
+     * Тестирует addAccountToUser().
+     * Добавление первого счёта.
+     */
+    @Test
+    public void testAddAccountToUserWithNoAccount() {
+        boolean result = false;
+        User user = new User("Foo", "FooPassport");
+        String requisites = "qqqqqqqqqqq";
+        Account account = new Account(requisites, 1000.0);
+        this.bank.addAccountToUser(user, account);
+        List<Account> accounts = this.bank.getAccounts();
+        for (Account item : accounts) {
+            if (item.getRequisites().equals(requisites)) {
+                result = true;
+                break;
+            }
+        }
+        assertTrue(result);
+    }
+    /**
      * Тестирует public void deleteAccountFromUser(User user, Account account).
      */
     @Test
@@ -152,6 +173,29 @@ public class BankTest {
         User u = new User("Fake", "qwerty");
         this.bank.addUser(u);
         this.bank.deleteAccountFromUser(u, this.testAccount);
+    }
+    /**
+     * Тестирует public Account getAccountByRequisitesAndPassport(final String passport, final String requisites).
+     */
+    @Test
+    public void testGetAccountByRequisitesAndPassport() {
+        assertNotNull(this.bank.getAccountByRequisitesAndPassport("TestPassport", "0OIKZHGH"));
+    }
+    /**
+     * Тестирует public Account getAccountByRequisitesAndPassport(final String passport, final String requisites).
+     * Паспорт = null.
+     */
+    @Test
+    public void testGetAccountByRequisitesAndPassportWithNullPassport() {
+        assertNull(this.bank.getAccountByRequisitesAndPassport(null, "0OIKZHGH"));
+    }
+    /**
+     * Тестирует public Account getAccountByRequisitesAndPassport(final String passport, final String requisites).
+     * Реквизиты = null.
+     */
+    @Test
+    public void testGetAccountByRequisitesAndPassportWithNullRequisites() {
+        assertNull(this.bank.getAccountByRequisitesAndPassport("TestPassport", null));
     }
     /**
      * Тестирует getAccounts().

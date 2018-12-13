@@ -8,7 +8,7 @@ import java.util.Objects;
  * @version 2018-12-11
  * @since 2017-05-15
  */
-class Account {
+public class Account {
     /**
      * Номер счёта.
      */
@@ -22,7 +22,7 @@ class Account {
      * @param value количество денег.
      * @param requisites номер счёта.
      */
-    Account(String requisites, double value) {
+    public Account(String requisites, double value) {
         this.requisites = requisites;
         this.value = value;
     }

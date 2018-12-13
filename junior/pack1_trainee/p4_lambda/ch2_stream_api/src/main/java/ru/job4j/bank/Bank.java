@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * @version 2018-12-12
  * @since 2017-05-15
  */
-class Bank {
+public class Bank {
     /**
      * Список счетов пользователя.
      */
@@ -20,7 +20,7 @@ class Bank {
     /**
      * Конструктор.
      */
-    Bank() {
+    public Bank() {
         this.accounts = new TreeMap<>();
     }
     /**
@@ -50,10 +50,7 @@ class Bank {
      */
     public void deleteAccountFromUser(User user, Account account) {
         List<Account> userAccounts = this.accounts.get(user);
-        if (userAccounts != null) {
-            userAccounts.remove(account);
-            this.accounts.put(user, userAccounts);
-        }
+        userAccounts.remove(account);
     }
     /**
      * Удаляет пользователя.
@@ -77,6 +74,23 @@ class Bank {
     public User getUserByPassport(String passport) {
         Optional<User> oUser = this.accounts.keySet().stream().filter(x -> x.getPassport().equals(passport)).findFirst();
         return oUser.isPresent() ? oUser.get() : null;
+    }
+    /**
+     * Получает счёт по паспорту и реквизитам.
+     * @param passport паспорт пользователя.
+     * @param requisites реквизитам счёта.
+     * @return счёт.
+     */
+    public Account getAccountByRequisitesAndPassport(final String passport, final String requisites) {
+        Account acc = null;
+        if (passport != null && requisites != null) {
+            User user = this.getUserByPassport(passport);
+            if (user != null) {
+                Optional<Account> oAcc = this.accounts.get(user).stream().filter(x -> x.getRequisites().equals(requisites)).findFirst();
+                acc = oAcc.isPresent() ? oAcc.get() : null;
+            }
+        }
+        return acc;
     }
     /**
      * Получает список со счетами.
@@ -106,24 +120,12 @@ class Bank {
      */
     public boolean transferMoney(User srcUser, Account srcAccount, User dstUser, Account dstAccount, double amount) {
         boolean success = false;
-        List<Account> srcAccounts = this.getUserAccounts(srcUser);
-        List<Account> dstAccounts = this.getUserAccounts(dstUser);
-        if (srcAccounts != null && dstAccounts != null) {
-            int srcIndex = srcAccounts.indexOf(srcAccount);
-            int dstIndex = dstAccounts.indexOf(dstAccount);
-            if (srcIndex != -1 && dstIndex != -1) {
-                Account srcAcc = srcAccounts.get(srcIndex);
-                Account dstAcc = dstAccounts.get(dstIndex);
-                if (srcAcc.getValue() >= amount) {
-                    srcAcc.setValue(srcAcc.getValue() - amount);
-                    srcAccounts.set(srcIndex, srcAcc);
-                    this.accounts.put(srcUser, srcAccounts);
-                    dstAcc.setValue(dstAcc.getValue() - amount);
-                    dstAccounts.set(dstIndex, dstAcc);
-                    this.accounts.put(dstUser, dstAccounts);
-                    success = true;
-                }
-            }
+        Account srcAcc = this.getAccountByRequisitesAndPassport(srcUser.getPassport(), srcAccount.getRequisites());
+        Account dstAcc = this.getAccountByRequisitesAndPassport(dstUser.getPassport(), dstAccount.getRequisites());
+        if (srcAcc != null && dstAcc != null && srcAcc.getValue() >= amount) {
+            srcAcc.setValue(srcAcc.getValue() - amount);
+            dstAcc.setValue(dstAcc.getValue() - amount);
+            success = true;
         }
         return success;
     }

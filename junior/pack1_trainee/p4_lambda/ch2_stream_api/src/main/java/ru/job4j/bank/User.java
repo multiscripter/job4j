@@ -8,7 +8,7 @@ import java.util.Objects;
  * @version 2018-12-11
  * @since 2017-05-15
  */
-class User implements Comparable<User> {
+public class User implements Comparable<User> {
     /**
      * Имя пользователя.
      */
@@ -22,7 +22,7 @@ class User implements Comparable<User> {
      * @param name имя пользователя.
      * @param passport номер паспорта пользователя.
      */
-    User(String name, String passport) {
+    public User(String name, String passport) {
         this.name = name;
         this.passport = passport;
     }
