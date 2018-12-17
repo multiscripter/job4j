@@ -6,19 +6,19 @@ import static org.junit.Assert.assertEquals;
  * Класс QueenTest тестирует сущность Ферзь (Queen).
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2017-05-08
+ * @version 2018-12-17
  * @since 2017-05-08
  */
 public class QueenTest {
     /**
-     * Тестирует move(). d4 -> d8.
+     * Тестирует move(). d8 -> d4.
      */
     @Test
     public void checkMoveRowPlus() {
         Board board = new Board();
-        Cell cell = board.getCell("d4");
-        Queen queen = new Queen(cell, Color.WHITE);
-        Cell expected = board.getCell("d8");
+        Cell cell = board.getCell("d8");
+        Queen queen = new Queen(cell, Color.BLACK);
+        Cell expected = board.getCell("d4");
         try {
             board.move(cell, expected);
         } catch (ImposibleMoveException | OccupiedWayException | FigureNotFoundException ex) {

@@ -6,19 +6,19 @@ import static org.junit.Assert.assertEquals;
  * Класс RookTest тестирует сущность Ладья (Rook).
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2017-05-08
+ * @version 2018-12-17
  * @since 2017-05-08
  */
 public class RookTest {
     /**
-     * Тестирует move(). d3 -> d8.
+     * Тестирует move(). e6 -> e8.
      */
     @Test
     public void checkMoveRowPlus() {
         Board board = new Board();
-        Cell cell = board.getCell("d3");
-        Rook rook = new Rook(cell, Color.BLACK);
-        Cell expected = board.getCell("d8");
+        Cell cell = board.getCell("e6");
+        Rook rook = new Rook(cell, Color.WHITE);
+        Cell expected = board.getCell("e8");
         try {
             board.move(cell, expected);
         } catch (ImposibleMoveException | OccupiedWayException | FigureNotFoundException ex) {
@@ -33,7 +33,7 @@ public class RookTest {
     public void checkMoveColPlusRowPlus() {
         Board board = new Board();
         Cell src = board.getCell("d3");
-        Rook rook = new Rook(src, Color.BLACK);
+        new Rook(src, Color.BLACK);
         Cell dest = board.getCell("h5");
         board.move(src, dest);
     }
@@ -60,7 +60,7 @@ public class RookTest {
     public void checkMoveColPlusRowMinus() {
         Board board = new Board();
         Cell src = board.getCell("d3");
-        Rook rook = new Rook(src, Color.BLACK);
+        new Rook(src, Color.BLACK);
         Cell dest = board.getCell("f1");
         board.move(src, dest);
     }
@@ -87,7 +87,7 @@ public class RookTest {
     public void checkMoveColMinusRowMinus() {
         Board board = new Board();
         Cell src = board.getCell("d3");
-        Rook rook = new Rook(src, Color.BLACK);
+        new Rook(src, Color.BLACK);
         Cell dest = board.getCell("c2");
         board.move(src, dest);
     }
@@ -114,7 +114,7 @@ public class RookTest {
     public void checkMoveColMinusRowPlus() {
         Board board = new Board();
         Cell src = board.getCell("d3");
-        Rook rook = new Rook(src, Color.BLACK);
+        new Rook(src, Color.BLACK);
         Cell dest = board.getCell("a8");
         board.move(src, dest);
     }
@@ -125,7 +125,7 @@ public class RookTest {
     public void checkMoveColMinusRowPlus1() {
         Board board = new Board();
         Cell src = board.getCell("d3");
-        Rook rook = new Rook(src, Color.BLACK);
+        new Rook(src, Color.BLACK);
         Cell dest = board.getCell("a9");
         board.move(src, dest);
     }

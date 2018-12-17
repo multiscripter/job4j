@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
  * Класс BoardTest тестирует класс Board.
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2017-05-04
+ * @version 2018-12-17
  * @since 2017-05-04
  */
 public class BoardTest {
@@ -27,7 +27,7 @@ public class BoardTest {
     @Test(expected = IllegalPositionException.class)
     public void testIllegalPositionExceptionColGreaterThenH() {
         Board board = new Board();
-        Cell cell = board.getCell("I1");
+        board.getCell("I1");
     }
     /**
      * Тестирует пользовательское исключение IllegalPositionException.
@@ -35,7 +35,7 @@ public class BoardTest {
     @Test(expected = IllegalPositionException.class)
     public void testIllegalPositionExceptionRowLowerThen1() {
         Board board = new Board();
-        Cell cell = board.getCell("c0");
+        board.getCell("c0");
     }
     /**
      * Тестирует пользовательское исключение IllegalPositionException.
@@ -43,7 +43,7 @@ public class BoardTest {
     @Test(expected = IllegalPositionException.class)
     public void testIllegalPositionExceptionRowGreaterThen8() {
         Board board = new Board();
-        Cell cell = board.getCell("f9");
+        board.getCell("f9");
     }
     /**
      * Тестирует пользовательское исключение FigureNotFoundException.
@@ -64,7 +64,7 @@ public class BoardTest {
     public void testMoveImposibleMoveException() {
         Board board = new Board();
         Cell cell = board.getCell("f8");
-        Bishop bishop = new Bishop(cell, Color.WHITE);
+        new Bishop(cell, Color.WHITE);
         try {
             board.move(cell, board.getCell("a1"));
         } catch (FigureNotFoundException | OccupiedWayException ex) {
@@ -78,12 +78,30 @@ public class BoardTest {
     public void testMoveOccupiedWayException() {
         Board board = new Board();
         Cell cell = board.getCell("c8");
-        Bishop bishop1 = new Bishop(cell, Color.WHITE);
-        Bishop bishop2 = new Bishop(board.getCell("f5"), Color.BLACK);
+        new Bishop(cell, Color.WHITE);
+        new Bishop(board.getCell("f5"), Color.BLACK);
         try {
             board.move(cell, board.getCell("h3"));
         } catch (FigureNotFoundException | ImposibleMoveException ex) {
             ex.printStackTrace();
         }
+    }
+    /**
+     * Тестирует пользовательское исключение OccupiedWayException.
+     * col < 0.
+     */
+    @Test(expected = IllegalPositionException.class)
+    public void testCheckCoordsThroughCallGetCellColLessZero() {
+        Board board = new Board();
+        board.getCell(-1, 1);
+    }
+    /**
+     * Тестирует пользовательское исключение OccupiedWayException.
+     * row < 0.
+     */
+    @Test(expected = IllegalPositionException.class)
+    public void testCheckCoordsThroughCallGetCellColGreaterSeven() {
+        Board board = new Board();
+        board.getCell(8, 1);
     }
 }

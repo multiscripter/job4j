@@ -6,10 +6,41 @@ import static org.junit.Assert.assertEquals;
  * Класс BishopTest тестирует сущность Слон (Bishop).
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2017-05-05
+ * @version 2018-12-17
  * @since 2017-05-05
  */
 public class BishopTest {
+    /**
+     * Тестирует public String Figure.getName().
+     */
+    @Test
+    public void testGetName() {
+        Board board = new Board();
+        Cell cell = board.getCell("c1");
+        Bishop b = new Bishop(cell, Color.BLACK);
+        assertEquals("Bishop", b.getName());
+    }
+    /**
+     * Тестирует public String Figure.getUnicode().
+     * Код чёрного слона.
+     */
+    @Test
+    public void testGetUnicode() {
+        Board board = new Board();
+        Cell cell = board.getCell("c1");
+        Bishop b = new Bishop(cell, Color.BLACK);
+        assertEquals("U+265D", b.getUnicode());
+    }
+    /**
+     * Тестирует public String Figure.getPosition().
+     */
+    @Test
+    public void testGetPosition() {
+        Board board = new Board();
+        Cell cell = board.getCell("c1");
+        Bishop b = new Bishop(cell, Color.BLACK);
+        assertEquals("c1", b.getPosition());
+    }
     /**
      * Тестирует пользовательское исключение OccupiedPositionException.
      */
@@ -17,8 +48,8 @@ public class BishopTest {
     public void testOccupiedPositionException() {
         Board board = new Board();
         Cell cell = board.getCell("c1");
-        Bishop bishop1 = new Bishop(cell, Color.BLACK);
-        Bishop bishop2 = new Bishop(cell, Color.WHITE);
+        new Bishop(cell, Color.BLACK);
+        new Bishop(cell, Color.WHITE);
     }
     /**
      * Тестирует move(). c1 -> h6.

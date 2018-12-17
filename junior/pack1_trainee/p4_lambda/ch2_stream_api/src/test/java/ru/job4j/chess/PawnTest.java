@@ -6,10 +6,21 @@ import static org.junit.Assert.assertEquals;
  * Класс PawnTest тестирует сущность Пешка (Pawn).
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2017-05-08
+ * @version 2018-12-17
  * @since 2017-05-08
  */
 public class PawnTest {
+    /**
+     * Тестирует move(). e2 -> e2.
+     */
+    @Test(expected = ImposibleMoveException.class)
+    public void checkMoveWhiteStartSameCell() {
+        Board board = new Board();
+        Cell src = board.getCell("e2");
+        new Pawn(src, Color.WHITE);
+        Cell dest = board.getCell("e2");
+        board.move(src, dest);
+    }
     /**
      * Тестирует move(). e2 -> e3.
      */
@@ -49,7 +60,7 @@ public class PawnTest {
     public void checkMoveWhiteStartRowPlus3cells() {
         Board board = new Board();
         Cell src = board.getCell("e2");
-        Pawn pawn = new Pawn(src, Color.WHITE);
+        new Pawn(src, Color.WHITE);
         Cell dest = board.getCell("e5");
         board.move(src, dest);
     }
@@ -60,7 +71,7 @@ public class PawnTest {
     public void checkMoveWhiteStartColPlusRowPlus() {
         Board board = new Board();
         Cell src = board.getCell("e2");
-        Pawn pawn = new Pawn(src, Color.WHITE);
+        new Pawn(src, Color.WHITE);
         Cell dest = board.getCell("f3");
         board.move(src, dest);
     }
@@ -71,7 +82,7 @@ public class PawnTest {
     public void checkMoveWhiteStartColPlus() {
         Board board = new Board();
         Cell src = board.getCell("e2");
-        Pawn pawn = new Pawn(src, Color.WHITE);
+        new Pawn(src, Color.WHITE);
         Cell dest = board.getCell("f2");
         board.move(src, dest);
     }
@@ -82,7 +93,7 @@ public class PawnTest {
     public void checkMoveWhiteStartColPlusRowMinus() {
         Board board = new Board();
         Cell src = board.getCell("e2");
-        Pawn pawn = new Pawn(src, Color.WHITE);
+        new Pawn(src, Color.WHITE);
         Cell dest = board.getCell("f1");
         board.move(src, dest);
     }
@@ -93,7 +104,7 @@ public class PawnTest {
     public void checkMoveWhiteStartRowMinus() {
         Board board = new Board();
         Cell src = board.getCell("e2");
-        Pawn pawn = new Pawn(src, Color.WHITE);
+        new Pawn(src, Color.WHITE);
         Cell dest = board.getCell("e1");
         board.move(src, dest);
     }
@@ -104,7 +115,7 @@ public class PawnTest {
     public void checkMoveWhiteStartColMinusRowMinus() {
         Board board = new Board();
         Cell src = board.getCell("e2");
-        Pawn pawn = new Pawn(src, Color.WHITE);
+        new Pawn(src, Color.WHITE);
         Cell dest = board.getCell("d1");
         board.move(src, dest);
     }
@@ -115,7 +126,7 @@ public class PawnTest {
     public void checkMoveWhiteStartColMinus() {
         Board board = new Board();
         Cell src = board.getCell("e2");
-        Pawn pawn = new Pawn(src, Color.WHITE);
+        new Pawn(src, Color.WHITE);
         Cell dest = board.getCell("d2");
         board.move(src, dest);
     }
@@ -126,7 +137,7 @@ public class PawnTest {
     public void checkMoveWhiteStartColMinusRowPlus() {
         Board board = new Board();
         Cell src = board.getCell("e2");
-        Pawn pawn = new Pawn(src, Color.WHITE);
+        new Pawn(src, Color.WHITE);
         Cell dest = board.getCell("d3");
         board.move(src, dest);
     }
@@ -153,7 +164,7 @@ public class PawnTest {
     public void checkMoveWhiteRowPlus2Cells() {
         Board board = new Board();
         Cell src = board.getCell("e3");
-        Pawn pawn = new Pawn(src, Color.WHITE);
+        new Pawn(src, Color.WHITE);
         Cell dest = board.getCell("e5");
         board.move(src, dest);
     }
@@ -196,8 +207,52 @@ public class PawnTest {
     public void checkMoveBlackStartRowPlus3Cells() {
         Board board = new Board();
         Cell src = board.getCell("e7");
-        Pawn pawn = new Pawn(src, Color.BLACK);
+        new Pawn(src, Color.BLACK);
         Cell dest = board.getCell("e4");
         board.move(src, dest);
+    }
+    /**
+     * Тестирует move(). e7 -> f6.
+     */
+    @Test(expected = ImposibleMoveException.class)
+    public void checkMoveBlackStartRowMinusColPlus() {
+        Board board = new Board();
+        Cell cell = board.getCell("e7");
+        new Pawn(cell, Color.BLACK);
+        Cell expected = board.getCell("f6");
+        board.move(cell, expected);
+    }
+    /**
+     * Тестирует move(). e7 -> f7.
+     */
+    @Test(expected = ImposibleMoveException.class)
+    public void checkMoveBlackStartColPlus() {
+        Board board = new Board();
+        Cell cell = board.getCell("e7");
+        new Pawn(cell, Color.BLACK);
+        Cell expected = board.getCell("f7");
+        board.move(cell, expected);
+    }
+    /**
+     * Тестирует move(). e7 -> d6.
+     */
+    @Test(expected = ImposibleMoveException.class)
+    public void checkMoveBlackStartRowMinusColMinus() {
+        Board board = new Board();
+        Cell cell = board.getCell("e7");
+        new Pawn(cell, Color.BLACK);
+        Cell expected = board.getCell("d6");
+        board.move(cell, expected);
+    }
+    /**
+     * Тестирует move(). e7 -> d7.
+     */
+    @Test(expected = ImposibleMoveException.class)
+    public void checkMoveBlackStartColMinus() {
+        Board board = new Board();
+        Cell cell = board.getCell("e7");
+        new Pawn(cell, Color.BLACK);
+        Cell expected = board.getCell("d7");
+        board.move(cell, expected);
     }
 }
