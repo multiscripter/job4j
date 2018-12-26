@@ -1,4 +1,4 @@
-package ru.job4j.jdbc;
+package ru.job4j.tracker;
 
 /**
  * Класс UserAction имплементирует интерфэйс UserAction.
@@ -30,8 +30,9 @@ abstract class UserAction implements IUserAction {
      * Выполняет действие, выбранное пользователем.
      * @param input объект ввода.
      * @param tracker объект трэкера.
+     * @throws Exception исключение.
      */
-    public abstract void execute(Input input, Tracker tracker);
+    public abstract void execute(Input input, Tracker tracker) throws Exception;
     /**
      * Возвращает строку с выполняемым действием.
      * @return идентификатор действия.

@@ -1,26 +1,36 @@
-package ru.job4j.jdbc;
+package ru.job4j.tracker;
 
-import java.util.Scanner;
 /**
- * Класс ConsoleInput реализует сущность ввода из консоли.
+ * Класс StubInput реализует сущность тестирования ввода из консоли.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
  * @version 2
  * @since 2017-04-19
  */
-public class ConsoleInput implements Input {
+public class StubInput implements Input {
     /**
-     * Объект класса Scanner.
+     * массив ответов.
      */
-    private Scanner scanner = new Scanner(System.in);
+    private String[] answers;
+    /**
+     * Позиция в массиве ответов.
+     */
+    private int position;
+    /**
+     * Конструктор.
+     * @param answers массив ответов.
+     */
+    public StubInput(String[] answers) {
+        this.answers = answers;
+        this.position = 0;
+    }
     /**
      * Опрашивает пользователя.
      * @param question вопрос пользователю.
      * @return ответ пользователя.
      */
     public String ask(String question) {
-        System.out.println(question);
-        return scanner.nextLine();
+        return this.answers[this.position++];
     }
     /**
      * Опрашивает пользователя.

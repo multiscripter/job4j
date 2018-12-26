@@ -1,4 +1,4 @@
-package ru.job4j.jdbc;
+package ru.job4j.tracker;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Класс StartUITest тестирует работу приложения Tracker.
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-07
+ * @version 2018-12-20
  * @since 2017-04-20
  */
 public class StartUITest {
@@ -34,7 +34,9 @@ public class StartUITest {
         try {
             Prepare pre = new Prepare();
             pre.loadProperties("tracker.properties");
-            pre.setDbDriver(new PgSQLJDBCDriver());
+            PgSQLJDBCDriver dbDriver = new PgSQLJDBCDriver(pre.getProperties());
+            dbDriver.setup();
+            pre.setDbDriver(dbDriver);
             pre.executeSql("junior.pack2.p8.ch4.task2.sql");
             this.items = new Item[taskQuantity];
             // Fill db by test data.
@@ -193,13 +195,5 @@ public class StartUITest {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-    /**
-     * Тестирует пользовательское исключение MenuOutException.
-     */
-    @Test(expected = MenuOutException.class)
-    public void checkMenuOutException() {
-        Input input = new StubInput(new String[]{"9"});
-        new StartUI(input, this.tracker).init();
     }
 }

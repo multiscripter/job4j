@@ -1,16 +1,25 @@
-package ru.job4j.jdbc;
+package ru.job4j.xmlxslt;
 
-import static org.junit.Assert.assertEquals;
+import java.sql.Connection;
+import java.sql.SQLException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 /**
  * Класс SQLiteJDBCDriverTest тестирует класс SQLiteJDBCDriver.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-11-26
+ * @version 2018-12-19
  * @since 2017-09-12
  */
 public class SQLiteJDBCDriverTest {
+    /**
+     * Логгер.
+     */
+    private Logger logger;
     /**
      * Ожидаемое число.
      */
@@ -43,18 +52,19 @@ public class SQLiteJDBCDriverTest {
      */
     @Before
     public void beforeTest() {
+        this.logger = LogManager.getLogger(this.getClass().getSimpleName());
         for (int a = 0; a < this.iters; a++) {
             this.expected += a;
         }
     }
     /**
-     * Тестирует public Connection getConnection().
+     * Тестирует работу приложения.
+     * @throws Exception исключение.
      */
     @Test
-    public void testGetConnection() {
+    public void checkApplication() throws Exception {
         try {
             this.lastTime = System.currentTimeMillis();
-            int expected = 0;
             JuniorPack2p8ch4 app = new JuniorPack2p8ch4();
             app.setConnection();
             this.setTimeMark("Prepare");
@@ -80,7 +90,32 @@ public class SQLiteJDBCDriverTest {
             System.out.printf("%-20s%d\n", "Sum", result);
             assertEquals(this.expected, result);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            this.logger.error("ERROR", ex);
+            throw new Exception(ex);
         }
+    }
+    /**
+     * Тестирует public Connection getConnection(String url).
+     * @throws Exception исключение.
+     */
+    @Test
+    public void testGetConnection() throws Exception {
+        try {
+            SQLiteJDBCDriver driver = new SQLiteJDBCDriver();
+            Connection con = driver.getConnection("testGetConnection.db");
+            assertNotNull(con);
+        } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
+            throw new Exception(ex);
+        }
+    }
+    /**
+     * Тестирует public Connection getConnection(String url).
+     * @throws java.sql.SQLException исключение базы данных.
+     */
+    @Test(expected = SQLException.class)
+    public void testGetConnectionThrowsSQLException() throws SQLException {
+        SQLiteJDBCDriver driver = new SQLiteJDBCDriver();
+        driver.getConnection("wrongPath");
     }
 }

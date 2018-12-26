@@ -1,10 +1,10 @@
-package ru.job4j.jdbc;
+package ru.job4j.tracker;
 
 /**
  * Класс ValidateInput реализует сущность валидации данных, введённых из консоли.
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-20
  * @since 2017-04-24
  */
 class ValidateInput extends ConsoleInput {
@@ -22,9 +22,9 @@ class ValidateInput extends ConsoleInput {
                 value = super.ask(question, range);
                 invalid = false;
             } catch (MenuOutException ex) {
-                System.out.println("Please, select key from menu.");
+                System.err.println("Please, select key from menu.");
             } catch (NumberFormatException ex) {
-                System.out.println("Please, enter valid data again.");
+                System.err.println("Please, enter valid data again.");
             }
         } while (invalid);
         return value;

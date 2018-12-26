@@ -15,3 +15,10 @@ notifications:
       - ill-jah@yandex.ru
     on_success: never # default: change
     on_failure: never # default: always
+    
+# Усатновка СУБД для тестов в Travis CI
+services:
+  - postgresql
+  
+before_script:
+  - psql -c 'create database jpack2p8ch4task2;' -U postgres

@@ -1,11 +1,11 @@
-package ru.job4j.jdbc;
+package ru.job4j.tracker;
 
-import java.util.ArrayList;
+import java.util.Objects;
 /**
- * Class Item реализует сущность Заявка.
+ * Класс Item реализует сущность Заявка.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 3
+ * @version 2018-12-19
  * @since 2017-04-18
  */
 public class Item {
@@ -26,10 +26,6 @@ public class Item {
      */
     private long created;
     /**
-     * Массив комментариев заявки.
-     */
-    private ArrayList<String> comments;
-    /**
      * Конструктор без параметров.
      */
     public Item() {
@@ -43,14 +39,6 @@ public class Item {
         this.name = name;
         this.desc = desc;
         this.created = System.currentTimeMillis();
-        this.comments = new ArrayList<>();
-    }
-    /**
-     * Получет комментарии заявки.
-     * @return комментарии заявки.
-     */
-    public String[] getComments() {
-        return this.comments.toArray(new String[this.comments.size()]);
     }
     /**
      * Получет время заявки.
@@ -93,10 +81,7 @@ public class Item {
             return false;
         }
         Item item = (Item) obj;
-        if (this.id != item.id || this.name != item.name || this.desc != item.desc || this.created != item.created) {
-            return false;
-        }
-        return true;
+        return this.id.equals(item.getId()) && this.name.equals(item.getName()) && this.desc.equals(item.getDesc()) && this.created == item.created;
     }
     /**
      * Переопределяет метод hashCode().
@@ -104,13 +89,7 @@ public class Item {
      */
     @Override
     public int hashCode() {
-        int prime = 31;
-        int result = 1;
-        result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-        result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
-        result = prime * result + ((this.desc == null) ? 0 : this.desc.hashCode());
-        result = prime * result + String.valueOf(this.created).hashCode();
-        return result;
+        return Objects.hash(this.id, this.name, this.desc, this.created);
     }
     /**
      * Проверяет объект на пустоту.
@@ -153,15 +132,6 @@ public class Item {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("id: ");
-        sb.append(this.getId());
-        sb.append(", user name: ");
-        sb.append(this.getName());
-        sb.append(", description: ");
-        sb.append(this.getDesc());
-        sb.append(", created: ");
-        sb.append(this.getCreated());
-        return sb.toString();
+        return String.format("id: %s, user name: %s, description: %s, created: %d", this.id, this.name, this.desc, this.created);
     }
 }

@@ -1,4 +1,4 @@
-package ru.job4j.jdbc;
+package ru.job4j.tracker;
 
 /**
  * Interface Input реализует интрефэйс ввода.

@@ -1,4 +1,4 @@
-package ru.job4j.jdbc;
+package ru.job4j.tracker;
 
 /**
  * Интрефэйс UserAction пользовательское действие.
@@ -17,8 +17,9 @@ interface IUserAction {
      * Выполняет действие, выбранное пользователем.
      * @param input объект ввода.
      * @param tracker объект трэкера.
+     * @throws Exception исключение.
      */
-    void execute(Input input, Tracker tracker);
+    void execute(Input input, Tracker tracker) throws Exception;
     /**
      * Возвращает строку с выполняемым действием.
      * @return идентификатор действия.

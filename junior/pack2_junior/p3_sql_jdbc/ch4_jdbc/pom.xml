@@ -19,5 +19,26 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.7.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.1.4</version>
+        </dependency>
     </dependencies>
+    
+    <profiles>
+        <profile>
+            <id>jpack2p8ch4task2-travis</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.url>jdbc:postgresql://localhost/jpack2p8ch4task2</db.url>
+                <db.username>postgres</db.username>
+                <db.password></db.password>
+                <db.driver>org.postgresql.Driver</db.driver>
+            </properties>
+        </profile>
+    </profiles>
 </project>

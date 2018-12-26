@@ -1,4 +1,4 @@
-package ru.job4j.jdbc;
+package ru.job4j.tracker;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Класс MenuTracker реализует сущность меню трэкера.
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 3
+ * @version 2018-12-20
  * @since 2017-04-23
  */
 class MenuTracker {
@@ -57,8 +57,9 @@ class MenuTracker {
     /**
      * Выполняет действие, выбранное пользователем.
      * @param key идентификатор действия.
+     * @throws Exception исключение.
      */
-    public void select(int key) {
+    public void select(int key) throws Exception {
         this.actions.get(key).execute(this.input, this.tracker);
     }
     /**
@@ -66,17 +67,14 @@ class MenuTracker {
      */
     public void show() {
         System.out.println("Please, enter the action number:");
-        for (IUserAction action : this.actions) {
-            if (action != null) {
-                System.out.println(action.info());
-            }
-        }
+        this.actions.stream().filter(action -> action != null).forEach(action
+                -> System.out.println(action.info()));
     }
     /**
      * Класс AddItem реализует сущность добавления заявки в трэкер.
      *
      * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
-     * @version 1
+     * @version 2017-04-23
      * @since 2017-04-23
      */
     private class AddItem extends UserAction {
@@ -91,8 +89,9 @@ class MenuTracker {
          * Выполняет действие, выбранное пользователем.
          * @param input объект ввода.
          * @param tracker объект трэкера.
+         * @throws Exception исключение.
          */
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Tracker tracker) throws Exception {
             System.out.println("");
             System.out.println("New task.");
             String name = input.ask("Enter user name: ");
@@ -106,9 +105,9 @@ class MenuTracker {
                 sb.append(item.getId());
                 sb.append(LS);
                 System.out.println(sb.toString());
-            } catch (SQLException ex) {
-                System.out.println("Error. Task not added.");
-                //ex.printStackTrace();
+            } catch (Exception ex) {
+                System.err.println("Error. Task not added.");
+                throw new Exception(ex);
             }
         }
     }
@@ -116,7 +115,7 @@ class MenuTracker {
      * Класс ShowItems реализует сущность печати заявок трэкера.
      *
      * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
-     * @version 1
+     * @version 2017-04-23
      * @since 2017-04-23
      */
     private static class ShowItems extends UserAction {
@@ -131,8 +130,9 @@ class MenuTracker {
          * Выполняет действие, выбранное пользователем.
          * @param input объект ввода.
          * @param tracker объект трэкера.
+         * @throws Exception исключение.
          */
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Tracker tracker) throws Exception {
             StringBuilder sb = new StringBuilder();
             sb.append(LS);
             sb.append("Tasks in tracker:");
@@ -148,7 +148,7 @@ class MenuTracker {
      * Класс DeleteItem реализует сущность удаления заявки из трэкера.
      *
      * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
-     * @version 1
+     * @version 2018-12-20
      * @since 2017-04-23
      */
     private class DeleteItem extends UserAction {
@@ -163,8 +163,9 @@ class MenuTracker {
          * Выполняет действие, выбранное пользователем.
          * @param input объект ввода.
          * @param tracker объект трэкера.
+         * @throws Exception исключение.
          */
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Tracker tracker) throws Exception {
             System.out.println("");
             System.out.println("Delete task.");
             String id = input.ask("Enter task id: ");
@@ -175,7 +176,8 @@ class MenuTracker {
                     System.out.println("Nothing deleted.");
                 }
             }  catch (SQLException ex) {
-                System.out.printf("Error occured while deleting task with id: %d.", id);
+                System.err.printf("Error occured while deleting task with id: %s.", id);
+                throw new Exception(ex);
             }
             System.out.println("");
         }
@@ -184,7 +186,7 @@ class MenuTracker {
      * Класс FindItemById реализует сущность поиска заявки по идентификатору.
      *
      * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
-     * @version 1
+     * @version 2018-12-20
      * @since 2017-04-23
      */
     private class FindItemById extends UserAction {
@@ -199,8 +201,9 @@ class MenuTracker {
          * Выполняет действие, выбранное пользователем.
          * @param input объект ввода.
          * @param tracker объект трэкера.
+         * @throws Exception исключение.
          */
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Tracker tracker) throws Exception {
             System.out.println("");
             System.out.println("Find task.");
             String id = input.ask("Enter task id: ");
@@ -220,7 +223,7 @@ class MenuTracker {
      * Класс FindItemsByName реализует сущность поиска заявок по имени.
      *
      * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
-     * @version 1
+     * @version 2017-04-23
      * @since 2017-04-23
      */
     private class FindItemsByName extends UserAction {
@@ -235,8 +238,9 @@ class MenuTracker {
          * Выполняет действие, выбранное пользователем.
          * @param input объект ввода.
          * @param tracker объект трэкера.
+         * @throws Exception исключение.
          */
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, Tracker tracker) throws Exception {
             System.out.println("");
             System.out.println("Find task.");
             String name = input.ask("Enter user name: ");
@@ -262,7 +266,7 @@ class MenuTracker {
  * Класс EditItem реализует сущность редактирования заявки в трэкере.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2017-04-23
  * @since 2017-04-23
  */
 class EditItem extends UserAction {
@@ -277,8 +281,9 @@ class EditItem extends UserAction {
      * Выполняет действие, выбранное пользователем.
      * @param input объект ввода.
      * @param tracker объект трэкера.
+     * @throws Exception исключение.
      */
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, Tracker tracker) throws Exception {
         System.out.println("");
         System.out.println("Edit task.");
         String id = input.ask("Enter task id: ");
@@ -299,7 +304,8 @@ class EditItem extends UserAction {
         try {
             tracker.update(item);
         } catch (SQLException ex) {
-            System.out.println("SQL error occured while updating task.");
+            System.err.println("SQL error occured while updating task.");
+            throw new Exception(ex);
         }
         System.out.println("Task updated.");
         System.out.println("");

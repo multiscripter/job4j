@@ -1,13 +1,13 @@
-package ru.job4j.jdbc;
+package ru.job4j.tracker;
 
 /**
- * Class StartUITest реализует сущность тестирования пользовательского интрефэйса трэкера.
+ * Класс StartUIApp реализует метод public static void main(String[] args).
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-20
  * @since 2017-04-19
  */
-public class StartUITest {
+public class StartUIApp {
     /**
      * Точка входа в программу.
      * @param args массив аргументов командной строки.

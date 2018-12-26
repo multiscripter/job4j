@@ -1,4 +1,4 @@
-package ru.job4j.jdbc;
+package ru.job4j.xmlxslt;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +23,6 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.TransformerConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
@@ -33,7 +32,7 @@ import org.w3c.dom.Text;
  * закинуть jar-файл драйвера БД в папку jdk/jre/lib/ext.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-11-26
+ * @version 2018-12-19
  * @since 2017-09-12
  */
 class JuniorPack2p8ch4 {
@@ -168,13 +167,12 @@ class JuniorPack2p8ch4 {
 		XMLInputFactory factory = XMLInputFactory.newInstance();
         FileInputStream fis = new FileInputStream(this.dir + "2.xml");
         XMLStreamReader parser = factory.createXMLStreamReader(fis);
-        String name = "";
         int event;
         int result = 0;
         while (parser.hasNext()) {
             event = parser.next();
             if (event == XMLStreamConstants.START_ELEMENT) {
-                name = parser.getLocalName();
+				String name = parser.getLocalName();
                 if ("entry".equals(name)) {
                     int field = Integer.parseInt(parser.getAttributeValue(null, "field"));
                     result += field;
@@ -184,15 +182,14 @@ class JuniorPack2p8ch4 {
         return result;
 	}
 	/**
-     * Сохраняет XML в файл.
-     * @throws TransformerConfigurationException ошибка конфигурирования преобразователя.
+     * Сохраняет XML в файл.преобразователя.
      * @throws TransformerException ошибка преобразователя.
      */
-	public void saveXML() throws TransformerConfigurationException, TransformerException {
+	public void saveXML() throws TransformerException {
 		this.transformerFactory = TransformerFactory.newInstance();
         this.transformer = this.transformerFactory.newTransformer();
         this.source = new DOMSource(this.doc);
-        this.dir = this.srcPath + "/../../../../../src/main/java/ru/job4j/jdbc/";
+        this.dir = this.srcPath + "/../../../../../src/main/java/ru/job4j/xmlxslt/";
         this.outFile = new StreamResult(new File(this.dir + "1.xml"));
         this.transformer.transform(this.source, this.outFile);
 	}
@@ -206,11 +203,10 @@ class JuniorPack2p8ch4 {
         this.conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s", this.path));
 	}
 	/**
-     * Преобразовать с помощью XSLT.
-     * @throws TransformerConfigurationException ошибка конфигурирования преобразователя.
+     * Преобразовать с помощью XSLT.преобразователя.
      * @throws TransformerException ошибка преобразователя.
      */
-	public void xslt() throws TransformerConfigurationException, TransformerException {
+	public void xslt() throws TransformerException {
 		StreamSource xslStream = new StreamSource(this.dir + "1.xslt");
         this.transformer = this.transformerFactory.newTransformer(xslStream);
         this.outFile = new StreamResult(new File(this.dir + "2.xml"));
