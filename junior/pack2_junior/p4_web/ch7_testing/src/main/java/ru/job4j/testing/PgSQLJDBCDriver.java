@@ -2,63 +2,122 @@ package ru.job4j.testing;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-
+import java.util.Properties;
 /**
  * Класс PgSQLJDBCDriver реализует функционал работы с PostgreSQL.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 2018-12-25
  * @since 2017-09-12
  */
-class PgSQLJDBCDriver {
-    /**
-     * Источник бд.
-     */
-    private String src;
+public class PgSQLJDBCDriver {
     /**
      * Имя бд.
      */
     private String db;
     /**
+     * Исключение.
+     */
+    private Exception ex;
+    /**
      * Пароль пользователя бд.
      */
-    private String pass;
+    private String pass = "";
     /**
      * Номер порта подключения к субд.
      */
     private int port;
     /**
+     * Свойства настроек бд.
+     */
+    private Properties props;
+    /**
      * Протокол подключения к бд.
      */
     private String protocol;
+    /**
+     * Источник бд.
+     */
+    private String src;
     /**
      * Пользователь бд.
      */
     private String user;
     /**
+     * Конструктор.
+     * @param props свойства соединения с бд.
+     */
+    public PgSQLJDBCDriver(final Properties props) {
+        this.props = props;
+    }
+    /**
      * Получает объект соединения с бд.
      * @return объект соединения с бд.
-     * @throws SQLException ошибка SQL.
      */
-    public Connection getConnection() throws SQLException {
+    private Connection getCon() {
+        this.ex = null;
         Connection con = null;
+        StringBuilder url =  new StringBuilder();
         try {
-            StringBuilder str =  new StringBuilder();
-            str.append("jdbc:");
-            str.append(this.protocol);
-            str.append("://");
-            str.append(this.src);
+            url.append("jdbc:");
+            url.append(this.protocol);
+            url.append(":");
+            if (this.src != null) {
+                url.append("//");
+                url.append(this.src);
+            }
             if (this.port != 0) {
-                str.append(":" + this.port);
+                url.append(":");
+                url.append(this.port);
             }
-            str.append("/");
+            if (this.src != null) {
+                url.append("/");
+            }
             if (this.db != null) {
-                str.append(this.db);
+                url.append(this.db);
             }
-            con = DriverManager.getConnection(str.toString(), this.user, this.pass);
-        } catch (SQLException ex) {
-            throw new SQLException(ex);
+            con = DriverManager.getConnection(url.toString(), this.user, this.pass);
+        } catch (Exception ex) {
+            String msg = String.format("Error connecting to db with url: %s, user: %s with%s password.\n", url.toString(), this.user, this.pass.equals("") ? "out" : "");
+            System.err.print(msg);
+            System.err.println(ex.getMessage());
+            this.ex = ex;
+        }
+        return con;
+    }
+    /**
+     * Получает объект соединения с бд.
+     * @return объект соединения с бд.
+     */
+    private Connection getConnect() {
+        Connection con = this.getCon();
+        if (con == null) {
+            this.setup();
+            this.setPort(0);
+            con = this.getCon();
+        }
+        if (con == null) {
+            this.setup();
+            this.setSrc(null);
+            this.setPort(0);
+            con = this.getCon();
+        }
+        if (con != null) {
+            this.saveConfig();
+        }
+        return con;
+    }
+    /**
+     * Получает объект соединения с бд.
+     * @return объект соединения с бд.
+     * @throws Exception исключение.
+     */
+    public Connection getConnection() throws Exception {
+        Connection con = this.getConnect();
+        if (con == null) {
+            this.props.setProperty("pass", "");
+            this.setup();
+            con = this.getConnect();
         }
         return con;
     }
@@ -68,6 +127,13 @@ class PgSQLJDBCDriver {
      */
     public String getDB() {
         return this.db;
+    }
+    /**
+     * Получает исключение.
+     * @return исключение.
+     */
+    public Exception getException() {
+        return this.ex;
     }
     /**
      * Получает номер порта подключения к субд.
@@ -98,11 +164,31 @@ class PgSQLJDBCDriver {
         return this.user;
     }
     /**
+     * Сохраняет рабочую конфигурацию совйств соединения с бд.
+     */
+    private void saveConfig() {
+        this.props.setProperty("protocol", this.protocol);
+        this.props.setProperty("src", this.src);
+        this.props.setProperty("port", Integer.toString(this.port));
+        this.props.setProperty("pass", this.pass);
+    }
+    /**
      * Устанавливает имя бд.
      * @param db имя бд.
      */
     public void setDB(String db) {
         this.db = db;
+    }
+    /**
+     * Устанавливает свойства драйвера.
+     */
+    public void setup() {
+        this.setProtocol(this.props.getProperty("protocol"));
+        this.setSrc(this.props.getProperty("src"));
+        this.setPort(Integer.parseInt(this.props.getProperty("port")));
+        this.setUser(this.props.getProperty("user"));
+        this.setPass(this.props.getProperty("pass"));
+        this.setDB(this.props.getProperty("db"));
     }
     /**
      * Устанавливает номер порта подключения к субд.

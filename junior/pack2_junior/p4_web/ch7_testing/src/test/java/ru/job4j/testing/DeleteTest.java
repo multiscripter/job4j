@@ -27,7 +27,7 @@ import org.mockito.stubbing.Answer;
  * Класс DeleteTest тестирует класс Delete.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-07
+ * @version 2018-12-26
  * @since 2017-12-18
  */
 public class DeleteTest {
@@ -99,7 +99,9 @@ public class DeleteTest {
         try {
             Prepare pre = new Prepare();
             pre.loadProperties("junior.pack2.p9.ch7.task1.properties");
-            pre.setDbDriver(new PgSQLJDBCDriver());
+            PgSQLJDBCDriver dbDriver = new PgSQLJDBCDriver(pre.getProperties());
+            dbDriver.setup();
+            pre.setDbDriver(dbDriver);
             pre.executeSql("junior.pack2.p9.ch7.task1.sql");
             MockitoAnnotations.initMocks(this);
             GregorianCalendar cal = new GregorianCalendar();

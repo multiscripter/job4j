@@ -11,16 +11,14 @@ import java.util.GregorianCalendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 /**
  * Класс UserService.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 4
+ * @version 2018-12-26
  * @since 2017-11-26
  */
-class UserService {
+public class UserService {
 	/**
      * Драйвер бд.
      */
@@ -29,10 +27,6 @@ class UserService {
      * Кодировка.
      */
 	private String enc;
-	/**
-     * Логгер.
-     */
-    private Logger logger;
     /**
      * RoleService.
      */
@@ -41,7 +35,6 @@ class UserService {
      * Конструктор.
      */
     UserService() {
-    	this.logger = LogManager.getLogger("UserService");
     	this.db = DBDriver.getInstance();
         this.rls = new RoleService();
     }
@@ -106,8 +99,7 @@ class UserService {
     public String getPassHash(String pass) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(pass.getBytes(this.enc), 0, pass.length());
-        String bi = new BigInteger(1, md.digest()).toString(16);
-        return bi;
+        return new BigInteger(1, md.digest()).toString(16);
     }
     /**
      * Получает пользователя по идентификатору.

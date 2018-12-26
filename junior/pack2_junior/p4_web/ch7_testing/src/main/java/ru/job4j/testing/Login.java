@@ -22,7 +22,7 @@ import org.apache.logging.log4j.LogManager;
  * Класс Login реализует контроллер входа пользователя.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-26
  * @since 2017-12-11
  */
 public class Login extends HttpServlet {
@@ -99,7 +99,7 @@ public class Login extends HttpServlet {
                 message = String.format("С возвращением, %s", user.getName());
             } else {
                 req.setAttribute("title", "Ты кто такой, дарагой?");
-                message = String.format("Ошибка. Пользователя с таким логином и паролем нет.");
+                message = "Ошибка. Пользователя с таким логином и паролем нет.";
             }
             req.setAttribute("message", message);
             req.setAttribute("refBack", String.format("%s://%s:%s%s/login/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));

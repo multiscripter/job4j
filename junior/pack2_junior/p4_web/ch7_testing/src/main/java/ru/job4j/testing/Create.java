@@ -23,7 +23,7 @@ import org.apache.logging.log4j.LogManager;
  * Класс Create реализует функционал создания пользователя.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 6
+ * @version 2018-12-26
  * @since 2017-11-09
  */
 public class Create extends HttpServlet {
@@ -31,10 +31,6 @@ public class Create extends HttpServlet {
      * Логгер.
      */
     private Logger logger;
-    /**
-     * Путь до файла.
-     */
-    private String path;
     /**
      * RoleService.
      */
@@ -51,10 +47,10 @@ public class Create extends HttpServlet {
     	try {
 			// /var/lib/tomcat8/webapps/ch7_testing-1.0/WEB-INF/classes
             // \Program FIles\Apache Software Foundation\Tomcat 8.5\webapps\ch7_testing-1.0\WEB-INF\classes
-			this.path = new File(Create.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
-			this.path = this.path.replaceFirst("^/(.:/)", "$1");
+			String path = new File(Create.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
+			path = path.replaceFirst("^/(.:/)", "$1");
 			XmlConfigurationFactory xcf = new XmlConfigurationFactory();
-			ConfigurationSource source = new ConfigurationSource(new FileInputStream(new File(this.path + "log4j2.xml")));
+			ConfigurationSource source = new ConfigurationSource(new FileInputStream(new File(path + "log4j2.xml")));
             Configuration conf = xcf.getConfiguration(new LoggerContext("ch7_testing_context"), source);
             LoggerContext ctx = (LoggerContext) LogManager.getContext(true);
             ctx.stop();

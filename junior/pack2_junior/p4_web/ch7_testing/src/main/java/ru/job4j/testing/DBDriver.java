@@ -3,7 +3,6 @@ package ru.job4j.testing;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,7 +24,7 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
  * Для конфигурирования пула соединений с бд не используется JNDI.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 4
+ * @version 2018-12-26
  * @since 2017-11-05
  */
 class DBDriver {
@@ -72,7 +71,7 @@ class DBDriver {
     		this.setDbDriver();
     		this.executeSqlScript("junior.pack2.p9.ch7.task1.sql");
     		this.setConnection();
-        } catch (URISyntaxException | IOException | NullPointerException | SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
 	}
@@ -86,7 +85,7 @@ class DBDriver {
         if (this.con == null) {
 			this.setConnection();
     	}
-    	int affected = 0;
+    	int affected;
 		try (Statement stmt = this.con.createStatement()) {
 			affected = stmt.executeUpdate(query);
 		} catch (SQLException ex) {

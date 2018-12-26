@@ -3,13 +3,14 @@ package ru.job4j.testing;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 /**
  * Класс RoleService.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2018-12-26
  * @since 2017-12-08
  */
 public class RoleService {
@@ -67,12 +68,10 @@ public class RoleService {
 	 */
     public LinkedList<Role> getRoles() throws SQLException {
         LinkedList<Role> roles = new LinkedList<>();
-        String query = String.format("select * from roles order by name");
+        String query = "select * from roles order by name";
         LinkedList<HashMap<String, String>> rl = this.db.select(query);
         if (!rl.isEmpty()) {
-            for (HashMap<String, String> entry : rl) {
-                roles.add(new Role(Integer.parseInt(entry.get("id")), entry.get("name")));
-            }
+            roles.addAll(rl.stream().map(entry -> new Role(Integer.parseInt(entry.get("id")), entry.get("name"))).collect(Collectors.toList()));
         }
         return roles;
     }

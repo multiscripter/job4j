@@ -26,7 +26,7 @@ import org.mockito.stubbing.Answer;
  * Класс UpdateTest тестирует класс Update.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-07
+ * @version 2018-12-26
  * @since 2017-12-17
  */
 public class UpdateTest {
@@ -67,10 +67,6 @@ public class UpdateTest {
     @Mock
     private HttpSession sess;
     /**
-     * UserService.
-     */
-    private UserService us;
-    /**
      * Действия перед тестом.
      */
     @Before
@@ -78,7 +74,9 @@ public class UpdateTest {
         try {
             Prepare pre = new Prepare();
             pre.loadProperties("junior.pack2.p9.ch7.task1.properties");
-            pre.setDbDriver(new PgSQLJDBCDriver());
+            PgSQLJDBCDriver dbDriver = new PgSQLJDBCDriver(pre.getProperties());
+            dbDriver.setup();
+            pre.setDbDriver(dbDriver);
             pre.executeSql("junior.pack2.p9.ch7.task1.sql");
             MockitoAnnotations.initMocks(this);
             GregorianCalendar cal = new GregorianCalendar();
@@ -90,8 +88,8 @@ public class UpdateTest {
             this.servlet = new Update();
             this.servlet.init(conf);
             this.enc = Charset.defaultCharset().toString();
-            this.us = new UserService();
-            this.us.setEncoding(this.enc);
+            UserService us = new UserService();
+            us.setEncoding(this.enc);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
