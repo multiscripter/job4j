@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
     <appenders>
-        <file name="logfile" fileName="/var/log/tomcat8/junior.pack2.p9.ch3.task1.log">
+        <file name="logfile" fileName="junior.pack2.p9.ch3.task1.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
         </file>
     </appenders>
