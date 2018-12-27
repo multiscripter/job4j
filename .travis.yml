@@ -23,3 +23,5 @@ services:
 before_script:
   - psql -c 'create database jpack2p8ch4task2;' -U postgres
   - psql -c 'create database jpack2p9ch7task1;' -U postgres
+  - psql -c 'create database jpack2p9ch8task1;' -U postgres
+  - psql -c 'create database jpack2p9ch9task1;' -U postgres
