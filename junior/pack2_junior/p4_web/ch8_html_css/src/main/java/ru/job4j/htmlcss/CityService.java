@@ -1,17 +1,17 @@
 package ru.job4j.htmlcss;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.LinkedList;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 /**
  * Класс CityService.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2019-01-08
  * @since 2017-12-19
  */
 public class CityService {
@@ -20,14 +20,15 @@ public class CityService {
      */
     private final DBDriver db;
     /**
-     * Логгер.
-     */
-    private final Logger logger;
-    /**
      * Конструктор.
+     * @throws ClassNotFoundException класс не найден.
+     * @throws IllegalAccessException незаконный доступ.
+     * @throws InstantiationException исключение создания экземпляра.
+     * @throws URISyntaxException исключение синтакса URI.
+     * @throws IOException исключение ввода-вывода.
+     * @throws SQLException исключение SQL.
      */
-    CityService() {
-        this.logger = LogManager.getLogger("CityService");
+    CityService() throws IllegalAccessException, InstantiationException, IOException, SQLException, URISyntaxException, ClassNotFoundException {
         this.db = DBDriver.getInstance();
     }
     /**
@@ -92,7 +93,7 @@ public class CityService {
                 }
                 cities.put(Integer.parseInt(entry.get("id")), city);
             }
-            list = new LinkedList(cities.values());
+            list = new LinkedList<>(cities.values());
             Collections.sort((List) list);
         }
         return list;

@@ -5,7 +5,7 @@ import java.util.Objects;
  * Класс Country реализует сущность Страна.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2019-01-08
  * @since 2017-12-19
  */
 public class Country {
@@ -40,11 +40,9 @@ public class Country {
             return false;
         }
         Country country = (Country) obj;
-        if (this.id != country.getId() || !this.name.equals(country.getName())) {
-            return false;
-        }
-        return true;
-    }
+		return !(this.id != country.getId() || !this.name.equals(country
+				.getName()));
+	}
     /**
 	 * Получает идентификатор.
 	 * @return идентификатор.

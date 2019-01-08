@@ -1,5 +1,7 @@
 package ru.job4j.htmlcss;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -9,7 +11,7 @@ import org.apache.logging.log4j.LogManager;
  * Класс RoleService.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2019-01-08
  * @since 2017-12-08
  */
 public class RoleService {
@@ -23,8 +25,14 @@ public class RoleService {
     private Logger logger;
     /**
      * Конструктор.
+     * @throws ClassNotFoundException класс не найден.
+     * @throws IllegalAccessException незаконный доступ.
+     * @throws InstantiationException исключение создания экземпляра.
+     * @throws URISyntaxException исключение синтакса URI.
+     * @throws IOException исключение ввода-вывода.
+     * @throws SQLException исключение SQL.
      */
-    RoleService() {
+    RoleService() throws IllegalAccessException, InstantiationException, IOException, SQLException, URISyntaxException, ClassNotFoundException {
     	this.logger = LogManager.getLogger("RoleService");
     	this.db = DBDriver.getInstance();
     }
@@ -67,7 +75,7 @@ public class RoleService {
 	 */
     public LinkedList<Role> getRoles() throws SQLException {
         LinkedList<Role> roles = new LinkedList<>();
-        String query = String.format("select * from roles order by name");
+        String query = "select * from roles order by name";
         LinkedList<HashMap<String, String>> rl = this.db.select(query);
         if (!rl.isEmpty()) {
             for (HashMap<String, String> entry : rl) {

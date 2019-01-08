@@ -13,9 +13,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import org.mockito.Mock;
@@ -30,7 +29,7 @@ import org.mockito.stubbing.Answer;
  * Класс CreateTest тестирует класс Create.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-07
+ * @version 2019-01-08
  * @since 2017-12-18
  */
 public class CreateTest {
@@ -69,29 +68,19 @@ public class CreateTest {
      * Заглушка сессии.
      */
     @Mock
-    private HttpSession sess;
+    private HttpSession session;
     /**
      * UserService.
      */
     private UserService us;
     /**
-     * Действия после теста.
-     */
-    @Ignore@After
-    public void afterTest() {
-        try {
-            DBDriver driver = DBDriver.getInstance();
-            driver.executeSql("delete from users where id > 14");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    /**
      * Действия перед тестом.
      */
-    @Ignore@Before
+    @Before
     public void beforeTest() {
         try {
+            DBDriver driver = DBDriver.getInstance();
+            driver.executeSqlScript("initial.sql");
             MockitoAnnotations.initMocks(this);
             GregorianCalendar cal = new GregorianCalendar();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -146,7 +135,7 @@ public class CreateTest {
     /**
      * Тестирует public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException.
      */
-    @Ignore@Test
+    @Test
     public void testDoGet() {
         try {
             HttpServletRequest req = mock(HttpServletRequest.class);
@@ -162,15 +151,15 @@ public class CreateTest {
     /**
      * Тестирует public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException.
      */
-    @Ignore@Test
+    @Test
     public void testDoPost() {
         try {
             String login = "createfakelogin";
             String pass = "createfakepass";
             HttpServletRequest req = mock(HttpServletRequest.class);
             HttpServletResponse resp = mock(HttpServletResponse.class);
-            when(req.getSession(false)).thenReturn(sess);
-            doReturn(this.admin).when(sess).getAttribute("auth");
+            when(req.getSession(false)).thenReturn(this.session);
+            doReturn(this.admin).when(this.session).getAttribute("auth");
             when(req.getParameter("name")).thenReturn(new String("Псевдоимя".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("login")).thenReturn(new String(login.getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("email")).thenReturn(new String("createfake@email.domain".getBytes(this.enc), "ISO-8859-1"));

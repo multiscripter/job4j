@@ -5,7 +5,7 @@ import java.util.Objects;
  * Класс Role реализует сущность Роль.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 2019-01-08
  * @since 2017-12-08
  */
 public class Role {
@@ -40,11 +40,8 @@ public class Role {
             return false;
         }
         Role role = (Role) obj;
-        if (this.id != role.getId() || !this.name.equals(role.getName())) {
-            return false;
-        }
-        return true;
-    }
+		return !(this.id != role.getId() || !this.name.equals(role.getName()));
+	}
     /**
 	 * Получает идентификатор.
 	 * @return идентификатор.

@@ -2,14 +2,14 @@ package ru.job4j.htmlcss;
 
 import java.util.Objects;
 import org.junit.Before;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 /**
  * Класс RoleTest тестирует класс Role.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2017-12-18
  * @since 2017-12-18
  */
 public class RoleTest {
@@ -20,14 +20,14 @@ public class RoleTest {
     /**
      * Действия перед тестом.
      */
-    @Ignore@Before
+    @Before
     public void beforeTest() {
         this.role = new Role(1, "administrator");
     }
     /**
      * Тестирует public boolean equals(Object obj).
      */
-    @Ignore@Test
+    @Test
     public void testEquals() {
         Role expected = this.role;
         Role actual = new Role(1, "administrator");
@@ -36,21 +36,21 @@ public class RoleTest {
     /**
      * Тестирует public int getId().
      */
-    @Ignore@Test
+    @Test
     public void testGetId() {
         assertEquals(1, this.role.getId());
     }
     /**
      * Тестирует public String getName().
      */
-    @Ignore@Test
+    @Test
     public void testGetName() {
         assertEquals("administrator", this.role.getName());
     }
     /**
      * Тестирует public int hashCode().
      */
-    @Ignore@Test
+    @Test
     public void testHashCode() {
         int expected = Objects.hash(this.role.getId(), this.role.getName());
         assertEquals(expected, this.role.hashCode());
@@ -58,7 +58,7 @@ public class RoleTest {
     /**
      * Тестирует public void setId(final int id).
      */
-    @Ignore@Test
+    @Test
     public void testSetId() {
         int expected = 100;
         this.role.setId(expected);
@@ -67,7 +67,7 @@ public class RoleTest {
     /**
      * Тестирует public void setName(final String name).
      */
-    @Ignore@Test
+    @Test
     public void testSetName() {
         String expected = "SuperAdmin";
         this.role.setName(expected);
@@ -76,7 +76,7 @@ public class RoleTest {
     /**
      * Тестирует public String toString().
      */
-    @Ignore@Test
+    @Test
     public void testToString() {
         assertEquals("Role[id: 1, name: administrator]", this.role.toString());
     }

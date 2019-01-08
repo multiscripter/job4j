@@ -24,7 +24,11 @@ public class RoleServiceTest {
      */
     @Before
     public void beforeTest() {
-        this.rls = new RoleService();
+        try {
+            this.rls = new RoleService();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     /**
      * Тестирует public Role getRoleById(final int id) throws SQLException.

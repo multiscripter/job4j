@@ -28,14 +28,10 @@ import org.mockito.stubbing.Answer;
  * Класс ReadTest тестирует класс Read.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-07
+ * @version 2019-01-08
  * @since 2017-12-18
  */
 public class ReadTest {
-    /**
-     * Админ.
-     */
-    private User admin;
     /**
      * Атрибуты.
      */
@@ -74,21 +70,23 @@ public class ReadTest {
     @Before
     public void beforeTest() {
         try {
+            DBDriver driver = DBDriver.getInstance();
+            driver.executeSqlScript("initial.sql");
             MockitoAnnotations.initMocks(this);
             GregorianCalendar cal = new GregorianCalendar();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date date = sdf.parse("1952-10-07");
             cal.setTime(date);
-            this.admin = new User();
-            this.admin.setId(1);
-            this.admin.setName("Путин");
-            this.admin.setLogin("president");
-            this.admin.setEmail("putin@kremlin.gov");
-            this.admin.setDate(cal);
-            this.admin.setPass("ab788932cee4ff449d2ec584da8af2b7");
-            this.admin.setRole(new Role(1, "administrator"));
-            this.admin.setCountry(new Country(2, "РФ"));
-            this.admin.setCity(new City(1, "Москва", new LinkedList<>(Arrays.asList(1, 2))));
+            User admin = new User();
+            admin.setId(1);
+            admin.setName("Путин");
+            admin.setLogin("president");
+            admin.setEmail("putin@kremlin.gov");
+            admin.setDate(cal);
+            admin.setPass("ab788932cee4ff449d2ec584da8af2b7");
+            admin.setRole(new Role(1, "administrator"));
+            admin.setCountry(new Country(2, "РФ"));
+            admin.setCity(new City(1, "Москва", new LinkedList<>(Arrays.asList(1, 2))));
             this.attributes = new ConcurrentHashMap<>();
             this.servlet = new Read();
             this.servlet.init(conf);

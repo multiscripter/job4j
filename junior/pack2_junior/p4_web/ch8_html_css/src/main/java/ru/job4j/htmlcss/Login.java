@@ -26,7 +26,7 @@ import org.apache.logging.log4j.LogManager;
  * Класс Login реализует контроллер входа пользователя.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2019-01-08
  * @since 2017-12-11
  */
 public class Login extends HttpServlet {
@@ -43,10 +43,6 @@ public class Login extends HttpServlet {
      */
     private Logger logger;
     /**
-     * Путь до файла.
-     */
-    private String path;
-    /**
      * UserService.
      */
     private UserService us;
@@ -59,21 +55,21 @@ public class Login extends HttpServlet {
         try {
             // /var/lib/tomcat8/webapps/ch8_html_css-1.0/WEB-INF/classes
             // \Program FIles\Apache Software Foundation\Tomcat 8.5\webapps\ch8_html_css-1.0\WEB-INF\classes
-            this.path = new File(Login.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
-            this.path = this.path.replaceFirst("^/(.:/)", "$1");
+            String path = new File(Login.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
+            path = path.replaceFirst("^/(.:/)", "$1");
             XmlConfigurationFactory xcf = new XmlConfigurationFactory();
-            ConfigurationSource source = new ConfigurationSource(new FileInputStream(new File(this.path + "log4j2.xml")));
+            ConfigurationSource source = new ConfigurationSource(new FileInputStream(new File(path + "log4j2.xml")));
             Configuration conf = xcf.getConfiguration(new LoggerContext("ch8_html_css_context"), source);
             LoggerContext ctx = (LoggerContext) LogManager.getContext(true);
             ctx.stop();
             ctx.start(conf);
             this.logger = LogManager.getLogger("Login");
             this.us = new UserService();
-            this.errmsgs = new PropertyLoader("junior.pack2.p9.ch8.task1.errmsg.properties").getPropertiesList();
-            this.filters = new HashMap();
+            this.errmsgs = new PropertyLoader("errmsg.properties").getPropertiesList();
+            this.filters = new HashMap<>();
             this.filters.put("login", new Filter("login", new String[]{"isExists", "isFilled"}));
             this.filters.put("pass", new Filter("pass", new String[]{"isExists", "isFilled"}));
-        } catch (URISyntaxException | IOException ex) {
+        } catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -138,7 +134,7 @@ public class Login extends HttpServlet {
                     resp.addCookie(cookie);
                 } else {
                     req.setAttribute("title", "Ты кто такой, дарагой?");
-                    message = String.format("Ошибка. Пользователя с таким логином и паролем нет.");
+                    message = "Ошибка. Пользователя с таким логином и паролем нет.";
                 }
                 req.setAttribute("message", message);
                 req.setAttribute("refBack", String.format("%s://%s:%s%s/login/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));

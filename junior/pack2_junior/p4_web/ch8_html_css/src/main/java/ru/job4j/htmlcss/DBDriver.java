@@ -2,8 +2,10 @@ package ru.job4j.htmlcss;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,19 +25,14 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
  * Для конфигурирования пула соединений с бд не используется JNDI.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 4
+ * @version 2018-12-26
  * @since 2017-11-05
  */
 class DBDriver {
     /**
      * Класс Синглетона.
      */
-    public static final class SingletonHolder {
-        /**
-         * Синглетон.
-         */
-        public static final DBDriver INSTANCE = new DBDriver();
-    }
+    private static DBDriver instance;
     /**
      * Соединение с бд.
      */
@@ -55,25 +52,25 @@ class DBDriver {
     /**
      * Свойства настроек бд.
      */
-    private Properties props;
-	/**
-	 * Конструктор.
-	 */
-	private DBDriver() {
+    private final Properties props;
+    /**
+     * Конструктор.
+     * @throws ClassNotFoundException класс не найден.
+     * @throws IllegalAccessException незаконный доступ.
+     * @throws InstantiationException исключение создания экземпляра.
+     * @throws URISyntaxException исключение синтакса URI.
+     * @throws IOException исключение ввода-вывода.
+     * @throws SQLException исключение SQL.
+     */
+	private DBDriver() throws ClassNotFoundException, IllegalAccessException, InstantiationException, URISyntaxException, IOException, SQLException {
         this.logger = LogManager.getLogger("DBDriver");
         this.props = new Properties();
-        try {
-            Class.forName("org.postgresql.Driver").newInstance(); //load driver
-            this.path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
-    		this.path = this.path.replaceFirst("^/(.:/)", "$1");
-            PropertyLoader pl = new PropertyLoader("junior.pack2.p9.ch8.task1.properties");
-    		this.props = pl.getProperties();
-    		this.setDbDriver();
-    		this.executeSqlScript("junior.pack2.p9.ch8.task1.sql");
-    		this.setConnection();
-        } catch (URISyntaxException | IOException | NullPointerException | SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            this.logger.error("ERROR", ex);
-        }
+        Class.forName("org.postgresql.Driver").newInstance(); //load driver
+        this.path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
+        this.path = this.path.replaceFirst("^/(.:/)", "$1");
+        this.loadProperties("db.properties");
+        this.setDbDriver();
+        this.setConnection();
 	}
 	/**
      * Выполняет вудуеу sql-запрос.
@@ -85,7 +82,7 @@ class DBDriver {
         if (this.con == null) {
 			this.setConnection();
     	}
-    	int affected = 0;
+    	int affected;
 		try (Statement stmt = this.con.createStatement()) {
 			affected = stmt.executeUpdate(query);
 		} catch (SQLException ex) {
@@ -114,11 +111,11 @@ class DBDriver {
      * @throws IOException исключение ввода-вывода.
      * @throws SQLException исключение SQL.
      */
-    private void executeSqlScript(String localName) throws IOException, SQLException {
+    public void executeSqlScript(String localName) throws IOException, SQLException {
         if (this.con == null) {
 			this.setConnection();
     	}
-        byte[] bytes = Files.readAllBytes(Paths.get(path + localName));
+        byte[] bytes = Files.readAllBytes(Paths.get(this.path + localName));
         String query = new String(bytes, "UTF-8");
         try (Statement stmt = this.con.createStatement()) {
             stmt.execute(query);
@@ -129,9 +126,18 @@ class DBDriver {
     /**
      * Получает псенглетон.
      * @return сенглетон.
+     * @throws ClassNotFoundException класс не найден.
+     * @throws IllegalAccessException незаконный доступ.
+     * @throws InstantiationException исключение создания экземпляра.
+     * @throws URISyntaxException исключение синтакса URI.
+     * @throws IOException исключение ввода-вывода.
+     * @throws SQLException исключение SQL.
      */
-    public static DBDriver getInstance() {
-        return SingletonHolder.INSTANCE;
+    public static DBDriver getInstance() throws ClassNotFoundException, IllegalAccessException, InstantiationException, URISyntaxException, IOException, SQLException {
+        if (DBDriver.instance == null) {
+            DBDriver.instance = new DBDriver();
+        }
+        return DBDriver.instance;
     }
     /**
      * Выполняет insert sql-запрос.
@@ -158,6 +164,16 @@ class DBDriver {
         }
         return entry;
 	}
+	/**
+     * Загружает свойства соединения с бд.
+     * @param localName локальное имя properties-файла.
+     * @throws IOException исключение ввода-вывода.
+     */
+    private void loadProperties(String localName) throws IOException {
+        Path fName = Paths.get(this.path + localName);
+        InputStream is = Files.newInputStream(fName);
+        this.props.load(is);
+    }
     /**
      * Выполняет select sql-запрос.
      * @param query sql-запрос.

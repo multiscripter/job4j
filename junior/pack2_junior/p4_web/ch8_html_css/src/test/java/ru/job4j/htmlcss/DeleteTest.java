@@ -13,7 +13,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.junit.After;
 import org.junit.Before;
 //import org.junit.Ignore;
 import org.junit.Test;
@@ -30,7 +29,7 @@ import org.mockito.stubbing.Answer;
  * Класс DeleteTest тестирует класс Delete.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-07
+ * @version 2019-01-08
  * @since 2017-12-18
  */
 public class DeleteTest {
@@ -73,29 +72,15 @@ public class DeleteTest {
      * Заглушка сессии.
      */
     @Mock
-    private HttpSession sess;
-    /**
-     * UserService.
-     */
-    private UserService us;
-    /**
-     * Действия после теста.
-     */
-    @After
-    public void afterTest() {
-        try {
-            DBDriver driver = DBDriver.getInstance();
-            driver.executeSql("delete from users where id > 4");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    private HttpSession session;
     /**
      * Действия перед тестом.
      */
     @Before
     public void beforeTest() {
         try {
+            DBDriver driver = DBDriver.getInstance();
+            driver.executeSqlScript("initial.sql");
             MockitoAnnotations.initMocks(this);
             GregorianCalendar cal = new GregorianCalendar();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -114,8 +99,8 @@ public class DeleteTest {
             this.attributes = new ConcurrentHashMap<>();
             this.servlet = new Delete();
             this.servlet.init(conf);
-            this.us = new UserService();
-            this.us.setEncoding(Charset.defaultCharset().toString());
+            UserService us = new UserService();
+            us.setEncoding(Charset.defaultCharset().toString());
             GregorianCalendar delCal = new GregorianCalendar();
             SimpleDateFormat delSdf = new SimpleDateFormat("yyyy-MM-dd");
             Date delDate = delSdf.parse("1952-11-11");
@@ -173,8 +158,8 @@ public class DeleteTest {
             HttpServletRequest req = mock(HttpServletRequest.class);
             HttpServletResponse resp = mock(HttpServletResponse.class);
             when(req.getParameter("id")).thenReturn(Integer.toString(this.delUser.getId()));
-            when(req.getSession(false)).thenReturn(sess);
-            doReturn(this.admin).when(sess).getAttribute("auth");
+            when(req.getSession(false)).thenReturn(this.session);
+            doReturn(this.admin).when(this.session).getAttribute("auth");
             when(servlet.getServletContext()).thenReturn(ctx);
             when(ctx.getRequestDispatcher("/WEB-INF/views/deleteGet.jsp")).thenReturn(reqDesp);
             this.setAttributeStorage(req);
@@ -201,8 +186,7 @@ public class DeleteTest {
             this.setAttributeStorage(req);
             servlet.doPost(req, resp);
             String actual = (String) req.getAttribute("message");
-            //assertEquals(expected, actual);
-            System.out.println("DeleteTest.testDoPost() desabled");
+            assertEquals(expected, actual);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

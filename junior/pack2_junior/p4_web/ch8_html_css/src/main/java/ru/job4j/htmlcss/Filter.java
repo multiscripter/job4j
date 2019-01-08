@@ -5,7 +5,7 @@ import java.util.Arrays;
  * Класс Filter реализует сущность Фильтр.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2017-12-25
  * @since 2017-12-25
  */
 public class Filter {

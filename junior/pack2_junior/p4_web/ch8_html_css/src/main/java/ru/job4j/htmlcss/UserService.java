@@ -1,7 +1,9 @@
 package ru.job4j.htmlcss;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URISyntaxException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -47,8 +49,14 @@ class UserService {
     private RoleService rls;
     /**
      * Конструктор.
+     * @throws ClassNotFoundException класс не найден.
+     * @throws IllegalAccessException незаконный доступ.
+     * @throws InstantiationException исключение создания экземпляра.
+     * @throws URISyntaxException исключение синтакса URI.
+     * @throws IOException исключение ввода-вывода.
+     * @throws SQLException исключение SQL.
      */
-    UserService() {
+    UserService() throws IllegalAccessException, InstantiationException, IOException, SQLException, URISyntaxException, ClassNotFoundException {
     	this.logger = LogManager.getLogger("UserService");
     	this.db = DBDriver.getInstance();
         this.cits = new CityService();

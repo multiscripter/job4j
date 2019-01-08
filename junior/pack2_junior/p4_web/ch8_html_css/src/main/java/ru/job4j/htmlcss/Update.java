@@ -13,6 +13,8 @@ import java.text.ParseException;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.HashMap;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +28,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Класс Update реализует функционал обновления пользователя.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 6
+ * @version 2019-01-08
  * @since 2017-11-09
  */
 public class Update extends HttpServlet {
@@ -55,10 +57,6 @@ public class Update extends HttpServlet {
      */
     private Logger logger;
     /**
-     * Путь до файла.
-     */
-    private String path;
-    /**
      * RoleService.
      */
     private RoleService rls;
@@ -75,10 +73,10 @@ public class Update extends HttpServlet {
         try {
             // /var/lib/tomcat8/webapps/ch8_html_css-1.0/WEB-INF/classes
             // \Program FIles\Apache Software Foundation\Tomcat 8.5\webapps\ch8_html_css-1.0\WEB-INF\classes
-            this.path = new File(Update.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
-            this.path = this.path.replaceFirst("^/(.:/)", "$1");
+            String path = new File(Update.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
+            path = path.replaceFirst("^/(.:/)", "$1");
             XmlConfigurationFactory xcf = new XmlConfigurationFactory();
-            ConfigurationSource source = new ConfigurationSource(new FileInputStream(new File(this.path + "log4j2.xml")));
+            ConfigurationSource source = new ConfigurationSource(new FileInputStream(new File(path + "log4j2.xml")));
             Configuration conf = xcf.getConfiguration(new LoggerContext("ch8_html_css_context"), source);
             LoggerContext ctx = (LoggerContext) LogManager.getContext(true);
             ctx.stop();
@@ -88,8 +86,8 @@ public class Update extends HttpServlet {
             this.cs = new CountryService();
             this.rls = new RoleService();
             this.us = new UserService();
-            this.errmsgs = new PropertyLoader("junior.pack2.p9.ch8.task1.errmsg.properties").getPropertiesList();
-            this.filters = new HashMap();
+            this.errmsgs = new PropertyLoader("errmsg.properties").getPropertiesList();
+            this.filters = new HashMap<>();
             this.filters.put("id", new Filter("id", new String[]{"isFilled", "isDecimal"}));
             this.filters.put("name", new Filter("name", new String[]{"isFilled", "isName"}));
             this.filters.put("login", new Filter("login", new String[]{"isFilled"}));
@@ -99,7 +97,7 @@ public class Update extends HttpServlet {
             this.filters.put("country", new Filter("country", new String[]{"isFilled", "isDecimal"}));
             this.filters.put("city", new Filter("city", new String[]{"isFilled", "isDecimal"}));
             this.adminRole = this.rls.getRoleByName("administrator");
-        } catch (URISyntaxException | IOException | SQLException ex) {
+        } catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -227,14 +225,16 @@ public class Update extends HttpServlet {
                     req.setAttribute("errors", va.getResult());
                     req.setAttribute("user", user);
                 }
-                this.getServletContext().getRequestDispatcher("/WEB-INF/views/updateGet.jsp").include(req, resp);
+                ServletContext ctx = this.getServletContext();
+                RequestDispatcher reqDesp = ctx.getRequestDispatcher("/WEB-INF/views/updateGet.jsp");
+                reqDesp.include(req, resp);
             } else {
                 user.setDate(new GregorianCalendar());
-                User auth = (User) req.getSession(false).getAttribute("auth");
+                /*User auth = (User) req.getSession(false).getAttribute("auth");
                 int roleId = auth.getRoleId();
                 if (roleId == this.adminRole.getId()) {
                     roleId = Integer.parseInt(role);
-                }
+                }*/
                 try {
                     if (this.us.editUser(user)) {
                         message = String.format("Пользователь id:%d отредактирован.", user.getId());

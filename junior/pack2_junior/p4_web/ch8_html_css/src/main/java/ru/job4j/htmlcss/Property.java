@@ -4,7 +4,7 @@ package ru.job4j.htmlcss;
  * Класс Property реализует сущность Свойство.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2017-12-23
  * @since 2017-12-23
  */
 public class Property {

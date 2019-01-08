@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * Класс City реализует сущность Город.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2
+ * @version 2017-12-08
  * @since 2017-12-08
  */
 public class City implements Comparable<City> {

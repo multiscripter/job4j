@@ -49,6 +49,21 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>jpack2p9ch8task1-travis</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <db.url>jdbc:postgresql://localhost/jpack2p9ch8task1</db.url>
+                <db.username>postgres</db.username>
+                <db.password />
+                <db.driver>org.postgresql.Driver</db.driver>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <plugin>

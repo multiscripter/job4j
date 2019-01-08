@@ -1,13 +1,12 @@
 package ru.job4j.htmlcss;
 
-//import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 /**
  * Класс User реализует сущность Пользоваетель.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 5
+ * @version 2019-01-08
  * @since 2017-11-06
  */
 public class User {
@@ -67,11 +66,8 @@ public class User {
             return false;
         }
         User user = (User) obj;
-        if (this.id != user.getId() || !this.name.equals(user.getName()) || !this.login.equals(user.getLogin()) || !this.email.equals(user.getEmail()) || !this.date.equals(user.getDate()) || !this.role.equals(user.getRole()) || !this.country.equals(user.country) || !this.city.equals(user.city)) {
-            return false;
-        }
-        return true;
-    }
+		return !(this.id != user.getId() || !this.name.equals(user.getName()) || !this.login.equals(user.getLogin()) || !this.email.equals(user.getEmail()) || !this.date.equals(user.getDate()) || !this.role.equals(user.getRole()) || !this.country.equals(user.country) || !this.city.equals(user.city));
+	}
     /**
 	 * Получает город.
 	 * @return город.
@@ -126,7 +122,6 @@ public class User {
 	 * @return строковое представление даты создания.
 	 */
 	public String getDateStr() {
-		//return String.format("%d-%02d-%02d", this.date.get(Calendar.YEAR), this.date.get(Calendar.MONTH), this.date.get(Calendar.DAY_OF_MONTH));
         return String.format("%1$tY-%1$tm-%1$td", this.date);
 	}
 	/**

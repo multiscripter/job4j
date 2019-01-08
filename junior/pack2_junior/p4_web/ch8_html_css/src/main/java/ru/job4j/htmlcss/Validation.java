@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Класс Validation реализует функционал валидации данных форм.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2017-12-20
  * @since 2017-12-20
  */
 public class Validation {
@@ -43,7 +43,7 @@ public class Validation {
         this.errmsg = new Properties();
         this.result = new HashMap<>();
         try {
-            PropertyLoader pl = new PropertyLoader("junior.pack2.p9.ch8.task1.errmsg.properties");
+            PropertyLoader pl = new PropertyLoader("errmsg.properties");
     		this.errmsg = pl.getProperties();
         } catch (IOException | NullPointerException ex) {
             this.logger.error("ERROR", ex);

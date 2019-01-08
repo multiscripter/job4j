@@ -7,14 +7,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import org.junit.Before;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 /**
  * Класс UserServiceTest тестирует класс UserService.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-07
+ * @version 2019-01-08
  * @since 2017-12-17
  */
 public class UserServiceTest {
@@ -27,8 +27,14 @@ public class UserServiceTest {
      */
     @Before
     public void beforeTest() {
-        this.us = new UserService();
-        this.us.setEncoding(Charset.defaultCharset().toString());
+        try {
+            DBDriver driver = DBDriver.getInstance();
+            driver.executeSqlScript("initial.sql");
+            this.us = new UserService();
+            this.us.setEncoding(Charset.defaultCharset().toString());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     /**
      * Тестирует public String getPassHash(String pass) throws NoSuchAlgorithmException, UnsupportedEncodingException.
@@ -46,7 +52,7 @@ public class UserServiceTest {
     /**
      * Тестирует public User getUserById(final int id) throws SQLException, ParseException, NoSuchAlgorithmException, UnsupportedEncodingException.
      */
-    @Ignore@Test
+    @Test
     public void testGetUserById() {
         try {
             GregorianCalendar cal = new GregorianCalendar();
@@ -72,7 +78,7 @@ public class UserServiceTest {
     /**
      * Тестирует public User getUserByLogPass(final String login, String pass) throws SQLException, ParseException,  NoSuchAlgorithmException, UnsupportedEncodingException.
      */
-    @Ignore@Test
+    @Test
     public void testGetUserByLogPass() {
         try {
             String login = "savior";

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.junit.Before;
-import org.junit.Ignore;
+//import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import org.mockito.Mock;
@@ -29,7 +29,7 @@ import org.mockito.stubbing.Answer;
  * Класс UpdateTest тестирует класс Update.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-07
+ * @version 2019-01-08
  * @since 2017-12-17
  */
 public class UpdateTest {
@@ -41,11 +41,6 @@ public class UpdateTest {
      * Атрибуты.
      */
     private ConcurrentHashMap<String, Object> attributes;
-    /**
-     * Заглушка конфига сервлета.
-     */
-    @Mock
-    private ServletConfig conf;
     /**
      * Заглушка контекста сервлета.
      */
@@ -68,17 +63,15 @@ public class UpdateTest {
      * Заглушка сессии.
      */
     @Mock
-    private HttpSession sess;
-    /**
-     * UserService.
-     */
-    private UserService us;
+    private HttpSession session;
     /**
      * Действия перед тестом.
      */
-    @Ignore@Before
+    @Before
     public void beforeTest() {
         try {
+            DBDriver driver = DBDriver.getInstance();
+            driver.executeSqlScript("initial.sql");
             MockitoAnnotations.initMocks(this);
             GregorianCalendar cal = new GregorianCalendar();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -96,10 +89,10 @@ public class UpdateTest {
             this.admin.setCity(new City(1, "Москва", new LinkedList<>(Arrays.asList(1, 2))));
             this.attributes = new ConcurrentHashMap<>();
             this.servlet = new Update();
-            this.servlet.init(conf);
+            this.servlet.init(mock(ServletConfig.class));
             this.enc = Charset.defaultCharset().toString();
-            this.us = new UserService();
-            this.us.setEncoding(this.enc);
+            UserService us = new UserService();
+            us.setEncoding(this.enc);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -133,15 +126,15 @@ public class UpdateTest {
     /**
      * Тестирует public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException.
      */
-    @Ignore@Test
+    @Test
     public void testDoGet() {
         try {
             User expected = this.admin;
             HttpServletRequest req = mock(HttpServletRequest.class);
             HttpServletResponse resp = mock(HttpServletResponse.class);
             when(req.getParameter("id")).thenReturn("1");
-            when(req.getSession(false)).thenReturn(sess);
-            doReturn(this.admin).when(sess).getAttribute("auth");
+            when(req.getSession(false)).thenReturn(session);
+            doReturn(this.admin).when(session).getAttribute("auth");
             when(servlet.getServletContext()).thenReturn(ctx);
             when(ctx.getRequestDispatcher("/WEB-INF/views/updateGet.jsp")).thenReturn(reqDesp);
             this.setAttributeStorage(req);
@@ -155,10 +148,10 @@ public class UpdateTest {
     /**
      * Тестирует public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException.
      */
-    @Ignore@Test
+    @Test
     public void testDoPost() {
         try {
-            int id = 14;
+            int id = 5;
             String expected = String.format("<p>Пользователь id:%d отредактирован.</p><br />\n", id);
             HttpServletRequest req = mock(HttpServletRequest.class);
             HttpServletResponse resp = mock(HttpServletResponse.class);
@@ -166,12 +159,12 @@ public class UpdateTest {
             when(req.getParameter("login")).thenReturn(new String("fakelogin".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("email")).thenReturn(new String("fake@email.domain".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("pass")).thenReturn(new String("fakepass".getBytes(this.enc), "ISO-8859-1"));
-            when(req.getSession(false)).thenReturn(sess);
-            doReturn(this.admin).when(sess).getAttribute("auth");
+            when(req.getSession(false)).thenReturn(session);
+            doReturn(this.admin).when(session).getAttribute("auth");
             when(req.getParameter("id")).thenReturn(Integer.toString(id));
             when(req.getParameter("role")).thenReturn("2");
             when(servlet.getServletContext()).thenReturn(ctx);
-            when(ctx.getRequestDispatcher("/WEB-INF/views/updatePost.jsp")).thenReturn(reqDesp);
+            when(ctx.getRequestDispatcher("/WEB-INF/views/updatePost.jsp")).thenReturn(mock(RequestDispatcher.class));
             this.setAttributeStorage(req);
             servlet.doPost(req, resp);
             String actual = (String) req.getAttribute("message");

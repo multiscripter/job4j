@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Класс PropertyLoader реализует функционал загрузки файлов свойств.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 1
+ * @version 2017-12-23
  * @since 2017-12-23
  */
 public class PropertyLoader {
