@@ -25,7 +25,7 @@ import org.apache.logging.log4j.LogManager;
  * Класс Delete реализует функционал удаления пользователя.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-08
+ * @version 2019-01-09
  * @since 2017-11-10
  */
 public class Delete extends HttpServlet {
@@ -63,7 +63,7 @@ public class Delete extends HttpServlet {
             this.us = new UserService();
             this.filters = new HashMap<>();
             this.filters.put("id", new Filter("id", new String[]{"isExists", "isFilled", "isDecimal"}));
-        } catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException ex) {
+        } catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException | NullPointerException ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -102,9 +102,7 @@ public class Delete extends HttpServlet {
             req.setAttribute("user", user);
             req.setAttribute("message", message);
             this.getServletContext().getRequestDispatcher("/WEB-INF/views/deleteGet.jsp").include(req, resp);
-            // или
-            //this.getServletContext().getRequestDispatcher("/WEB-INF/views/deleteGet.jsp").forward(req, resp);
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | SecurityException | SQLException | ParseException | NumberFormatException | NoSuchAlgorithmException | NoSuchMethodException | UnsupportedEncodingException ex) {
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | SecurityException | SQLException | ParseException | NumberFormatException | NoSuchAlgorithmException | NoSuchMethodException | UnsupportedEncodingException | NullPointerException ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -137,9 +135,7 @@ public class Delete extends HttpServlet {
             }
             req.setAttribute("message", message);
             this.getServletContext().getRequestDispatcher("/WEB-INF/views/deletePost.jsp").include(req, resp);
-            // или
-            //this.getServletContext().getRequestDispatcher("/WEB-INF/views/deletePost.jsp").forward(req, resp);
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException | SQLException ex) {
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException | SQLException | NullPointerException ex) {
             this.logger.error("ERROR", ex);
         }
     }

@@ -29,7 +29,7 @@ import org.mockito.stubbing.Answer;
  * Класс UpdateTest тестирует класс Update.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-08
+ * @version 2019-01-09
  * @since 2017-12-17
  */
 public class UpdateTest {
@@ -114,13 +114,10 @@ public class UpdateTest {
             }
         }).when(req).setAttribute(Mockito.anyString(), Mockito.anyObject());
         // Mock getAttribute
-        Mockito.doAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                String key = invocation.getArgumentAt(0, String.class);
-                //System.out.println("get attribute value for key=" + key + " : " + attributes.get(key));
-                return attributes.get(key);
-            }
+        Mockito.doAnswer(invocation -> {
+            String key = invocation.getArgumentAt(0, String.class);
+            //System.out.println("get attribute value for key=" + key + " : " + attributes.get(key));
+            return attributes.get(key);
         }).when(req).getAttribute(Mockito.anyString());
     }
     /**
@@ -152,17 +149,19 @@ public class UpdateTest {
     public void testDoPost() {
         try {
             int id = 5;
-            String expected = String.format("<p>Пользователь id:%d отредактирован.</p><br />\n", id);
+            String expected = String.format("Пользователь id:%d отредактирован.", id);
             HttpServletRequest req = mock(HttpServletRequest.class);
             HttpServletResponse resp = mock(HttpServletResponse.class);
+            when(req.getParameter("id")).thenReturn(Integer.toString(id));
             when(req.getParameter("name")).thenReturn(new String("Жирик".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("login")).thenReturn(new String("fakelogin".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("email")).thenReturn(new String("fake@email.domain".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("pass")).thenReturn(new String("fakepass".getBytes(this.enc), "ISO-8859-1"));
+            when(req.getParameter("role")).thenReturn("2");
+            when(req.getParameter("country")).thenReturn(new String("2".getBytes(this.enc), "ISO-8859-1"));
+            when(req.getParameter("city")).thenReturn(new String("1".getBytes(this.enc), "ISO-8859-1"));
             when(req.getSession(false)).thenReturn(session);
             doReturn(this.admin).when(session).getAttribute("auth");
-            when(req.getParameter("id")).thenReturn(Integer.toString(id));
-            when(req.getParameter("role")).thenReturn("2");
             when(servlet.getServletContext()).thenReturn(ctx);
             when(ctx.getRequestDispatcher("/WEB-INF/views/updatePost.jsp")).thenReturn(mock(RequestDispatcher.class));
             this.setAttributeStorage(req);

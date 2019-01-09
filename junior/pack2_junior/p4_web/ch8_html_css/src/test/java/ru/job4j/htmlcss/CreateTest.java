@@ -29,7 +29,7 @@ import org.mockito.stubbing.Answer;
  * Класс CreateTest тестирует класс Create.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-08
+ * @version 2019-01-09
  * @since 2017-12-18
  */
 public class CreateTest {
@@ -165,12 +165,14 @@ public class CreateTest {
             when(req.getParameter("email")).thenReturn(new String("createfake@email.domain".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("pass")).thenReturn(new String(pass.getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("role")).thenReturn(new String("2".getBytes(this.enc), "ISO-8859-1"));
+            when(req.getParameter("country")).thenReturn(new String("2".getBytes(this.enc), "ISO-8859-1"));
+            when(req.getParameter("city")).thenReturn(new String("1".getBytes(this.enc), "ISO-8859-1"));
             when(servlet.getServletContext()).thenReturn(ctx);
             when(ctx.getRequestDispatcher("/WEB-INF/views/createPost.jsp")).thenReturn(reqDesp);
             this.setAttributeStorage(req);
             servlet.doPost(req, resp);
             User user = this.us.getUserByLogPass(login, pass);
-            String expected = String.format("Пользователь %s добавлен. ID: %s", user.getName(), user.getId());
+            String expected = String.format("Пользователь %s добавлен. id: %s", user.getName(), user.getId());
             String actual = (String) req.getAttribute("message");
             assertEquals(expected, actual);
         } catch (Exception ex) {

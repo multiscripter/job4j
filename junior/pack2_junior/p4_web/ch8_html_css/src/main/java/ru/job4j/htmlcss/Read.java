@@ -23,7 +23,7 @@ import org.apache.logging.log4j.LogManager;
  * Класс Read реализует функционал чтения пользователей.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-08
+ * @version 2019-01-09
  * @since 2017-11-08
  */
 public class Read extends HttpServlet {
@@ -59,7 +59,7 @@ public class Read extends HttpServlet {
 			RoleService rls = new RoleService();
             this.us = new UserService();
             this.adminRole = rls.getRoleByName("administrator");
-		} catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException ex) {
+		} catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException | NullPointerException ex) {
 			this.logger.error("ERROR", ex);
 		}
     }
@@ -83,9 +83,7 @@ public class Read extends HttpServlet {
             req.setAttribute("refCreate", String.format("%s://%s:%s%s/create/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             req.setAttribute("refLogin", String.format("%s://%s:%s%s/login/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
 			this.getServletContext().getRequestDispatcher("/WEB-INF/views/readGet.jsp").include(req, resp);
-			// или
-			//this.getServletContext().getRequestDispatcher("/WEB-INF/views/readGet.jsp").forward(req, resp);
-		} catch (SQLException | ParseException | NoSuchAlgorithmException ex) {
+		} catch (SQLException | ParseException | NoSuchAlgorithmException | NullPointerException ex) {
 			this.logger.error("ERROR", ex);
 		}
 	}

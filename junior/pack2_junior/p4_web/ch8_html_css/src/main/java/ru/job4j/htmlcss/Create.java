@@ -25,7 +25,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Класс Create реализует функционал создания пользователя.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-08
+ * @version 2019-01-09
  * @since 2017-11-09
  */
 public class Create extends HttpServlet {
@@ -115,9 +115,7 @@ public class Create extends HttpServlet {
             req.setAttribute("refHome", String.format("%s://%s:%s%s/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             req.setAttribute("refLogin", String.format("%s://%s:%s%s/login/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             this.getServletContext().getRequestDispatcher("/WEB-INF/views/createGet.jsp").include(req, resp);
-            // или
-            //this.getServletContext().getRequestDispatcher("/WEB-INF/views/createGet.jsp").forward(req, resp);
-        } catch (SQLException ex) {
+        } catch (SQLException | NullPointerException ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -190,10 +188,8 @@ public class Create extends HttpServlet {
                 }
                 req.setAttribute("message", message);
                 this.getServletContext().getRequestDispatcher("/WEB-INF/views/createPost.jsp").include(req, resp);
-                // или
-                //this.getServletContext().getRequestDispatcher("/WEB-INF/views/createPost.jsp").forward(req, resp);
             }
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchAlgorithmException | NoSuchMethodException | ParseException | SQLException ex) {
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchAlgorithmException | NoSuchMethodException | ParseException | SQLException | NullPointerException ex) {
             this.logger.error("ERROR", ex);
         }
     }

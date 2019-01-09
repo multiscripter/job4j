@@ -28,7 +28,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Класс Update реализует функционал обновления пользователя.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-08
+ * @version 2019-01-09
  * @since 2017-11-09
  */
 public class Update extends HttpServlet {
@@ -147,9 +147,7 @@ public class Update extends HttpServlet {
             req.setAttribute("user", user);
             req.setAttribute("message", message);
             this.getServletContext().getRequestDispatcher("/WEB-INF/views/updateGet.jsp").include(req, resp);
-            // или
-            //this.getServletContext().getRequestDispatcher("/WEB-INF/views/updateGet.jsp").forward(req, resp);
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchAlgorithmException | NoSuchMethodException | SQLException | ParseException ex) {
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchAlgorithmException | NoSuchMethodException | SQLException | ParseException | NullPointerException ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -245,10 +243,8 @@ public class Update extends HttpServlet {
                 req.setAttribute("message", message);
                 req.setAttribute("refBack", String.format("%s://%s:%s%s/update/?id=%s", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath(), id));
                 this.getServletContext().getRequestDispatcher("/WEB-INF/views/updatePost.jsp").include(req, resp);
-                // или
-                //this.getServletContext().getRequestDispatcher("/WEB-INF/views/updatePost.jsp").forward(req, resp);
             }
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | SecurityException | SQLException | NoSuchAlgorithmException | NoSuchMethodException | UnsupportedEncodingException ex) {
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | SecurityException | SQLException | NoSuchAlgorithmException | NoSuchMethodException | UnsupportedEncodingException | NullPointerException ex) {
             this.logger.error("ERROR", ex);
         }
     }

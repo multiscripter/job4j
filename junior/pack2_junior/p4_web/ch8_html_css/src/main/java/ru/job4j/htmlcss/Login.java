@@ -92,8 +92,6 @@ public class Login extends HttpServlet {
         req.setAttribute("refHome", String.format("%s://%s:%s%s/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
         req.setAttribute("refLogout", String.format("%s://%s:%s%s%s?auth=logout", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath(), req.getServletPath()));
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginGet.jsp").include(req, resp);
-        // или
-        //this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginGet.jsp").forward(req, resp);
     }
     /**
      * Обрабатывает POST-запросы. http://bot.net:8080/ch8_html_css-1.0/login/
@@ -140,8 +138,6 @@ public class Login extends HttpServlet {
                 req.setAttribute("refBack", String.format("%s://%s:%s%s/login/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
                 req.setAttribute("refHome", String.format("%s://%s:%s%s/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
                 this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginPost.jsp").include(req, resp);
-                // или
-                //this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginPost.jsp").forward(req, resp);
             }
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException | SQLException | ParseException | NoSuchAlgorithmException ex) {
             this.logger.error("ERROR", ex);
