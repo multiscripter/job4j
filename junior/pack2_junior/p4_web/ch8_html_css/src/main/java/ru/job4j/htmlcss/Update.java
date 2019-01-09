@@ -147,7 +147,7 @@ public class Update extends HttpServlet {
             req.setAttribute("user", user);
             req.setAttribute("message", message);
             this.getServletContext().getRequestDispatcher("/WEB-INF/views/updateGet.jsp").include(req, resp);
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchAlgorithmException | NoSuchMethodException | SQLException | ParseException | NullPointerException ex) {
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchAlgorithmException | NoSuchMethodException | SQLException | ParseException ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -244,7 +244,7 @@ public class Update extends HttpServlet {
                 req.setAttribute("refBack", String.format("%s://%s:%s%s/update/?id=%s", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath(), id));
                 this.getServletContext().getRequestDispatcher("/WEB-INF/views/updatePost.jsp").include(req, resp);
             }
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | SecurityException | SQLException | NoSuchAlgorithmException | NoSuchMethodException | UnsupportedEncodingException | NullPointerException ex) {
+        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | SecurityException | SQLException | NoSuchAlgorithmException | NoSuchMethodException | UnsupportedEncodingException ex) {
             this.logger.error("ERROR", ex);
         }
     }
