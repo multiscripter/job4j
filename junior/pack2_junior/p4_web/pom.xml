@@ -16,15 +16,15 @@
     </parent>
 
     <modules>
-        <module>ch1_struct</module>
-        <module>ch2_crud</module>
-        <module>ch3_ui</module>
-        <module>ch4_jsp</module>
-        <module>ch5_mvc_jstl</module>
-        <module>ch6_filter</module>
-        <module>ch7_testing</module>
+        <!--<module>ch1_struct</module>-->
+        <!--<module>ch2_crud</module>-->
+        <!--<module>ch3_ui</module>-->
+        <!--<module>ch4_jsp</module>-->
+        <!--<module>ch5_mvc_jstl</module>-->
+        <!--<module>ch6_filter</module>-->
+        <!--<module>ch7_testing</module>-->
         <module>ch8_html_css</module>
-        <module>ch9_control</module>
+        <!--<module>ch9_control</module>-->
     </modules>
 
     <properties>

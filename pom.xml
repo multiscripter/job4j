@@ -11,7 +11,7 @@
     
     <modules>
         <module>junior</module>
-        <module>tasks</module>
+        <!--<module>tasks</module>-->
     </modules>
 
     <properties>

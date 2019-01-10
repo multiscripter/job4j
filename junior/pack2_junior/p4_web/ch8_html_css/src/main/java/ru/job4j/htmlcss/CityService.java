@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+//import java.util.List;
 import java.util.LinkedList;
 /**
  * Класс CityService.
@@ -94,7 +94,7 @@ public class CityService {
                 cities.put(Integer.parseInt(entry.get("id")), city);
             }
             list = new LinkedList<>(cities.values());
-            Collections.sort((List) list);
+            Collections.sort((LinkedList) list);
         }
         return list;
     }
