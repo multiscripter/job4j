@@ -20,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -165,7 +164,6 @@ public class UpdateTest {
             doReturn(this.admin).when(session).getAttribute("auth");
             when(servlet.getServletContext()).thenReturn(ctx);
             when(ctx.getRequestDispatcher("/WEB-INF/views/updatePost.jsp")).thenReturn(reqDesp);
-            doNothing().when(reqDesp).include(req, resp);
             this.setAttributeStorage(req);
             servlet.doPost(req, resp);
             String actual = (String) req.getAttribute("message");
