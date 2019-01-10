@@ -225,6 +225,7 @@ public class Update extends HttpServlet {
                 }
                 ServletContext ctx = this.getServletContext();
                 RequestDispatcher reqDesp = ctx.getRequestDispatcher("/WEB-INF/views/updateGet.jsp");
+                System.err.println(reqDesp.toString());
                 reqDesp.include(req, resp);
             } else {
                 user.setDate(new GregorianCalendar());
