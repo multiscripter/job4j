@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -29,7 +30,7 @@ import org.mockito.stubbing.Answer;
  * Класс CreateTest тестирует класс Create.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-09
+ * @version 2019-01-10
  * @since 2017-12-18
  */
 public class CreateTest {
@@ -169,6 +170,7 @@ public class CreateTest {
             when(req.getParameter("city")).thenReturn(new String("1".getBytes(this.enc), "ISO-8859-1"));
             when(servlet.getServletContext()).thenReturn(ctx);
             when(ctx.getRequestDispatcher("/WEB-INF/views/createPost.jsp")).thenReturn(reqDesp);
+            doNothing().when(reqDesp).include(req, resp);
             this.setAttributeStorage(req);
             servlet.doPost(req, resp);
             User user = this.us.getUserByLogPass(login, pass);

@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -29,7 +30,7 @@ import org.mockito.stubbing.Answer;
  * Класс UpdateTest тестирует класс Update.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-09
+ * @version 2019-01-10
  * @since 2017-12-17
  */
 public class UpdateTest {
@@ -163,7 +164,8 @@ public class UpdateTest {
             when(req.getSession(false)).thenReturn(session);
             doReturn(this.admin).when(session).getAttribute("auth");
             when(servlet.getServletContext()).thenReturn(ctx);
-            when(ctx.getRequestDispatcher("/WEB-INF/views/updatePost.jsp")).thenReturn(mock(RequestDispatcher.class));
+            when(ctx.getRequestDispatcher("/WEB-INF/views/updatePost.jsp")).thenReturn(reqDesp);
+            doNothing().when(reqDesp).include(req, resp);
             this.setAttributeStorage(req);
             servlet.doPost(req, resp);
             String actual = (String) req.getAttribute("message");

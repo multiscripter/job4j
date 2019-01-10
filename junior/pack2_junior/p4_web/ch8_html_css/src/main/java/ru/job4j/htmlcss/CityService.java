@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * Класс CityService.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-08
+ * @version 2019-01-09
  * @since 2017-12-19
  */
 public class CityService {
