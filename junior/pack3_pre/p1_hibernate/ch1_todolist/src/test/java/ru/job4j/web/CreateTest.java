@@ -1,10 +1,13 @@
 package ru.job4j.web;
 
+import java.io.File;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static org.junit.Assert.assertEquals;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 //import org.junit.Ignore;
 import org.junit.Test;
@@ -15,12 +18,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import ru.job4j.services.ItemDAO;
+import ru.job4j.checking.DBDriver;
 /**
  * Класс CreateTest тестирует класс Create.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-08
+ * @version 2019-01-12
  * @since 2018-04-24
  */
 public class CreateTest {
@@ -34,25 +37,30 @@ public class CreateTest {
     @Mock
     private ServletConfig conf;
     /**
+     * Логгер.
+     */
+    private Logger logger;
+    /**
      * Сервлет.
      */
     private Create servlet;
-    /**
-     * ItemDAO.
-     */
-	private ItemDAO idao;
     /**
      * Действия перед тестом.
      */
     @Before
     public void beforeTest() {
+        this.logger = LogManager.getLogger(this.getClass().getSimpleName());
         try {
+            DBDriver driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch1task1", "postgres", "postgresrootpass");
+            String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
+            path = path.replaceFirst("^/(.:/)", "$1");
+            driver.executeSqlScript(path + "../../src/main/resources/junior.pack3.p1.ch1.task1.sql");
             MockitoAnnotations.initMocks(this);
             this.attributes = new ConcurrentHashMap<>();
-            this.idao = new ItemDAO();
             this.servlet = new Create();
             this.servlet.init(conf);
         } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
@@ -102,6 +110,7 @@ public class CreateTest {
             String actual = new String(ssos.getByteArray());
             assertEquals(expected, actual);
         } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }
@@ -126,6 +135,7 @@ public class CreateTest {
             String actual = new String(ssos.getByteArray());
             assertEquals(expected, actual);
         } catch (Exception ex) {
+            this.logger.error("ERROR", ex);
             ex.printStackTrace();
         }
     }

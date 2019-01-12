@@ -1,5 +1,6 @@
 package ru.job4j.web;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
@@ -20,13 +21,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import ru.job4j.checking.DBDriver;
 import ru.job4j.models.Item;
 import ru.job4j.services.ItemRepository;
 /**
  * Класс ReadTest тестирует класс Read.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-08
+ * @version 2019-01-12
  * @since 2018-04-20
  */
 public class ReadTest {
@@ -68,6 +70,10 @@ public class ReadTest {
     @Before
     public void beforeTest() {
         try {
+            DBDriver driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch1task1", "postgres", "postgresrootpass");
+            String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
+            path = path.replaceFirst("^/(.:/)", "$1");
+            driver.executeSqlScript(path + "../../src/main/resources/junior.pack3.p1.ch1.task1.sql");
             MockitoAnnotations.initMocks(this);
             this.attributes = new ConcurrentHashMap<>();
             this.ir = new ItemRepository();
