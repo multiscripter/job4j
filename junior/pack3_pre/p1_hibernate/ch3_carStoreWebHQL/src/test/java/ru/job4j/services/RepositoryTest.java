@@ -23,7 +23,7 @@ import static org.junit.Assert.assertEquals;
  * Класс RepositoryTest тестирует класс Repository.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-08
+ * @version 2019-01-12
  * @since 2018-05-10
  */
 public class RepositoryTest {
@@ -154,7 +154,7 @@ public class RepositoryTest {
     public void testGetByIdWithTypeBrand() {
         try {
             int id = 1;
-            String query = String.format("select brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name as founder_name, founders.name_last as founder_name_last from brands, founders where brands.founder_id = founders.id and brands.id = %d", id);
+            String query = String.format("select brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name as founder_name, founders.name_last as founder_name_last from brands, founders where brands.founder_id = founders.id and brands.id = %d order by brand_id", id);
             HashMap<String, String> result = this.driver.select(query).get(0);
             Founder founder = new Founder();
             founder.setId(Integer.parseInt(result.get("founder_id")));
@@ -168,6 +168,12 @@ public class RepositoryTest {
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"brands", "id", "=", Integer.toString(id)});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             Brand actual = (Brand) this.repo.get(Brand.class.getSimpleName(), params).get(0);
             assertEquals(expected, actual);
         } catch (Exception ex) {
@@ -184,7 +190,7 @@ public class RepositoryTest {
             int id = 1;
             Offer expected = new Offer();
             expected.setId(id);
-            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id and offers.id = %d", id);
+            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id and offers.id = %d order by offer_id", id);
             HashMap<String, String> result = this.driver.select(query).get(0);
             Founder founder = new Founder(Integer.parseInt(result.get("founder_id")), result.get("founder_name_last"), result.get("founder_name"));
             Brand brand = new Brand(Integer.parseInt(result.get("brand_id")), result.get("brand_name"), founder);
@@ -214,6 +220,12 @@ public class RepositoryTest {
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"cars", "id", "=", Integer.toString(id)});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             Offer actual = (Offer) this.repo.get(Offer.class.getSimpleName(), params).get(0);
             assertEquals(expected, actual);
         } catch (Exception ex) {
@@ -230,7 +242,7 @@ public class RepositoryTest {
             int brandId = 1;
             List<Offer> expected = new ArrayList<>();
             List<Offer> actual = new ArrayList<>();
-            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id and brands.id = %d", brandId);
+            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id and brands.id = %d order by offer_id", brandId);
             List<HashMap<String, String>> result = this.driver.select(query);
             for (HashMap<String, String> item : result) {
                 Offer offer = new Offer();
@@ -265,6 +277,12 @@ public class RepositoryTest {
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"brands", "id", "=", Integer.toString(brandId)});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             for (IModel item :this.repo.get(Offer.class.getSimpleName(), params)) {
                 actual.add((Offer) item);
             }
@@ -305,13 +323,19 @@ public class RepositoryTest {
         try {
             List<Car> expected = new ArrayList<>();
             int id = 1;
-            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name as founder_name, founders.name_last as founder_name_last from cars, cars_bodies, brands, founders where brands.founder_id = founders.id and cars.brand_id = brands.id and cars.id = car_id and body_id = %d group by cars.id, brands.id, founders.id", id);
+            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name as founder_name, founders.name_last as founder_name_last from cars, cars_bodies, brands, founders where brands.founder_id = founders.id and cars.brand_id = brands.id and cars.id = car_id and body_id = %d group by cars.id, brands.id, founders.id order by car_id", id);
             List<HashMap<String, String>> result = this.driver.select(query);
             this.fillCarList(expected, result);
             HashMap<String, List<String[]>> params = new HashMap<>();
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"bodies", "id", "=", Integer.toString(id)});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             List<Car> actual = new ArrayList<>();
             for (IModel item : this.repo.get("Car", params)) {
                 actual.add((Car) item);
@@ -330,13 +354,19 @@ public class RepositoryTest {
         try {
             List<Offer> expected = new ArrayList<>();
             String ids = "1, 3";
-            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id and offers.id in (%s) group by offers.id, users.id, cars.id, brands.id, founders.id, bodies.id", ids);
+            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id and offers.id in (%s) group by offers.id, users.id, cars.id, brands.id, founders.id, bodies.id order by offer_id", ids);
             List<HashMap<String, String>> result = this.driver.select(query);
             this.fillOfferList(expected, result);
             HashMap<String, List<String[]>> params = new HashMap<>();
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"offers", "id", "in", "1", "3"});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             List<Offer> actual = new ArrayList<>();
             for (IModel item : this.repo.get("Offer", params)) {
                 actual.add((Offer) item);
@@ -356,13 +386,19 @@ public class RepositoryTest {
             List<Offer> expected = new ArrayList<>();
             int from = 2;
             int to = 3;
-            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id and offers.id between %d and %d group by offers.id, users.id, cars.id, brands.id, founders.id, bodies.id", from, to);
+            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id and offers.id between %d and %d group by offers.id, users.id, cars.id, brands.id, founders.id, bodies.id order by offer_id", from, to);
             List<HashMap<String, String>> result = this.driver.select(query);
             this.fillOfferList(expected, result);
             HashMap<String, List<String[]>> params = new HashMap<>();
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"offers", "id", "between", Integer.toString(from), Integer.toString(to)});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             List<Offer> actual = new ArrayList<>();
             for (IModel item : this.repo.get("Offer", params)) {
                 actual.add((Offer) item);
@@ -380,15 +416,16 @@ public class RepositoryTest {
     public void testGetWithOfferOrderBy() {
         try {
             List<Offer> expected = new ArrayList<>();
-            String orderBy = "price";
-            String orderDir = "desc";
-            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id group by offers.id, users.id, cars.id, brands.id, founders.id, bodies.id order by %s %s", orderBy, orderDir);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"price"});
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"desc"});
+            String query = String.format("select offers.id as offer_id, users.id as user_id, users.name as user_name, cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name, bodies.id as body_id, bodies.name as body_name, price, status from bodies, brands, cars, founders, offers, users where bodies.id = offers.body_id and users.id = offers.user_id and brands.id = cars.brand_id and founders.id = brands.founder_id and cars.id = offers.car_id group by offers.id, users.id, cars.id, brands.id, founders.id, bodies.id order by %s %s", orderBy.get(0)[0], orderDir.get(0)[0]);
             List<HashMap<String, String>> result = this.driver.select(query);
             this.fillOfferList(expected, result);
             HashMap<String, List<String[]>> params = new HashMap<>();
-            List<String[]> order = new ArrayList<>();
-            order.add(new String[] {orderBy, orderDir});
-            params.put("order", order);
+            params.put("orderBy", orderBy);
+            params.put("orderDir", orderDir);
             List<Offer> actual = new ArrayList<>();
             for (IModel item : this.repo.get("Offer", params)) {
                 actual.add((Offer) item);

@@ -15,7 +15,7 @@ import ru.job4j.models.Offer;
  * Класс Repository реализует репозиторий для моделей, имплементирующих IModel.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-06-12
+ * @version 2019-01-12
  * @since 2018-04-27
  */
 public class Repository {
@@ -75,11 +75,10 @@ public class Repository {
             query = String.format("%s %s where %s", query, join, where.substring(4));
         }
         query = String.format("%s group by %s.id", query, type.toLowerCase());
-        if (params.containsKey("order") && !params.get("order").isEmpty()) {
-            query = String.format("%s order by %s", query, params.get("order").get(0)[0]);
-            if (params.get("order").get(0).length > 1) {
-                query = String.format("%s %s", query, params.get("order").get(0)[1]);
-            }
+        if (params.containsKey("orderBy") && !params.get("orderBy").isEmpty()) {
+            query = String.format("%s order by %s.%s ", query, type.toLowerCase(), String.join(",", params.get("orderBy").get(0)));
+            String order = params.containsKey("orderDir") && !params.get("orderDir").isEmpty() ? params.get("orderDir").get(0)[0] : "asc";
+            query = String.format("%s %s", query, order);
         }
         return query;
     }
@@ -97,6 +96,7 @@ public class Repository {
     }
     /**
      * Получает список предложений по имени бренда, отсортированный по возрастанию или убыванию.
+     * Написан по просьбе Петра.
      * @param brandId идентификатор бренда.
      * @param orderDir направление сортировки.
      * @return список предложений.
