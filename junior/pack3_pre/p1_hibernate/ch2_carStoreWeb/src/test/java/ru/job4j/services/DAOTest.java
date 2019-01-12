@@ -24,7 +24,7 @@ import ru.job4j.models.User;
  * Класс DAOTest тестирует класс DAO.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-08
+ * @version 2019-01-12
  * @since 2018-05-15
  */
 public class DAOTest {
@@ -138,7 +138,7 @@ public class DAOTest {
         try {
             Car expected = new Car();
             expected.setId(0);
-            expected.setName("Niva");
+            expected.setName("Niva2");
             List<Body> ebodies = new ArrayList<>();
             ebodies.add(new Body(3, "universal"));
             expected.setBodies(ebodies);
@@ -483,14 +483,14 @@ public class DAOTest {
         try {
             Car expected = new Car();
             expected.setId(0);
-            expected.setName("Niva");
+            expected.setName("Niva2");
             List<Body> ebodies = new ArrayList<>();
             ebodies.add(new Body(3, "universal"));
             expected.setBodies(ebodies);
-            Founder founder = new Founder(0, "ЦК КПСС", "Совет министров СССР");
+            Founder founder = new Founder(0, "ЦК КПСС2", "Совет министров СССР2");
             int id = this.dao.create(founder);
             founder.setId(id);
-            Brand brand = new Brand(0, "ВАЗ", founder);
+            Brand brand = new Brand(0, "ВАЗ2", founder);
             id = this.dao.create(brand);
             brand.setId(id);
             expected.setBrand(brand);
@@ -538,14 +538,14 @@ public class DAOTest {
         try {
             Car car = new Car();
             car.setId(0);
-            car.setName("Niva");
+            car.setName("Niva2");
             List<Body> bodies = new ArrayList<>();
             bodies.add(new Body(3, "universal"));
             car.setBodies(bodies);
-            Founder founder = new Founder(0, "ЦК КПСС", "Совет министров СССР");
+            Founder founder = new Founder(0, "ЦК КПСС2", "Совет министров СССР2");
             int id = this.dao.create(founder);
             founder.setId(id);
-            Brand brand = new Brand(0, "ВАЗ", founder);
+            Brand brand = new Brand(0, "ВАЗ2", founder);
             id = this.dao.create(brand);
             brand.setId(id);
             car.setBrand(brand);

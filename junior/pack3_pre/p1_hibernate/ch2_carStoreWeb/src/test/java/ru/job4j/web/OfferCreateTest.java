@@ -101,7 +101,7 @@ public class OfferCreateTest {
             when(req.getContentType()).thenReturn("multipart/form-data; boundary=someBoundary");
             /**
              * Цепочка вызовов заходит в приватные методы внутри parseRequest()
-             * и там валится на с NPE низ-за того,
+             * и там валится с NPE из-за того,
              * что org.apache.commons.fileupload.MultipartStream$ItemInputStream
              * == null.
              */

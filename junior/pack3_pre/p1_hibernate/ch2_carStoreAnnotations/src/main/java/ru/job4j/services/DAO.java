@@ -10,7 +10,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 import ru.job4j.models.IModel;
-
 /**
  * Класс DAO реализует слой DAO для моделей.
  *
