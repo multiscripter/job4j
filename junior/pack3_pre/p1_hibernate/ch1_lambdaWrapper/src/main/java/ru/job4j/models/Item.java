@@ -8,7 +8,7 @@ import java.util.Objects;
  * Класс Item реализует сущность Элемент TODO-листа.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-04-20
+ * @version 2019-01-12
  * @since 2018-03-20
  */
 public class Item {
@@ -72,7 +72,7 @@ public class Item {
             return false;
         }
         Item o = (Item) obj;
-        return !(this.id != o.getId() || (this.item == null ? o.getItem() != null : !this.item.equals(o.getItem())) || (this.descr == null ? o.getDescr() != null : !this.descr.equals(o.getDescr())) || (this.created == null ? this.created != null : !this.getCreated().equals(o.getCreated())) || this.done != o.getDone());
+        return !(this.id != o.getId() || (this.item == null ? o.getItem() != null : !this.item.equals(o.getItem())) || (this.descr == null ? o.getDescr() != null : !this.descr.equals(o.getDescr())) || (this.created != null && !this.getCreated().equals(o.getCreated())) || this.done != o.getDone());
     }
     /**
      * Получет дата заявки.

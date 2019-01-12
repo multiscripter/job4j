@@ -12,7 +12,7 @@ import ru.job4j.models.Item;
  * Класс ItemDAO реализует шаблон "DAO" для модели Item.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-04-25
+ * @version 2019-01-12
  * @since 2018-04-04
  */
 public class ItemDAO {
@@ -45,17 +45,9 @@ public class ItemDAO {
      * @throws javax.persistence.PersistenceException исключение JPA.
      */
     public void delete(Item obj) throws PersistenceException {
-        this.process(new Function<Session, Object>() {
-            /**
-             * Переопределённый метод.
-             * @param session сессия.
-             * @return пустая ссылка.
-             */
-            @Override
-            public Object apply(Session session) {
-                session.delete(obj);
-                return null;
-            }
+        this.process(session -> {
+            session.delete(obj);
+            return null;
         });
     }
     /**
@@ -87,17 +79,9 @@ public class ItemDAO {
      * @throws javax.persistence.PersistenceException исключение JPA.
      */
     public void update(Item obj) throws PersistenceException {
-        this.process(new Function<Session, Object>() {
-            /**
-             * Переопределённый метод.
-             * @param session сессия.
-             * @return пустая ссылка.
-             */
-            @Override
-            public Object apply(Session session) {
-                session.update(obj);
-                return null;
-            }
+        this.process(session -> {
+            session.update(obj);
+            return null;
         });
     }
 }
