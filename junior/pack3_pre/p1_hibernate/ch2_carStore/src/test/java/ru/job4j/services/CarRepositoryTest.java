@@ -100,6 +100,12 @@ public class CarRepositoryTest {
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"bodies", "id", "=", Integer.toString(id)});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             List<Car> actual = this.repo.get(params);
             assertEquals(expected, actual);
         } catch (Exception ex) {
@@ -123,6 +129,12 @@ public class CarRepositoryTest {
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"bodies", "id", "in", "1", "2"});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             List<Car> actual = this.repo.get(params);
             assertEquals(expected, actual);
         } catch (Exception ex) {
@@ -147,6 +159,12 @@ public class CarRepositoryTest {
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"bodies", "id", "between", Integer.toString(from), Integer.toString(to)});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             List<Car> actual = this.repo.get(params);
             assertEquals(expected, actual);
         } catch (Exception ex) {

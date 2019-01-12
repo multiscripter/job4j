@@ -61,9 +61,9 @@ public class CarRepository {
         }
         query = String.format("%s group by car.id ", query);
         if (params.containsKey("orderBy") && !params.get("orderBy").isEmpty()) {
-            query = String.format("%s order by %s ", query, String.join(",", params.get("orderBy").get(0)));
+            query = String.format("%s order by car.%s ", query, String.join(",", params.get("orderBy").get(0)));
             String order = params.containsKey("orderDir") && !params.get("orderDir").isEmpty() ? params.get("orderDir").get(0)[0] : "asc";
-            query = String.format("%s %s", query, params.get("orderDir").get(0)[0]);
+            query = String.format("%s %s", query, order);
         }
         return query;
     }
