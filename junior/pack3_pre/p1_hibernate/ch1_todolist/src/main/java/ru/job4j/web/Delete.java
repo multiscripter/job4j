@@ -22,14 +22,14 @@ import ru.job4j.utils.Validation;
  * Класс Delete реализует контроллер Удаление элементов TODO-листа.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-04-18
+ * @version 2019-01-12
  * @since 2018-04-03
  */
 public class Delete extends AbstractServlet {
     /**
      * Карта фильтров.
      */
-    private final HashMap<String, Filter> filters = new HashMap();
+    private final HashMap<String, Filter> filters = new HashMap<>();
     /**
      * ItemDAO.
      */

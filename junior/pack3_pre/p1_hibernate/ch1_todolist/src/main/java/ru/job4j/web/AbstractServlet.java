@@ -17,14 +17,14 @@ import org.apache.logging.log4j.LogManager;
  * AbstractServlet реализует Абстрактный сервлет.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-04-18
+ * @version 2019-01-12
  * @since 2018-03-26
  */
 public abstract class AbstractServlet extends HttpServlet {
     /**
      * Логгер.
      */
-    private Logger logger;
+    private Logger logger = LogManager.getLogger(this.getClass().getSimpleName());
     /**
 	 * Инициализатор.
      * @throws javax.servlet.ServletException исключение сервлета.

@@ -78,7 +78,7 @@ public class Validation {
         boolean result = true;
         try {
             int num = Integer.parseInt(value);
-            if (num < 1 || num > Integer.MAX_VALUE) {
+            if (num < 1) {
                 result = false;
             }
         } catch (NumberFormatException ex) {

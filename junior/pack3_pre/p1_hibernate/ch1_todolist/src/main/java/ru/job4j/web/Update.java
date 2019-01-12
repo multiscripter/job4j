@@ -25,14 +25,14 @@ import ru.job4j.utils.Validation;
  * Класс Update реализует контроллер Обновление элементов TODO-листа.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-04-19
+ * @version 2019-01-12
  * @since 2018-04-19
  */
 public class Update extends AbstractServlet {
     /**
      * Карта фильтров.
      */
-    private final HashMap<String, Filter> filters = new HashMap();
+    private final HashMap<String, Filter> filters = new HashMap<>();
     /**
      * ItemDAO.
      */
@@ -85,7 +85,6 @@ public class Update extends AbstractServlet {
         JsonObjectBuilder jsonErrors = Json.createObjectBuilder();
         String status = "";
         try {
-            String enc = (String) req.getAttribute("encoding");
             String idStr = req.getParameter("id");
             String name = req.getParameter("name");
             String descr = req.getParameter("descr");
@@ -93,6 +92,7 @@ public class Update extends AbstractServlet {
             String doneStr = req.getParameter("done");
             /*String ajax = req.getParameter("type");
             if (ajax == null && !"ajax".equals(ajax.trim())) {
+                String enc = (String) req.getAttribute("encoding");
                 name = new String(name.getBytes("ISO-8859-1"), enc);
                 descr = new String(descr.getBytes("ISO-8859-1"), enc);
             }*/

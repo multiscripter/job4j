@@ -181,6 +181,6 @@ public class ItemRepositoryTest {
         params.put("whereField", "id");
         params.put("whereOp", "ololo");
         params.put("whereVal", "ololo");
-        List<Item> items = repos.getItems(params);
+        repos.getItems(params);
     }
 }
