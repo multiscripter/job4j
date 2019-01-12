@@ -13,7 +13,7 @@ import ru.job4j.models.Car;
  * Класс CarRepository реализует репозиторий для модели Car.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-05-01
+ * @version 2019-01-12
  * @since 2018-04-27
  */
 public class CarRepository {

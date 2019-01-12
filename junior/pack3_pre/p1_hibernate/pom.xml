@@ -20,8 +20,8 @@
         <module>ch1_lambdaWrapper</module>
         <module>ch1_todolist</module>
         <module>ch2_carStore</module>
-        <!--<module>ch2_carStoreAnnotations</module>
-        <module>ch2_carStoreWeb</module>
+        <module>ch2_carStoreAnnotations</module>
+        <!--<module>ch2_carStoreWeb</module>
         <module>ch3_carStoreWebHQL</module>
         <module>ch4_carStoreIntegrationTests</module>-->
     </modules>

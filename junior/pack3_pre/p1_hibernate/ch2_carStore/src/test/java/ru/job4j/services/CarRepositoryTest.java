@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  * Класс CarRepositoryTest тестирует класс CarRepository.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-08
+ * @version 2019-01-12
  * @since 2018-05-14
  */
 public class CarRepositoryTest {

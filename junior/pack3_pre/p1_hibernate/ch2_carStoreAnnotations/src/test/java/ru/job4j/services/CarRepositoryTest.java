@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  * Класс CarRepositoryTest тестирует класс CarRepository.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-08
+ * @version 2019-01-12
  * @since 2018-05-14
  */
 public class CarRepositoryTest {
@@ -93,13 +93,19 @@ public class CarRepositoryTest {
         try {
             List<Car> expected = new ArrayList<>();
             int id = 1;
-            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id = %d group by cars.id, brands.id, founders.id", id);
+            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id = %d group by cars.id, brands.id, founders.id order by car_id", id);
             List<HashMap<String, String>> result = this.driver.select(query);
             this.fillExpected(expected, result);
             HashMap<String, List<String[]>> params = new HashMap<>();
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"bodies", "id", "=", Integer.toString(id)});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             List<Car> actual = this.repo.get(params);
             assertEquals(expected, actual);
         } catch (Exception ex) {
@@ -116,13 +122,19 @@ public class CarRepositoryTest {
         try {
             List<Car> expected = new ArrayList<>();
             String ids = "1, 2";
-            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id in (%s) group by cars.id, brands.id, founders.id", ids);
+            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id in (%s) group by cars.id, brands.id, founders.id order by car_id", ids);
             List<HashMap<String, String>> result = this.driver.select(query);
             this.fillExpected(expected, result);
             HashMap<String, List<String[]>> params = new HashMap<>();
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"bodies", "id", "in", "1", "2"});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             List<Car> actual = this.repo.get(params);
             assertEquals(expected, actual);
         } catch (Exception ex) {
@@ -140,13 +152,19 @@ public class CarRepositoryTest {
             List<Car> expected = new ArrayList<>();
             int from = 1;
             int to = 7;
-            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id between %d and %d group by cars.id, brands.id, founders.id", from, to);
+            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id between %d and %d group by cars.id, brands.id, founders.id order by car_id", from, to);
             List<HashMap<String, String>> result = this.driver.select(query);
             this.fillExpected(expected, result);
             HashMap<String, List<String[]>> params = new HashMap<>();
             List<String[]> where = new ArrayList<>();
             where.add(new String[] {"bodies", "id", "between", Integer.toString(from), Integer.toString(to)});
             params.put("where", where);
+            List<String[]> orderBy = new ArrayList<>();
+            orderBy.add(new String[] {"id"});
+            params.put("orderBy", orderBy);
+            List<String[]> orderDir = new ArrayList<>();
+            orderDir.add(new String[] {"asc"});
+            params.put("orderDir", orderDir);
             List<Car> actual = this.repo.get(params);
             assertEquals(expected, actual);
         } catch (Exception ex) {

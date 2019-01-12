@@ -13,7 +13,7 @@ import ru.job4j.models.Car;
  * Класс CarRepository реализует репозиторий для модели Car.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-05-01
+ * @version 2019-01-12
  * @since 2018-04-27
  */
 public class CarRepository {
@@ -57,9 +57,14 @@ public class CarRepository {
                     where = String.format("%s %s %s ", where, item[2], item[3]);
                 }
             }
-            query = String.format("%s %s where %s", query, join, where.substring(4));
+            query = String.format("%s %s where %s ", query, join, where.substring(4));
         }
-        query = String.format("%s group by car.id", query);
+        query = String.format("%s group by car.id ", query);
+        if (params.containsKey("orderBy") && !params.get("orderBy").isEmpty()) {
+            query = String.format("%s order by car.%s ", query, String.join(",", params.get("orderBy").get(0)));
+            String order = params.containsKey("orderDir") && !params.get("orderDir").isEmpty() ? params.get("orderDir").get(0)[0] : "asc";
+            query = String.format("%s %s", query, order);
+        }
         return query;
     }
     /**
