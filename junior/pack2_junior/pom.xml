@@ -16,9 +16,9 @@
     </parent>
 
     <modules>
-        <!--<module>p1_collections_pro</module>-->
-        <!--<module>p2_multithreading</module>-->
-        <!--<module>p3_sql_jdbc</module>-->
+        <!--<module>p1_collections_pro</module>
+        <module>p2_multithreading</module>
+        <module>p3_sql_jdbc</module>-->
         <module>p4_web</module>
     </modules>
 </project>

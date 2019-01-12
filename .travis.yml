@@ -25,8 +25,11 @@ before_script:
   - psql -c 'create database jpack2p9ch7task1;' -U postgres
   - psql -c 'create database jpack2p9ch8task1;' -U postgres
   - psql -c 'create database jpack2p9ch9task1;' -U postgres
+  - psql -c 'create database jpack3p1ch1task0;' -U postgres
   - psql -c 'create database jpack3p1ch1task1;' -U postgres
   - psql -c 'create database jpack3p1ch1task2;' -U postgres
   - psql -c 'create database jpack3p1ch2task1;' -U postgres
   - psql -c 'create database jpack3p1ch2task2;' -U postgres
   - psql -c 'create database jpack3p1ch3task1;' -U postgres
+  - psql -c 'create database jpack3p1ch4task1;' -U postgres
+  - psql -c 'create database jpack3p2ch1task2;' -U postgres

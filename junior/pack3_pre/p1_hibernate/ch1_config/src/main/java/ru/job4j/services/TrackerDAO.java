@@ -3,6 +3,7 @@ package ru.job4j.services;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.hibernate.Session;
@@ -107,7 +108,8 @@ public class TrackerDAO<T> {
         List<T> objs = null;
         try (Session session = this.factory.openSession()) {
             session.beginTransaction();
-            objs = session.createQuery(String.format("from %s", obj.getClass().getSimpleName())).list();
+            Query query = session.createQuery(String.format("from %s", obj.getClass().getSimpleName()));
+            objs = query.getResultList();
             try {
                 session.getTransaction().commit();
             } catch (Exception ex) {
