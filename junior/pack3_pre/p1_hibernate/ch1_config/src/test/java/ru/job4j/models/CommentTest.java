@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.SimpleTimeZone;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import org.junit.Test;
  * Класс CommentTest тестирует класс Comment.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-03-09
+ * @version 2019-01-12
  * @since 2018-03-09
  */
 public class CommentTest {
@@ -35,7 +36,7 @@ public class CommentTest {
     @Test
     public void testComment() {
         Comment comment = new Comment();
-        assertTrue(comment != null);
+        assertNotNull(comment);
     }
     /**
      * Тестирует public Comment(final int id, final int itemId, final int userId, String comment, long created).

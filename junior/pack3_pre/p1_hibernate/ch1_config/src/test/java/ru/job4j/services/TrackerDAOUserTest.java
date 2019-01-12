@@ -25,14 +25,10 @@ import ru.job4j.models.User;
  * Класс TrackerDAOUserTest тестирует класс TrackerDAO на типе User.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-07-22
+ * @version 2019-01-12
  * @since 2018-03-05
  */
 public class TrackerDAOUserTest {
-    /**
-     * Имя СУБД.
-     */
-    private static String db = "H2"; // H2 | HyperSQL | PostgreSQL
     /**
      * Item DAO.
      */
@@ -55,6 +51,7 @@ public class TrackerDAOUserTest {
     @BeforeClass
     public static void beforeAllTests() {
         try {
+            String db = "H2"; // H2 | HyperSQL | PostgreSQL
             if (db.equals("H2")) {
                 // http://www.h2database.com/html/features.html#in_memory_databases
                 // В H2 алиасы по умолчанию могут быть выкючены.
@@ -69,7 +66,7 @@ public class TrackerDAOUserTest {
             path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
             path = String.format("%s../../src/test/resources/junior.pack3.p1.ch1.task0.%s.sql", path, db);
-            dao = new TrackerDAO(String.format("hibernate.%s.cfg.xml", db));
+            dao = new TrackerDAO<>(String.format("hibernate.%s.cfg.xml", db));
         } catch (Exception ex) {
             logger.error("ERROR", ex);
             ex.printStackTrace();

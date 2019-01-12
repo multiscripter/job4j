@@ -67,7 +67,7 @@ public class UserTest {
      */
     @Test
     public void testEqualsWithDifferentClasses() {
-        assertFalse(this.user.equals(new String()));
+        assertFalse(this.user.equals(""));
     }
     /**
      * Тестирует public boolean equals(Object obj).

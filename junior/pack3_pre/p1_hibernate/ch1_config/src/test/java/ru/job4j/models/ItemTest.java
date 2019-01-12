@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.SimpleTimeZone;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import org.junit.Test;
  * Класс ItemTest тестирует класс Item.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-03-09
+ * @version 2019-01-12
  * @since 2018-03-08
  */
 public class ItemTest {
@@ -35,7 +36,7 @@ public class ItemTest {
     @Test
     public void testItem() {
         Item item = new Item();
-        assertTrue(item != null);
+        assertNotNull(item);
     }
     /**
      * Тестирует public Item(final int id, final int userId, String name, String desc, long created).
@@ -77,7 +78,7 @@ public class ItemTest {
      */
     @Test
     public void testEqualsWithDifferentClasses() {
-        assertFalse(this.item.equals(new String()));
+        assertFalse(this.item.equals(""));
     }
     /**
      * Тестирует public Date getCreated().

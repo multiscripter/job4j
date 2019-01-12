@@ -22,14 +22,10 @@ import ru.job4j.models.User;
  * Класс TrackerRepositoryTest тестирует класс TrackerRepository.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-07-22
+ * @version 2019-01-12
  * @since 2018-03-14
  */
 public class TrackerRepositoryTest {
-    /**
-     * Имя СУБД.
-     */
-    private static String db = "H2"; // H2 | HyperSQL | PostgreSQL
     /**
      * Репозиторий.
      */
@@ -52,6 +48,7 @@ public class TrackerRepositoryTest {
     @BeforeClass
     public static void beforeAllTests() {
         try {
+            String db = "H2"; // H2 | HyperSQL | PostgreSQL
             if (db.equals("H2")) {
                 // http://www.h2database.com/html/features.html#in_memory_databases
                 // В H2 алиасы по умолчанию могут быть выкючены.
@@ -65,7 +62,7 @@ public class TrackerRepositoryTest {
             path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             path = path.replaceFirst("^/(.:/)", "$1");
             path = String.format("%s../../src/test/resources/junior.pack3.p1.ch1.task0.%s.sql", path, db);
-            repos = new TrackerRepository(db);
+            repos = new TrackerRepository<>(db);
         } catch (Exception ex) {
             logger.error("ERROR", ex);
             ex.printStackTrace();
