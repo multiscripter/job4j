@@ -93,7 +93,7 @@ public class CarRepositoryTest {
         try {
             List<Car> expected = new ArrayList<>();
             int id = 1;
-            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id = %d group by cars.id, brands.id, founders.id", id);
+            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id = %d group by cars.id, brands.id, founders.id order by car_id", id);
             List<HashMap<String, String>> result = this.driver.select(query);
             this.fillExpected(expected, result);
             HashMap<String, List<String[]>> params = new HashMap<>();
@@ -116,7 +116,7 @@ public class CarRepositoryTest {
         try {
             List<Car> expected = new ArrayList<>();
             String ids = "1, 2";
-            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id in (%s) group by cars.id, brands.id, founders.id", ids);
+            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id in (%s) group by cars.id, brands.id, founders.id order by car_id", ids);
             List<HashMap<String, String>> result = this.driver.select(query);
             this.fillExpected(expected, result);
             HashMap<String, List<String[]>> params = new HashMap<>();
@@ -140,7 +140,7 @@ public class CarRepositoryTest {
             List<Car> expected = new ArrayList<>();
             int from = 1;
             int to = 7;
-            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id between %d and %d group by cars.id, brands.id, founders.id", from, to);
+            String query = String.format("select cars.id as car_id, cars.name as car_name, brands.id as brand_id, brands.name as brand_name, founders.id as founder_id, founders.name_last as founder_name_last, founders.name as founder_name from cars, brands, founders, cars_bodies where cars.brand_id = brands.id and brands.founder_id = founders.id and cars.id = cars_bodies.car_id and cars_bodies.body_id between %d and %d group by cars.id, brands.id, founders.id order by car_id", from, to);
             List<HashMap<String, String>> result = this.driver.select(query);
             this.fillExpected(expected, result);
             HashMap<String, List<String[]>> params = new HashMap<>();
