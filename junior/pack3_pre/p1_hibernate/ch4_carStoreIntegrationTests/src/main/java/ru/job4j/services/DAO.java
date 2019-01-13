@@ -14,14 +14,14 @@ import ru.job4j.utils.HibernateSessionFactory;
  * Класс DAO реализует слой DAO для моделей.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-06-30
+ * @version 2019-01-13
  * @since 2018-04-27
  */
 public class DAO {
     /**
      * Фабрика.
      */
-    private final SessionFactory factory = HibernateSessionFactory.get();
+    private final SessionFactory factory;
     /**
      * Логгер.
      */
@@ -30,6 +30,14 @@ public class DAO {
      * Конструктор без параметров.
      */
     public DAO() {
+        this.factory = HibernateSessionFactory.get();
+    }
+    /**
+     * Конструктор.
+     * @param localFileName имя файла конфигурации.
+     */
+    public DAO(String localFileName) {
+        this.factory = HibernateSessionFactory.get(localFileName);
     }
     /**
      * Закрывает фабрику.

@@ -95,7 +95,7 @@ public class OfferCreateTest {
             HttpServletResponse resp = mock(HttpServletResponse.class);
             ServletFileUpload sfu = mock(ServletFileUpload.class);
             HashMap<String, String> fields = mock(HashMap.class);
-            List<FileItem> items = new ArrayList();
+            List<FileItem> items = new ArrayList<>();
             String name = "TestName";
             String carId = "1";
             String body = "2";

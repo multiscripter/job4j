@@ -74,6 +74,7 @@ public class OfferDeleteTest {
     @Before
     public void beforeTest() {
         try {
+            // При тестировании с PostgreSQL фпереименовать test/resources/hibernate.cfg.xml
             String db = "HyperSQL"; // HyperSQL | PostgreSQL
             if (db.equals("HyperSQL")) {
                 /**
@@ -84,8 +85,7 @@ public class OfferDeleteTest {
                  */
                 this.driver = new DBDriver("jdbc:hsqldb:mem:jpack3p1ch4task1;get_column_name=false", "SA", "");
             } else if (db.equals("PostgreSQL"))  {
-                this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch4task1", "postgres",
- "postgresrootpass");
+                this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch4task1", "postgres", "postgresrootpass");
             }
             this.dao = new DAO();
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";

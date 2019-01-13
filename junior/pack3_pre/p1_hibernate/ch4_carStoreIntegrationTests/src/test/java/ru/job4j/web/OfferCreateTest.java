@@ -74,6 +74,7 @@ public class OfferCreateTest {
     @Before
     public void beforeTest() {
         try {
+            // При тестировании с PostgreSQL фпереименовать test/resources/hibernate.cfg.xml
             String db = "HyperSQL"; // HyperSQL | PostgreSQL
             if (db.equals("HyperSQL")) {
                 /**

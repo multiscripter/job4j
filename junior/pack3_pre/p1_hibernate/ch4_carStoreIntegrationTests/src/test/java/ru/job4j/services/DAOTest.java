@@ -31,7 +31,7 @@ public class DAOTest {
     /**
      * DAO моделей.
      */
-    private DAO dao = new DAO();
+    private DAO dao;
     /**
      * Имя СУБД.
      */
@@ -54,6 +54,7 @@ public class DAOTest {
     @Before
     public void beforeTest() {
         try {
+            // При тестировании с PostgreSQL фпереименовать test/resources/hibernate.cfg.xml
             this.db = "HyperSQL"; // HyperSQL | PostgreSQL
             if (db.equals("HyperSQL")) {
                 /**
@@ -64,9 +65,9 @@ public class DAOTest {
                  */
                 this.driver = new DBDriver("jdbc:hsqldb:mem:jpack3p1ch4task1;get_column_name=false", "SA", "");
             } else if (db.equals("PostgreSQL")) {
-                this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch4task1", "postgres",
- "postgresrootpass");
+                this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch4task1", "postgres", "postgresrootpass");
             }
+            this.dao = new DAO();
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             this.path = path.replaceFirst("^/(.:/)", "$1");
             this.path = String.format("%s../../src/test/resources/junior.pack3.p1.ch4.task1.%s.sql", this.path, db);

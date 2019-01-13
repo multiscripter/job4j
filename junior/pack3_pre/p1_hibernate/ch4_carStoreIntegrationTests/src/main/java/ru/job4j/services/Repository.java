@@ -15,14 +15,14 @@ import ru.job4j.utils.HibernateSessionFactory;
  * Класс Repository реализует репозиторий для моделей, имплементирующих IModel.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-06-30
+ * @version 2019-01-13
  * @since 2018-04-27
  */
 public class Repository {
     /**
      * Фабрика.
      */
-    private final SessionFactory factory = HibernateSessionFactory.get();
+    private final SessionFactory factory;
     /**
      * Логгер.
      */
@@ -31,6 +31,14 @@ public class Repository {
      * Конструктор без параметров.
      */
     public Repository() {
+        this.factory = HibernateSessionFactory.get();
+    }
+    /**
+     * Конструктор.
+     * @param localFileName имя файла конфигурации.
+     */
+    public Repository(String localFileName) {
+        this.factory = HibernateSessionFactory.get(localFileName);
     }
     /**
      * Закрывает фабрику.

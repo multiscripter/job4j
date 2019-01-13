@@ -29,7 +29,7 @@ import static org.junit.Assert.assertEquals;
  * Класс RepositoryTest тестирует класс Repository.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-06-18
+ * @version 2019-01-13
  * @since 2018-05-10
  */
 public class RepositoryTest {
@@ -38,23 +38,24 @@ public class RepositoryTest {
      */
     private DBDriver driver;
     /**
-     * Путь файла sql.
-     */
-    private String path;
-    /**
      * Логгер.
      */
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
     /**
+     * Путь файла sql.
+     */
+    private String path;
+    /**
      * Репозиторий машинок.
      */
-    private Repository repo = new Repository();
+    private Repository repo;
     /**
      * Действия перед тестом.
      */
     @Before
     public void beforeTest() {
         try {
+            // При тестировании с PostgreSQL фпереименовать test/resources/hibernate.cfg.xml
             String db = "HyperSQL"; // HyperSQL | PostgreSQL
             if (db.equals("HyperSQL")) {
                 /**
@@ -68,6 +69,7 @@ public class RepositoryTest {
                 this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p1ch4task1", "postgres",
  "postgresrootpass");
             }
+            this.repo = new Repository();
             String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
             this.path = path.replaceFirst("^/(.:/)", "$1");
             this.path = String.format("%s../../src/test/resources/junior.pack3.p1.ch4.task1.%s.sql", this.path, db);
