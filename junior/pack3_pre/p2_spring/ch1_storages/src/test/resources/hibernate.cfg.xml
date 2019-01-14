@@ -18,6 +18,7 @@
         <property name="hibernate.current_session_context_class">thread</property>
         <!-- Disable the second-level cache  -->
         <property name="hibernate.cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
+        <!-- Drop and re-create the database schema on startup -->
         <property name="hibernate.hbm2ddl.auto">create</property>
         <!-- Echo all executed SQL to stdout -->
         <property name="hibernate.show_sql">false</property>

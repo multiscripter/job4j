@@ -16,7 +16,7 @@
 
     <modules>
         <module>p1_hibernate</module>
-        <!--<module>p2_spring</module>-->
+        <module>p2_spring</module>
     </modules>
     
     <dependencies>

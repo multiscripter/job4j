@@ -9,6 +9,7 @@
         <property name="hibernate.connection.url">jdbc:derby:jpack3p2ch1task2;create=true</property>
         <property name="hibernate.connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
         <property name="hibernate.connection.username">app</property>
+        <property name="hibernate.connection.password"></property>
         <!-- JDBC connection pool (use the built-in) -->
         <property name="hibernate.connection.pool_size">1</property>
         <!-- SQL dialect
