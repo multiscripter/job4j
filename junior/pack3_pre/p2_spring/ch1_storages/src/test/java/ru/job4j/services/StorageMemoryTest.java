@@ -41,7 +41,8 @@ public class StorageMemoryTest {
          * col_name=значение, а не col_alias=значение. Выключается это совершенно дибильное поведение
          * опцией get_column_name=false
          */
-        this.driver = new DBDriver("jdbc:hsqldb:mem:jpack3p2ch1task2;get_column_name=false", "SA", "");
+        //this.driver = new DBDriver("jdbc:hsqldb:mem:jpack3p2ch1task2;get_column_name=false", "SA", "");
+        this.driver = new DBDriver();
         String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
         this.path = path.replaceFirst("^/(.:/)", "$1");
         this.path = String.format("%s../../src/test/resources/junior.pack3.p2.ch1.task2.%s.sql", this.path, "HyperSQL");

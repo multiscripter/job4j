@@ -1,6 +1,7 @@
 package ru.job4j.services;
 
 import java.io.File;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import org.junit.After;
@@ -34,7 +35,10 @@ public class StorageJDBCTest {
      */
     @Before
     public void beforeTest() throws Exception {
-        this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p2ch1task2", "postgres", "postgresrootpass");
+        URL url = this.getClass().getClassLoader().getResource("hibernate.cfg.xml");
+        System.err.println("----- url: " + url);
+        //this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p2ch1task2", "postgres", "postgresrootpass");
+        this.driver = new DBDriver();
         String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
         this.path = path.replaceFirst("^/(.:/)", "$1");
         this.path = String.format("%s../../src/test/resources/junior.pack3.p2.ch1.task2.%s.sql", this.path, "PostgreSQL");
@@ -45,7 +49,7 @@ public class StorageJDBCTest {
      * Явный вызов конструктора.
      * @throws Exception исключение.
      */
-    @Ignore@Test
+    @Test
     public void testAddWithExplisitCallOfStorageDBMSConstructor() throws Exception {
         String cfgLocalFileName = "hibernate.cfg.xml";
         Storage storage = new Storage(cfgLocalFileName);

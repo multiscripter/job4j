@@ -25,7 +25,7 @@ import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
  * Для конфигурирования пула соединений с бд не используется JNDI.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-12-26
+ * @version 2019-01-08
  * @since 2017-11-05
  */
 class DBDriver {

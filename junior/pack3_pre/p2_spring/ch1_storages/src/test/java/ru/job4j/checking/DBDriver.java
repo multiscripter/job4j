@@ -1,6 +1,8 @@
 package ru.job4j.checking;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -12,12 +14,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Properties;
+import ru.job4j.utils.PropertyLoader;
 /**
  * Класс DBDriver используется в тестах для проверки классов, работающих с СУБД.
- *
- * @see https://docs.oracle.com/javase/tutorial/jdbc/basics/connecting.html
+ * https://docs.oracle.com/javase/tutorial/jdbc/basics/connecting.html
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-07-23
+ * @version 2019-01-15
  * @since 2018-03-07
  */
 public class DBDriver {
@@ -26,27 +29,22 @@ public class DBDriver {
      */
 	private Connection con;
     /**
-     * Пароль бд.
+     * Свойства настроек бд.
      */
-    private String pass;
+    private final Properties props;
     /**
-     * Ресурс СУБД.
+     * Конструктор.
+     * @throws ClassNotFoundException класс не найден.
+     * @throws IOException исключение ввода-вывода.
+     * @throws IllegalAccessException исключение Незаконный доступ.
+     * @throws InstantiationException исключение содания экземпляра.
+     * @throws SQLException исключение SQL.
      */
-    private String url;
-    /**
-     * Пользователь бд.
-     */
-    private String user;
-    /**
-	 * Конструктор.
-     * @param url соединеия с СУБД.
-     * @param user имя пользователя СУБД.
-     * @param pass пароль пользователя СУБД.
-	 */
-	public DBDriver(String url, String user, String pass) {
-        this.pass = pass;
-        this.url = url;
-        this.user = user;
+	public DBDriver() throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException, SQLException {
+        String dbmsName = new PropertyLoader("activeDBMS.properties").getPropValue("name");
+        this.props = new PropertyLoader(dbmsName + ".properties").getProperties();
+        Class.forName(this.props.getProperty("driver")).newInstance(); //load driver
+        this.setConnection();
     }
     /**
      * Закрывает соединение с СУБД.
@@ -67,7 +65,7 @@ public class DBDriver {
         if (this.con == null || this.con.isClosed()) {
 			this.setConnection();
     	}
-    	int affected = 0;
+    	int affected;
 		try (Statement stmt = this.con.createStatement()) {
 			affected = stmt.executeUpdate(query);
 		} catch (SQLException ex) {
@@ -77,15 +75,18 @@ public class DBDriver {
 	}
     /**
      * Выполняет sql-запрос.
-     * @param query sql-запрос.
+     * @param query строка с sql-запросом.
+     * @return <code>true</code> if the first result is a <code>ResultSet</code>
+     *         object; <code>false</code> if it is an update count or there are
+     *         no results.
      * @throws SQLException исключение SQL.
      */
-    public void executeSql(String query) throws SQLException {
+    public boolean executeSql(String query) throws SQLException {
     	if (this.con == null || this.con.isClosed()) {
 			this.setConnection();
     	}
     	try (Statement stmt = this.con.createStatement()) {
-			stmt.execute(query);
+			return stmt.execute(query);
     	} catch (SQLException ex) {
             throw new SQLException(ex);
         }
@@ -96,14 +97,17 @@ public class DBDriver {
      * @return массив, каждое значение которого является количеством строк,
      * затронутых инструкцией.
      * @throws IOException исключение ввода-вывода.
+     * @throws NullPointerException исключение Нулевой указатель.
      * @throws SQLException исключение SQL.
+     * @throws URISyntaxException исключение синтаксиса URI.
      */
-    public int[] executeSqlScript(String name) throws IOException, SQLException {
+    public int[] executeSqlScript(String name) throws IOException, NullPointerException, SQLException, URISyntaxException {
         int[] affectedRowsArr;
         if (this.con == null || this.con.isClosed()) {
 			this.setConnection();
     	}
-        byte[] bytes = Files.readAllBytes(Paths.get(name));
+        URL url = this.getClass().getClassLoader().getResource(name);
+        byte[] bytes = Files.readAllBytes(Paths.get(url.toURI()));
         String query = new String(bytes, "UTF-8");
         String[] commands = query.split(";");
         con.setAutoCommit(false);
@@ -132,6 +136,17 @@ public class DBDriver {
     public boolean isValid() throws SQLException {
         return this.con.isValid(0);
     }
+    /**
+     * Загружает свойства соединения с бд.
+     * @param localName локальное имя properties-файла.
+     * @throws IOException исключение ввода-вывода.
+     *
+    private void loadProperties(String localName) throws IOException {
+        String fileName = this.getClass().getClassLoader().getResource(localName).getFile();
+        Path fName = Paths.get(fileName);
+        InputStream is = Files.newInputStream(fName);
+        this.props.load(is);
+    }*/
     /**
      * Выполняет select sql-запрос.
      * @param query sql-запрос.
@@ -165,29 +180,20 @@ public class DBDriver {
      */
     public void setConnection() throws SQLException {
         if (this.con == null || this.con.isClosed()) {
-            this.con = DriverManager.getConnection(this.url, this.user, this.pass);
+            for (int a = 1; this.props.containsKey("url" + a); a++) {
+                String url = this.props.getProperty("url" + a);
+                url = String.format(url, this.props.getProperty("protocol"), this.props.getProperty("src"), this.props.getProperty("port"), this.props.getProperty("db"));
+                try {
+                    Connection con = DriverManager.getConnection(url, this.props.getProperty("user"), this.props.getProperty("pass"));
+                    if (con != null) {
+                        this.con = con;
+                        break;
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
-    }
-    /**
-     * Устанавливает пароль пользователя СУБД.
-     * @param pass пользователя СУБД.
-     */
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-    /**
-     * Устанавливает ресурс СУБД.
-     * @param url ресурс СУБД.
-     */
-    public void setUrl(String url) {
-        this.url = url;
-    }
-    /**
-     * Устанавливает пользователя СУБД.
-     * @param user пользователь СУБД.
-     */
-    public void setUser(String user) {
-        this.user = user;
     }
     /**
      * Выполняет update sql-запрос.
