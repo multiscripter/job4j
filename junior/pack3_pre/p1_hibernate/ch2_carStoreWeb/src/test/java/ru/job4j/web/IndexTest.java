@@ -50,6 +50,7 @@ public class IndexTest {
     /**
      * Сервлет.
      */
+    @Mock
     private Index servlet;
     /**
      * Действия перед тестом.

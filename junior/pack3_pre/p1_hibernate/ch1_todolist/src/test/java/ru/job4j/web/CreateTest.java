@@ -43,6 +43,7 @@ public class CreateTest {
     /**
      * Сервлет.
      */
+    @Mock
     private Create servlet;
     /**
      * Действия перед тестом.

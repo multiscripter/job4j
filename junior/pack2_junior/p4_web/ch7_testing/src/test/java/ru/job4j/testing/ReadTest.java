@@ -60,6 +60,7 @@ public class ReadTest {
     /**
      * Сервлет.
      */
+    @Mock
     private Read servlet;
     /**
      * Заглушка сессии.

@@ -58,6 +58,7 @@ public class OfferDeleteTest {
     /**
      * Сервлет.
      */
+    @Mock
     private OfferDelete servlet;
     /**
      * Действия перед тестом.

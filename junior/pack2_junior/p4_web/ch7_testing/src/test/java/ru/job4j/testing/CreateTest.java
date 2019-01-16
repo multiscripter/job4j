@@ -60,6 +60,7 @@ public class CreateTest {
     /**
      * Сервлет.
      */
+    @Mock
     private Create servlet;
     /**
      * Заглушка сессии.

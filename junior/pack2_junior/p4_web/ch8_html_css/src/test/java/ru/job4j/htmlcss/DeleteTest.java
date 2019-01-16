@@ -67,6 +67,7 @@ public class DeleteTest {
     /**
      * Сервлет.
      */
+    @Mock
     private Delete servlet;
     /**
      * Заглушка сессии.

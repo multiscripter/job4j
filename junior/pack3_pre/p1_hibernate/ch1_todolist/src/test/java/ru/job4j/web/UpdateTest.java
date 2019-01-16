@@ -39,6 +39,7 @@ public class UpdateTest {
     /**
      * Сервлет.
      */
+    @Mock
     private Update servlet;
     /**
      * ItemDAO.

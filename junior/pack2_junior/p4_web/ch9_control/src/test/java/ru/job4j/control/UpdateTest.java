@@ -68,6 +68,7 @@ public class UpdateTest {
     /**
      * Сервлет.
      */
+    @Mock
     private Update servlet;
     /**
      * Заглушка сессии.

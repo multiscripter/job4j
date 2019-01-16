@@ -63,6 +63,7 @@ public class LoginTest {
     /**
      * Сервлет.
      */
+    @Mock
     private Login servlet;
     /**
      * Заглушка сессии.
