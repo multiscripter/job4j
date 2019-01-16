@@ -1,5 +1,6 @@
 package ru.job4j.utils;
 
+import java.net.URL;
 import java.util.HashMap;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -7,7 +8,7 @@ import org.hibernate.cfg.Configuration;
  * Класс HibernateSessionFactory реализует функционал получения SessionFactory.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-08-03
+ * @version 2019-01-16
  * @since 2018-06-30
  */
 public class HibernateSessionFactory {
@@ -22,11 +23,22 @@ public class HibernateSessionFactory {
     }
     /**
      * Строит фабрику сессий с файлом конфигурации localFileName.
-     * @param localFileName имя файла конфигурации.
+     * @param localFileName локальное имя файла конфигурации.
      */
     private static void buildSessionFactory(String localFileName) {
         try {
             FACTORY.put(localFileName, new Configuration().configure(localFileName).buildSessionFactory());
+        } catch (Throwable ex) {
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+    /**
+     * Строит фабрику сессий с файлом конфигурации url.
+     * @param url имя файла конфигурации.
+     */
+    private static void buildSessionFactory(URL url) {
+        try {
+            FACTORY.put(url.getFile(), new Configuration().configure(url).buildSessionFactory());
         } catch (Throwable ex) {
             throw new ExceptionInInitializerError(ex);
         }
@@ -43,7 +55,7 @@ public class HibernateSessionFactory {
     }
     /**
      * Получает фабрику сессий.
-     * @param localFileName имя файла конфигурации.
+     * @param localFileName локальное имя файла конфигурации.
      * @return фабрику сессий.
      */
     public static SessionFactory get(String localFileName) {
@@ -51,5 +63,17 @@ public class HibernateSessionFactory {
             buildSessionFactory(localFileName);
         }
         return FACTORY.get(localFileName);
+    }
+    /**
+     * Получает фабрику сессий.
+     * @param url имя файла конфигурации.
+     * @return фабрику сессий.
+     */
+    public static SessionFactory get(URL url) {
+        System.err.println(url.getFile());
+        if (!FACTORY.containsKey(url.getFile())) {
+            buildSessionFactory(url);
+        }
+        return FACTORY.get(url.getFile());
     }
 }

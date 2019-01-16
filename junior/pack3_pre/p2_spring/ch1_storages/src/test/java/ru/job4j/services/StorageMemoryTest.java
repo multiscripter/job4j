@@ -1,52 +1,91 @@
 package ru.job4j.services;
 
-import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 //import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.job4j.checking.DBDriver;
 import ru.job4j.models.User;
+import ru.job4j.utils.PropertyLoader;
 import static org.junit.Assert.assertEquals;
 /**
  * Класс StorageMemoryTest тестирует класс Storage с хранением данных в RAM.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-08-14
+ * @version 2018-08-16
  * @since 2018-07-19
  */
 public class StorageMemoryTest {
     /**
+     * Название субд.
+     */
+    private static String dbmsName;
+    /**
      * Драйвер бд.
      */
-    private DBDriver driver;
+    private static DBDriver driver;
     /**
-     * Путь файла sql.
+     * Логгер.
      */
-    private String path;
+    private static Logger logger = LogManager.getLogger(StorageMemoryTest.class.getSimpleName());
+    /**
+     * Абсолютный путь к папке ресурсов.
+     */
+    private static String path;
+    /**
+     * Локальное ямя sql-скрипта.
+     */
+    private static String sqlScriptName;
     /**
      * Действия перед тестом.
-     * @throws Exception исключение.
+     */
+    @BeforeClass
+    public static void beforeAllTests() {
+        try {
+            /**
+             * Получает абсолютный путь до папки с ресурсами.
+             * В случае с Maven это: target/test-classes/
+             */
+            path = StorageMemoryTest.class.getClassLoader().getResource(".").getPath();
+            path = path.replaceFirst("^/(.:/)", "$1");
+            driver = new DBDriver(path);
+            dbmsName = new PropertyLoader(String.format("%s%s", path, "activeDBMS.properties")).getPropValue("name");
+            sqlScriptName = String.format("%sjunior.pack3.p2.ch1.task2.%s.sql", path, dbmsName);
+        } catch (Exception ex) {
+            logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
+    }
+    /**
+     * Действия перед тестом.
      */
     @Before
-    public void beforeTest() throws Exception {
-        /**
-         * По-умолчанию HSQLDB в запросах использует имёна столбцов из схемы таблицы, игнорируя алиасы !!!
-         * То есть запрос "select col_name as col_alias from . . . " вернёт в результирующем наборе
-         * col_name=значение, а не col_alias=значение. Выключается это совершенно дибильное поведение
-         * опцией get_column_name=false
-         */
-        //this.driver = new DBDriver("jdbc:hsqldb:mem:jpack3p2ch1task2;get_column_name=false", "SA", "");
-        this.driver = new DBDriver();
-        String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
-        this.path = path.replaceFirst("^/(.:/)", "$1");
-        this.path = String.format("%s../../src/test/resources/junior.pack3.p2.ch1.task2.%s.sql", this.path, "HyperSQL");
-        this.driver.executeSqlScript(this.path);
+    public void beforeEachTest() {
+        try {
+            /**
+             * По-умолчанию HSQLDB в запросах использует имёна столбцов из схемы
+             * таблицы, игнорируя алиасы !!!
+             * То есть запрос "select col_name as col_alias from . . . "
+             * вернёт в результирующем наборе col_name=значение,
+             * а не col_alias=значение. Выключается это совершенно дибильное
+             * поведение опцией get_column_name=false
+             */
+            //this.driver = new DBDriver("jdbc:hsqldb:mem:jpack3p2ch1task2;get_column_name=false", "SA", "");
+            driver.executeSqlScript(sqlScriptName);
+        } catch (Exception ex) {
+            logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
     }
     /**
      * Тестирует public void add(User user).
@@ -55,11 +94,11 @@ public class StorageMemoryTest {
      */
     @Test
     public void testAddWithExplisitCallOfStorageMemoryConstructor() throws Exception {
-        Storage storage = new Storage();
+        Storage storage = new Storage(String.format("hibernate.%s.cfg.xml", dbmsName));
         User expected = new User(0, "MemoryUser1");
         storage.add(expected);
         String query = String.format("select users.id as id, users.name as name from users where id = %d", expected.getId());
-        List<HashMap<String, String>> result = this.driver.select(query);
+        List<HashMap<String, String>> result = driver.select(query);
         User actual = new User(Integer.parseInt(result.get(0).get("id")), result.get(0).get("name"));
         assertEquals(expected, actual);
     }
@@ -83,7 +122,7 @@ public class StorageMemoryTest {
         User expected = new User(0, "MemoryUser2");
         storage.add(expected);
         String query = String.format("select users.id as id, users.name as name from users where id = %d", expected.getId());
-        List<HashMap<String, String>> result = this.driver.select(query);
+        List<HashMap<String, String>> result = driver.select(query);
         User actual = new User(Integer.parseInt(result.get(0).get("id")), result.get(0).get("name"));
         assertEquals(expected, actual);
     }
@@ -96,7 +135,7 @@ public class StorageMemoryTest {
         Storage storage = new Storage();
         List<User> expected = storage.read(new User());
         String query = "select * from users";
-        List<HashMap<String, String>> result = this.driver.select(query);
+        List<HashMap<String, String>> result = driver.select(query);
         List<User> actual = new ArrayList<>();
         for (HashMap<String, String> item : result) {
             actual.add(new User(Integer.parseInt(item.get("id")), item.get("name")));
@@ -114,11 +153,26 @@ public class StorageMemoryTest {
     }
     /**
      * Действия после теста.
-     * @throws Exception исключение.
      */
     @After
-    public void afterTest() throws Exception {
-        this.driver.executeSqlScript(this.path);
-        this.driver.close();
+    public void afterEachTest() {
+        try {
+            driver.executeSqlScript(sqlScriptName);
+        } catch (Exception ex) {
+            logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
+    }
+    /**
+     * Действия после всех тестов.
+     */
+    @AfterClass
+    public static void afterAllTests() {
+        try {
+            driver.close();
+        } catch (Exception ex) {
+            logger.error("ERROR", ex);
+            ex.printStackTrace();
+        }
     }
 }

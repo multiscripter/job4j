@@ -1,5 +1,6 @@
 package ru.job4j.services;
 
+import java.net.URL;
 import java.util.List;
 import java.util.function.Function;
 import org.hibernate.Session;
@@ -23,16 +24,26 @@ public class Storage {
     private final SessionFactory factory;
     /**
      * Конструктор без параметров.
+     * Создаёт фабрику с конфигурацей по умолчанию.
      */
     public Storage() {
         this.factory = HibernateSessionFactory.get();
     }
     /**
      * Конструктор.
-     * @param fileName имя файла конфигурации.
+     * Создаёт фабрику с указанной конфигурацей.
+     * @param localFileName локальное имя файла конфигурации.
      */
-    public Storage(String fileName) {
-        this.factory = HibernateSessionFactory.get(fileName);
+    public Storage(String localFileName) {
+        this.factory = HibernateSessionFactory.get(localFileName);
+    }
+    /**
+     * Конструктор.
+     * Создаёт фабрику с указанной конфигурацей.
+     * @param url имя файла конфигурации.
+     */
+    public Storage(URL url) {
+        this.factory = HibernateSessionFactory.get(url);
     }
     /**
      * Добавляет пользователя в хранилище.

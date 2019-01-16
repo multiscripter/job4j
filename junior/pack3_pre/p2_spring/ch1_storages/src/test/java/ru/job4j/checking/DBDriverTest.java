@@ -1,8 +1,8 @@
 package ru.job4j.checking;
 
 import java.io.IOException;
-import java.io.File;
 import java.net.URISyntaxException;
+import java.nio.file.NoSuchFileException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -21,14 +21,14 @@ import ru.job4j.utils.PropertyLoader;
  * Класс DBDriverTest тестирует класс DBDriver.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-15
+ * @version 2019-01-16
  * @since 2018-03-09
  */
 public class DBDriverTest {
     /**
-     * Имя СУБД.
+     * Название субд.
      */
-    private static String db;
+    private static String dbmsName;
     /**
      * Драйвер бд.
      */
@@ -36,23 +36,15 @@ public class DBDriverTest {
     /**
      * Логгер.
      */
-    private static Logger logger = LogManager.getLogger("TrackerRepositoryUserTest");
+    private static Logger logger = LogManager.getLogger(DBDriverTest.class.getSimpleName());
     /**
-     * Путь к файлу.
+     * Абсолютный путь к папке ресурсов.
      */
     private static String path;
     /**
-     * URL подключения к БД.
+     * Локальное ямя sql-скрипта.
      */
-    private static String url;
-    /**
-     * Пользователь БД.
-     */
-    private static String user;
-    /**
-     * Пароль пользователя БД.
-     */
-    private static String pass;
+    private static String sqlScriptName;
     /**
      * Действия перед тестом.
      */
@@ -60,7 +52,7 @@ public class DBDriverTest {
     public static void beforeAllTests() {
         try {
             // H2 | HyperSQL | PostgreSQL
-            db = new PropertyLoader("activeDBMS.properties").getPropValue("name");
+            /*
             if (db.equals("H2")) {
                 // http://www.h2database.com/html/features.html#in_memory_databases
                 // В H2 алиасы по умолчанию могут быть выкючены.
@@ -72,14 +64,20 @@ public class DBDriverTest {
                 url = "jdbc:hsqldb:mem:jpack3p1ch1task0;get_column_name=false;ifexists=true";
                 user = "SA";
                 pass = "";
-            }/* else if (db.equals("PostgreSQL")) {
+            } else if (db.equals("PostgreSQL")) {
                 url = "jdbc:postgresql://localhost:5432/jpack3p1ch1task0";
                 user = "postgres";
                 pass = "postgresrootpass";
             }*/
-            driver = new DBDriver();
-            path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
+            /**
+             * Получает абсолютный путь до папки с ресурсами.
+             * В случае с Maven это: target/test-classes/
+             */
+            path = DBDriverTest.class.getClassLoader().getResource(".").getPath();
             path = path.replaceFirst("^/(.:/)", "$1");
+            driver = new DBDriver(path);
+            dbmsName = new PropertyLoader(String.format("%s%s", path, "activeDBMS.properties")).getPropValue("name");
+            sqlScriptName = String.format("%sjunior.pack3.p2.ch1.task2.%s.sql", path, dbmsName);
         } catch (Exception ex) {
             logger.error("ERROR", ex);
             ex.printStackTrace();
@@ -91,7 +89,7 @@ public class DBDriverTest {
     @Before
     public void beforeEachTest() {
         try {
-            driver.executeSqlScript("junior.pack3.p2.ch1.task2.PostgreSQL.sql");
+            driver.executeSqlScript(sqlScriptName);
         } catch (Exception ex) {
             logger.error("ERROR", ex);
             ex.printStackTrace();
@@ -173,12 +171,14 @@ public class DBDriverTest {
     }
     /**
      * Тестирует public int[] executeSqlScript(String name) throws IOException, NullPointerException, SQLException, URISyntaxException.
-     * Выброс SQLException.
+     * Выброс NoSuchFileException.
      */
-    @Test(expected = NullPointerException.class)
-    public void testExecuteSqlScriptThrowsSQLException() {
+    @Test(expected = NoSuchFileException.class)
+    public void testExecuteSqlScriptThrowsNoSuchFileException() throws NoSuchFileException {
         try {
             driver.executeSqlScript("junior.pack3.p1.ch1.task0.test.sql");
+        } catch (NoSuchFileException ex) {
+            throw new NoSuchFileException(ex.getFile());
         } catch (IOException | SQLException | URISyntaxException ex) {
             ex.printStackTrace();
         }
@@ -249,7 +249,7 @@ public class DBDriverTest {
      * Действия после всех тестов.
      */
     @AfterClass
-    public static void afterAllTest() {
+    public static void afterAllTests() {
         try {
             driver.close();
         } catch (Exception ex) {

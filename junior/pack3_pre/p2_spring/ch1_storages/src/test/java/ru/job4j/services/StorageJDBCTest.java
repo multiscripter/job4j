@@ -38,7 +38,7 @@ public class StorageJDBCTest {
         URL url = this.getClass().getClassLoader().getResource("hibernate.cfg.xml");
         System.err.println("----- url: " + url);
         //this.driver = new DBDriver("jdbc:postgresql://localhost:5432/jpack3p2ch1task2", "postgres", "postgresrootpass");
-        this.driver = new DBDriver();
+        this.driver = new DBDriver(url.toString());
         String path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
         this.path = path.replaceFirst("^/(.:/)", "$1");
         this.path = String.format("%s../../src/test/resources/junior.pack3.p2.ch1.task2.%s.sql", this.path, "PostgreSQL");

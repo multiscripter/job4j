@@ -2,8 +2,8 @@ package ru.job4j.checking;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,20 +29,26 @@ public class DBDriver {
      */
 	private Connection con;
     /**
+     * Абсолютный путь к папке ресурсов.
+     */
+    private String path;
+    /**
      * Свойства настроек бд.
      */
     private final Properties props;
     /**
      * Конструктор.
+     * @param path абсолютный путь к папке ресурсов.
      * @throws ClassNotFoundException класс не найден.
      * @throws IOException исключение ввода-вывода.
      * @throws IllegalAccessException исключение Незаконный доступ.
      * @throws InstantiationException исключение содания экземпляра.
      * @throws SQLException исключение SQL.
      */
-	public DBDriver() throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException, SQLException {
-        String dbmsName = new PropertyLoader("activeDBMS.properties").getPropValue("name");
-        this.props = new PropertyLoader(dbmsName + ".properties").getProperties();
+	public DBDriver(String path) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException, SQLException {
+        this.path = path;
+        String dbmsName = new PropertyLoader(String.format("%s%s", this.path, "activeDBMS.properties")).getPropValue("name");
+        this.props = new PropertyLoader(String.format("%s%s.properties", this.path, dbmsName)).getProperties();
         Class.forName(this.props.getProperty("driver")).newInstance(); //load driver
         this.setConnection();
     }
@@ -97,17 +103,17 @@ public class DBDriver {
      * @return массив, каждое значение которого является количеством строк,
      * затронутых инструкцией.
      * @throws IOException исключение ввода-вывода.
+     * @throws NoSuchFileException исключение Нет такого файла.
      * @throws NullPointerException исключение Нулевой указатель.
      * @throws SQLException исключение SQL.
      * @throws URISyntaxException исключение синтаксиса URI.
      */
-    public int[] executeSqlScript(String name) throws IOException, NullPointerException, SQLException, URISyntaxException {
+    public int[] executeSqlScript(String name) throws IOException, NoSuchFileException, NullPointerException, SQLException, URISyntaxException {
         int[] affectedRowsArr;
         if (this.con == null || this.con.isClosed()) {
 			this.setConnection();
     	}
-        URL url = this.getClass().getClassLoader().getResource(name);
-        byte[] bytes = Files.readAllBytes(Paths.get(url.toURI()));
+        byte[] bytes = Files.readAllBytes(Paths.get(name));
         String query = new String(bytes, "UTF-8");
         String[] commands = query.split(";");
         con.setAutoCommit(false);

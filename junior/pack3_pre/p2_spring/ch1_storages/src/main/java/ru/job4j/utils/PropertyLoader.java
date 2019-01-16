@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,21 +35,24 @@ public final class PropertyLoader {
      * Конструктор без параметров.
      */
     public PropertyLoader() {
-        try {
-            this.path = new File(PropertyLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
-    		this.path = this.path.replaceFirst("^/(.:/)", "$1");
-        } catch (URISyntaxException | NullPointerException ex) {
-            this.logger.error("ERROR", ex);
-        }
     }
     /**
      * Конструктор.
-     * @param localName локальное имя properties-файла.
+     * @param name имя properties-файла.
      * @throws IOException исключение ввода-вывода.
      */
-    public PropertyLoader(String localName) throws IOException {
+    public PropertyLoader(String name) throws IOException {
         this();
-        this.load(localName);
+        this.load(name);
+    }
+    /**
+     * Конструктор.
+     * @param url имя properties-файла.
+     * @throws IOException исключение ввода-вывода.
+     */
+    public PropertyLoader(URL url) throws IOException {
+        this();
+        this.load(url.toString());
     }
     /**
      * Получает свойства.
@@ -81,12 +85,12 @@ public final class PropertyLoader {
     }*/
     /**
      * Загружает свойства из файла.
-     * @param localName локальное имя properties-файла.
+     * @param name имя properties-файла.
      * @throws IOException исключение ввода-вывода.
      */
-    public void load(String localName) throws IOException {
-        Path fName = Paths.get(path + localName);
-        InputStream is = Files.newInputStream(fName);
+    public void load(String name) throws IOException {
+        Path path = Paths.get(name);
+        InputStream is = Files.newInputStream(path);
         this.props.load(is);
     }
 }
