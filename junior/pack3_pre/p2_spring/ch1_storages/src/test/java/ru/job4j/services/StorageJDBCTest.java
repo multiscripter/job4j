@@ -49,7 +49,7 @@ public class StorageJDBCTest {
      * Явный вызов конструктора.
      * @throws Exception исключение.
      */
-    @Test
+    @Ignore@Test
     public void testAddWithExplisitCallOfStorageDBMSConstructor() throws Exception {
         String cfgLocalFileName = "hibernate.cfg.xml";
         Storage storage = new Storage(cfgLocalFileName);

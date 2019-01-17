@@ -26,6 +26,7 @@ public class HibernateSessionFactory {
      * @param localFileName локальное имя файла конфигурации.
      */
     private static void buildSessionFactory(String localFileName) {
+        System.err.println("bSF: " + localFileName);
         try {
             FACTORY.put(localFileName, new Configuration().configure(localFileName).buildSessionFactory());
         } catch (Throwable ex) {
@@ -70,7 +71,6 @@ public class HibernateSessionFactory {
      * @return фабрику сессий.
      */
     public static SessionFactory get(URL url) {
-        System.err.println(url.getFile());
         if (!FACTORY.containsKey(url.getFile())) {
             buildSessionFactory(url);
         }

@@ -1,6 +1,5 @@
 package ru.job4j.services;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  * Класс StorageMemoryTest тестирует класс Storage с хранением данных в RAM.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-08-16
+ * @version 2018-08-17
  * @since 2018-07-19
  */
 public class StorageMemoryTest {
@@ -39,10 +38,6 @@ public class StorageMemoryTest {
      */
     private static Logger logger = LogManager.getLogger(StorageMemoryTest.class.getSimpleName());
     /**
-     * Абсолютный путь к папке ресурсов.
-     */
-    private static String path;
-    /**
      * Локальное ямя sql-скрипта.
      */
     private static String sqlScriptName;
@@ -56,7 +51,7 @@ public class StorageMemoryTest {
              * Получает абсолютный путь до папки с ресурсами.
              * В случае с Maven это: target/test-classes/
              */
-            path = StorageMemoryTest.class.getClassLoader().getResource(".").getPath();
+            String path = StorageMemoryTest.class.getClassLoader().getResource(".").getPath();
             path = path.replaceFirst("^/(.:/)", "$1");
             driver = new DBDriver(path);
             dbmsName = new PropertyLoader(String.format("%s%s", path, "activeDBMS.properties")).getPropValue("name");
@@ -117,7 +112,7 @@ public class StorageMemoryTest {
      */
     @Test
     public void testAdd() throws Exception {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-context.xml");
+        ApplicationContext ctx = new ClassPathXmlApplicationContext(String.format("spring-context.%s.xml", dbmsName));
         Storage storage = (Storage) ctx.getBean("storageMemory");
         User expected = new User(0, "MemoryUser2");
         storage.add(expected);
@@ -128,11 +123,12 @@ public class StorageMemoryTest {
     }
     /**
      * Тестирует public List<User> read(User obj) throws Exception.
+     * Явный вызов конструктора.
      * @throws Exception исключение.
      */
     @Test
     public void testRead() throws Exception {
-        Storage storage = new Storage();
+        Storage storage = new Storage(String.format("hibernate.%s.cfg.xml", dbmsName));
         List<User> expected = storage.read(new User());
         String query = "select * from users";
         List<HashMap<String, String>> result = driver.select(query);
@@ -144,11 +140,12 @@ public class StorageMemoryTest {
     }
     /**
      * Тестирует public List<User> read(User obj) throws Exception.
+     * Явный вызов конструктора.
      * @throws Exception исключение.
      */
     @Test(expected = Exception.class)
     public void testReadPassNullThrowsException() throws Exception {
-        Storage storage = new Storage();
+        Storage storage = new Storage(String.format("hibernate.%s.cfg.xml", dbmsName));
         storage.read(null);
     }
     /**

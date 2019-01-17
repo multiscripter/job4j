@@ -27,6 +27,7 @@ public class Storage {
      * Создаёт фабрику с конфигурацей по умолчанию.
      */
     public Storage() {
+        System.err.println("Storage()");
         this.factory = HibernateSessionFactory.get();
     }
     /**
@@ -35,6 +36,7 @@ public class Storage {
      * @param localFileName локальное имя файла конфигурации.
      */
     public Storage(String localFileName) {
+        System.err.println("Storage: " + localFileName);
         this.factory = HibernateSessionFactory.get(localFileName);
     }
     /**

@@ -21,14 +21,10 @@ import ru.job4j.utils.PropertyLoader;
  * Класс DBDriverTest тестирует класс DBDriver.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-16
+ * @version 2019-01-17
  * @since 2018-03-09
  */
 public class DBDriverTest {
-    /**
-     * Название субд.
-     */
-    private static String dbmsName;
     /**
      * Драйвер бд.
      */
@@ -37,10 +33,6 @@ public class DBDriverTest {
      * Логгер.
      */
     private static Logger logger = LogManager.getLogger(DBDriverTest.class.getSimpleName());
-    /**
-     * Абсолютный путь к папке ресурсов.
-     */
-    private static String path;
     /**
      * Локальное ямя sql-скрипта.
      */
@@ -73,10 +65,10 @@ public class DBDriverTest {
              * Получает абсолютный путь до папки с ресурсами.
              * В случае с Maven это: target/test-classes/
              */
-            path = DBDriverTest.class.getClassLoader().getResource(".").getPath();
+            String path = DBDriverTest.class.getClassLoader().getResource(".").getPath();
             path = path.replaceFirst("^/(.:/)", "$1");
             driver = new DBDriver(path);
-            dbmsName = new PropertyLoader(String.format("%s%s", path, "activeDBMS.properties")).getPropValue("name");
+            String dbmsName = new PropertyLoader(String.format("%s%s", path, "activeDBMS.properties")).getPropValue("name");
             sqlScriptName = String.format("%sjunior.pack3.p2.ch1.task2.%s.sql", path, dbmsName);
         } catch (Exception ex) {
             logger.error("ERROR", ex);
@@ -172,6 +164,7 @@ public class DBDriverTest {
     /**
      * Тестирует public int[] executeSqlScript(String name) throws IOException, NullPointerException, SQLException, URISyntaxException.
      * Выброс NoSuchFileException.
+     * @throws NoSuchFileException исключение Нет такого файла.
      */
     @Test(expected = NoSuchFileException.class)
     public void testExecuteSqlScriptThrowsNoSuchFileException() throws NoSuchFileException {
