@@ -11,7 +11,7 @@ import static org.junit.Assert.assertNotNull;
  * Класс UserStorageTest тестирует класс UserStorage.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-07-14
+ * @version 2019-03-18
  * @since 2018-07-14
  */
 public class UserStorageTest {
@@ -27,7 +27,7 @@ public class UserStorageTest {
         try {
             StorageMemory memory = new StorageMemory();
             UserStorage storage = new UserStorage(memory);
-            storage.add(new User());
+            storage.add(new User(1, "testUser1"));
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
@@ -46,7 +46,7 @@ public class UserStorageTest {
              */
             // UserStorage storage = ctx.getBean(UserStorage.class);
             UserStorage storage = (UserStorage) ctx.getBean("userStorageMemory");
-            storage.add(new User());
+            storage.add(new User(2, "testUser2"));
             assertNotNull(storage);
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
@@ -60,7 +60,7 @@ public class UserStorageTest {
         try {
             ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-context.xml");
             UserStorage storage = (UserStorage) ctx.getBean("userStorageJDBC");
-            storage.add(new User());
+            storage.add(new User(3, "testUser3"));
             assertNotNull(storage);
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
@@ -74,7 +74,7 @@ public class UserStorageTest {
         try {
             ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-context.xml");
             UserStorage storage = (UserStorage) ctx.getBean("userStorageFile");
-            storage.add(new User());
+            storage.add(new User(4, "testUser4"));
             assertNotNull(storage);
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);

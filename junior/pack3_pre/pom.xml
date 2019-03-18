@@ -15,7 +15,7 @@
     </parent>
 
     <modules>
-        <module>p1_hibernate</module>
+        <!--<module>p1_hibernate</module>-->
         <module>p2_spring</module>
     </modules>
     

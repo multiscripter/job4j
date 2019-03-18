@@ -16,8 +16,8 @@
     </parent>
     
     <modules>
-        <!--<module>pack1_trainee</module>-->
-        <module>pack2_junior</module>
+        <!--<module>pack1_trainee</module>
+        <module>pack2_junior</module>-->
         <module>pack3_pre</module>
     </modules>
 

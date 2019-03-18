@@ -26,7 +26,6 @@ public class HibernateSessionFactory {
      * @param localFileName локальное имя файла конфигурации.
      */
     private static void buildSessionFactory(String localFileName) {
-        System.err.println("bSF: " + localFileName);
         try {
             FACTORY.put(localFileName, new Configuration().configure(localFileName).buildSessionFactory());
         } catch (Throwable ex) {

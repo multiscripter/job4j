@@ -29,10 +29,6 @@ public class DBDriver {
      */
 	private Connection con;
     /**
-     * Абсолютный путь к папке ресурсов.
-     */
-    private String path;
-    /**
      * Свойства настроек бд.
      */
     private final Properties props;
@@ -46,9 +42,8 @@ public class DBDriver {
      * @throws SQLException исключение SQL.
      */
 	public DBDriver(String path) throws ClassNotFoundException, IOException, IllegalAccessException, InstantiationException, SQLException {
-        this.path = path;
-        String dbmsName = new PropertyLoader(String.format("%s%s", this.path, "activeDBMS.properties")).getPropValue("name");
-        this.props = new PropertyLoader(String.format("%s%s.properties", this.path, dbmsName)).getProperties();
+        //String dbmsName = new PropertyLoader(String.format("%s%s", this.path, "activeDBMS.properties")).getPropValue("name");
+        this.props = new PropertyLoader(String.format("%s.properties", path)).getProperties();
         Class.forName(this.props.getProperty("driver")).newInstance(); //load driver
         this.setConnection();
     }

@@ -7,19 +7,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 /**
  * Класс PropertyLoader реализует функционал загрузки файлов свойств.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-12
+ * @version 2019-03-18
  * @since 2017-12-23
  */
 public final class PropertyLoader {
-    /**
-     * Логгер.
-     */
-    private final Logger logger = LogManager.getLogger(this.getClass().getSimpleName());
     /**
      * Путь до файла.
      */

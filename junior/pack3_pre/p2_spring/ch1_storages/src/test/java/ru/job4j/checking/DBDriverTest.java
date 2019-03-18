@@ -6,8 +6,6 @@ import java.nio.file.NoSuchFileException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.AfterClass;
@@ -16,12 +14,11 @@ import org.junit.BeforeClass;
 //import org.junit.Ignore;
 import org.junit.Test;
 import ru.job4j.utils.PropertyLoader;
-
 /**
  * Класс DBDriverTest тестирует класс DBDriver.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-17
+ * @version 2019-03-18
  * @since 2018-03-09
  */
 public class DBDriverTest {
@@ -30,105 +27,81 @@ public class DBDriverTest {
      */
     private static DBDriver driver;
     /**
-     * Логгер.
-     */
-    private static Logger logger = LogManager.getLogger(DBDriverTest.class.getSimpleName());
-    /**
      * Локальное ямя sql-скрипта.
      */
     private static String sqlScriptName;
     /**
      * Действия перед тестом.
+     * @throws Exception исключение.
      */
     @BeforeClass
-    public static void beforeAllTests() {
-        try {
-            // H2 | HyperSQL | PostgreSQL
-            /*
-            if (db.equals("H2")) {
-                // http://www.h2database.com/html/features.html#in_memory_databases
-                // В H2 алиасы по умолчанию могут быть выкючены.
-                // http://www.h2database.com/html/faq.html#column_names_incorrect
-                url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
-                user = "sa";
-                pass = "";
-            } else if (db.equals("HyperSQL")) {
-                url = "jdbc:hsqldb:mem:jpack3p1ch1task0;get_column_name=false;ifexists=true";
-                user = "SA";
-                pass = "";
-            } else if (db.equals("PostgreSQL")) {
-                url = "jdbc:postgresql://localhost:5432/jpack3p1ch1task0";
-                user = "postgres";
-                pass = "postgresrootpass";
-            }*/
-            /**
-             * Получает абсолютный путь до папки с ресурсами.
-             * В случае с Maven это: target/test-classes/
-             */
-            String path = DBDriverTest.class.getClassLoader().getResource(".").getPath();
-            path = path.replaceFirst("^/(.:/)", "$1");
-            driver = new DBDriver(path);
-            String dbmsName = new PropertyLoader(String.format("%s%s", path, "activeDBMS.properties")).getPropValue("name");
-            sqlScriptName = String.format("%sjunior.pack3.p2.ch1.task2.%s.sql", path, dbmsName);
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public static void beforeAllTests() throws Exception {
+        // H2 | HyperSQL | PostgreSQL
+        /*
+        if (db.equals("H2")) {
+            // http://www.h2database.com/html/features.html#in_memory_databases
+            // В H2 алиасы по умолчанию могут быть выкючены.
+            // http://www.h2database.com/html/faq.html#column_names_incorrect
+            url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
+            user = "sa";
+            pass = "";
+        } else if (db.equals("HyperSQL")) {
+            url = "jdbc:hsqldb:mem:jpack3p1ch1task0;get_column_name=false;ifexists=true";
+            user = "SA";
+            pass = "";
+        } else if (db.equals("PostgreSQL")) {
+            url = "jdbc:postgresql://localhost:5432/jpack3p1ch1task0";
+            user = "postgres";
+            pass = "postgresrootpass";
+        }*/
+        /**
+         * Получает абсолютный путь до папки с ресурсами.
+         * В случае с Maven это: target/test-classes/
+         */
+        String path = DBDriverTest.class.getClassLoader().getResource(".").getPath();
+        path = path.replaceFirst("^/(.:/)", "$1");
+        String dbmsName = new PropertyLoader(String.format("%s%s", path, "activeDBMS.properties")).getPropValue("name");
+        driver = new DBDriver(path + dbmsName);
+        sqlScriptName = String.format("%sjunior.pack3.p2.ch1.task2.%s.sql", path, dbmsName);
     }
     /**
      * Действия перед тестом.
+     * @throws Exception исключение.
      */
     @Before
-    public void beforeEachTest() {
-        try {
-            driver.executeSqlScript(sqlScriptName);
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public void beforeEachTest() throws Exception {
+        driver.executeSqlScript(sqlScriptName);
     }
     /**
      * Тестирует public int delete(String query) throws SQLException.
+     * @throws Exception исключение.
      */
     @Test
-    public void testDelete() {
-        try {
-            int affected = driver.delete("delete from users");
-            assertEquals(2, affected);
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public void testDelete() throws Exception {
+        int affected = driver.delete("delete from users");
+        assertEquals(2, affected);
     }
     /**
      * Тестирует public int delete(String query) throws SQLException.
      * Явная установка соединения.
+     * @throws Exception исключение.
      */
     @Test
-    public void testDeleteConnectionEstablished() {
-        try {
-            driver.setConnection();
-            int affected = driver.delete("delete from users");
-            assertEquals(2, affected);
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public void testDeleteConnectionEstablished() throws Exception {
+        driver.setConnection();
+        int affected = driver.delete("delete from users");
+        assertEquals(2, affected);
     }
     /**
      * Тестирует public int delete(String query) throws SQLException.
      * Соединение закрыто.
+     * @throws Exception исключение.
      */
     @Test
-    public void testDeleteConnectionClosed() {
-        try {
-            driver.close();
-            int affected = driver.delete("delete from users");
-            assertEquals(2, affected);
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public void testDeleteConnectionClosed() throws Exception {
+        driver.close();
+        int affected = driver.delete("delete from users");
+        assertEquals(2, affected);
     }
     /**
      * Тестирует public int delete(String query) throws SQLException.
@@ -141,16 +114,12 @@ public class DBDriverTest {
     }
     /**
      * Тестирует public void executeSql(String query) throws SQLException.
+     * @throws Exception исключение.
      */
     @Test
-    public void testExecuteSql() {
-        try {
-            boolean result = driver.executeSql("select * from users");
-            assertTrue(result);
-        } catch (SQLException ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public void testExecuteSql() throws Exception {
+        boolean result = driver.executeSql("select * from users");
+        assertTrue(result);
     }
     /**
      * Тестирует public void executeSql(String query) throws SQLException.
@@ -178,29 +147,21 @@ public class DBDriverTest {
     }
     /**
      * Тестирует public boolean isValid() throws SQLException.
+     * @throws Exception исключение.
      */
     @Test
-    public void testIsValid() {
-        try {
-            driver.setConnection();
-            assertTrue(driver.isValid());
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public void testIsValid() throws Exception {
+        driver.setConnection();
+        assertTrue(driver.isValid());
     }
     /**
      * Тестирует public LinkedList<HashMap<String, String>> select(String query) throws SQLException.
+     * @throws Exception исключение.
      */
     @Test
-    public void testSelect() {
-        try {
-            LinkedList<HashMap<String, String>> result = driver.select("select * from users");
-            assertTrue(result.size() > 0);
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public void testSelect() throws Exception {
+        LinkedList<HashMap<String, String>> result = driver.select("select * from users");
+        assertTrue(result.size() > 0);
     }
     /**
      * Тестирует public LinkedList<HashMap<String, String>> select(String query) throws SQLException.
@@ -213,41 +174,29 @@ public class DBDriverTest {
     }
     /**
      * Тестирует public void setConnection() throws SQLException.
+     * @throws Exception исключение.
      */
     @Test
-    public void testSetConnection() {
-        try {
-            driver.close();
-            driver.setConnection();
-            assertTrue(driver.isValid());
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public void testSetConnection() throws Exception {
+        driver.close();
+        driver.setConnection();
+        assertTrue(driver.isValid());
     }
     /**
      * Тестирует public int update(String query) throws SQLException.
+     * @throws Exception исключение.
      */
     @Test
-    public void testUpdate() {
-        try {
-            int affected = driver.update("update users set name = 'Zorro' where id = 1");
-            assertEquals(1, affected);
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public void testUpdate() throws Exception {
+        int affected = driver.update("update users set name = 'Zorro' where id = 1");
+        assertEquals(1, affected);
     }
     /**
      * Действия после всех тестов.
+     * @throws Exception исключение.
      */
     @AfterClass
-    public static void afterAllTests() {
-        try {
-            driver.close();
-        } catch (Exception ex) {
-            logger.error("ERROR", ex);
-            ex.printStackTrace();
-        }
+    public static void afterAllTests() throws Exception {
+        driver.close();
     }
 }

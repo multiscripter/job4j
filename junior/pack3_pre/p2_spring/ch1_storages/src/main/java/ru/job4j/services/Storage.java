@@ -13,7 +13,7 @@ import ru.job4j.utils.HibernateSessionFactory;
  * Класс Storage реализует сущность Хранилище.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-08-04
+ * @version 2019-03-18
  * @since 2018-07-19
  */
 @Component
@@ -27,7 +27,7 @@ public class Storage {
      * Создаёт фабрику с конфигурацей по умолчанию.
      */
     public Storage() {
-        System.err.println("Storage()");
+        //System.err.println("Storage()");
         this.factory = HibernateSessionFactory.get();
     }
     /**
@@ -36,7 +36,7 @@ public class Storage {
      * @param localFileName локальное имя файла конфигурации.
      */
     public Storage(String localFileName) {
-        System.err.println("Storage: " + localFileName);
+        //System.err.println("Storage(" + localFileName + ")");
         this.factory = HibernateSessionFactory.get(localFileName);
     }
     /**
@@ -98,10 +98,10 @@ public class Storage {
      * @throws Exception исключение.
      */
     public List<User> read(User obj) throws Exception {
-        List<User> objs = null;
+        List<User> objects;
         try (Session session = this.factory.openSession()) {
             session.beginTransaction();
-            objs = session.createQuery(String.format("from %s", obj.getClass().getSimpleName())).list();
+            objects = session.createQuery(String.format("from %s", obj.getClass().getSimpleName())).list();
             try {
                 session.getTransaction().commit();
             } catch (Exception ex) {
@@ -110,6 +110,6 @@ public class Storage {
         } catch (Exception ex) {
             throw new Exception(ex);
         }
-        return objs;
+        return objects;
     }
 }

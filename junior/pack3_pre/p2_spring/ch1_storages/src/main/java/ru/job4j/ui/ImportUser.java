@@ -10,7 +10,7 @@ import ru.job4j.services.Storage;
  * Запуск из точки сборки: java -cp ./target/classes/ ru.job4j.ui.ImportUser
  *
  * @author Goureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2018-08-05
+ * @version 2019-03-18
  * @since 2017-04-19
  */
 public class ImportUser {
@@ -29,11 +29,12 @@ public class ImportUser {
     /**
      * Конструктор.
      * @param io объект класса, реализующего интерфейс IIO.
+     * @param ctxName локальное имя файла контекста.
      * @param beanId локальное имя файла контекста Spring.
      */
-    public ImportUser(IIO io, String beanId) {
+    public ImportUser(IIO io, String ctxName, String beanId) {
         this.io = io;
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-context.xml");
+        ApplicationContext ctx = new ClassPathXmlApplicationContext(ctxName);
         this.storage = (Storage) ctx.getBean(beanId);
         this.range = new ArrayList<>(MenuActions.values().length);
         for (int a = 0; a < MenuActions.values().length; a++) {
@@ -49,7 +50,7 @@ public class ImportUser {
         System.out.println("User storage is on-line.");
         do {
             menu.show();
-            menu.select(io.ask("Select: ", this.range.stream().mapToInt(i -> i).toArray()));
+            menu.select(this.io.ask("Select: ", this.range.stream().mapToInt(i -> i).toArray()));
         } while (!"y".equals(this.io.ask("Exit? y|n: ")));
         System.out.println("Press CTRL+C to stop.");
     }
@@ -59,6 +60,6 @@ public class ImportUser {
      */
     public static void main(String[] args) {
         IIO io = new ValidateIO();
-        new ImportUser(io, "storageDBMS").init();
+        new ImportUser(io, "spring-context.xml", "storageDBMS").init();
     }
 }
