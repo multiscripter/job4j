@@ -156,6 +156,7 @@ public class UpdateTest {
             when(req.getParameter("id")).thenReturn(Integer.toString(id));
             // Тест, запущенный из IDEA под Виндой валится из-за того,
             // что в IDEA кодировка UTF-8, а в Винде windows-1251.
+            System.err.println(this.enc);
             when(req.getParameter("name")).thenReturn(new String("Жирик".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("login")).thenReturn(new String("fakelogin".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("email")).thenReturn(new String("fake@email.domain".getBytes(this.enc), "ISO-8859-1"));
