@@ -1,6 +1,5 @@
 package ru.job4j.htmlcss;
 
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,7 +27,7 @@ import org.mockito.stubbing.Answer;
  * Класс ReadTest тестирует класс Read.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-08
+ * @version 2019-03-18
  * @since 2017-12-18
  */
 public class ReadTest {
@@ -92,7 +91,7 @@ public class ReadTest {
             this.servlet = new Read();
             this.servlet.init(conf);
             this.us = new UserService();
-            this.us.setEncoding(Charset.defaultCharset().toString());
+            this.us.setEncoding("UTF-8");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

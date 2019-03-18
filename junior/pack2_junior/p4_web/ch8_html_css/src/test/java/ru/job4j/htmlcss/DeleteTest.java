@@ -1,6 +1,5 @@
 package ru.job4j.htmlcss;
 
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
@@ -101,7 +100,7 @@ public class DeleteTest {
             this.servlet = new Delete();
             this.servlet.init(conf);
             UserService us = new UserService();
-            us.setEncoding(Charset.defaultCharset().toString());
+            us.setEncoding("UTF-8");
             GregorianCalendar delCal = new GregorianCalendar();
             SimpleDateFormat delSdf = new SimpleDateFormat("yyyy-MM-dd");
             Date delDate = delSdf.parse("1952-11-11");

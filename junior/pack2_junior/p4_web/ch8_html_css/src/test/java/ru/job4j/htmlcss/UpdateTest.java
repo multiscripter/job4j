@@ -1,6 +1,5 @@
 package ru.job4j.htmlcss;
 
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
@@ -49,7 +48,7 @@ public class UpdateTest {
     /**
      * Кодировка окружения.
      */
-    private String enc;
+    private String enc = "UTF-8";
     /**
      * Заглушка диспатчера реквеста.
      */
@@ -91,7 +90,6 @@ public class UpdateTest {
             this.attributes = new ConcurrentHashMap<>();
             this.servlet = new Update();
             this.servlet.init(mock(ServletConfig.class));
-            this.enc = Charset.defaultCharset().toString();
             UserService us = new UserService();
             us.setEncoding(this.enc);
         } catch (Exception ex) {
@@ -154,9 +152,6 @@ public class UpdateTest {
             HttpServletRequest req = mock(HttpServletRequest.class);
             HttpServletResponse resp = mock(HttpServletResponse.class);
             when(req.getParameter("id")).thenReturn(Integer.toString(id));
-            // Тест, запущенный из IDEA под Виндой валится из-за того,
-            // что в IDEA кодировка UTF-8, а в Винде windows-1251.
-            System.err.println(this.enc);
             when(req.getParameter("name")).thenReturn(new String("Жирик".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("login")).thenReturn(new String("fakelogin".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("email")).thenReturn(new String("fake@email.domain".getBytes(this.enc), "ISO-8859-1"));

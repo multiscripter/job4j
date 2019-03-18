@@ -3,13 +3,6 @@ package ru.job4j.htmlcss;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.HashMap;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,10 +18,14 @@ import org.apache.logging.log4j.LogManager;
  * Класс Delete реализует функционал удаления пользователя.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-09
+ * @version 2019-03-18
  * @since 2017-11-10
  */
 public class Delete extends HttpServlet {
+    /**
+     * Кодировка окружения.
+     */
+    private String enc = "UTF-8";
     /**
      * Карта фильтров.
      */
@@ -63,7 +60,7 @@ public class Delete extends HttpServlet {
             this.us = new UserService();
             this.filters = new HashMap<>();
             this.filters.put("id", new Filter("id", new String[]{"isExists", "isFilled", "isDecimal"}));
-        } catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException | NullPointerException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -79,11 +76,10 @@ public class Delete extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             resp.setContentType("text/html");
-            String enc = Charset.defaultCharset().toString();
-            resp.setCharacterEncoding(enc);
-            req.setAttribute("encoding", enc);
+            resp.setCharacterEncoding(this.enc);
+            req.setAttribute("encoding", this.enc);
             String id = req.getParameter("id");
-            Validation va = new Validation(this.logger, enc);
+            Validation va = new Validation(this.logger, this.enc);
             va.validate("id", id, this.filters.get("id").getFilters());
             String message = "";
             User user = null;
@@ -102,7 +98,7 @@ public class Delete extends HttpServlet {
             req.setAttribute("user", user);
             req.setAttribute("message", message);
             this.getServletContext().getRequestDispatcher("/WEB-INF/views/deleteGet.jsp").include(req, resp);
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | SecurityException | SQLException | ParseException | NumberFormatException | NoSuchAlgorithmException | NoSuchMethodException | UnsupportedEncodingException | NullPointerException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -117,11 +113,10 @@ public class Delete extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             resp.setContentType("text/html");
-            String enc = Charset.defaultCharset().toString();
-            resp.setCharacterEncoding(enc);
-            req.setAttribute("encoding", enc);
+            resp.setCharacterEncoding(this.enc);
+            req.setAttribute("encoding", this.enc);
             String id = req.getParameter("id");
-            Validation va = new Validation(this.logger, enc);
+            Validation va = new Validation(this.logger, this.enc);
             va.validate("id", id, this.filters.get("id").getFilters());
             req.setAttribute("refHome", String.format("%s://%s:%s%s/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             String message = String.format("Пользователь id:%s удалён.", id);
@@ -135,7 +130,7 @@ public class Delete extends HttpServlet {
             }
             req.setAttribute("message", message);
             this.getServletContext().getRequestDispatcher("/WEB-INF/views/deletePost.jsp").include(req, resp);
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException | SQLException | NullPointerException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }

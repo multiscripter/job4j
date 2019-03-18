@@ -8,7 +8,6 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Properties;
 import java.util.Set;
@@ -17,7 +16,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Класс PropertyLoader реализует функционал загрузки файлов свойств.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2017-12-23
+ * @version 2019-03-18
  * @since 2017-12-23
  */
 public class PropertyLoader {
@@ -71,9 +70,7 @@ public class PropertyLoader {
     public LinkedList<Property> getPropertiesList() throws UnsupportedEncodingException {
         LinkedList<Property> list = new LinkedList<>();
         Set<String> names = this.props.stringPropertyNames();
-        Iterator<String> iter = names.iterator();
-        while (iter.hasNext()) {
-            String name = iter.next();
+        for (String name : names) {
             list.add(new Property(name, new String(this.props.getProperty(name).getBytes("ISO-8859-1"), "UTF-8")));
         }
         return list;

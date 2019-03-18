@@ -1,6 +1,5 @@
 package ru.job4j.htmlcss;
 
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,7 +28,7 @@ import org.mockito.stubbing.Answer;
  * Класс CreateTest тестирует класс Create.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-10
+ * @version 2019-08-18
  * @since 2017-12-18
  */
 public class CreateTest {
@@ -54,7 +53,7 @@ public class CreateTest {
     /**
      * Кодировка окружения.
      */
-    private String enc;
+    private String enc = "UTF-8";
     /**
      * Заглушка диспатчера реквеста.
      */
@@ -100,7 +99,6 @@ public class CreateTest {
             this.attributes = new ConcurrentHashMap<>();
             this.servlet = new Create();
             this.servlet.init(conf);
-            this.enc = Charset.defaultCharset().toString();
             this.us = new UserService();
             this.us.setEncoding(this.enc);
         } catch (Exception ex) {

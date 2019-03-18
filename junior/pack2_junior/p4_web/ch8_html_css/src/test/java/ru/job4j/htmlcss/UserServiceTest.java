@@ -1,6 +1,5 @@
 package ru.job4j.htmlcss;
 
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertEquals;
  * Класс UserServiceTest тестирует класс UserService.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-08
+ * @version 2019-03-18
  * @since 2017-12-17
  */
 public class UserServiceTest {
@@ -31,7 +30,7 @@ public class UserServiceTest {
             DBDriver driver = DBDriver.getInstance();
             driver.executeSqlScript("initial.sql");
             this.us = new UserService();
-            this.us.setEncoding(Charset.defaultCharset().toString());
+            this.us.setEncoding("UTF-8");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

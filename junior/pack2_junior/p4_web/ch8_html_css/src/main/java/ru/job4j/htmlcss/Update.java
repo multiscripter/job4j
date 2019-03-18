@@ -3,13 +3,7 @@ package ru.job4j.htmlcss;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.HashMap;
@@ -28,7 +22,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Класс Update реализует функционал обновления пользователя.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-09
+ * @version 2019-03-18
  * @since 2017-11-09
  */
 public class Update extends HttpServlet {
@@ -44,6 +38,10 @@ public class Update extends HttpServlet {
      * CountryService.
      */
     private CountryService cs;
+    /**
+     * Кодировка окружения.
+     */
+    private String enc = "UTF-8";
     /**
      * Список сообщений об ошибках.
      */
@@ -97,7 +95,7 @@ public class Update extends HttpServlet {
             this.filters.put("country", new Filter("country", new String[]{"isFilled", "isDecimal"}));
             this.filters.put("city", new Filter("city", new String[]{"isFilled", "isDecimal"}));
             this.adminRole = this.rls.getRoleByName("administrator");
-        } catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -113,13 +111,12 @@ public class Update extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             resp.setContentType("text/html");
-            String enc = Charset.defaultCharset().toString();
-            resp.setCharacterEncoding(enc);
-            req.setAttribute("encoding", enc);
+            resp.setCharacterEncoding(this.enc);
+            req.setAttribute("encoding", this.enc);
             req.setAttribute("errmsgs", this.errmsgs);
             req.setAttribute("filters", this.filters.values());
             String id = req.getParameter("id");
-            Validation va = new Validation(this.logger, enc);
+            Validation va = new Validation(this.logger, this.enc);
             va.validate("id", id, this.filters.get("id").getFilters());
             String message = "";
             User user = null;
@@ -147,7 +144,7 @@ public class Update extends HttpServlet {
             req.setAttribute("user", user);
             req.setAttribute("message", message);
             this.getServletContext().getRequestDispatcher("/WEB-INF/views/updateGet.jsp").include(req, resp);
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchAlgorithmException | NoSuchMethodException | SQLException | ParseException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -162,21 +159,24 @@ public class Update extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             resp.setContentType("text/html");
-            String enc = Charset.defaultCharset().toString();
-            resp.setCharacterEncoding(enc);
-            req.setAttribute("encoding", enc);
-            this.us.setEncoding(enc);
+            resp.setCharacterEncoding(this.enc);
+            req.setAttribute("encoding", this.enc);
+            this.us.setEncoding(this.enc);
             req.setAttribute("refHome", String.format("%s://%s:%s%s/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             req.setAttribute("refLogin", String.format("%s://%s:%s%s/login/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             String id = req.getParameter("id");
             String name = req.getParameter("name");
+            name = new String(name.getBytes("ISO-8859-1"), this.enc);
             String login = req.getParameter("login");
+            login = new String(login.getBytes("ISO-8859-1"), this.enc);
             String email = req.getParameter("email");
+            email = new String(email.getBytes("ISO-8859-1"), this.enc);
             String pass = req.getParameter("pass");
+            pass = new String(pass.getBytes("ISO-8859-1"), this.enc);
             String role = req.getParameter("role");
             String country = req.getParameter("country");
             String city = req.getParameter("city");
-            Validation va = new Validation(this.logger, enc);
+            Validation va = new Validation(this.logger, this.enc);
             va.validate("id", id, this.filters.get("id").getFilters());
             va.validate("name", name, this.filters.get("name").getFilters());
             va.validate("login", login, this.filters.get("login").getFilters());
@@ -190,16 +190,16 @@ public class Update extends HttpServlet {
                 user.setId(Integer.parseInt(id));
             }
             if (!va.hasError("name")) {
-                user.setName(new String(name.getBytes("ISO-8859-1"), enc));
+                user.setName(name);
             }
             if (!va.hasError("login")) {
-                user.setLogin(new String(login.getBytes("ISO-8859-1"), enc));
+                user.setLogin(login);
             }
             if (!va.hasError("email")) {
-                user.setEmail(new String(email.getBytes("ISO-8859-1"), enc));
+                user.setEmail(email);
             }
             if (!va.hasError("pass")) {
-                user.setPass(new String(pass.getBytes("ISO-8859-1"), enc));
+                user.setPass(pass);
             }
             if (!va.hasError("role")) {
                 user.setRole(this.rls.getRoleById(Integer.parseInt(role)));
@@ -244,7 +244,7 @@ public class Update extends HttpServlet {
                 req.setAttribute("refBack", String.format("%s://%s:%s%s/update/?id=%s", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath(), id));
                 this.getServletContext().getRequestDispatcher("/WEB-INF/views/updatePost.jsp").include(req, resp);
             }
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | SecurityException | SQLException | NoSuchAlgorithmException | NoSuchMethodException | UnsupportedEncodingException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }

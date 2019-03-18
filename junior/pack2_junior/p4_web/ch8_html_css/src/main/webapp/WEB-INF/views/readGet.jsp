@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=${encoding}" />
+    <meta charset="${encoding}" />
     <title>Хранилище пользователей</title>
     <jsp:include page="head.jsp" />
 </head>

@@ -3,12 +3,7 @@ package ru.job4j.htmlcss;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.HashMap;
@@ -25,7 +20,7 @@ import org.apache.logging.log4j.LogManager;
 /**
  * Класс Create реализует функционал создания пользователя.
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-09
+ * @version 2019-03-18
  * @since 2017-11-09
  */
 public class Create extends HttpServlet {
@@ -37,6 +32,10 @@ public class Create extends HttpServlet {
      * CountryService.
      */
     private CountryService cs;
+    /**
+     * Кодировка окружения.
+     */
+    private String enc = "UTF-8";
     /**
      * Список сообщений об ошибках.
      */
@@ -88,7 +87,7 @@ public class Create extends HttpServlet {
             this.filters.put("role", new Filter("role", new String[]{"isFilled", "isDecimal"}));
             this.filters.put("country", new Filter("country", new String[]{"isFilled", "isDecimal"}));
             this.filters.put("city", new Filter("city", new String[]{"isFilled", "isDecimal"}));
-        } catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -103,9 +102,8 @@ public class Create extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             resp.setContentType("text/html");
-            String enc = Charset.defaultCharset().toString();
-            resp.setCharacterEncoding(enc);
-            req.setAttribute("encoding", enc);
+            resp.setCharacterEncoding(this.enc);
+            req.setAttribute("encoding", this.enc);
             req.setAttribute("errmsgs", this.errmsgs);
             req.setAttribute("filters", this.filters.values());
             req.setAttribute("cities", this.cits.getCities());
@@ -115,7 +113,7 @@ public class Create extends HttpServlet {
             req.setAttribute("refHome", String.format("%s://%s:%s%s/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             req.setAttribute("refLogin", String.format("%s://%s:%s%s/login/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             this.getServletContext().getRequestDispatcher("/WEB-INF/views/createGet.jsp").include(req, resp);
-        } catch (SQLException | NullPointerException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -130,21 +128,24 @@ public class Create extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             resp.setContentType("text/html");
-            String enc = Charset.defaultCharset().toString();
-            resp.setCharacterEncoding(enc);
-            req.setAttribute("encoding", enc);
-            this.us.setEncoding(enc);
+            resp.setCharacterEncoding(this.enc);
+            req.setAttribute("encoding", this.enc);
+            this.us.setEncoding(this.enc);
             req.setAttribute("refBack", String.format("%s://%s:%s%s/create/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             req.setAttribute("refHome", String.format("%s://%s:%s%s/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             req.setAttribute("refLogin", String.format("%s://%s:%s%s/login/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             String name = req.getParameter("name");
+            name = new String(name.getBytes("ISO-8859-1"), this.enc);
             String login = req.getParameter("login");
+            login = new String(login.getBytes("ISO-8859-1"), this.enc);
             String email = req.getParameter("email");
+            email = new String(email.getBytes("ISO-8859-1"), this.enc);
             String pass = req.getParameter("pass");
+            pass = new String(pass.getBytes("ISO-8859-1"), this.enc);
             String role = req.getParameter("role");
             String country = req.getParameter("country");
             String city = req.getParameter("city");
-            Validation va = new Validation(this.logger, enc);
+            Validation va = new Validation(this.logger, this.enc);
             va.validate("name", name, this.filters.get("name").getFilters());
             va.validate("login", login, this.filters.get("login").getFilters());
             va.validate("email", email, this.filters.get("email").getFilters());
@@ -165,10 +166,6 @@ public class Create extends HttpServlet {
                 req.setAttribute("errors", va.getResult());
                 this.getServletContext().getRequestDispatcher("/WEB-INF/views/createGet.jsp").include(req, resp);
             } else {
-                name = new String(name.getBytes("ISO-8859-1"), enc);
-                login = new String(login.getBytes("ISO-8859-1"), enc);
-                email = new String(email.getBytes("ISO-8859-1"), enc);
-                pass = new String(pass.getBytes("ISO-8859-1"), enc);
                 User user = new User();
                 user.setName(name);
                 user.setLogin(login);
@@ -189,7 +186,7 @@ public class Create extends HttpServlet {
                 req.setAttribute("message", message);
                 this.getServletContext().getRequestDispatcher("/WEB-INF/views/createPost.jsp").include(req, resp);
             }
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchAlgorithmException | NoSuchMethodException | ParseException | SQLException | NullPointerException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }

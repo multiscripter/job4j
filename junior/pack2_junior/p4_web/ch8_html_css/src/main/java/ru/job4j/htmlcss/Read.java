@@ -3,11 +3,6 @@ package ru.job4j.htmlcss;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.LinkedList;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +18,7 @@ import org.apache.logging.log4j.LogManager;
  * Класс Read реализует функционал чтения пользователей.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-09
+ * @version 2019-03-18
  * @since 2017-11-08
  */
 public class Read extends HttpServlet {
@@ -59,7 +54,7 @@ public class Read extends HttpServlet {
 			RoleService rls = new RoleService();
             this.us = new UserService();
             this.adminRole = rls.getRoleByName("administrator");
-		} catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException | NullPointerException ex) {
+		} catch (Exception ex) {
 			this.logger.error("ERROR", ex);
 		}
     }
@@ -71,9 +66,9 @@ public class Read extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			resp.setContentType("text/html");
-			String enc = Charset.defaultCharset().toString();
+			String enc = "UTF-8";
 			resp.setCharacterEncoding(enc);
-			req.setAttribute("encoding", enc);
+			req.setAttribute("encoding", enc.toLowerCase());
 			LinkedList<User> users = this.us.getUsers("id", false);
 			req.setAttribute("users", users);
             req.setAttribute("adminRole", this.adminRole);
@@ -83,7 +78,7 @@ public class Read extends HttpServlet {
             req.setAttribute("refCreate", String.format("%s://%s:%s%s/create/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
             req.setAttribute("refLogin", String.format("%s://%s:%s%s/login/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
 			this.getServletContext().getRequestDispatcher("/WEB-INF/views/readGet.jsp").include(req, resp);
-		} catch (SQLException | ParseException | NoSuchAlgorithmException | NullPointerException ex) {
+		} catch (Exception ex) {
 			this.logger.error("ERROR", ex);
 		}
 	}

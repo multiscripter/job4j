@@ -3,12 +3,6 @@ package ru.job4j.htmlcss;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.HashMap;
 import javax.servlet.http.Cookie;
@@ -26,10 +20,14 @@ import org.apache.logging.log4j.LogManager;
  * Класс Login реализует контроллер входа пользователя.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-08
+ * @version 2019-03-18
  * @since 2017-12-11
  */
 public class Login extends HttpServlet {
+    /**
+     * Кодировка окружения.
+     */
+    private String enc = "UTF-8";
     /**
      * Список сообщений об ошибках.
      */
@@ -69,7 +67,7 @@ public class Login extends HttpServlet {
             this.filters = new HashMap<>();
             this.filters.put("login", new Filter("login", new String[]{"isExists", "isFilled"}));
             this.filters.put("pass", new Filter("pass", new String[]{"isExists", "isFilled"}));
-        } catch (IllegalAccessException | InstantiationException | URISyntaxException | ClassNotFoundException | SQLException | IOException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }
@@ -83,9 +81,8 @@ public class Login extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
-        String enc = Charset.defaultCharset().toString();
-        resp.setCharacterEncoding(enc);
-        req.setAttribute("encoding", enc);
+        resp.setCharacterEncoding(this.enc);
+        req.setAttribute("encoding", this.enc);
         req.setAttribute("errmsgs", this.errmsgs);
         req.setAttribute("filters", this.filters.values());
         req.setAttribute("action", String.format("%s://%s:%s%s%s", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath(), req.getServletPath()));
@@ -104,13 +101,12 @@ public class Login extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             resp.setContentType("text/html");
-            String enc = Charset.defaultCharset().toString();
-            resp.setCharacterEncoding(enc);
-            req.setAttribute("encoding", enc);
-            this.us.setEncoding(enc);
+            resp.setCharacterEncoding(this.enc);
+            req.setAttribute("encoding", this.enc);
+            this.us.setEncoding(this.enc);
             String login = req.getParameter("login");
             String pass = req.getParameter("pass");
-            Validation va = new Validation(this.logger, enc);
+            Validation va = new Validation(this.logger, this.enc);
             va.validate("login", login, this.filters.get("login").getFilters());
             va.validate("pass", pass, this.filters.get("pass").getFilters());
             if (va.hasErrors()) {
@@ -118,8 +114,8 @@ public class Login extends HttpServlet {
                 req.setAttribute("errors", va.getResult());
                 this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginGet.jsp").include(req, resp);
             } else {
-                login = new String(login.getBytes("ISO-8859-1"), enc);
-                pass = new String(pass.getBytes("ISO-8859-1"), enc);
+                login = new String(login.getBytes("ISO-8859-1"), this.enc);
+                pass = new String(pass.getBytes("ISO-8859-1"), this.enc);
                 User user = this.us.getUserByLogPass(login, pass);
                 String message;
                 if (user != null) {
@@ -139,7 +135,7 @@ public class Login extends HttpServlet {
                 req.setAttribute("refHome", String.format("%s://%s:%s%s/", req.getScheme(), req.getServerName(), req.getServerPort(), req.getContextPath()));
                 this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginPost.jsp").include(req, resp);
             }
-        } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException | SQLException | ParseException | NoSuchAlgorithmException ex) {
+        } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
     }
