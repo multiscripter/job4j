@@ -169,6 +169,7 @@ public class CreateTest {
             when(req.getParameter("country")).thenReturn(new String("2".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("city")).thenReturn(new String("1".getBytes(this.enc), "ISO-8859-1"));
             when(servlet.getServletContext()).thenReturn(ctx);
+            when(ctx.getRequestDispatcher("/WEB-INF/views/createGet.jsp")).thenReturn(reqDesp);
             when(ctx.getRequestDispatcher("/WEB-INF/views/createPost.jsp")).thenReturn(reqDesp);
             this.setAttributeStorage(req);
             servlet.doPost(req, resp);

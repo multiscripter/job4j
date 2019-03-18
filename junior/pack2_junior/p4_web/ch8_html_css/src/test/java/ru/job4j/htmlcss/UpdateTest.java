@@ -29,7 +29,7 @@ import org.mockito.stubbing.Answer;
  * Класс UpdateTest тестирует класс Update.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-01-10
+ * @version 2019-03-18
  * @since 2017-12-17
  */
 public class UpdateTest {
@@ -154,6 +154,8 @@ public class UpdateTest {
             HttpServletRequest req = mock(HttpServletRequest.class);
             HttpServletResponse resp = mock(HttpServletResponse.class);
             when(req.getParameter("id")).thenReturn(Integer.toString(id));
+            // Тест, запущенный из IDEA под Виндой валится из-за того,
+            // что в IDEA кодировка UTF-8, а в Винде windows-1251.
             when(req.getParameter("name")).thenReturn(new String("Жирик".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("login")).thenReturn(new String("fakelogin".getBytes(this.enc), "ISO-8859-1"));
             when(req.getParameter("email")).thenReturn(new String("fake@email.domain".getBytes(this.enc), "ISO-8859-1"));
@@ -164,6 +166,7 @@ public class UpdateTest {
             when(req.getSession(false)).thenReturn(session);
             doReturn(this.admin).when(session).getAttribute("auth");
             when(servlet.getServletContext()).thenReturn(ctx);
+            when(ctx.getRequestDispatcher("/WEB-INF/views/updateGet.jsp")).thenReturn(reqDesp);
             when(ctx.getRequestDispatcher("/WEB-INF/views/updatePost.jsp")).thenReturn(reqDesp);
             this.setAttributeStorage(req);
             servlet.doPost(req, resp);
