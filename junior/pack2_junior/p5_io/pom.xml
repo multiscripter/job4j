@@ -2,23 +2,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>pack2_junior</artifactId>
+    <artifactId>p5_io</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
-    <name>pack2_junior</name>
+    <name>p5_io</name>
     <url>http://job4j.ru</url>
-
+    
     <parent>
         <groupId>ru.job4j</groupId>
-        <artifactId>junior</artifactId>
+        <artifactId>pack2_junior</artifactId>
         <version>1.0</version>
     </parent>
 
     <modules>
-        <!--<module>p1_collections_pro</module>
-        <module>p2_multithreading</module>
-        <module>p3_sql_jdbc</module>
-        <module>p4_web</module>-->
-        <module>p5_io</module>
+        <module>ch1_conf</module>
     </modules>
 </project>
