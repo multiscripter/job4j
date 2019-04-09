@@ -47,11 +47,20 @@ public class ConfigTest {
         new Config("fakeFileName").load();
     }
     /**
-     * Тестирует public String toString().
+     * Тестирует public String toStr() throws Exception.
+     * @throws Exception исключение.
+     */
+    @Test(expected = Exception.class)
+    public void testToStrThrowsException() throws Exception {
+        Config conf = new Config("fakeFileName");
+        conf.toStr();
+    }
+    /**
+     * Тестирует public String toStr() throws Exception.
      * @throws Exception исключение.
      */
     @Test
-    public void testToString() throws Exception {
+    public void testToStr() throws Exception {
         StringBuilder expected = new StringBuilder();
         expected.append("# Qualified dbms driver class name.");
         expected.append(System.lineSeparator());
@@ -79,7 +88,7 @@ public class ConfigTest {
         expected.append("params=get_column_name=false");
         Config conf = new Config(propsFileName);
         conf.load();
-        String actual = conf.toString();
+        String actual = conf.toStr();
         assertEquals(expected.toString(), actual);
     }
     /**

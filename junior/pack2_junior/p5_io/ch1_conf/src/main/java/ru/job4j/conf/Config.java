@@ -59,14 +59,14 @@ public class Config {
     /**
      * Возвращает строковое предстваление коллекции свойств.
      * @return строковое предстваление коллекции свойств.
+     * @throws Exception исключение.
      */
-    @Override
-    public String toString() {
+    public String toStr() throws Exception {
         StringJoiner out = new StringJoiner(System.lineSeparator());
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             read.lines().forEach(out::add);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception(e);
         }
         return out.toString();
     }
