@@ -16,5 +16,6 @@
 
     <modules>
         <module>ch1_conf</module>
+        <module>ch2_analize</module>
     </modules>
 </project>
