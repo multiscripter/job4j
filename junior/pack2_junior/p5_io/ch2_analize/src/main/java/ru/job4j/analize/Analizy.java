@@ -61,8 +61,8 @@ public class Analizy {
     }
     /**
      * Открывает файл лога сервера на чтение.
-     * @param source лог-файл сервера.
-     * @param target имя файлс с диапазонами значений недоступности сервера.
+     * @param source имя лог-файла сервера.
+     * @param target имя файла с диапазонами значений недоступности сервера.
      * @throws Exception исключение.
      */
     private void open(String source, String target) throws Exception {
@@ -74,16 +74,14 @@ public class Analizy {
      */
     private void read() {
         if (this.reader != null) {
-            this.reader.lines().forEach((line) -> {
-                this.analize(line.trim());
-            });
+            this.reader.lines().forEach((line) -> this.analize(line.trim()));
         }
     }
     /**
      * Анализирует лог-файл сервера, находит диапазоны когда сервер не работал
      * и записывает резудбтат в файл.
-     * @param source лог-файл сервера.
-     * @param target файл с диапазонами
+     * @param source имя лог-файла сервера.
+     * @param target имя файла с диапазонами.
      * @throws Exception исключение.
      */
     public void unavailable(String source, String target) throws Exception {

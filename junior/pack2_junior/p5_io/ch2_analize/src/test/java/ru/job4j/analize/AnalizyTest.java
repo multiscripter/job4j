@@ -32,4 +32,24 @@ public class AnalizyTest {
         Analizy anal = new Analizy();
         anal.unavailable(String.format("%s%s", path, "log1.serverlog"), String.format("%s%s", path, "log1.csv"));
     }
+    /**
+     * Тестирует public void unavailable(String source, String target) throws Exception.
+     * Пустой лог-файл сервера.
+     * @throws Exception исключение.
+     */
+    @Test
+    public void testUnavailableServerLogContainsEmptyStrings() throws Exception {
+        Analizy anal = new Analizy();
+        anal.unavailable(String.format("%s%s", path, "log2.serverlog"), String.format("%s%s", path, "log2.csv"));
+    }
+    /**
+     * Тестирует public void unavailable(String source, String target) throws Exception.
+     * Пустой лог-файл сервера.
+     * @throws Exception исключение.
+     */
+    @Test
+    public void testUnavailableServerLogEndsWithStatus500() throws Exception {
+        Analizy anal = new Analizy();
+        anal.unavailable(String.format("%s%s", path, "log3.serverlog"), String.format("%s%s", path, "log3.csv"));
+    }
 }
