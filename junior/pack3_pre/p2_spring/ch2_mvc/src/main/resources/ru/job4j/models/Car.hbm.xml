@@ -1,0 +1,19 @@
+<hibernate-mapping>
+    <class name="ru.job4j.models.Car" table="cars">
+        <id name="id" column="id" type="int">
+            <generator class="identity"/>
+        </id>
+        <property name="name" column="name" type="string"/>
+        <bag name="bodies" table="cars_bodies">
+            <key column="car_id"/>
+            <many-to-many column="body_id" lazy="false" class="ru.job4j.models.Body" />
+        </bag>
+        <many-to-one
+            name="brand"
+            column="brand_id"
+            not-null="true"
+            cascade="all"
+            lazy="false"
+            class="ru.job4j.models.Brand" />
+    </class>
+</hibernate-mapping>

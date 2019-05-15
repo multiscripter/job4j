@@ -15,8 +15,9 @@
     </parent>
 
     <modules>
-        <module>ch1_beans</module>
-        <module>ch1_storages</module>
+        <!--<module>ch1_beans</module>
+        <module>ch1_storages</module>-->
+        <module>ch2_mvc</module>
     </modules>
     
     <dependencies>

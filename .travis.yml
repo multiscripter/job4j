@@ -1,3 +1,6 @@
+jdk:
+  - openjdk9
+
 # используем язык java. Travis CI поддерживает разные языки.
 language: java
 # используем режим обычного пользователя для сборки проекта.
@@ -33,3 +36,4 @@ before_script:
   - psql -c 'create database jpack3p1ch3task1;' -U postgres
   - psql -c 'create database jpack3p1ch4task1;' -U postgres
   - psql -c 'create database jpack3p2ch1task2;' -U postgres
+  - psql -c 'create database jpack3p4ch2task1;' -U postgres
