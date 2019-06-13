@@ -1,0 +1,38 @@
+<hibernate-mapping>
+    <class name="ru.job4j.models.Offer" table="offers">
+        <id name="id" column="id" type="long">
+            <generator class="identity"/>
+        </id>
+        
+        <!-- one-to-one one-way relationship Offer -> User -->
+        <many-to-one
+            name="user"
+            column="user_id"
+            unique="true"
+            not-null="true"
+            lazy="false"
+            class="ru.job4j.models.User" />
+            
+        <!-- one-to-one one-way relationship Offer -> Car -->
+        <many-to-one 
+            name="car" 
+            column="car_id"
+            unique="true"            
+            not-null="true"
+            lazy="false"
+            class="ru.job4j.models.Car"
+            cascade="none" />
+            
+        <!-- one-to-one one-way relationship Offer -> Body -->
+        <many-to-one
+            name="body"
+            column="body_id"
+            unique="true"
+            not-null="true"
+            lazy="false"
+            class="ru.job4j.models.Body" />
+            
+        <property name="price" column="price" type="int"/>
+        <property name="status" column="status" type="boolean"/>
+    </class>
+</hibernate-mapping>
