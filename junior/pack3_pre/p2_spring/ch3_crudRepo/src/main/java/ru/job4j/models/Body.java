@@ -1,21 +1,33 @@
 package ru.job4j.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 /**
  * Класс Body реализует сущность Кузов.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-06-01
+ * @version 2019-06-26
  * @since 2018-04-26
  */
+@Entity
+@Table(name = "bodies")
 public class Body implements IModel {
     /**
      * Идентификатор кузова.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     /**
      * Название кузова.
      */
+    @Column(name = "name")
     private String name;
     /**
      * Конструктор без параметров.

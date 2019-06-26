@@ -1,25 +1,45 @@
 package ru.job4j.models;
 
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 /**
  * Класс Brand реализует сущность Брэнд.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-06-01
+ * @version 2019-06-26
  * @since 2018-05-14
  */
+@Entity
+@Table(name = "brands")
 public class Brand implements IModel {
     /**
      * Основатель брэнда.
      */
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "founder_id")
     private Founder founder;
     /**
      * Идентификатор брэнда.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     /**
      * Название брэнда.
      */
+    @Column(name = "name")
     private String name;
     /**
      * Конструктор без параметров.

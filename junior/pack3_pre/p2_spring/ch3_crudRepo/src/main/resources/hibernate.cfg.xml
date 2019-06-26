@@ -20,11 +20,12 @@
         <!-- Echo all executed SQL to stdout -->
         <property name="hibernate.show_sql">true</property>
 
+       <!-- Annotations used.
         <mapping resource="ru/job4j/models/Body.hbm.xml" />
         <mapping resource="ru/job4j/models/Brand.hbm.xml" />
         <mapping resource="ru/job4j/models/Car.hbm.xml" />
         <mapping resource="ru/job4j/models/Founder.hbm.xml" />
         <mapping resource="ru/job4j/models/Offer.hbm.xml" />
-        <mapping resource="ru/job4j/models/User.hbm.xml" />
+        <mapping resource="ru/job4j/models/User.hbm.xml" /> -->
     </session-factory>
 </hibernate-configuration>

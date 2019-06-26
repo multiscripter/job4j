@@ -1,25 +1,38 @@
 package ru.job4j.models;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 /**
  * Класс Founder реализует сущность Основатель брэнда.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-06-01
+ * @version 2019-06-26
  * @since 2018-05-14
  */
+@Entity
+@Table(name = "founders")
 public class Founder implements IModel {
     /**
      * Идентификатор основателя брэнда.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     /**
      * Имя основателя брэнда.
      */
+    @Column(name = "name")
     private String name;
     /**
      * Фамилия основателя брэнда.
      */
+    @Column(name = "name_last")
     private String nameLast;
     /**
      * Конструктор без параметров.

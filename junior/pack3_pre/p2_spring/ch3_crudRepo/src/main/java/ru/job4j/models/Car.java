@@ -4,30 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.collection.internal.PersistentBag;
 /**
  * Класс Car реализует сущность Модель автомобиля.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-06-01
+ * @version 2019-06-26
  * @since 2018-04-26
  */
+@Entity
+@Table(name = "cars")
 public class Car implements IModel {
     /**
      * Список типов кузова автомобиля.
      */
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "cars_bodies",
+            joinColumns = { @JoinColumn(name = "car_id") },
+            inverseJoinColumns = { @JoinColumn(name = "body_id") }
+    )
     private List<Body> bodies;
     /**
      * Брэнд.
      */
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "brand_id")
     private Brand brand;
     /**
      * Идентификатор автомобиля.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     /**
      * Название автомобиля.
      */
+    @Column(name = "name")
     private String name;
     /**
      * Конструктор без параметров.

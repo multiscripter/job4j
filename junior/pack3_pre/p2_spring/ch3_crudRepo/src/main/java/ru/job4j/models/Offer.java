@@ -2,41 +2,73 @@ package ru.job4j.models;
 
 import java.util.HashMap;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 /**
  * Класс Offer реализует сущность Объявление.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-06-01
+ * @version 2019-06-26
  * @since 2018-05-10
  */
+@Entity
+@Table(name = "offers")
 public class Offer implements IModel {
     /**
      * Кузов атомобиля.
      */
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "body_id")
     private Body body;
     /**
      * Модель автомобиля.
      */
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "car_id")
     private Car car;
     /**
      * Массив имён файлов изображений.
+     * @Transient Указывает, что свойство или поле не являются постоянными.
+     * https://docs.oracle.com/javaee/7/api/javax/persistence/Transient.html
      */
+    @Transient
     private String[] fotos;
     /**
      * Идентификатор объявления.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id = 0L;
     /**
      * Цена автомобиля.
      */
+    @Column(name = "price")
     private int price;
     /**
      * Статус объявления (продано/не продано).
      */
+    @Column(name = "status")
     private boolean status;
     /**
      * Идентификатор пользоваетля.
      */
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "user_id")
     private User user;
     /**
      * Конструктор без параметров.

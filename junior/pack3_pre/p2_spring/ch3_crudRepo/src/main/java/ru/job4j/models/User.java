@@ -1,21 +1,33 @@
 package ru.job4j.models;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 /**
  * Класс User реализует сущность Пользователь.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-05-30
+ * @version 2019-06-26
  * @since 2018-05-10
  */
+@Entity
+@Table(name = "users")
 public class User implements IModel {
     /**
      * Идентификатор пользователя.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     /**
      * Логин пользователя.
      */
+    @Column(name = "name")
     private String name;
     /**
      * Конструктор без параметров.
