@@ -1,12 +1,13 @@
 package ru.job4j.services;
 
 import javax.persistence.metamodel.EntityType;
+import java.util.Objects;
 
 /**
  * Класс Entry реализует сущность Вхождение.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-06-12
+ * @version 2019-06-27
  * @since 2019-05-27
  */
 public class Entry {
@@ -53,6 +54,14 @@ public class Entry {
      */
     public EntityType<?> getParent() {
         return this.parent;
+    }
+    /**
+     * Переопределяет метод hashCode().
+     * @return хэш-сумма объекта.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.attrName, this.child, this.parent);
     }
     /**
      * Устанавливает имя атрибута.
