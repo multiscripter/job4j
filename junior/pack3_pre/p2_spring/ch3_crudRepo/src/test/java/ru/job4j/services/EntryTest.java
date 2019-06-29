@@ -9,6 +9,8 @@ import javax.persistence.metamodel.EntityType;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import ru.job4j.checking.DBDriver;
+import ru.job4j.utils.PropertyLoader;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -17,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
  * Класс EntryTest тестирует класс Entry.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-06-27
+ * @version 2019-06-29
  * @since 2018-06-27
  */
 public class EntryTest {
@@ -26,13 +28,13 @@ public class EntryTest {
      */
     private Entry entry;
     /**
-     * Итератор по типам сущностей.
-     */
-    private Iterator<EntityType<?>> iter;
-    /**
      * entityManagerFactory.
      */
     private static EntityManagerFactory emf;
+    /**
+     * Итератор по типам сущностей.
+     */
+    private Iterator<EntityType<?>> iter;
     /**
      * Действия перед тестом.
      * @throws Exception исключение.
@@ -50,7 +52,17 @@ public class EntryTest {
      */
     @BeforeClass
     public static void beforeAllTests() throws Exception {
-        emf = Persistence.createEntityManagerFactory("persistenceUnitNameHibernate");
+        String path = BodyRepositoryTest.class.getClassLoader().getResource(".").getPath();
+        path = path.replaceFirst("^/(.:/)", "$1");
+        String dbmsName = new PropertyLoader(String.format("%s%s", path, "activeDBMS.properties")).getPropValue("name");
+        String persistenceUnitName = "persistenceUnitNameHibernate";
+        if (!dbmsName.equals("PostgreSQL")) {
+            persistenceUnitName = String.format("persistenceUnitNameHibernate%s", dbmsName);
+        }
+        DBDriver driver = new DBDriver(path + dbmsName);
+        path = String.format("%sjunior.pack3.p4.ch3.task1.%s.sql", path, dbmsName);
+        driver.executeSqlScript(path);
+        emf = Persistence.createEntityManagerFactory(persistenceUnitName);
     }
     /**
      * Тестирует public String getAttrName().

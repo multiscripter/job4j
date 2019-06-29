@@ -31,18 +31,10 @@ import static org.junit.Assert.assertEquals;
  * Класс OfferRepositoryTest тестирует класс OfferRepository.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-06-27
+ * @version 2019-06-29
  * @since 2018-06-26
  */
 public class OfferRepositoryTest {
-    /**
-     * Локальное имя файла конфигурации Hibernate.
-     */
-    private static String contextLocalFileName;
-    /**
-     * Название текущей СУБД.
-     */
-    private static String dbmsName;
     /**
      * Драйвер бд.
      */
@@ -97,19 +89,22 @@ public class OfferRepositoryTest {
      */
     @BeforeClass
     public static void beforeAllTests() throws Exception {
-        emf = Persistence.createEntityManagerFactory("persistenceUnitNameHibernate");
         path = UserRepositoryTest.class.getClassLoader().getResource(".").getPath();
         path = path.replaceFirst("^/(.:/)", "$1");
-        dbmsName = new PropertyLoader(String.format("%s%s", path, "activeDBMS.properties")).getPropValue("name");
-        contextLocalFileName = "servlet-context.xml";
+        String dbmsName = new PropertyLoader(String.format("%s%s", path, "activeDBMS.properties")).getPropValue("name");
+        String contextLocalFileName = "servlet-context.xml";
+        String persistenceUnitName = "persistenceUnitNameHibernate";
         if (!dbmsName.equals("PostgreSQL")) {
             contextLocalFileName = String.format("%s.servlet-context.xml", dbmsName);
+            persistenceUnitName = String.format("persistenceUnitNameHibernate%s", dbmsName);
         }
+        emf = Persistence.createEntityManagerFactory(persistenceUnitName);
         driver = new DBDriver(path + dbmsName);
         path = new File(DBDriver.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getAbsolutePath() + "/";
         XmlWebApplicationContext ctx = new XmlWebApplicationContext();
         path = path.replaceFirst("^/(.:/)", "$1");
         path = String.format("%sjunior.pack3.p4.ch3.task1.%s.sql", path, dbmsName);
+        driver.executeSqlScript(path);
         ctx.setConfigLocation("file:src/test/resources/" + contextLocalFileName);
         ctx.setServletContext(new MockServletContext());
         ctx.refresh();

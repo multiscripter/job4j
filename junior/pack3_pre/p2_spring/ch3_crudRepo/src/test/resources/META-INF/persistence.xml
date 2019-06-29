@@ -4,20 +4,26 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
-    <persistence-unit name="persistenceUnitNameHibernate">
+    <persistence-unit name="persistenceUnitNameHibernateHyperSQL">
         <description>
-            Persistence unit for Hibernate Repository
+            Persistence unit for Hibernate Repository HyperSQL
         </description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>ru.job4j.models.Body</class>
+        <class>ru.job4j.models.Brand</class>
+        <class>ru.job4j.models.Car</class>
+        <class>ru.job4j.models.Founder</class>
+        <class>ru.job4j.models.Offer</class>
+        <class>ru.job4j.models.User</class>
         <properties>
             <property name="javax.persistence.jdbc.driver"
-                      value="org.postgresql.Driver" />
+                      value="org.hsqldb.jdbc.JDBCDriver" />
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:postgresql://localhost:5432/jpack3p4ch3task1" />
+                      value="jdbc:hsqldb:mem:jpack3p4ch3task1;get_column_name=false" />
             <property name="javax.persistence.jdbc.user"
-                      value="postgres" />
+                      value="SA" />
             <property name="javax.persistence.jdbc.password"
-                      value="postgresrootpass" />
+                      value="" />
             <property name="hibernate.show_sql"
                       value="true" />
         </properties>
