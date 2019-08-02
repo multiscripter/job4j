@@ -1,0 +1,188 @@
+body {
+    cursor: default;
+    font-size: 20px;
+    min-width: 320px;
+}
+
+label,
+select,
+option {
+    cursor: pointer;
+}
+
+.table th,
+.table td {
+    display: block;
+}
+
+th {
+    white-space: nowrap;
+}
+
+textarea {
+    min-height: 38px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.offer-item {
+    padding: 5px 0;
+}
+
+.offer-item:nth-child(2n+1) {
+    background: #eee;
+}
+
+.offer-details {
+    display: table;
+    padding: 0 5px;
+    text-align: center;
+    width: 100%;
+}
+
+.offer-pic {
+    background: #fff url("../../fotos/no-photo.png") no-repeat center;
+    background-size: contain;
+    height: 100px;
+    margin: 5px auto;
+    width: 135px;
+}
+
+.offer-head {
+    margin-bottom: 0;
+}
+
+.form-control,
+.custom-file-label{
+    padding: 0.375rem;
+}
+
+.custom-select {
+    padding: 0 0.375rem;
+}
+
+.filters .custom-select {
+    padding: 0 2rem 0 0.375rem;
+    width: auto;
+}
+
+.custom-file-label {
+    line-height: 1.1;
+    padding-right: 5.375rem;
+}
+
+.custom-file-label::after {
+    line-height: 1;
+}
+
+.offer-actions {
+    margin: 0 auto;
+}
+
+.offer-actions .btn {
+    width: 100px;
+}
+
+.offer-delete .offer-list {
+    margin-bottom: 0;
+}
+
+.offer-delete-table td {
+    border-color: transparent;
+}
+
+.offer-delete-table label {
+    margin-bottom: 0;
+}
+
+.custom-control-label::before,
+.custom-control-label::after{
+    top: 0.5rem;
+}
+
+.foto-item + .foto-item {
+    display: none;
+}
+
+.foto-ref {
+    display: block;
+}
+
+.foto-pic {
+    width: 100%;
+}
+
+@media (min-width: 576px) {
+    .offer-details {
+        text-align: start;
+    }
+
+    .offer-details > li {
+        display: table-cell;
+    }
+
+    .offer-pic {
+        margin: 0 auto;
+        vertical-align: top;
+    }
+
+    .offer-car,
+    .offer-data{
+        padding: 0 5px;
+    }
+
+    .offer-data {
+        width: 100px;
+    }
+
+    .offer-actions {
+        width: 100px;
+    }
+
+    .offer-actions .btn {
+        width: 100%;
+    }
+
+    .offer-actions .btn + .btn {
+        margin-top: 0.75rem;
+    }
+
+    .table th,
+    .table td {
+        display: table-cell;
+    }
+
+    .offer-table td:first-child,
+    .offer-delete-table td:nth-child(3) {
+        width: 120px;
+    }
+
+    .offer-delete .btn-submit {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    body {
+        font-size: 18px;
+    }
+
+    .custom-control-label::before,
+    .custom-control-label::after{
+        top: 0.25rem;
+    }
+
+    .custom-file-label,
+    .custom-file-label:after{
+        line-height: 1.3;
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        font-size: 16px;
+    }
+}

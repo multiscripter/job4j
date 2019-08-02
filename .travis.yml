@@ -38,3 +38,4 @@ before_script:
   - psql -c 'create database jpack3p2ch1task2;' -U postgres
   - psql -c 'create database jpack3p4ch2task1;' -U postgres
   - psql -c 'create database jpack3p4ch3task1;' -U postgres
+  - psql -c 'create database jpack3p4ch4task1;' -U postgres
