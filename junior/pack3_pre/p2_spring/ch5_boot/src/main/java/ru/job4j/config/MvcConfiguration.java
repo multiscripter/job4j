@@ -1,36 +1,22 @@
 package ru.job4j.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Класс ViewResolver реализует Разрешитель видов.
+ * Класс MvcConfiguration реализует конфигурацию MVC.
  *
  * @author Goureev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2020-10-04
+ * @version 2020-10-05
  * @since 2020-10-04
  */
 @Configuration
 @EnableWebMvc
 public class MvcConfiguration implements WebMvcConfigurer {
-
-//    @Bean
-//    public ViewResolver getViewResolver() {
-//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-//        resolver.setPrefix("/WEB-INF/");
-//        resolver.setSuffix(".jsp");
-//        resolver.setViewClass(JstlView.class);
-//        return resolver;
-//    }
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -48,10 +34,4 @@ public class MvcConfiguration implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
     }
-
-//    @Override
-//    public void configureDefaultServletHandling(
-//            DefaultServletHandlerConfigurer configurer) {
-//        configurer.enable();
-//    }
 }

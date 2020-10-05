@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.fileupload.FileItem;
+import javax.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +93,13 @@ public class OfferCreate {
     public void afterConstruct() {
         try {
             this.enc = "UTF-8";
-            String path = context.getRealPath("/");
-            path = String.format("%s/fotos", path);
+            String path = getClass().getResource("/WEB-INF").getPath();
+            path = path.replaceFirst(".war!/WEB-INF", "");
+            path = path.replaceFirst("file:", "");
+            path = path.replaceFirst("^/(.:/)", "$1");
+            path = String.format("%s/resources/fotos", path);
             String fotosPath = Paths.get(path).normalize().toString();
-            this.handler = new Handler(enc, fotosPath);
+            this.handler = new Handler(this.enc, fotosPath);
         } catch (Exception ex) {
             this.logger.error("ERROR", ex);
         }
@@ -138,11 +141,11 @@ public class OfferCreate {
         String msg = "";
         String jsp = "offerCreateGet";
         try {
-            HashMap<String, String> fields = new HashMap<>();
-            List<FileItem> files = new ArrayList<>();
+            HashMap<String, String[]> fields = new HashMap<>();
+            List<Part> files = new ArrayList<>();
             this.handler.handleFormData(context, req, fields, files);
             Offer offer = new Offer();
-            String name = fields.get("name");
+            String name = fields.get("name")[0];
             name = new String(name.getBytes("ISO-8859-1"), this.enc);
             User user = new User();
             user.setName(name);
@@ -162,7 +165,7 @@ public class OfferCreate {
             }
             offer.setUser(user);
             where.clear();
-            where.add(new String[] {"cars", "id", "=",  fields.get("car")});
+            where.add(new String[] {"cars", "id", "=",  fields.get("car")[0]});
             params.clear();
             params.put("where", where);
             Car car = new Car();
@@ -175,7 +178,7 @@ public class OfferCreate {
             }
             offer.setCar(car);
             Body body = new Body();
-            body.setId(Long.parseLong(fields.get("body")));
+            body.setId(Long.parseLong(fields.get("body")[0]));
             if (car.getBodies() != null) {
                 for (Body b : car.getBodies()) {
                     if (b.getId().equals(body.getId())) {
@@ -185,9 +188,9 @@ public class OfferCreate {
                 }
             }
             offer.setBody(body);
-            int price = Integer.parseInt(fields.get("price"));
+            int price = Integer.parseInt(fields.get("price")[0]);
             offer.setPrice(price);
-            Boolean status = "true".equals(fields.get("status"));
+            Boolean status = "true".equals(fields.get("status")[0]);
             offer.setStatus(status);
             Long id = this.repoOffer.save(offer).getId();
             offer.setId(id);

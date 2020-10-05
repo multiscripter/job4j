@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.commons.fileupload.FileItem;
+import javax.servlet.http.Part;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,18 +134,18 @@ public class OfferUpdate {
         String msg = "";
         String jsp = "offerUpdateGet";
         try {
-            HashMap<String, String> fields = new HashMap<>();
-            List<FileItem> files = new ArrayList<>();
+            HashMap<String, String[]> fields = new HashMap<>();
+            List<Part> files = new ArrayList<>();
             this.handler.handleFormData(context, req, fields, files);
-            String strId = fields.get("id");
+            String strId = fields.get("id")[0];
             Offer offer = this.getOffer(strId);
             if (offer != null) {
-                String name = fields.get("name");
+                String name = fields.get("name")[0];
                 name = new String(name.getBytes("ISO-8859-1"), this.enc);
                 if (name.equals(offer.getUser().getName())) {
                     HashMap<String, List<String[]>> params = new HashMap<>();
                     List<String[]> where = new ArrayList<>();
-                    where.add(new String[] {"cars", "id", "=",  fields.get("car")});
+                    where.add(new String[] {"cars", "id", "=",  fields.get("car")[0]});
                     params.put("where", where);
                     Car car = new Car();
                     CarStoreSpecification<Car> cSspecCar = new CarStoreSpecification<>();
@@ -157,7 +157,7 @@ public class OfferUpdate {
                     }
                     offer.setCar(car);
                     Body body = new Body();
-                    body.setId(Long.parseLong(fields.get("body")));
+                    body.setId(Long.parseLong(fields.get("body")[0]));
                     if (car.getBodies() != null) {
                         for (Body b : car.getBodies()) {
                             if (b.getId().equals(body.getId())) {
@@ -167,9 +167,9 @@ public class OfferUpdate {
                         }
                     }
                     offer.setBody(body);
-                    int price = Integer.parseInt(fields.get("price"));
+                    int price = Integer.parseInt(fields.get("price")[0]);
                     offer.setPrice(price);
-                    Boolean status = "true".equals(fields.get("status"));
+                    Boolean status = "true".equals(fields.get("status")[0]);
                     offer.setStatus(status);
                     Long id = this.repoOffer.save(offer).getId();
                     offer.setId(id);

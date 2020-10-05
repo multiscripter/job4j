@@ -81,8 +81,8 @@ public class Index {
     public void afterConstruct() {
         try {
             // TODO: добавить favicon.ico в webapp.
-            String path = getClass().getResource("/WEB-INF/web.xml").getPath();
-            path = path.replaceFirst(".war!/WEB-INF/web.xml", "");
+            String path = getClass().getResource("/WEB-INF").getPath();
+            path = path.replaceFirst(".war!/WEB-INF", "");
             path = path.replaceFirst("file:", "");
             path = path.replaceFirst("^/(.:/)", "$1");
             this.path = path;

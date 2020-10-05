@@ -32,7 +32,6 @@
                     </label>
                     <input type="submit" class="btn btn-primary btn-submit" value="Отфильтровать" />
                 </form>
-                ${path}
                 <c:choose>
                     <c:when test="${items != null && items.size() > 0}">
                 <ul class="offer-list">
