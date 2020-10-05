@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appenders>
+        <!-- Universal logger for any environment -->
+        <file name="logfileUniversal" fileName="junior.pack3.p4.ch5.task1.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%n" />
+        </file>
+    </appenders>
+    
+    <loggers>
+        <!-- Исправить на level="debug" для вывода в лог отладочных сообщений. -->
+        <root level="error">
+            <appender-ref ref="logfileUniversal" />
+        </root>
+    </loggers>
+    
+    <category name="org.springframework">
+        <priority value="error" />
+    </category>
+    <category name="org.springframework.beans">
+        <priority value="error" />
+    </category>
+    <category name="org.springframework.security">
+        <priority value="error" />
+    </category>
+    <category name="org.springframework.jdbc.core">
+        <priority value="error" />
+    </category>
+</configuration>

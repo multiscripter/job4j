@@ -18,8 +18,8 @@
         <!--<module>ch1_beans</module>
         <module>ch1_storages</module>
         <module>ch2_mvc</module>
-        <module>ch3_crudRepo</module>-->
-        <module>ch4_security</module>
+        <module>ch3_crudRepo</module>
+        <module>ch4_security</module>-->
     </modules>
     
     <dependencies>

@@ -2,7 +2,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ru.job4j</groupId>
     <artifactId>pack1_trainee</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
@@ -16,9 +15,9 @@
     </parent>
 
     <modules>
-        <module>p1_syntax</module>
+        <!--<module>p1_syntax</module>
         <module>p2_oop</module>
         <module>p3_collections</module>
-        <module>p4_lambda</module>
+        <module>p4_lambda</module>-->
     </modules>
 </project>
