@@ -32,7 +32,7 @@ import ru.job4j.utils.Handler;
  * Класс Index реализует контроллер Чтение и вывод элементов площадки продаж машин.
  *
  * @author Gureyev Ilya (mailto:ill-jah@yandex.ru)
- * @version 2019-08-01
+ * @version 2020-20-06
  * @since 2019-05-01
  */
 @Controller
@@ -80,7 +80,6 @@ public class Index {
     @PostConstruct
     public void afterConstruct() {
         try {
-            // TODO: добавить favicon.ico в webapp.
             String path = getClass().getResource("/WEB-INF").getPath();
             path = path.replaceFirst(".war!/WEB-INF", "");
             path = path.replaceFirst("file:", "");
@@ -103,7 +102,6 @@ public class Index {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String processGet(HttpServletRequest req, Model model) {
         try {
-            //this.setPrepare();
             CarStoreSpecification<Brand> brandsCsSpec = new CarStoreSpecification<>();
             brandsCsSpec.setEntityManager(this.entityManager);
             Specification<Brand> brandsSpec = brandsCsSpec.getSpec(new HashMap<>());
