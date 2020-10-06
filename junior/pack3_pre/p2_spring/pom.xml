@@ -20,6 +20,7 @@
         <module>ch2_mvc</module>
         <module>ch3_crudRepo</module>
         <module>ch4_security</module>-->
+        <module>ch5_boot</module>
     </modules>
     
     <dependencies>

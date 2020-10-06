@@ -31,7 +31,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
     // Указание местоположения статики (css, js и т.д.).
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
+        registry.addResourceHandler("/resources/static/**")
+                .addResourceLocations("/resources/static/");
     }
 }
